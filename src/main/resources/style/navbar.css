@@ -1,0 +1,14 @@
+.navbar {
+    -fx-background-color: #808791;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 24, 0, 0, 0);
+}
+
+.navbar .hyperlink, .navbar .text {
+    -fx-text-fill: white;
+    -fx-font-size: 19pt;
+    -fx-font-family: "Blender Pro Bold";
+}
+
+.navbar .text {
+    -fx-text-fill: white;
+}

@@ -1,0 +1,95 @@
+/*
+@font-face {
+    font-family: "Roboto Slab";
+    src:
+            url("../fonts/RobotoSlab.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Proxima Nova";
+    src:
+        url("../fonts/BlenderProMedium.ttf") format("truetype");
+}
+
+/*
+@font-face {
+    font-family: 'Blender Pro';
+    src:
+        url("../fonts/BlenderPro-Book.ttf") format("truetype");
+}*/
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+* {
+    -fx-font-family: 'Blender Pro Medium';
+    -fx-font-size: 15pt;
+}
+
+.main {
+    -fx-background-color: #39659b;
+}
+
+.title > .text {
+    -fx-font-size: 24pt;
+    -fx-font-family: 'Blender Pro Bold';
+}
+
+.title {
+    -fx-label-padding: 0 0 32px 0;
+}
+
+.button {
+    -fx-cursor: hand;
+    -fx-border: none;
+    -fx-background-radius: 12px;
+    -fx-padding: 8px 36px;
+}
+
+.check-box .box {
+    -fx-border: none;
+    -fx-background-radius: 8px;
+    -fx-background-color: white;
+}
+
+.check-box {
+    -fx-padding: 0px;
+}
+
+/* Floating Container */
+
+.floating-container {
+    -fx-background-color: #1a233d;
+    -fx-padding: 24px;
+    -fx-background-radius: 8px;
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 36, 0, 0, 0);
+}
+
+.floating-container *{
+    -fx-text-fill: white;
+}
+
+.floating-container .text-field {
+    -fx-background-color: #1a233d;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: #385e9d;
+}
+
+.floating-container * {
+    -fx-alignment: center;
+}
+
+.floating-container .button {
+    -fx-background-color: #d9d9d9;
+    -fx-text-fill: #161922;
+    -fx-font-family: 'Blender Pro Bold';
+    -fx-font-size: 16pt;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 12, 0, 0, 0);
+}
+
+.floating-container .button:hover {
+    -fx-background-color: #c3c3c3;
+}
+
+.floating-container .button:pressed {
+    -fx-background-color: #b0b0b0;
+}
