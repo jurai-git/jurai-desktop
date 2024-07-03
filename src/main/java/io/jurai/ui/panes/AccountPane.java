@@ -5,7 +5,7 @@ import io.jurai.data.notifier.StateNotifier;
 import io.jurai.ui.menus.LoginMenu;
 import javafx.scene.layout.StackPane;
 
-public class AccountPane implements StateNotifier<Boolean> {
+public class AccountPane {
     private StackPane view;
     private LoginMenu loginMenu;
 
@@ -23,12 +23,12 @@ public class AccountPane implements StateNotifier<Boolean> {
     }
 
     private void addNotifiers() {
-        ApplicationState.addLoggedInListener(this);
-        stateChanged(ApplicationState.isLoggedIn());
+        ApplicationState.addLoggedInListener(this::loggedInStateChanged);
+        loggedInStateChanged(ApplicationState.isLoggedIn());
     }
 
-    @Override
-    public void stateChanged(Boolean newState) {
+
+    public void loggedInStateChanged(Boolean newState) {
         if(!newState) {
             //remove login view and add account dashboard view
             view.getChildren().clear();
@@ -36,8 +36,6 @@ public class AccountPane implements StateNotifier<Boolean> {
         } else {
             view.getChildren().clear();
         }
-
-
         System.out.println("[STATE LOGGER] updated loggedIn property: " + ApplicationState.isLoggedIn());
     }
 

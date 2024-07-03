@@ -27,7 +27,6 @@ public class Navbar {
         HBox.setHgrow(icon, Priority.ALWAYS);
         icon.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/horizontal_logo.png"))));
         HBox.setHgrow(icon, Priority.ALWAYS);
-        icon.setFitHeight(128);
         icon.setSmooth(true);
         icon.setPreserveRatio(true);
         icon.getStyleClass().add("image");
@@ -47,6 +46,8 @@ public class Navbar {
         cadastroEntrarBtn = new Hyperlink("Cadastro / Entrar");
         cadastroEntrarBtn.getStyleClass().add("navbar-button");
         HBox.setHgrow(cadastroEntrarBtn, Priority.NEVER);
+
+        icon.fitHeightProperty().bind(inicioBtn.heightProperty().multiply(1.5));
     }
 
     private void layControls() {
@@ -65,5 +66,21 @@ public class Navbar {
 
     public HBox getView() {
         return view;
+    }
+
+    public Hyperlink getConsultaRapidaBtn() {
+        return consultaRapidaBtn;
+    }
+
+    public Hyperlink getInicioBtn() {
+        return inicioBtn;
+    }
+
+    public Hyperlink getPlanosBtn() {
+        return planosBtn;
+    }
+
+    public Hyperlink getCadastroEntrarBtn() {
+        return cadastroEntrarBtn;
     }
 }
