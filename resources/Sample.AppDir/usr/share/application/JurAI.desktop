@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=JurAI
-Exec=JurAI %F
-Icon=JurAI
-Type=Application
-Categories=Utility;
-Comment=Auxiliador jurídico
-Terminal=false
-StartupNotify=true
