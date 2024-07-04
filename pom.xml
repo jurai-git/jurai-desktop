@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.jurai</groupId>
+    <artifactId>JurAI</artifactId>
+    <version>0.0.1</version>
+
+    <properties>
+        <native.maven.plugin.version>0.9.12</native.maven.plugin.version>
+        <maven.compiler.source>22</maven.compiler.source>
+        <maven.compiler.target>22</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>22</javafx.version>
+        <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+        <mainClass>io.jurai.Launcher</mainClass>
+        <buildDirectory>${project.basedir}/target</buildDirectory>
+        <jpackageInputDir>${buildDirectory}/jpackage_inputdir</jpackageInputDir>
+        <jpackageOutputDir>${buildDirectory}/jpackage_outputdir</jpackageOutputDir>
+        <appModule>${project.basedir}</appModule>
+        <resDirectory>${project.basedir}/src/main/resources</resDirectory>
+        <mainJar>${buildDirectory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</mainJar>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>22.0.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>java</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>io.jurai.Launcher</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>io.jurai.Launcher</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>22</source>
+                    <target>22</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>io.jurai.Launcher</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>io.jurai.Launcher</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Plugin to create JPackage directories -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>create-dirs</id>
+                        <phase>validate</phase> <!-- Run in the validate phase -->
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <!-- Create jpackage_inputdir if it doesn't exist -->
+                                <mkdir dir="${jpackageInputDir}"/>
+                                <!-- Create jpackage_outputdir if it doesn't exist -->
+                                <mkdir dir="${jpackageOutputDir}"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- JPackage -->
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.6.5</version>
+
+                <configuration>
+                    <name>JurAI</name>
+                    <appVersion>${project.version}</appVersion>
+                    <vendor>io.jurai</vendor>
+                    <mainClass>${mainClass}</mainClass>
+                    <input>${jpackageInputDir}</input>
+                    <mainJar>${mainJar}</mainJar>
+                    <destination>${jpackageOutputDir}</destination>
+                    <javaOptions>
+                        <option>--enable-preview</option>
+                        <option>-Dfile.encoding=UTF-8</option>
+                    </javaOptions>
+                </configuration>
+
+                <!-- OS specific configurations -->
+                <executions>
+                    <execution>
+                        <id>mac</id>
+                        <configuration>
+                            <type>PKG</type>
+                            <icon>${resDirectory}/img/icon.png</icon>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>win</id>
+                        <configuration>
+                            <type>EXE</type>
+                            <icon>${resDirectory}/img/icon.png</icon>
+                            <winMenu>true</winMenu>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>linux</id>
+                        <configuration>
+                            <type>APP_IMAGE</type>
+                            <icon>${resDirectory}/img/icon.png</icon>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
