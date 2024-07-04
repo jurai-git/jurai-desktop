@@ -39,3 +39,4 @@ target/
 ### Custom ###
 build/out
 build/var
+*.AppImage
