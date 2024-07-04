@@ -7,7 +7,9 @@ Para versões com propósito de testagem, pode ser usado o empacotamento em JAR 
 
 ## Empacotamento em JAR
 
-execute as etapas `clean` e `package` do ciclo de vida do maven. Isso pode ser feito por meio de uma interface gráfica ou pela linha de comando:
+Se você estiverno Linux, poderá utilizar [este script](build/package_jar_linux.sh), que fará a criação do JAR em build/out/JurAI<Versão>.jar. Se não, siga os seguintes passos:
+
+Execute as etapas `clean` e `package` do ciclo de vida do maven. Isso pode ser feito por meio de uma interface gráfica ou pela linha de comando:
 
 ```shell
 mvn clean; mvn package
@@ -56,6 +58,8 @@ No Linux, prefira o AppImage para compatibilidade em todas as distros, e, se pos
 No Mac, prefira o PKG, pela melhor experiência do usuário na instalação.
 
 ### Empacotamento de AppImage (Linux):
+
+Você poderá fazer o empacotamento em AppImage de duas formas. A primeira é rodando [Este script](build/package_appimage_linux.sh), que irá produzir uma AppImage padrão automaticamente para você. Entretanto, para maior controle e customização, é recomendado que você faça a criação da mesma manualmente, como descrito abaixo.
 
 Após ter criado um executável com o JPackage do tipo AppImage, você deverá criar um diretório do tipo AppDir, e criar um AppImage dele com algum programa criador de AppImages. Pessoalmente, eu recomendo o `appimagetool`. Para instalá-lo, execute os seguintes comandos: 
 ```shell
