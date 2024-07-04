@@ -17,7 +17,9 @@ public class NavbarController {
     }
 
     private void attachEvents() {
-        navbar.getCadastroEntrarBtn().setOnMouseClicked(e -> ApplicationState.setActivePane(Pane.AccountPane));
+        navbar.getAccountHyperlink().setOnMouseClicked(e -> ApplicationState.setActivePane(Pane.AccountPane));
+        navbar.getAccountBtn().setOnAction(e -> ApplicationState.setActivePane(Pane.AccountPane));
+        navbar.getDashboardBtn().setOnAction(e -> ApplicationState.setActivePane(Pane.DashboardPane));
         navbar.getInicioBtn().setOnMouseClicked(e -> ApplicationState.setActivePane(Pane.HomePane));
         navbar.getPlanosBtn().setOnMouseClicked(e -> ApplicationState.setActivePane(Pane.PlanPane));
         navbar.getConsultaRapidaBtn().setOnMouseClicked(e -> ApplicationState.setActivePane(Pane.QuickQueryPane));

@@ -44,7 +44,7 @@ public class MainScene {
     }
 
     private void layControls() {
-        mainPane.setCenter(accountPane.getView());
+        activePaneChanged(ApplicationState.getActivePane());
         mainPane.setTop(navbar.getView());
         mainPane.getStyleClass().add("main");
     }

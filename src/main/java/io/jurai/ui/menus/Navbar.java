@@ -1,20 +1,22 @@
 package io.jurai.ui.menus;
 
+import io.jurai.ui.controls.AccountControl;
 import javafx.geometry.Pos;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-
 import java.util.Objects;
 
 public class Navbar {
     private HBox view;
 
     private ImageView icon;
-    private Hyperlink inicioBtn, consultaRapidaBtn, planosBtn, cadastroEntrarBtn;
+    private Hyperlink inicioBtn, consultaRapidaBtn, planosBtn;
+    private AccountControl accountControl;
 
     public Navbar() {
         view = new HBox();
@@ -43,9 +45,8 @@ public class Navbar {
         planosBtn.getStyleClass().add("navbar-button");
         HBox.setHgrow(planosBtn, Priority.NEVER);
 
-        cadastroEntrarBtn = new Hyperlink("Cadastro / Entrar");
-        cadastroEntrarBtn.getStyleClass().add("navbar-button");
-        HBox.setHgrow(cadastroEntrarBtn, Priority.NEVER);
+        accountControl = new AccountControl();
+        HBox.setHgrow(accountControl, Priority.NEVER);
 
         icon.fitHeightProperty().bind(inicioBtn.heightProperty().multiply(1.5));
     }
@@ -59,7 +60,7 @@ public class Navbar {
 
         view.getStyleClass().add("navbar");
         view.setAlignment(Pos.CENTER);
-        view.getChildren().addAll(spacers[5], icon, spacers[0], inicioBtn, spacers[1], consultaRapidaBtn, spacers[2], planosBtn, spacers[3], cadastroEntrarBtn, spacers[4]);
+        view.getChildren().addAll(spacers[5], icon, spacers[0], inicioBtn, spacers[1], consultaRapidaBtn, spacers[2], planosBtn, spacers[3], accountControl, spacers[4]);
 
         view.getStylesheets().add(getClass().getResource("/style/navbar.css").toExternalForm());
     }
@@ -80,7 +81,15 @@ public class Navbar {
         return planosBtn;
     }
 
-    public Hyperlink getCadastroEntrarBtn() {
-        return cadastroEntrarBtn;
+    public Hyperlink getAccountHyperlink() {
+        return accountControl.getAccountHyperlink();
+    }
+
+    public MenuItem getAccountBtn() {
+        return accountControl.getAccountInfoBtn();
+    }
+
+    public MenuItem getDashboardBtn() {
+        return accountControl.getDashboardBtn();
     }
 }

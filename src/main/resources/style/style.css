@@ -63,6 +63,15 @@
     -fx-background-color: transparent;
 }
 
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-border: none;
+}
+
+.image-pane {
+    -fx-background-color: transparent;
+}
+
 .h1, .h2, .h3, .h4, .h5 {
     -fx-text-alignment: center;
     -fx-text-fill: white;
