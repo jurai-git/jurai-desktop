@@ -1,7 +1,7 @@
 package io.jurai.ui.controls;
 
 import io.jurai.data.ApplicationState;
-import io.jurai.ui.uti.ImageViewPane;
+import io.jurai.ui.util.ImageViewPane;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;

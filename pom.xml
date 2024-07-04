@@ -20,65 +20,9 @@
         <jpackageInputDir>${buildDirectory}/jpackage_inputdir</jpackageInputDir>
         <jpackageOutputDir>${buildDirectory}/jpackage_outputdir</jpackageOutputDir>
         <appModule>${project.basedir}</appModule>
-
+        <resDirectory>${project.basedir}/src/main/resources</resDirectory>
+        <mainJar>${buildDirectory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</mainJar>
     </properties>
-
-    <!-- OS-specific configs for JPackage -->
-    <profiles>
-        <profile>
-            <id>mac</id>
-            <activation>
-                <os>
-                    <family>mac</family>
-                </os>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.panteleyev</groupId>
-                        <artifactId>jpackage-maven-plugin</artifactId>
-                        <configuration>
-                            <icon>${appModule}/src/main/resources/img/icon.png</icon>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>windows</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.panteleyev</groupId>
-                        <artifactId>jpackage-maven-plugin</artifactId>
-                        <configuration>
-                            <icon>${appModule}/src/main/resources/img/icon.png</icon>
-                            <winMenu>true</winMenu>
-                            <type>MSI</type>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>linux</id>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.panteleyev</groupId>
-                        <artifactId>jpackage-maven-plugin</artifactId>
-                        <configuration>
-                            <type>APP_IMAGE</type>
-                            <icon>${appModule}/src/main/resources/img/icon.png</icon>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
     <dependencies>
         <dependency>
@@ -197,18 +141,40 @@
                     <vendor>io.jurai</vendor>
                     <mainClass>${mainClass}</mainClass>
                     <input>${jpackageInputDir}</input>
-                    <mainJar>${buildDirectory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</mainJar>
+                    <mainJar>${mainJar}</mainJar>
                     <destination>${jpackageOutputDir}</destination>
                     <javaOptions>
                         <option>--enable-preview</option>
                         <option>-Dfile.encoding=UTF-8</option>
                     </javaOptions>
                 </configuration>
+
+                <!-- OS specific configurations -->
+                <executions>
+                    <execution>
+                        <id>mac</id>
+                        <configuration>
+                            <type>PKG</type>
+                            <icon>${resDirectory}/img/icon.png</icon>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>win</id>
+                        <configuration>
+                            <type>EXE</type>
+                            <icon>${resDirectory}/img/icon.png</icon>
+                            <winMenu>true</winMenu>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>linux</id>
+                        <configuration>
+                            <type>APP_IMAGE</type>
+                            <icon>${resDirectory}/img/icon.png</icon>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
-
-
-
-
 </project>

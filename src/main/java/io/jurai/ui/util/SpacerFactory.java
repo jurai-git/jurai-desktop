@@ -1,4 +1,4 @@
-package io.jurai.ui.uti;
+package io.jurai.ui.util;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;

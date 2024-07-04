@@ -1,6 +1,6 @@
 package io.jurai.ui.menus;
 
-import io.jurai.ui.uti.SpacerFactory;
+import io.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
