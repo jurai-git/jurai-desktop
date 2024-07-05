@@ -12,7 +12,7 @@ Se você estiverno Linux, poderá utilizar [este script](build/package_jar_linux
 Execute as etapas `clean` e `package` do ciclo de vida do maven. Isso pode ser feito por meio de uma interface gráfica ou pela linha de comando:
 
 ```shell
-mvn clean; mvn package
+mvn clean package
 ```
 
 Isso gerará um arquivo jar em target/JurAI-<versão>-jar-with-dependencies.jar. Esse arquivo pode ser distribuído para testers e devs, e poderá ser executado por quem tiver instalado em sua máquina a JDK do Java 22.
