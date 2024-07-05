@@ -17,7 +17,7 @@
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
         <mainClass>io.jurai.Launcher</mainClass>
         <buildDirectory>${project.basedir}/target</buildDirectory>
-        <jpackageInputDir>${buildDirectory}/jpackage_inputdir</jpackageInputDir>
+        <jpackageInputDir>${buildDirectory}/image</jpackageInputDir>
         <jpackageOutputDir>${buildDirectory}/jpackage_outputdir</jpackageOutputDir>
         <appModule>${project.basedir}</appModule>
         <resDirectory>${project.basedir}/src/main/resources</resDirectory>
@@ -56,7 +56,14 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <stripDebug>true</stripDebug>
+                    <noManPages>true</noManPages>
                     <mainClass>io.jurai.Launcher</mainClass>
+                    <launcher>JurAI</launcher>
+                    <jlinkImageName>JurAI</jlinkImageName>
+                    <jlinkZipName>JurAI</jlinkZipName>
                 </configuration>
             </plugin>
             <plugin>
@@ -123,6 +130,7 @@
                                 <mkdir dir="${jpackageInputDir}"/>
                                 <!-- Create jpackage_outputdir if it doesn't exist -->
                                 <mkdir dir="${jpackageOutputDir}"/>
+                                <mkdir dir="target/dist"/>
                             </target>
                         </configuration>
                     </execution>
@@ -137,15 +145,18 @@
 
                 <configuration>
                     <name>JurAI</name>
-                    <appVersion>${project.version}</appVersion>
+                    <appVersion>0.0.1</appVersion>
                     <vendor>io.jurai</vendor>
-                    <mainClass>${mainClass}</mainClass>
-                    <input>${jpackageInputDir}</input>
-                    <mainJar>${mainJar}</mainJar>
-                    <destination>${jpackageOutputDir}</destination>
+                    <destination>target/dist</destination>
+                    <module>jurai/io.jurai.Launcher</module>
+                    <runtimeImage>target/JurAI</runtimeImage>
+                    <linuxShortcut>true</linuxShortcut>
+                    <linuxPackageName>JurAI</linuxPackageName>
+                    <linuxAppCategory>Utilities</linuxAppCategory>
+                    <linuxMenuGroup>Utilities</linuxMenuGroup>
+                    <icon>${project.basedir}/src/main/resources/img/icon.png</icon>
                     <javaOptions>
-                        <option>--enable-preview</option>
-                        <option>-Dfile.encoding=UTF-8</option>
+                    <option>-Dfile.encoding=UTF-8</option>
                     </javaOptions>
                 </configuration>
 
@@ -155,14 +166,13 @@
                         <id>mac</id>
                         <configuration>
                             <type>PKG</type>
-                            <icon>${resDirectory}/img/icon.png</icon>
+                            <icon>${resourceDir}/img/icon.png</icon>
                         </configuration>
                     </execution>
                     <execution>
                         <id>win</id>
                         <configuration>
-                            <type>EXE</type>
-                            <icon>${resDirectory}/img/icon.png</icon>
+                            <type>MSI</type>
                             <winMenu>true</winMenu>
                         </configuration>
                     </execution>
@@ -170,7 +180,7 @@
                         <id>linux</id>
                         <configuration>
                             <type>APP_IMAGE</type>
-                            <icon>${resDirectory}/img/icon.png</icon>
+                            <icon>${resourceDir}/img/icon.png</icon>
                         </configuration>
                     </execution>
                 </executions>
