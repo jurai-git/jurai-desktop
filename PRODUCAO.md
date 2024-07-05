@@ -20,22 +20,21 @@ Esse arquivo não deverá ser distribuído para os clientes, ou ser publicado no
 
 ## Empacotamento em Instalador
 
-Execute as etapas `clean`, `validate`, `test` e `package` do ciclo de vida do maven, assim como desrito na seção de empacotamento em Jar (ver acima).
-Se o módulo passar a validação e o teste com sucesso, teste o jar criado no diretório `target`.
+Execute as etapas `clean` e `compile` do ciclo de vida do maven.
+Se não houverem erros, execute o jlink com o plugin do javafx para maven, com o comando `mvn javafx:jlink`. Isso deverá criar uma imagem do programa com uma JRE embutia, no diretório target/JurAI. Teste a imagem, e se tudo estiver funcionando, você pode continuar para a proxima etapa.
 
-Se tudo ocorrer conforme o esperado, você poderá criar um pacote/instalador para o JAR para a arquitetura desejada:
 NOTA: A plataforma para a qual você for empacotar o projeto deverá ser a mesma que você estiver usando. Por exemplo: Se você for empacotar um jar para um instalador para Windows x86_64, isso deverá ser feito em uma máqiuna Windows x86_64.
+
+Para criar o instalador ou pacote, execute:
 
 ```shell
 mvn jpackage:jpackage@<OS>
 ```
 
 Aqui, o OS deverá ser um dos seguintes:
-`mac`, `win` ou `linux`.
-Se você quiser customizar o tipo de instalador para o seu sistema operacional, você deverá ajustar isso no arquivo pom.xml.
-Em <profiles>, encontre a profile do sistema operacional a ser utilizado, e em build->plugins->plugin->configuration->type, troque o tipo para o desejado.
+`mac_pkg`, `mac_dmg`, `win_exe`, `win_msi`, `linux_deb` ou `linux_appimage`.
 
-Aqui está uma lista dos tipos de pacotes que você poderá utilizar:
+Abaixo está uma pequena lista dos formatos, juntamente com algunmas observações.
 ```text
 Windows: 
     .msi (MSI);
@@ -57,11 +56,28 @@ No windows, prefira o EXE, pela maior faciliade de distribuição
 No Linux, prefira o AppImage para compatibilidade em todas as distros, e, se possível, também faca um pacote .deb, para as distros baseadas em debian;
 No Mac, prefira o PKG, pela melhor experiência do usuário na instalação.
 
+# Instruções específicas para as plataformas
+
+
+### Empacotamento de EXE e MSI (Windows):
+
+
+Para fazer o empacotamento nestes formatos, basta executar o comando jpackage com o formato a ser empacotado, como descrito na seção Empacotamento em Instalador.
+
+
+### empacotamento em deb (linux):
+
+
+Para empacotar um pacote deb, basta executrar o comando `mvn jpackage:jpackag@linux_deb`, como descrito na seção Empacotamento em Instalador.
+
+
 ### Empacotamento de AppImage (Linux):
+
+O empacotamento em AppImage é um pouco mais complexo que os outros, então leia as instruções com atenção.
 
 Você poderá fazer o empacotamento em AppImage de duas formas. A primeira é rodando [Este script](build/package_appimage_linux.sh), que irá produzir uma AppImage padrão automaticamente para você. Entretanto, para maior controle e customização, é recomendado que você faça a criação da mesma manualmente, como descrito abaixo.
 
-Após ter criado um executável com o JPackage do tipo AppImage, você deverá criar um diretório do tipo AppDir, e criar um AppImage dele com algum programa criador de AppImages. Pessoalmente, eu recomendo o `appimagetool`. Para instalá-lo, execute os seguintes comandos: 
+Após ter criado um executável com o JPackage do tipo AppImage, você deverá criar um diretório do tipo AppDir, e criar um AppImage dele com algum programa criador de AppImages. Pessoalmente, eu recomendo o `appimagetool`. Para instalá-lo, execute os seguintes comandos:
 ```shell
 sudo wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O /usr/local/bin/appimagetool
 ```
