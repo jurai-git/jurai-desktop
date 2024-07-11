@@ -1,13 +1,16 @@
 package io.jurai;
 
 import io.jurai.data.ApplicationState;
+import io.jurai.data.model.*;
 import javafx.application.Platform;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
 
 public class CommandListener implements Runnable {
     private boolean running;
+    private Advogado dummyUser;
 
     public CommandListener() {
         running = true;
@@ -15,6 +18,7 @@ public class CommandListener implements Runnable {
 
     @Override
     public void run() {
+        dummyUser = new Advogado("123123123-12" , TipoPessoa.PESSOA_FISICA, "NomeUsuario", Genero.FEMININO, new Date(), Nacionalidade.BRASILEIRO, "eu-nao-sei-como-é-uma-oab", "email@email", new Endereco("12123123", "rua", "bairro", "cidade", "estado", "123"), null);
         while(running) {
             String input = new Scanner(System.in).nextLine().toLowerCase();
             handleCommand(input);
@@ -48,6 +52,13 @@ public class CommandListener implements Runnable {
                         case "loggedin":
                             Platform.runLater(() -> ApplicationState.setLoggedIn(Boolean.parseBoolean(newValue)));
                             System.out.println(key + " property changed");
+                            break;
+                        case "currentuser":
+                            if(newValue.equals("default")) {
+                                Platform.runLater(() -> ApplicationState.setCurrentUser(dummyUser));
+                            } else {
+                                System.out.println("Custom user setting is not yet supported");
+                            }
                             break;
                         default:
                             System.out.println("Invalid key: " + key);

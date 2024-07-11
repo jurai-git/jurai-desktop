@@ -1,0 +1,25 @@
+.popover * {
+    -fx-text-fill: rgb(64, 64, 64) !important;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.popover > .content {
+    -fx-padding: 6px 24px;
+}
+
+.popover *.border-pane {
+    -fx-alignment: center;
+}
+
+.popover *.vbox {
+    -fx-alignment: center;
+    -fx-spacing: 12px;
+    -fx-padding: 12px;
+}
+
+.popover *.hbox {
+    -fx-alignment: center;
+    -fx-spacing: 12px;
+    -fx-padding: 12px;
+}

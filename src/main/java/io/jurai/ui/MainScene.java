@@ -50,11 +50,16 @@ public class MainScene {
     }
 
     private void attachControllers() {
-        NavbarController navbarController = new NavbarController(navbar);
+        NavbarController navbarController = new NavbarController();
+        navbarController.initialize(navbar);
     }
 
     private void attachNotifiers() {
-        ApplicationState.addActivePaneNotifier(this::activePaneChanged);
+        ApplicationState.addPropertyChangeListener(e -> {
+            if("activePane".equals(e.getPropertyName())) {
+                activePaneChanged((Pane) e.getNewValue());
+            }
+        });
     }
 
     public Scene getScene() {

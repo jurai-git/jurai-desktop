@@ -1,42 +1,59 @@
 package io.jurai.data;
 
+import io.jurai.data.model.Advogado;
 import io.jurai.data.model.Pane;
-import io.jurai.data.notifier.StateNotifier;
-import java.util.ArrayList;
 
-public abstract class ApplicationState {
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-    //logged in property
+public class ApplicationState {
+    private static final PropertyChangeSupport support = new PropertyChangeSupport(new ApplicationState());
+
     private static boolean loggedIn = false;
-    private static ArrayList<StateNotifier<Boolean>> loggedInListeners = new ArrayList<>();
+    private static Pane activePane = Pane.HomePane;
+    private static Advogado currentUser = null;
 
     public static void setLoggedIn(boolean loggedIn) {
+        if (loggedIn == ApplicationState.loggedIn)
+            return; // do nothing if the state is the same
+        boolean old = ApplicationState.loggedIn;
         ApplicationState.loggedIn = loggedIn;
-        loggedInListeners.forEach(notifier -> notifier.stateChanged(loggedIn));
+        support.firePropertyChange("loggedIn", old, loggedIn);
+        if (!loggedIn) {
+            setCurrentUser(null);
+        }
+    }
+
+    public static void setActivePane(Pane pane) {
+        Pane old = ApplicationState.activePane;
+        ApplicationState.activePane = pane;
+        support.firePropertyChange("activePane", old, pane);
+    }
+
+    public static void setCurrentUser(Advogado newUser) {
+        Advogado old = ApplicationState.currentUser;
+        ApplicationState.currentUser = newUser;
+        setLoggedIn(newUser != null);
+        support.firePropertyChange("currentUser", old, newUser);
     }
 
     public static boolean isLoggedIn() {
         return loggedIn;
     }
 
-    public static void addLoggedInListener(StateNotifier<Boolean> l) {
-        loggedInListeners.add(l);
-    }
-
-    //current pane property
-    private static Pane activePane = Pane.HomePane;
-    private static ArrayList<StateNotifier<Pane>> activePaneNotifiers = new ArrayList<>();
-
-    public static void setActivePane(Pane pane) {
-        activePane = pane;
-        activePaneNotifiers.forEach(notifier -> notifier.stateChanged(activePane));
-    }
-
     public static Pane getActivePane() {
         return activePane;
     }
 
-    public static void addActivePaneNotifier(StateNotifier<Pane> notifier) {
-        activePaneNotifiers.add(notifier);
+    public static Advogado getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    public static void removePropertyChangeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
     }
 }

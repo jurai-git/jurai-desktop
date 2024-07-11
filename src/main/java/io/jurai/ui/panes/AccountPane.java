@@ -23,7 +23,11 @@ public class AccountPane {
     }
 
     private void addNotifiers() {
-        ApplicationState.addLoggedInListener(this::loggedInStateChanged);
+        ApplicationState.addPropertyChangeListener(event -> {
+            if("loggedIn".equals(event.getPropertyName())) {
+                loggedInStateChanged((Boolean) event.getNewValue());
+            }
+        });
         loggedInStateChanged(ApplicationState.isLoggedIn());
     }
 

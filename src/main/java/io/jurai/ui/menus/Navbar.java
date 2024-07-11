@@ -1,7 +1,9 @@
 package io.jurai.ui.menus;
 
 import io.jurai.ui.controls.AccountControl;
+import io.jurai.ui.controls.controller.AccountControlController;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -22,6 +24,7 @@ public class Navbar {
         view = new HBox();
         initControls();
         layControls();
+        attachControllers();
     }
 
     private void initControls() {
@@ -65,6 +68,15 @@ public class Navbar {
         view.getStylesheets().add(getClass().getResource("/style/navbar.css").toExternalForm());
     }
 
+    private void attachControllers() {
+        AccountControlController acc = new AccountControlController();
+        acc.initialize(accountControl);
+    }
+
+    public AccountControl getAccountControl() {
+        return accountControl;
+    }
+
     public HBox getView() {
         return view;
     }
@@ -81,15 +93,26 @@ public class Navbar {
         return planosBtn;
     }
 
-    public Hyperlink getAccountHyperlink() {
-        return accountControl.getAccountHyperlink();
+    public Hyperlink getDashboardBtn() {
+        return accountControl.getDashboardHpl();
     }
 
-    public MenuItem getAccountBtn() {
-        return accountControl.getAccountInfoBtn();
+    public Hyperlink getAccountBtn() {
+        return accountControl.getAccountPaneHpl();
     }
 
-    public MenuItem getDashboardBtn() {
-        return accountControl.getDashboardBtn();
+    public Button getLoginBtn() {
+        return accountControl.getLoginBtn();
     }
+
+    public Button getRegisterBtn() {
+        return accountControl.getRegisterBtn();
+    }
+
+    public Button getExitBtn() {
+        return accountControl.getExitBtn();
+    }
+
+
+
 }
