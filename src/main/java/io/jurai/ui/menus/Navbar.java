@@ -2,18 +2,19 @@ package io.jurai.ui.menus;
 
 import io.jurai.ui.controls.AccountControl;
 import io.jurai.ui.controls.controller.AccountControlController;
+import io.jurai.ui.panes.AbstractPane;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import java.util.Objects;
 
-public class Navbar {
+public class Navbar extends AbstractPane {
     private HBox view;
 
     private ImageView icon;
@@ -21,13 +22,13 @@ public class Navbar {
     private AccountControl accountControl;
 
     public Navbar() {
-        view = new HBox();
         initControls();
         layControls();
         attachControllers();
     }
 
-    private void initControls() {
+    @Override
+    protected void initControls() {
         icon = new ImageView();
         HBox.setHgrow(icon, Priority.ALWAYS);
         icon.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/horizontal_logo.png"))));
@@ -54,7 +55,9 @@ public class Navbar {
         icon.fitHeightProperty().bind(inicioBtn.heightProperty().multiply(1.5));
     }
 
-    private void layControls() {
+    @Override
+    protected void layControls() {
+        view = new HBox();
         Region spacers[] = new Region[6];
         for(int i=0; i < 6; i++) {
             spacers[i] = new Region();
@@ -77,7 +80,8 @@ public class Navbar {
         return accountControl;
     }
 
-    public HBox getView() {
+    @Override
+    public Pane getView() {
         return view;
     }
 
@@ -112,7 +116,4 @@ public class Navbar {
     public Button getExitBtn() {
         return accountControl.getExitBtn();
     }
-
-
-
 }

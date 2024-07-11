@@ -1,6 +1,7 @@
 package io.jurai.ui.panes;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,18 +9,18 @@ import javafx.scene.layout.*;
 
 import java.util.Objects;
 
-public class HomePane {
+public class HomePane extends AbstractPane {
     private VBox view;
     private Label sloganLbl;
     private ImageView logo;
     BorderPane imageViewWrapper;
 
     public HomePane() {
-        initControls();
-        layControls();
+        super();
     }
 
-    private void initControls() {
+    @Override
+    protected void initControls() {
         view = new VBox();
         view.getStyleClass().add("main");
         view.setAlignment(Pos.CENTER);
@@ -41,11 +42,13 @@ public class HomePane {
         logo.fitHeightProperty().bind(imageViewWrapper.maxHeightProperty());
     }
 
-    private void layControls() {
+    @Override
+    protected void layControls() {
         view.getChildren().addAll(logo, sloganLbl);
     }
 
-    public Pane getView() {
+    @Override
+    public VBox getView() {
         return view;
     }
 }

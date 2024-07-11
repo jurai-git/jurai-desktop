@@ -68,9 +68,20 @@ public class CommandListener implements Runnable {
                     System.out.println("Invalid value: " + newValue);
                 }
                 break;
+            case "stop-debug":
+            case "--stop-debug":
+            case "-s":
+                System.out.println("Are you sure? You will not be able to turn debugging again. [N/y]");
+                if(new Scanner(System.in).nextLine().toLowerCase().equals("y"))
+                    ApplicationState.setDebugging(false);
+                else
+                    System.out.println("Aborting...");
+                break;
             default:
                 System.out.println("Invalid fxctl command: " + args[0]);
-                System.out.println("Avaliable commands: --export | -e: exports a value to the ApplicationState");
+                System.out.println("Avaliable commands:\n" +
+                        " --export | -e | export: exports a value to the ApplicationState\n" +
+                        " --stop-debug | -s | stop-debug: stops debugging (once you stop it, you cant turn it back!)");
         }
     }
 

@@ -2,10 +2,13 @@ package io.jurai;
 
 import io.jurai.data.ApplicationState;
 import io.jurai.ui.MainScene;
+import io.jurai.util.UILogger;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class App extends Application {
+    private static Thread ctlThread;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -17,7 +20,23 @@ public class App extends Application {
         MainScene scene = new MainScene();
         scene.getScene().getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
         stage.setScene(scene.getScene());
-        ApplicationState.initialize();
         stage.show();
+
+        ApplicationState.addPropertyChangeListener(e -> {
+            if(e.getPropertyName().equals("debugging")) {
+                if((boolean) e.getNewValue()) {
+                    stage.setOnCloseRequest(_ -> ctlThread.interrupt());
+                } else {
+                    stage.setOnCloseRequest(_ -> {});
+                }
+            }
+        });
+
+        //this is to trigger the above listener
+        ApplicationState.setDebugging(ApplicationState.isDebugging());
+    }
+
+    public static void setCtlThread(Thread t) {
+        ctlThread = t;
     }
 }

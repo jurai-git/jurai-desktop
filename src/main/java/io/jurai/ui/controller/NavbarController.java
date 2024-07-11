@@ -5,16 +5,13 @@ import io.jurai.data.model.Pane;
 import io.jurai.ui.menus.Navbar;
 
 
-public class NavbarController {
+public class NavbarController extends AbstractController<Navbar> {
 
     public NavbarController() {
     }
 
-    public void initialize(Navbar navbar) {
-        attachEvents(navbar);
-    }
-
-    private void attachEvents(Navbar navbar) {
+    @Override
+    protected void attachEvents(Navbar navbar) {
         navbar.getExitBtn().setOnAction(e -> {
             ApplicationState.setLoggedIn(false);
             ApplicationState.setActivePane(Pane.HomePane);
@@ -39,5 +36,10 @@ public class NavbarController {
         navbar.getInicioBtn().setOnMouseClicked(e -> ApplicationState.setActivePane(Pane.HomePane));
         navbar.getPlanosBtn().setOnMouseClicked(e -> ApplicationState.setActivePane(Pane.PlanPane));
         navbar.getConsultaRapidaBtn().setOnMouseClicked(e -> ApplicationState.setActivePane(Pane.QuickQueryPane));
+    }
+
+    @Override
+    protected void attachNotifiers(Navbar navbar) {
+
     }
 }

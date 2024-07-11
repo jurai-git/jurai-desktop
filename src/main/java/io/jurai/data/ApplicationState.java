@@ -4,6 +4,7 @@ import io.jurai.data.model.Advogado;
 import io.jurai.data.model.Pane;
 import io.jurai.util.StateLogger;
 
+import javax.swing.plaf.nimbus.State;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -14,6 +15,7 @@ public class ApplicationState {
     private static boolean loggedIn = false;
     private static Pane activePane = Pane.HomePane;
     private static Advogado currentUser = null;
+    private static boolean debugging = false;
 
     public static void initialize() {
         support.addPropertyChangeListener(propertyChangeEvent -> {
@@ -21,6 +23,7 @@ public class ApplicationState {
             String newValueString = (propertyChangeEvent.getNewValue() == null) ? "null" : propertyChangeEvent.getNewValue().toString();
             StateLogger.log((propertyChangeEvent.getPropertyName() + " changed from " + oldValueString + " to " + newValueString));
         });
+        StateLogger.log("initialized StateLogger");
     }
 
     public static void setLoggedIn(boolean loggedIn) {
@@ -47,6 +50,12 @@ public class ApplicationState {
         support.firePropertyChange("currentUser", old, newUser);
     }
 
+    public static void setDebugging(boolean debugging) {
+        boolean old = ApplicationState.debugging;
+        ApplicationState.debugging = debugging;
+        support.firePropertyChange("debugging", old, debugging);
+    }
+
     public static boolean isLoggedIn() {
         return loggedIn;
     }
@@ -57,6 +66,10 @@ public class ApplicationState {
 
     public static Advogado getCurrentUser() {
         return currentUser;
+    }
+
+    public static boolean isDebugging() {
+        return debugging;
     }
 
     public static void addPropertyChangeListener(PropertyChangeListener listener) {
