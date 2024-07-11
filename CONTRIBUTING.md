@@ -116,8 +116,10 @@ public class MeuController {
 Como você pode perceber, o MeuPane (um pane qualquer) é injetado através do método initialize() do controlador.
 O controlador terá três funcões: 
 
-1 - detectar quando algum evento for feito na view que ele está controlando (através do attachEvents),
+1 - detectar quando algum evento for feito na view que ele está controlando (através do attachEvents)
+
 2 - detectar quando alguma propriedade do aplicativo mudar, e atualizer sua view conforme necessário (falarei sobre isso mais para a frente)
+
 3 - atualizar os modelos do projeto (criar um usuário através de um serviço, por exemplo). Isso também será discutido mais para frente.
 
 
