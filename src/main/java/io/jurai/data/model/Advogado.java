@@ -147,4 +147,9 @@ public class Advogado {
     public void setNacionalidade(Nacionalidade nacionalidade) {
         this.nacionalidade = nacionalidade;
     }
+
+    @Override
+    public String toString() {
+        return "{io.jurai.data.model.Advogado: " + getNomeUsuario() + "}";
+    }
 }

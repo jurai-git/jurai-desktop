@@ -5,7 +5,6 @@ public class Launcher {
         CommandListener commandListener = new CommandListener();
         Thread commandThread = new Thread(commandListener);
         commandThread.start();
-
         App.main(args);
     }
 }

@@ -1,7 +1,6 @@
 package io.jurai.ui.panes;
 
 import io.jurai.data.ApplicationState;
-import io.jurai.data.notifier.StateNotifier;
 import io.jurai.ui.menus.LoginMenu;
 import javafx.scene.layout.StackPane;
 
@@ -40,7 +39,11 @@ public class AccountPane {
         } else {
             view.getChildren().clear();
         }
-        System.out.println("[STATE LOGGER] updated loggedIn property: " + ApplicationState.isLoggedIn());
+
+    }
+
+    public LoginMenu getLoginMenu() {
+        return loginMenu;
     }
 
     public StackPane getView() {

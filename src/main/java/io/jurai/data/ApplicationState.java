@@ -2,7 +2,9 @@ package io.jurai.data;
 
 import io.jurai.data.model.Advogado;
 import io.jurai.data.model.Pane;
+import io.jurai.util.StateLogger;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -12,6 +14,14 @@ public class ApplicationState {
     private static boolean loggedIn = false;
     private static Pane activePane = Pane.HomePane;
     private static Advogado currentUser = null;
+
+    public static void initialize() {
+        support.addPropertyChangeListener(propertyChangeEvent -> {
+            String oldValueString = (propertyChangeEvent.getOldValue() == null) ? "null" : propertyChangeEvent.getOldValue().toString();
+            String newValueString = (propertyChangeEvent.getNewValue() == null) ? "null" : propertyChangeEvent.getNewValue().toString();
+            StateLogger.log((propertyChangeEvent.getPropertyName() + " changed from " + oldValueString + " to " + newValueString));
+        });
+    }
 
     public static void setLoggedIn(boolean loggedIn) {
         if (loggedIn == ApplicationState.loggedIn)

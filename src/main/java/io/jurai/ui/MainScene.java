@@ -1,7 +1,7 @@
 package io.jurai.ui;
 
 import io.jurai.data.ApplicationState;
-import io.jurai.data.notifier.StateNotifier;
+import io.jurai.ui.controller.AccountPaneController;
 import io.jurai.ui.controller.NavbarController;
 import io.jurai.data.model.Pane;
 import io.jurai.ui.menus.LoginMenu;
@@ -52,6 +52,8 @@ public class MainScene {
     private void attachControllers() {
         NavbarController navbarController = new NavbarController();
         navbarController.initialize(navbar);
+        AccountPaneController accountPaneController = new AccountPaneController();
+        accountPaneController.initialize(accountPane);
     }
 
     private void attachNotifiers() {
