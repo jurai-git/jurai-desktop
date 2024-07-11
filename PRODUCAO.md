@@ -12,7 +12,7 @@ Se você estiverno Linux, poderá utilizar [este script](build/package_jar_linux
 Execute as etapas `clean` e `package` do ciclo de vida do maven. Isso pode ser feito por meio de uma interface gráfica ou pela linha de comando:
 
 ```shell
-mvn clean; mvn package
+mvn clean package
 ```
 
 Isso gerará um arquivo jar em target/JurAI-<versão>-jar-with-dependencies.jar. Esse arquivo pode ser distribuído para testers e devs, e poderá ser executado por quem tiver instalado em sua máquina a JDK do Java 22.
@@ -23,7 +23,7 @@ Esse arquivo não deverá ser distribuído para os clientes, ou ser publicado no
 Execute as etapas `clean` e `compile` do ciclo de vida do maven.
 Se não houverem erros, execute o jlink com o plugin do javafx para maven, com o comando `mvn javafx:jlink`. Isso deverá criar uma imagem do programa com uma JRE embutia, no diretório target/JurAI. Teste a imagem, e se tudo estiver funcionando, você pode continuar para a proxima etapa.
 
-NOTA: A plataforma para a qual você for empacotar o projeto deverá ser a mesma que você estiver usando. Por exemplo: Se você for empacotar um jar para um instalador para Windows x86_64, isso deverá ser feito em uma máqiuna Windows x86_64.
+NOTA: A plataforma para a qual você for empacotar o projeto deverá ser a mesma que você estiver usando. Por exemplo: Se você for empacotar um instalador para Windows x86_64, isso deverá ser feito em uma máqiuna Windows x86_64.
 
 Para criar o instalador ou pacote, execute:
 

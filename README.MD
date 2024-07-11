@@ -1,6 +1,6 @@
 # JurAI Desktop
 
-Este é o repositório destinado para conter o código, informações e pacotes da versção Desktop do projeto JurAI.
+Este é o repositório destinado para conter o código, informações e pacotes da versão Desktop do projeto JurAI.
 
 # Sobre o projeto
 
