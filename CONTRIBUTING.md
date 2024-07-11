@@ -142,7 +142,7 @@ Já a segunda maneira é utilizando uma classe centralizadora, que recebe e envi
 
 <img src="/resources/images/observer_architecture.jpg" width="50%" display="block">
 
-Enquanto para aplicações simples a primeira opção funciona bem, no nosso caso a segunda é muito mais viável, visto que, quando temos dezenas e dezenas de propriedades e eventos, a primeira opção cria uma complexa rede de observadores e propriedades, que deixa o código completamente caótico, enquanto a segunda opção centraliza tudo em apenas uma classe, deixando o código mais limpo.
+Enquanto para aplicações simples a primeira opção funciona bem, no nosso caso a segunda é muito mais viável, visto que quando temos dezenas e dezenas de propriedades e eventos, a primeira opção cria uma complexa rede de observadores e propriedades que deixa o código completamente caótico, enquanto a segunda opção centraliza tudo em apenas uma classe, deixando o código mais limpo.
 
 Aqui está uma simples implementação da classe ApplicationState, e o seu uso nos Panes, para melhor entendimento.
 
