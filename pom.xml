@@ -25,32 +25,42 @@
     </properties>
 
     <dependencies>
+        <!-- javafx base -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>22.0.1</version>
         </dependency>
+
+        <!-- javafx extra controls -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.2.1</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+
+            <!-- Plugin to run program via maven -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <id>java</id>
                         <goals>
                             <goal>java</goal>
                         </goals>
-                        <configuration>
-                            <mainClass>io.jurai.Launcher</mainClass>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <mainClass>io.jurai.Launcher</mainClass>
+                </configuration>
             </plugin>
 
+            <!-- Plugin to create modularized image -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -65,7 +75,9 @@
                     <jlinkImageName>JurAI</jlinkImageName>
                     <jlinkZipName>JurAI</jlinkZipName>
                 </configuration>
-            </plugin>
+                </plugin>
+
+            <!-- Plugins to compile project -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -88,6 +100,8 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <!-- Plugin to create JAR files -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.0</version>
