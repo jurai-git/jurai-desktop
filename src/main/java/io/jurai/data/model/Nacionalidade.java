@@ -227,4 +227,8 @@ public enum Nacionalidade {
     Nacionalidade(String label) {
         this.label = label;
     }
+
+    public String getLabel() {
+        return label;
+    }
 }
