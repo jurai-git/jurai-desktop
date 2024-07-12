@@ -1,0 +1,8 @@
+- Add EventLogger to logging system
+- Implement DasboardPane
+- Implement PlanPane
+- Implement QuickSearchPane
+- Redo HomePane
+- Add Models and Services
+- Style with CSS
+- Optional: refactor code with FXML
