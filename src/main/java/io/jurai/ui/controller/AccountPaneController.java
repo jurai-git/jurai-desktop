@@ -1,7 +1,6 @@
 package io.jurai.ui.controller;
 
 import io.jurai.data.ApplicationState;
-import io.jurai.ui.panes.AbstractPane;
 import io.jurai.ui.panes.AccountPane;
 
 public class AccountPaneController extends AbstractController<AccountPane> {
@@ -26,7 +25,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         if(!newState) {
             //remove login view and add account dashboard view
             accountPane.getView().getChildren().clear();
-            accountPane.getView().getChildren().add(accountPane.getLoginMenu().getView());
+            accountPane.getView().getChildren().add(accountPane.getLoginMenu().getContent());
         } else {
             accountPane.getView().getChildren().clear();
         }

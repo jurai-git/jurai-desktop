@@ -1,8 +1,7 @@
-package io.jurai.ui.menus;
+package io.jurai.ui.panes;
 
 import io.jurai.ui.controls.AccountControl;
 import io.jurai.ui.controls.controller.AccountControlController;
-import io.jurai.ui.panes.AbstractPane;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;

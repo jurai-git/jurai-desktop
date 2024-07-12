@@ -5,7 +5,7 @@ import io.jurai.ui.controller.AccountPaneController;
 import io.jurai.ui.controller.NavbarController;
 import io.jurai.data.model.Pane;
 import io.jurai.ui.menus.LoginMenu;
-import io.jurai.ui.menus.Navbar;
+import io.jurai.ui.panes.Navbar;
 import io.jurai.ui.panes.*;
 import io.jurai.util.UILogger;
 import javafx.scene.Scene;

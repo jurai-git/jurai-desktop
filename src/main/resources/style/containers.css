@@ -1,6 +1,38 @@
 
 /* Floating Container */
 
+.titled-pane.floating {
+    -fx-background-color: #1a233d;
+    -fx-padding: 24px;
+    -fx-background-radius: 8px;
+    -fx-collapsible: false;
+}
+
+.titled-pane.floating .text-field {
+    -fx-background-color: #1a233d;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: #385e9d;
+}
+
+.titled-pane.floating > .title {
+    -fx-border-width: 0;
+    -fx-background-color: #1a233d;
+}
+
+.titled-pane.floating > .content {
+    -fx-border-width: 0;
+    -fx-background-color: #1a233d;
+}
+
+.titled-pane.floating .hbox {
+    -fx-spacing: 16px;
+}
+
+.titled-pane.floating .border-pane-child {
+    -fx-padding: 16px;
+}
+
+
 .floating-container {
     -fx-background-color: #1a233d;
     -fx-padding: 24px;
@@ -11,12 +43,7 @@
 
 .floating-container * {
     -fx-text-fill: white;
-}
-
-.floating-container .text-field {
-    -fx-background-color: #1a233d;
-    -fx-border-width: 0 0 2px 0;
-    -fx-border-color: #385e9d;
+    -fx-base: #1a2c5d;
 }
 
 .floating-container * {

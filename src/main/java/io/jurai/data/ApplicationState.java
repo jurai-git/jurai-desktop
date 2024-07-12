@@ -4,8 +4,6 @@ import io.jurai.data.model.Advogado;
 import io.jurai.data.model.Pane;
 import io.jurai.util.StateLogger;
 
-import javax.swing.plaf.nimbus.State;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 

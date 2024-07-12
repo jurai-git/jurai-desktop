@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class LoginMenu {
+public class LoginMenu extends AbstractMenu{
     private VBox view;
     private HBox urls;
 
@@ -18,14 +18,13 @@ public class LoginMenu {
     Hyperlink forgotPwd, createAccount;
 
     public LoginMenu() {
+        super();
+    }
+
+    protected void initControls() {
         view = new VBox();
         urls = new HBox();
 
-        initControls();
-        layControls();
-    }
-
-    private void initControls() {
         title = new Label("Bem-vindo de volta!");
         title.getStyleClass().add("title");
         HBox.setHgrow(title, Priority.ALWAYS);
@@ -53,7 +52,7 @@ public class LoginMenu {
         HBox.setHgrow(urls, Priority.ALWAYS);
     }
 
-    private void layControls() {
+    protected void layControls() {
         view.getStyleClass().add("floating-container");
         view.setAlignment(Pos.CENTER);
         view.getChildren().addAll(title, SpacerFactory.createVBoxSpacer(), email, SpacerFactory.createVBoxSpacer(),
@@ -61,7 +60,7 @@ public class LoginMenu {
                 urls, SpacerFactory.createVBoxSpacer(), login);
     }
 
-    public VBox getView() {
+    public VBox getContent() {
         return view;
     }
 }

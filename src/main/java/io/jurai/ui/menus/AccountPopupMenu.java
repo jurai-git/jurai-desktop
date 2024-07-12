@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Priority;
 
-public class AccountPopupMenu {
+public class AccountPopupMenu extends AbstractMenu {
     private BorderPane content;
     private VBox labelPane;
     private HBox buttonsPane;
@@ -19,13 +19,12 @@ public class AccountPopupMenu {
     private Button exitBtn, loginBtn, registerBtn;
 
     public AccountPopupMenu() {
-        initControls();
-        layControls();
+        super();
         attachNotifiers();
         currentUserChanged(null);
     }
 
-    private void initControls() {
+    protected void initControls() {
         messageLbl = new Label();
         messageLbl.getStyleClass().add("h3");
         HBox.setHgrow(messageLbl, Priority.ALWAYS);
@@ -40,7 +39,7 @@ public class AccountPopupMenu {
         registerBtn = new Button("Cadastre-se");
     }
 
-    private void layControls() {
+    protected void layControls() {
         labelPane = new VBox();
         labelPane.getStyleClass().add("vbox");
         buttonsPane = new HBox();

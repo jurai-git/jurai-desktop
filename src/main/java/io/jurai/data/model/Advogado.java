@@ -3,13 +3,11 @@ package io.jurai.data.model;
 import java.util.*;
 
 public class Advogado {
-    private static int newID = 0;
-    private int id;
 
     // informacoes pessoais
-    private String nome;
+    private String nullableNome;
     private String nomeUsuario;
-    private String nomeSocial;
+    private String nullableNomeSocial;
     private Genero genero;
     private Date dataNascimento;
     private Nacionalidade nacionalidade;
@@ -21,12 +19,12 @@ public class Advogado {
 
     // informacoes de contato
     private String email;
-    private String telefone;
     private Endereco endereco;
 
+    // informacoes do jurai
+
     public Advogado() {
-        this.id = newID;
-        newID++;
+
     }
 
     public Advogado(String cpfCnpj, TipoPessoa tipoPessoa, String nomeUsuario, Genero genero, Date dataNascimento, Nacionalidade nacionalidade, String oab, String email, Endereco endereco, Map<String, Object> outros) {
@@ -43,21 +41,16 @@ public class Advogado {
 
         if (outros == null) return;
 
-        Optional.ofNullable(outros.get("nome")).ifPresent(value -> this.nome = (String) value);
-        Optional.ofNullable(outros.get("nomeSocial")).ifPresent(value -> this.nomeSocial = (String) value);
-        Optional.ofNullable(outros.get("telefone")).ifPresent(value -> this.telefone = (String) value);
-    }
-
-    public int getId() {
-        return id;
+        Optional.ofNullable(outros.get("nome")).ifPresent(value -> this.nullableNome = (String) value);
+        Optional.ofNullable(outros.get("nomeSocial")).ifPresent(value -> this.nullableNomeSocial = (String) value);
     }
 
     public String getNome() {
-        return nome;
+        return nullableNome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNome(String nullableNome) {
+        this.nullableNome = nullableNome;
     }
 
     public String getNomeUsuario() {
@@ -69,11 +62,11 @@ public class Advogado {
     }
 
     public String getNomeSocial() {
-        return nomeSocial;
+        return nullableNomeSocial;
     }
 
-    public void setNomeSocial(String nomeSocial) {
-        this.nomeSocial = nomeSocial;
+    public void setNomeSocial(String nullableNomeSocial) {
+        this.nullableNomeSocial = nullableNomeSocial;
     }
 
     public Genero getGenero() {
@@ -122,14 +115,6 @@ public class Advogado {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
     }
 
     public Endereco getEndereco() {

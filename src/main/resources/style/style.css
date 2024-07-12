@@ -24,6 +24,8 @@
 * {
     -fx-font-family: 'Blender Pro Medium';
     -fx-font-size: 15pt;
+    -fx-base: #1a2c5d;
+    -fx-text-fill: white;
 }
 
 .root-pane {
@@ -48,6 +50,12 @@
     -fx-border: none;
     -fx-background-radius: 12px;
     -fx-padding: 8px 36px;
+}
+
+.text-field, .text-area {
+    -fx-background-color: #1a233d;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: #385e9d;
 }
 
 .check-box .box {
@@ -80,6 +88,10 @@
 
 .h1 .text{
     -fx-font-size: 48px;
+}
+
+.table-view {
+    -fx-border-color: transparent;
 }
 
 .h2 .text {

@@ -1,6 +1,5 @@
 package io.jurai.ui.panes;
 
-import io.jurai.data.ApplicationState;
 import io.jurai.ui.menus.LoginMenu;
 import javafx.scene.layout.StackPane;
 
@@ -16,13 +15,13 @@ public class AccountPane extends AbstractPane {
     protected void initControls() {
         view  = new StackPane();
         loginMenu = new LoginMenu();
-        loginMenu.getView().maxWidthProperty().bind(view.widthProperty().divide(8).multiply(5));
-        loginMenu.getView().maxHeightProperty().bind(view.heightProperty().divide(8).multiply(6));
+        loginMenu.getContent().maxWidthProperty().bind(view.widthProperty().divide(8).multiply(5));
+        loginMenu.getContent().maxHeightProperty().bind(view.heightProperty().divide(8).multiply(6));
     }
 
     @Override
     protected void layControls() {
-        view.getChildren().add(loginMenu.getView());
+        view.getChildren().add(loginMenu.getContent());
     }
 
     public LoginMenu getLoginMenu() {

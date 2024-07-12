@@ -1,4 +1,15 @@
 package io.jurai.ui.menus;
 
-public class AbstractMenu {
+import javafx.scene.Node;
+
+public abstract class AbstractMenu {
+    public AbstractMenu() {
+        initControls();
+        layControls();
+    }
+
+    protected abstract void initControls();
+    protected abstract void layControls();
+
+    protected abstract Node getContent();
 }
