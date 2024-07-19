@@ -2,7 +2,6 @@ package io.jurai;
 
 import io.jurai.data.ApplicationState;
 import io.jurai.ui.MainScene;
-import io.jurai.util.UILogger;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

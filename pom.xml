@@ -8,6 +8,13 @@
     <artifactId>JurAI</artifactId>
     <version>0.0.1</version>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <properties>
         <native.maven.plugin.version>0.9.12</native.maven.plugin.version>
         <maven.compiler.source>21</maven.compiler.source>

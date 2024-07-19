@@ -21,6 +21,7 @@ public class LoginMenu extends AbstractMenu{
         super();
     }
 
+    @Override
     protected void initControls() {
         view = new VBox();
         urls = new HBox();
@@ -52,6 +53,7 @@ public class LoginMenu extends AbstractMenu{
         HBox.setHgrow(urls, Priority.ALWAYS);
     }
 
+    @Override
     protected void layControls() {
         view.getStyleClass().add("floating-container");
         view.setAlignment(Pos.CENTER);
@@ -60,6 +62,7 @@ public class LoginMenu extends AbstractMenu{
                 urls, SpacerFactory.createVBoxSpacer(), login);
     }
 
+    @Override
     public VBox getContent() {
         return view;
     }

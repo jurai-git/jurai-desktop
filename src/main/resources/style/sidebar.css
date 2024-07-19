@@ -1,0 +1,30 @@
+.sidebar {
+    -fx-background-color: #333;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 24, 0, 0, 0);
+    -fx-padding: 12px 24px;
+    -fx-background-radius: 0 12px 0 0;
+}
+
+.separator {
+    -fx-padding: 32px 18px;
+}
+
+.separator .line {
+    -fx-border-width: 2px 0 0 0;
+    -fx-border-color: #272727;
+}
+
+.sidebar-nav {
+    -fx-background-color: #484848;
+    -fx-background-radius: 10px;
+}
+
+.sidebar-nav > * {
+    -fx-padding: 20px 0px 20px 16px;
+    -fx-spacing: 20px;
+}
+
+.sidebar-nav > * > * {
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}

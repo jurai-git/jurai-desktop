@@ -11,7 +11,7 @@ public class ApplicationState {
     private static final PropertyChangeSupport support = new PropertyChangeSupport(new ApplicationState());
 
     private static boolean loggedIn = false;
-    private static Pane activePane = Pane.HomePane;
+    private static Pane activePane = Pane.DashboardPane;
     private static Advogado currentUser = null;
     private static boolean debugging = false;
 
@@ -22,6 +22,7 @@ public class ApplicationState {
             StateLogger.log((propertyChangeEvent.getPropertyName() + " changed from " + oldValueString + " to " + newValueString));
         });
         StateLogger.log("initialized StateLogger");
+        support.firePropertyChange("activePane", activePane, activePane);
     }
 
     public static void setLoggedIn(boolean loggedIn) {

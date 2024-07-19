@@ -22,7 +22,7 @@ public class HomePane extends AbstractPane {
     @Override
     protected void initControls() {
         view = new VBox();
-        view.getStyleClass().add("main");
+        view.getStyleClass().add("content");
         view.setAlignment(Pos.CENTER);
 
         sloganLbl = new Label("A inteligência que facilita o processo");

@@ -1,8 +1,9 @@
 package io.jurai.ui.menus;
 
+import io.jurai.ui.controller.Controllable;
 import javafx.scene.Node;
 
-public abstract class AbstractMenu {
+public abstract class AbstractMenu implements Controllable {
     public AbstractMenu() {
         initControls();
         layControls();
@@ -11,5 +12,5 @@ public abstract class AbstractMenu {
     protected abstract void initControls();
     protected abstract void layControls();
 
-    protected abstract Node getContent();
+    public abstract Node getContent();
 }

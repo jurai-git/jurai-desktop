@@ -11,7 +11,8 @@ public class QuickQueryPane extends AbstractPane {
 
     @Override
     protected void initControls() {
-
+        view = new BorderPane();
+        view.getStyleClass().add("content");
     }
 
     @Override
