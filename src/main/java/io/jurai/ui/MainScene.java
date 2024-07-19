@@ -54,7 +54,7 @@ public class MainScene {
         mainPane.addConstraints(navbar.getView(), new NodeConstraints(0, 0, 1, 0.08f));
         mainPane.getChildren().add(navbar.getView());
 
-        mainPane.addConstraints(sidebar.getView(), new NodeConstraints(0, 0, 0.15f, 1));
+        mainPane.addConstraints(sidebar.getView(), new NodeConstraints(0, 0, 0.2f, 1));
         mainPane.getChildren().add(sidebar.getView());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
