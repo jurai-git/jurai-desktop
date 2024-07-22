@@ -10,17 +10,18 @@
     src:
         url("../fonts/BlenderProMedium.ttf") format("truetype");
 }
+*/
 
-/*
 @font-face {
     font-family: 'Blender Pro';
     src:
         url("../fonts/BlenderPro-Book.ttf") format("truetype");
-}*/
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+}
 @import url("popover.css");
 @import url("navbar.css");
 @import url("sidebar.css");
+@import url("controls/simple-list.css");
+@import url("util/scroll-pane.css");
 
 * {
     -fx-font-family: 'Blender Pro Medium';
@@ -35,6 +36,16 @@
 
 .content {
     -fx-background-color: transparent;
+    -fx-padding: 24px;
+}
+
+.content > .header-label {
+    -fx-padding: 16px 16px 16px 4px !important;
+}
+
+.content > .header-label .text {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.8em;
 }
 
 .svg {

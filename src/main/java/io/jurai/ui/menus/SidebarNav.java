@@ -1,7 +1,6 @@
 package io.jurai.ui.menus;
 
-import io.jurai.ui.controller.Controllable;
-import io.jurai.ui.controls.controller.SidebarNavItem;
+import io.jurai.ui.controls.SidebarNavItem;
 import io.jurai.util.FileUtils;
 import io.jurai.util.UILogger;
 import javafx.scene.Node;
@@ -26,16 +25,16 @@ public class SidebarNav extends AbstractMenu {
         content.getStyleClass().add("sidebar-nav");
 
         dashboard = new SidebarNavItem(dashboardIcon, "Dashboard");
-        dashboard.dotWidthProperty().bind(content.widthProperty().multiply(0.03));
+        dashboard.dotWidthProperty().bind(content.widthProperty().multiply(0.025));
 
         quickQuery = new SidebarNavItem(quickQueryIcon, "Consulta Rápida");
-        quickQuery.dotWidthProperty().bind(content.widthProperty().multiply(0.03));
+        quickQuery.dotWidthProperty().bind(content.widthProperty().multiply(0.025));
 
         documents = new SidebarNavItem(documentsIcon, "Documentos");
-        documents.dotWidthProperty().bind(content.widthProperty().multiply(0.03));
+        documents.dotWidthProperty().bind(content.widthProperty().multiply(0.025));
 
         account = new SidebarNavItem(accountIcon, "Sua Conta");
-        account.dotWidthProperty().bind(content.widthProperty().multiply(0.03));
+        account.dotWidthProperty().bind(content.widthProperty().multiply(0.025));
     }
 
     @Override

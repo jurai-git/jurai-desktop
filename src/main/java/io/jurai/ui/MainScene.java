@@ -22,6 +22,7 @@ public class MainScene {
     private Navbar navbar;
     private LoginMenu loginMenu;
     private Sidebar sidebar;
+    private final NodeConstraints mainContentConstraints = new NodeConstraints(0.18f, 0.08f, 0.82f, 0.92f);
 
     private AccountPane accountPane;
     private DashboardPane dashboardPane;
@@ -50,16 +51,24 @@ public class MainScene {
     }
 
     private void layControls() {
-        //activePaneChanged(ApplicationState.getActivePane());
-        mainPane.addConstraints(navbar.getView(), new NodeConstraints(0, 0, 1, 0.08f));
-        mainPane.getChildren().add(navbar.getView());
-
-        mainPane.addConstraints(sidebar.getView(), new NodeConstraints(0, 0, 0.2f, 1));
-        mainPane.getChildren().add(sidebar.getView());
+        mainPane.addConstraints(accountPane.getView(), mainContentConstraints);
+        mainPane.addConstraints(dashboardPane.getView(), mainContentConstraints);
+        mainPane.addConstraints(homePane.getView(), mainContentConstraints);
+        mainPane.addConstraints(planPane.getView(), mainContentConstraints);
+        mainPane.addConstraints(quickQueryPane.getView(), mainContentConstraints);
+        activePaneChanged(ApplicationState.getActivePane());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         scene = new Scene(mainPane, screenSize.width * 0.7, screenSize.height * 0.7, false, SceneAntialiasing.BALANCED);
+    }
+
+    private void layFixedControls() {
+        mainPane.addConstraints(navbar.getView(), new NodeConstraints(0, 0, 1, 0.08f));
+        mainPane.getChildren().add(navbar.getView());
+
+        mainPane.addConstraints(sidebar.getView(), new NodeConstraints(0, 0, 0.18f, 1));
+        mainPane.getChildren().add(sidebar.getView());
     }
 
     private void attachControllers() {
@@ -78,28 +87,27 @@ public class MainScene {
     public Scene getScene() {
         return scene;
     }
-    /*
+
     private void activePaneChanged(Pane pane) {
         switch (pane) {
             case AccountPane:
-                mainPane.setCenter(accountPane.getView());
+                mainPane.getChildren().removeAll();
+                layFixedControls();
+                mainPane.getChildren().add(accountPane.getView());
                 break;
             case DashboardPane:
-                mainPane.setCenter(dashboardPane.getView());
-                break;
-            case HomePane:
-                mainPane.setCenter(homePane.getView());
+                mainPane.getChildren().removeAll();
+                layFixedControls();
+                mainPane.getChildren().add(dashboardPane.getView());
                 break;
             case PlanPane:
-                mainPane.setCenter(planPane.getView());
                 break;
             case QuickQueryPane:
-                mainPane.setCenter(quickQueryPane.getView());
                 break;
             default:
                 UILogger.logError("Tried switching to invalid main pane");
                 return;
         }
         UILogger.log("active pane changed to " + pane.name());
-    }*/
+    }
 }

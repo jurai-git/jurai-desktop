@@ -1,8 +1,6 @@
-package io.jurai.ui.controls.controller;
+package io.jurai.ui.controls;
 
 import io.jurai.ui.animation.PropertyBindPair;
-import io.jurai.ui.animation.PropertyPair;
-import io.jurai.ui.animation.SimplePropertyAnimation;
 import io.jurai.ui.animation.SimplePropertyBindAnimation;
 import io.jurai.ui.animation.interpolator.PowerEase;
 import javafx.animation.*;
@@ -52,7 +50,7 @@ public class SidebarNavItem extends HBox {
 
         dotWarpTransition = new SimplePropertyBindAnimation(
                 new PropertyBindPair<>(dot.heightProperty(), dot.widthProperty().multiply(1.5)),
-                new PropertyBindPair<>(dot.heightProperty(), dot.widthProperty().multiply(3)),
+                new PropertyBindPair<>(dot.heightProperty(), dot.widthProperty().multiply(3.5)),
                 new PowerEase(4, true),
                 500
         );

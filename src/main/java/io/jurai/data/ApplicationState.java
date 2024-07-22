@@ -1,7 +1,9 @@
 package io.jurai.data;
 
 import io.jurai.data.model.Advogado;
+import io.jurai.data.model.Model;
 import io.jurai.data.model.Pane;
+import io.jurai.ui.controls.SimpleListItem;
 import io.jurai.util.StateLogger;
 
 import java.beans.PropertyChangeListener;
@@ -14,6 +16,7 @@ public class ApplicationState {
     private static Pane activePane = Pane.DashboardPane;
     private static Advogado currentUser = null;
     private static boolean debugging = false;
+    private static SimpleListItem<? extends Model> selectedRequerente = null;
 
     public static void initialize() {
         support.addPropertyChangeListener(propertyChangeEvent -> {
@@ -23,6 +26,7 @@ public class ApplicationState {
         });
         StateLogger.log("initialized StateLogger");
         support.firePropertyChange("activePane", activePane, activePane);
+        support.firePropertyChange("selectedRequerente", selectedRequerente, selectedRequerente);
     }
 
     public static void setLoggedIn(boolean loggedIn) {
@@ -53,6 +57,16 @@ public class ApplicationState {
         boolean old = ApplicationState.debugging;
         ApplicationState.debugging = debugging;
         support.firePropertyChange("debugging", old, debugging);
+    }
+
+    public static SimpleListItem<? extends Model> getSelectedRequerente() {
+        return selectedRequerente;
+    }
+
+    public static void setSelectedRequerente(SimpleListItem<? extends Model> selectedRequerente) {
+        SimpleListItem<? extends Model> oldValue = ApplicationState.selectedRequerente;
+        ApplicationState.selectedRequerente = selectedRequerente;
+        support.firePropertyChange("selectedRequerente", oldValue, ApplicationState.selectedRequerente);
     }
 
     public static boolean isLoggedIn() {

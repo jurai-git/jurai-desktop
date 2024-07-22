@@ -1,0 +1,65 @@
+.simple-list {
+    -fx-background-radius: 12px;
+    -fx-background-color: #333;
+    -fx-padding: 0 !important;
+}
+
+
+.simple-list .search-icon-container {
+    -fx-background-color: transparent;
+    -fx-padding: 8px;
+    -fx-cursor: hand;
+}
+
+.simple-list .search-icon-container * {
+    -fx-background-color: transparent;
+}
+
+.simple-list .search-tf {
+    -fx-background-color: transparent;
+    -fx-padding: 0 .2em 4px .8em;
+}
+
+.simple-list .search-tf {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #AAA;
+}
+
+.simple-list .header-label {
+    -fx-background-color: #444;
+    -fx-text-fill: white;
+    -fx-background-radius: 12px 0 12px 0;
+    -fx-border-width: 3px 0 0 3px;
+    -fx-border-radius: 12px 0 12px 0;
+    -fx-border-color: #333;
+    -fx-padding: 4px 16px;
+    -fx-alignment: center;
+}
+
+.simple-list .header-label .text {
+    -fx-font-size: 1.2em;
+}
+
+.simple-list .search-area {
+    -fx-background-color: #444;
+    -fx-background-radius: 0 12px 0 12px;
+    -fx-border-width: 3px 3px 0 0;
+    -fx-border-radius: 0 12px 0 12px;
+    -fx-border-color: #333;
+}
+
+.simple-list .scroll-pane {
+    -fx-padding: 8px 16px;
+}
+
+.simple-list .scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #666;
+}
+
+.simple-list .list-items {
+    -fx-background-color: transparent;
+}
+
+.simple-list .list-items {
+    -fx-padding: 16px;
+}

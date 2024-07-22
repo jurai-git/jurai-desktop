@@ -1,18 +1,21 @@
 package io.jurai.data.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Map;
 import java.util.Optional;
 
-public class Requerente {
+public class Requerente implements Model {
     private final PropertyChangeSupport support;
 
     //dados pessoais
     private TipoPessoa tipoPessoa;
     private String nullableCpfCnpj;
     private String nome;
-    private String nullableNomeSocial;
+    private StringProperty nullableNomeSocial;
     private Genero genero;
     private boolean idoso;
     private String nullableRG;
@@ -26,7 +29,8 @@ public class Requerente {
 
     private Requerente() {
         nullableEmail = "";
-        nullableNomeSocial = "";
+        nullableNomeSocial = new SimpleStringProperty();
+        nullableNomeSocial.set("");
         nullableCpfCnpj = "";
         nullableRG = "";
         support = new PropertyChangeSupport(new Requerente());
@@ -48,8 +52,13 @@ public class Requerente {
 
         Optional.ofNullable(optionals.get("cpfCnpj")).ifPresent(object -> nullableCpfCnpj = (String) object);
         Optional.ofNullable(optionals.get("rg")).ifPresent(object -> nullableRG = (String) object);
-        Optional.ofNullable(optionals.get("nomeSocial")).ifPresent(object -> nullableNomeSocial = (String) object);
+        Optional.ofNullable(optionals.get("nomeSocial")).ifPresent(object -> nullableNomeSocial.set((String) object));
         Optional.ofNullable(optionals.get("email")).ifPresent(object -> nullableEmail = (String) object);
+
+        if(nullableNomeSocial.get().isEmpty()) {
+            nullableNomeSocial.set(nome);
+        }
+
     }
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
@@ -69,7 +78,7 @@ public class Requerente {
     }
 
     public String getNomeSocial() {
-        return nullableNomeSocial;
+        return nullableNomeSocial.get();
     }
 
     public Genero getGenero() {
@@ -123,9 +132,9 @@ public class Requerente {
     }
 
     public void setNomeSocial(String nullableNomeSocial) {
-        String oldValue = this.nullableNomeSocial;
-        this.nullableNomeSocial = nullableNomeSocial;
-        support.firePropertyChange("nullableNomeSocial", oldValue, this.nullableNomeSocial);
+        String oldValue = this.nullableNomeSocial.get();
+        this.nullableNomeSocial.set(nullableNomeSocial);
+        support.firePropertyChange("nullableNomeSocial", oldValue, this.nullableNomeSocial.get());
     }
 
     public void setGenero(Genero genero) {
@@ -174,5 +183,10 @@ public class Requerente {
         String oldValue = this.nullableEmail;
         this.nullableEmail = nullableEmail;
         support.firePropertyChange("nullableEmail", oldValue, this.nullableEmail);
+    }
+
+    @Override
+    public StringProperty nomeProperty() {
+        return nullableNomeSocial;
     }
 }

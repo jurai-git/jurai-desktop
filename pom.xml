@@ -67,22 +67,22 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin to create modularized image -->
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
-                <configuration>
-                    <compress>2</compress>
-                    <noHeaderFiles>true</noHeaderFiles>
-                    <stripDebug>true</stripDebug>
-                    <noManPages>true</noManPages>
-                    <mainClass>io.jurai.Launcher</mainClass>
-                    <launcher>JurAI</launcher>
-                    <jlinkImageName>JurAI</jlinkImageName>
-                    <jlinkZipName>JurAI</jlinkZipName>
-                </configuration>
-                </plugin>
+    <!-- Plugin to create modularized image -->
+    <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+            <compress>2</compress>
+            <noHeaderFiles>false</noHeaderFiles>
+            <stripDebug>false</stripDebug>
+            <noManPages>true</noManPages>
+            <mainClass>io.jurai.Launcher</mainClass>
+            <launcher>JurAI</launcher>
+            <jlinkImageName>JurAI</jlinkImageName>
+            <jlinkZipName>JurAI</jlinkZipName>
+        </configuration>
+    </plugin>
 
             <!-- Plugins to compile project -->
             <plugin>

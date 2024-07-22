@@ -4,7 +4,6 @@ import io.jurai.ui.menus.SidebarNav;
 import io.jurai.ui.menus.controller.SidebarNavController;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
