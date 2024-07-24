@@ -1,140 +1,73 @@
 package io.jurai.data.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.*;
 
-public class Advogado {
+public class Advogado implements Model {
 
     // informacoes pessoais
-    private String nullableNome;
-    private String nomeUsuario;
-    private String nullableNomeSocial;
-    private Genero genero;
-    private Date dataNascimento;
-    private Nacionalidade nacionalidade;
+    private double id;
+    private StringProperty nome = new SimpleStringProperty();
+    private StringProperty email = new SimpleStringProperty();
+    private StringProperty senha = new SimpleStringProperty();
 
-    // informacoes tecnicas
-    private TipoPessoa tipoPessoa;
-    private String cpfCnpj;
-    private String oab;
-
-    // informacoes de contato
-    private String email;
-    private Endereco endereco;
-
-    // informacoes do jurai
-
-    public Advogado() {
-
+    public Advogado(String nome, String email, String senha) {
+        this.nome.set(nome);
+        this.email.set(email);
+        this.senha.set(senha);
+        id = new Random().nextDouble();
     }
 
-    public Advogado(String cpfCnpj, TipoPessoa tipoPessoa, String nomeUsuario, Genero genero, Date dataNascimento, Nacionalidade nacionalidade, String oab, String email, Endereco endereco, Map<String, Object> outros) {
-        this();
-        this.cpfCnpj = cpfCnpj;
-        this.tipoPessoa = tipoPessoa;
-        this.nomeUsuario = nomeUsuario;
-        this.genero = genero;
-        this.dataNascimento = dataNascimento;
-        this.nacionalidade = nacionalidade;
-        this.oab = oab;
-        this.email = email;
-        this.endereco = endereco;
+    // getters and setters
 
-        if (outros == null) return;
-
-        Optional.ofNullable(outros.get("nome")).ifPresent(value -> this.nullableNome = (String) value);
-        Optional.ofNullable(outros.get("nomeSocial")).ifPresent(value -> this.nullableNomeSocial = (String) value);
+    public double getId() {
+        return id;
     }
 
     public String getNome() {
-        return nullableNome;
-    }
-
-    public void setNome(String nullableNome) {
-        this.nullableNome = nullableNome;
-    }
-
-    public String getNomeUsuario() {
-        return nomeUsuario;
-    }
-
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
-    }
-
-    public String getNomeSocial() {
-        return nullableNomeSocial;
-    }
-
-    public void setNomeSocial(String nullableNomeSocial) {
-        this.nullableNomeSocial = nullableNomeSocial;
-    }
-
-    public Genero getGenero() {
-        return genero;
-    }
-
-    public void setGenero(Genero genero) {
-        this.genero = genero;
-    }
-
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public TipoPessoa getTipoPessoa() {
-        return tipoPessoa;
-    }
-
-    public void setTipoPessoa(TipoPessoa tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
-    }
-
-    public String getCpfCnpj() {
-        return cpfCnpj;
-    }
-
-    public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
-    }
-
-    public String getOab() {
-        return oab;
-    }
-
-    public void setOab(String oab) {
-        this.oab = oab;
+        return nome.get();
     }
 
     public String getEmail() {
-        return email;
+        return email.get();
+    }
+
+    public String getSenha() {
+        return senha.get();
+    }
+
+    public void setNome(String nome) {
+        this.nome.set(nome);
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email.set(email);
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public void setSenha(String senha) {
+        this.senha.set(senha);
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+
+    //property access
+
+    public StringProperty senhaProperty() {
+        return senha;
     }
 
-    public Nacionalidade getNacionalidade() {
-        return nacionalidade;
+    public StringProperty emailProperty() {
+        return email;
     }
 
-    public void setNacionalidade(Nacionalidade nacionalidade) {
-        this.nacionalidade = nacionalidade;
+    @Override
+    public StringProperty nomeProperty() {
+        return nome;
     }
 
     @Override
     public String toString() {
-        return "{io.jurai.data.model.Advogado: " + getNomeUsuario() + "}";
+        return "{io.jurai.data.model.Advogado: " + getNome() + "}";
     }
 }

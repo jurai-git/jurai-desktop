@@ -3,8 +3,6 @@ package io.jurai;
 import io.jurai.data.ApplicationState;
 
 public class Launcher {
-    private static boolean debugging = false;
-
     public static void main(String[] args) {
         CommandListener commandListener = new CommandListener();
         Thread commandThread = new Thread(commandListener);
