@@ -2,7 +2,8 @@ package io.jurai.data;
 
 import io.jurai.data.model.Advogado;
 import io.jurai.data.model.Model;
-import io.jurai.data.model.Pane;
+import io.jurai.ui.util.AccountMode;
+import io.jurai.ui.util.Pane;
 import io.jurai.ui.controls.SimpleListItem;
 import io.jurai.util.StateLogger;
 
@@ -12,11 +13,11 @@ import java.beans.PropertyChangeSupport;
 public class ApplicationState {
     private static final PropertyChangeSupport support = new PropertyChangeSupport(new ApplicationState());
 
-    private static boolean loggedIn = false;
     private static Pane activePane = Pane.DashboardPane;
     private static Advogado currentUser = null;
     private static boolean debugging = false;
     private static SimpleListItem<? extends Model> selectedRequerente = null;
+    private static AccountMode accountMode = AccountMode.LOGGING_IN;
 
     public static void initialize() {
         support.addPropertyChangeListener(propertyChangeEvent -> {
@@ -29,17 +30,6 @@ public class ApplicationState {
         support.firePropertyChange("selectedRequerente", selectedRequerente, selectedRequerente);
     }
 
-    public static void setLoggedIn(boolean loggedIn) {
-        if (loggedIn == ApplicationState.loggedIn)
-            return; // do nothing if the state is the same
-        boolean old = ApplicationState.loggedIn;
-        ApplicationState.loggedIn = loggedIn;
-        support.firePropertyChange("loggedIn", old, loggedIn);
-        if (!loggedIn) {
-            setCurrentUser(null);
-        }
-    }
-
     public static void setActivePane(Pane pane) {
         Pane old = ApplicationState.activePane;
         ApplicationState.activePane = pane;
@@ -49,8 +39,11 @@ public class ApplicationState {
     public static void setCurrentUser(Advogado newUser) {
         Advogado old = ApplicationState.currentUser;
         ApplicationState.currentUser = newUser;
-        setLoggedIn(newUser != null);
         support.firePropertyChange("currentUser", old, newUser);
+
+        if(newUser != null) {
+            setAccountMode(AccountMode.LOGGED_IN);
+        }
     }
 
     public static void setDebugging(boolean debugging) {
@@ -69,9 +62,12 @@ public class ApplicationState {
         support.firePropertyChange("selectedRequerente", oldValue, ApplicationState.selectedRequerente);
     }
 
-    public static boolean isLoggedIn() {
-        return loggedIn;
+    public static void setAccountMode(AccountMode accountMode) {
+        AccountMode oldValue = ApplicationState.accountMode;
+        ApplicationState.accountMode = accountMode;
+        support.firePropertyChange("accountMode", oldValue, ApplicationState.accountMode);
     }
+
 
     public static Pane getActivePane() {
         return activePane;
@@ -83,6 +79,10 @@ public class ApplicationState {
 
     public static boolean isDebugging() {
         return debugging;
+    }
+
+    public static AccountMode getAccountMode() {
+        return accountMode;
     }
 
     public static void addPropertyChangeListener(PropertyChangeListener listener) {

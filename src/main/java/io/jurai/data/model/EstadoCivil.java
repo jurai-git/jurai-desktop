@@ -1,6 +1,8 @@
 package io.jurai.data.model;
 
-public enum EstadoCivil {
+import java.util.List;
+
+public enum EstadoCivil implements LabeledEnum{
 
     SOLTEIRO("Solteiro(a)"),
     CASADO("Casado(a)"),
@@ -15,5 +17,9 @@ public enum EstadoCivil {
 
     public String getLabel() {
         return label;
+    }
+
+    public static List<String> asList() {
+        return AbstractLabeledEnum.asList(EstadoCivil.class);
     }
 }

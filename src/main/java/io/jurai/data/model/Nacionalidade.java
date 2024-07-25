@@ -1,6 +1,8 @@
 package io.jurai.data.model;
 
-public enum Nacionalidade {
+import java.util.List;
+
+public enum Nacionalidade implements LabeledEnum {
     AFEGAO("afegão"),
     SUL_AFRICANO("sul-africano"),
     ALBANES("albanês"),
@@ -230,5 +232,9 @@ public enum Nacionalidade {
 
     public String getLabel() {
         return label;
+    }
+
+    public static List<String> asList() {
+        return AbstractLabeledEnum.asList(Nacionalidade.class);
     }
 }
