@@ -1,7 +1,7 @@
 package io.jurai.ui.menus.controller;
 
 import io.jurai.data.ApplicationState;
-import io.jurai.data.model.Pane;
+import io.jurai.ui.util.Pane;
 import io.jurai.ui.controller.AbstractController;
 import io.jurai.ui.controls.SidebarNavItem;
 import io.jurai.ui.menus.SidebarNav;

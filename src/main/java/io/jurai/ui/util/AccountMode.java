@@ -1,4 +1,8 @@
 package io.jurai.ui.util;
 
-public class AccountMode {
+public enum AccountMode {
+    LOGGING_IN,
+    REGISTERING,
+    FORGOT_PASSWORD,
+    LOGGED_IN
 }

@@ -76,7 +76,7 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
         headerLabel = new Label(headerText);
         headerLabel.getStyleClass().add("header-label");
         headerLabel.prefHeightProperty().bind(searchArea.heightProperty());
-        headerLabel.prefWidthProperty().bind(header.widthProperty().multiply(0.15));
+        headerLabel.minWidthProperty().bind(header.widthProperty().multiply(0.15));
 
         listItemsContainer = new VBox();
         listItemsContainer.getStyleClass().add("list-items");

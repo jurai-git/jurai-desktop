@@ -1,7 +1,5 @@
 package io.jurai.ui.controller;
 
-import io.jurai.data.ApplicationState;
-import io.jurai.data.model.Pane;
 import io.jurai.ui.panes.Navbar;
 
 

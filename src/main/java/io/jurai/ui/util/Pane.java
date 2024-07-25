@@ -1,4 +1,4 @@
-package io.jurai.data.model;
+package io.jurai.ui.util;
 
 public enum Pane {
     DashboardPane,

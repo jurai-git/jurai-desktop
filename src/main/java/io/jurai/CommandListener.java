@@ -49,10 +49,6 @@ public class CommandListener implements Runnable {
                 String newValue = args[2];
                 try {
                     switch (key) {
-                        case "loggedin":
-                            Platform.runLater(() -> ApplicationState.setLoggedIn(Boolean.parseBoolean(newValue)));
-                            System.out.println(key + " property changed");
-                            break;
                         case "currentuser":
                             if(newValue.equals("default")) {
                                 Platform.runLater(() -> ApplicationState.setCurrentUser(dummyUser));

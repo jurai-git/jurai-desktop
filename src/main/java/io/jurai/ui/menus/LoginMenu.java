@@ -1,5 +1,6 @@
 package io.jurai.ui.menus;
 
+import io.jurai.ui.controller.Controllable;
 import io.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -7,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class LoginMenu extends AbstractMenu{
+public class LoginMenu extends AbstractMenu implements Controllable {
     private VBox view;
     private HBox urls;
 
@@ -65,5 +66,29 @@ public class LoginMenu extends AbstractMenu{
     @Override
     public VBox getContent() {
         return view;
+    }
+
+    public TextField getEmail() {
+        return email;
+    }
+
+    public TextField getPassword() {
+        return password;
+    }
+
+    public CheckBox getKeepConnected() {
+        return keepConnected;
+    }
+
+    public Button getLogin() {
+        return login;
+    }
+
+    public Hyperlink getForgotPwd() {
+        return forgotPwd;
+    }
+
+    public Hyperlink getCreateAccount() {
+        return createAccount;
     }
 }

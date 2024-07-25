@@ -1,18 +1,17 @@
 package io.jurai.ui;
 
 import io.jurai.data.ApplicationState;
+import io.jurai.ui.controller.AccountPaneController;
 import io.jurai.ui.controller.NavbarController;
-import io.jurai.data.model.Pane;
+import io.jurai.ui.util.Pane;
 import io.jurai.ui.menus.LoginMenu;
 import io.jurai.ui.panes.Navbar;
 import io.jurai.ui.panes.*;
 import io.jurai.ui.panes.layout.NodeConstraints;
 import io.jurai.ui.panes.layout.ProportionPane;
-import io.jurai.util.EventLogger;
 import io.jurai.util.UILogger;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
-import javafx.scene.layout.BorderPane;
 
 import java.awt.*;
 
@@ -72,14 +71,20 @@ public class MainScene {
     }
 
     private void attachControllers() {
+        // navbar
         NavbarController navbarController = new NavbarController();
         navbarController.initialize(navbar);
+
+        // account pane
+        AccountPaneController accountPaneController = new AccountPaneController();
+        accountPaneController.initialize(accountPane);
+
     }
 
     private void attachNotifiers() {
         ApplicationState.addPropertyChangeListener(e -> {
             if("activePane".equals(e.getPropertyName())) {
-                //activePaneChanged((Pane) e.getNewValue());
+                activePaneChanged((Pane) e.getNewValue());
             }
         });
     }
@@ -91,12 +96,12 @@ public class MainScene {
     private void activePaneChanged(Pane pane) {
         switch (pane) {
             case AccountPane:
-                mainPane.getChildren().removeAll();
+                mainPane.getChildren().removeAll(mainPane.getChildren());
                 layFixedControls();
                 mainPane.getChildren().add(accountPane.getView());
                 break;
             case DashboardPane:
-                mainPane.getChildren().removeAll();
+                mainPane.getChildren().removeAll(mainPane.getChildren());
                 layFixedControls();
                 mainPane.getChildren().add(dashboardPane.getView());
                 break;

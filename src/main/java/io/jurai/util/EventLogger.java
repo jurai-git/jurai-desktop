@@ -7,4 +7,7 @@ public class EventLogger {
     public static void logError(String msg) {
         System.out.println("\u001B[34m[EVENT LOGGER] \u001B[31mERROR: \u001B[37m " + msg);
     }
+    public static void logWarning(String msg) {
+        System.out.println("\u001B[34m[EVENT LOGGER] \u001B[33mWARNING: \u001B[37m " + msg);
+    }
 }
