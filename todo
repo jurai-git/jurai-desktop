@@ -1,8 +1,10 @@
-- Add EventLogger to logging system
-- Implement DasboardPane
-- Implement PlanPane
-- Implement QuickSearchPane
-- Redo HomePane
-- Add Models and Services
-- Style with CSS
-- Optional: refactor code with FXML
+
+account-related {
+    - fix forms css and animations
+    - add functionality to login and account creation forms
+    - create basic controller fuctionality
+}
+
+visual-candy-related {
+    - add animator classes for more organized code
+}
