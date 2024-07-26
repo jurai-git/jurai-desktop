@@ -1,3 +1,11 @@
+@import url("navbar.css");
+@import url("popover.css");
+@import url("sidebar.css");
+@import url("controls/simple-list.css");
+@import url("util/scroll-pane.css");
+@import url("menus/advogado-register.css");
+@import url("util/forms.css");
+
 /*
 @font-face {
     font-family: "Roboto Slab";
@@ -17,16 +25,10 @@
     src:
         url("../fonts/BlenderPro-Book.ttf") format("truetype");
 }
-@import url("popover.css");
-@import url("navbar.css");
-@import url("sidebar.css");
-@import url("controls/simple-list.css");
-@import url("util/scroll-pane.css");
-
 * {
     -fx-font-family: 'Blender Pro Medium';
     -fx-font-size: 15pt;
-    -fx-base: #1a2c5d;
+    -fx-base: #333;
     -fx-text-fill: white;
 }
 

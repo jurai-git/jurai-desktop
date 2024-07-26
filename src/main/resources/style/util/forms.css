@@ -1,0 +1,12 @@
+
+.form .text-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: #888;
+    -fx-padding: 4px;
+}
+
+.form .text-field:hover,
+.form .text-field:focused {
+    -fx-border-color: #539CD4;
+}

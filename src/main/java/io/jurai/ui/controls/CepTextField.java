@@ -42,6 +42,7 @@ public class CepTextField extends TextField {
                 filtered.append(c);
             }
         }
+        return filtered;
     }
 
     private boolean conforms(Character c) {

@@ -3,7 +3,7 @@ package io.jurai.ui.menus;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
-public class AccountDashboardMenu extends AbstractMenu {
+public class AccountDashboardMenu extends AbstractMenu<BorderPane> {
     private BorderPane content;
 
     @Override
@@ -21,7 +21,7 @@ public class AccountDashboardMenu extends AbstractMenu {
     }
 
     @Override
-    public Node getContent() {
+    public BorderPane getContent() {
         return content;
     }
 }

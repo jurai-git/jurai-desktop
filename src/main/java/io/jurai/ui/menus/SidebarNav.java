@@ -9,7 +9,7 @@ import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
 
-public class SidebarNav extends AbstractMenu {
+public class SidebarNav extends AbstractMenu<VBox> {
     private VBox content;
     private SidebarNavItem dashboard, quickQuery, documents, account;
     private SVGPath dashboardIcon, quickQueryIcon, documentsIcon, accountIcon;
@@ -80,7 +80,7 @@ public class SidebarNav extends AbstractMenu {
     }
 
     @Override
-    public Node getContent() {
+    public VBox getContent() {
         return content;
     }
 }

@@ -28,19 +28,28 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             }
         });
 
+
+        // mode switching handling
+        pane.getLoginMenu().getCreateAccount().setOnAction(_ -> ApplicationState.setAccountMode(AccountMode.REGISTERING));
+        pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(_ -> ApplicationState.setAccountMode(AccountMode.LOGGING_IN));
+
     }
 
     @Override
     protected void attachNotifiers(AccountPane pane) {
         ApplicationState.addPropertyChangeListener(e -> {
             if("accountMode".equals(e.getPropertyName())) {
-
+                modeChanged((AccountMode) e.getNewValue(), pane);
             }
         });
     }
 
-    private void modeChanged(AccountMode newMode) {
-        switch(newMode) {
-        }
+    private void modeChanged(AccountMode newMode, AccountPane pane) {
+        pane.setPane(switch(newMode) {
+            case AccountMode.LOGGING_IN -> pane.getLoginMenu();
+            case AccountMode.REGISTERING -> pane.getAdvogadoRegisterMenu();
+            case FORGOT_PASSWORD -> null;
+            case AccountMode.LOGGED_IN -> pane.getAccountDashboardMenu();
+        });
     }
 }

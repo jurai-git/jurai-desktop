@@ -7,9 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
-public class RegisterMenu extends AbstractMenu {
+public class RequerenteRegisterMenu extends AbstractMenu<BorderPane> {
     private BorderPane currentStage;
 
     private BorderPane stage1, stage2, stage3;
@@ -122,11 +121,13 @@ public class RegisterMenu extends AbstractMenu {
 
         header.getChildren().addAll(stageLabel, cadastroHeader);
 
+        stage1.getChildren().addAll();
+
 
     }
 
     @Override
-    public Node getContent() {
+    public BorderPane getContent() {
         return null;
     }
 }

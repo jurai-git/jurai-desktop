@@ -56,7 +56,7 @@ public class LoginMenu extends AbstractMenu implements Controllable {
 
     @Override
     protected void layControls() {
-        view.getStyleClass().add("floating-container");
+        view.getStyleClass().addAll("floating-container", "form");
         view.setAlignment(Pos.CENTER);
         view.getChildren().addAll(title, SpacerFactory.createVBoxSpacer(), email, SpacerFactory.createVBoxSpacer(),
                 password, SpacerFactory.createVBoxSpacer(), keepConnected, SpacerFactory.createVBoxSpacer(),
