@@ -25,7 +25,6 @@ public class AdvogadoService implements Service<Advogado> {
     @Override
     public void remove(Advogado adv) {
         existingAdvogados.remove(adv);
-
     }
 
     public void setCurrent(Advogado advogado) {
@@ -35,11 +34,14 @@ public class AdvogadoService implements Service<Advogado> {
         }
 
         Optional<Advogado> found = existingAdvogados.stream().filter(a -> a.equals(advogado)).findFirst();
-
         found.ifPresentOrElse(ApplicationState::setCurrentUser, () -> {
             EventLogger.logWarning("tried to log-in with non-existing user");
             throw new IllegalArgumentException("Este advogado não existe!");
         });
+    }
+
+    public void deauthenticate() {
+        ApplicationState.setCurrentUser(null);
     }
 
     public void authenticate(String email, String password) {

@@ -2,6 +2,7 @@ package io.jurai.ui;
 
 import io.jurai.data.ApplicationState;
 import io.jurai.ui.controller.AccountPaneController;
+import io.jurai.ui.controller.DashboardPaneController;
 import io.jurai.ui.controller.NavbarController;
 import io.jurai.ui.util.Pane;
 import io.jurai.ui.menus.LoginMenu;
@@ -79,6 +80,9 @@ public class MainScene {
         AccountPaneController accountPaneController = new AccountPaneController();
         accountPaneController.initialize(accountPane);
 
+        // dashboard pane
+        DashboardPaneController dashboardPaneController = new DashboardPaneController();
+        dashboardPaneController.initialize(dashboardPane);
     }
 
     private void attachNotifiers() {

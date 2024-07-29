@@ -4,19 +4,20 @@ import io.jurai.ui.controller.Controllable;
 import io.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
-public class LoginMenu extends AbstractMenu implements Controllable {
-    private VBox view;
-    private HBox urls;
+public class LoginMenu extends AbstractMenu<BorderPane> implements Controllable {
 
-    Label title;
-    TextField email, password;
-    CheckBox keepConnected;
-    Button login;
-    Hyperlink forgotPwd, createAccount;
+    private BorderPane content;
+    private VBox fields;
+    private VBox urls;
+
+    private Label title;
+    private TextField email, password;
+    private CheckBox keepConnected;
+    private Button login;
+    private Hyperlink forgotPwd, createAccount;
+
 
     public LoginMenu() {
         super();
@@ -24,22 +25,24 @@ public class LoginMenu extends AbstractMenu implements Controllable {
 
     @Override
     protected void initControls() {
-        view = new VBox();
-        urls = new HBox();
+        content = new BorderPane();
+        fields = new VBox();
+        urls = new VBox();
+        fields.getStyleClass().add("vbox");
 
         title = new Label("Bem-vindo de volta!");
-        title.getStyleClass().add("title");
+        title.getStyleClass().add("header");
         HBox.setHgrow(title, Priority.ALWAYS);
 
         email = new TextField();
         email.setPromptText("E-mail");
         HBox.setHgrow(email, Priority.ALWAYS);
-        email.maxWidthProperty().bind(view.widthProperty().divide(2));
+        email.maxWidthProperty().bind(content.widthProperty().divide(2));
 
         password = new TextField();
         password.setPromptText("Senha");
         HBox.setHgrow(password, Priority.ALWAYS);
-        password.maxWidthProperty().bind(view.widthProperty().divide(2));
+        password.maxWidthProperty().bind(content.widthProperty().divide(2));
 
         keepConnected = new CheckBox("Mantenha-me conectado(a)");
         HBox.setHgrow(keepConnected, Priority.ALWAYS);
@@ -49,23 +52,34 @@ public class LoginMenu extends AbstractMenu implements Controllable {
 
         forgotPwd = new Hyperlink("Esqueci minha senha");
         createAccount = new Hyperlink("Não possuo conta");
-        urls.setAlignment(Pos.CENTER);
-        urls.getChildren().addAll(SpacerFactory.createHBoxSpacer(), createAccount, SpacerFactory.createHBoxSpacer(), forgotPwd, SpacerFactory.createHBoxSpacer());
-        HBox.setHgrow(urls, Priority.ALWAYS);
     }
 
     @Override
     protected void layControls() {
-        view.getStyleClass().addAll("floating-container", "form");
-        view.setAlignment(Pos.CENTER);
-        view.getChildren().addAll(title, SpacerFactory.createVBoxSpacer(), email, SpacerFactory.createVBoxSpacer(),
-                password, SpacerFactory.createVBoxSpacer(), keepConnected, SpacerFactory.createVBoxSpacer(),
-                urls, SpacerFactory.createVBoxSpacer(), login);
+        urls.getChildren().addAll(forgotPwd, createAccount);
+        urls.setAlignment(Pos.CENTER);
+
+        content.getStyleClass().addAll("form");
+        fields.setAlignment(Pos.CENTER);
+        fields.getChildren().addAll(
+                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                email, SpacerFactory.createVBoxSpacer(null),
+                password, SpacerFactory.createVBoxSpacer(null),
+                keepConnected,
+                urls, SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                login
+        );
+
+        BorderPane.setAlignment(title, Pos.CENTER);
+        title.getStyleClass().add("border-pane-region");
+        content.setTop(title);
+        content.getStyleClass().add("border-pane-region");
+        content.setCenter(fields);
     }
 
     @Override
-    public VBox getContent() {
-        return view;
+    public BorderPane getContent() {
+        return content;
     }
 
     public TextField getEmail() {

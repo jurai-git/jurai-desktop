@@ -122,8 +122,6 @@ public class RequerenteRegisterMenu extends AbstractMenu<BorderPane> {
         header.getChildren().addAll(stageLabel, cadastroHeader);
 
         stage1.getChildren().addAll();
-
-
     }
 
     @Override

@@ -1,8 +1,8 @@
-
 account-related {
-    - fix forms css and animations
-    - add functionality to login and account creation forms
-    - create basic controller fuctionality
+    - fix forms animations
+    - create logout
+    - create password recuperation
+    - add account info to accountPane
 }
 
 visual-candy-related {

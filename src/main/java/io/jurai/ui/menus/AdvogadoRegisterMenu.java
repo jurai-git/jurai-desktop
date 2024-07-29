@@ -2,7 +2,7 @@ package io.jurai.ui.menus;
 
 import io.jurai.ui.controller.Controllable;
 import io.jurai.ui.util.SpacerFactory;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
@@ -11,7 +11,8 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
 
     private BorderPane content;
 
-    private TextField email, password, confirmPassword;
+    private TextField email, username;
+    PasswordField password, confirmPassword;
     private CheckBox keepConnected;
     private Button create;
     private Label alreadyHasAccountLabel, headerLabel;
@@ -24,27 +25,36 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
         content = new BorderPane();
         content.getStyleClass().addAll("advogado-register", "form");
 
-        headerLabel = new Label("Criar conta");
+        headerLabel = new Label("Crie sua conta");
         headerLabel.getStyleClass().add("header");
 
+
         email = new TextField();
+        email.maxWidthProperty().bind(content.widthProperty().multiply(0.6));
         email.setPromptText("E-mail");
-        VBox.setVgrow(email, Priority.SOMETIMES);
+        VBox.setVgrow(email, Priority.ALWAYS);
 
-        password = new TextField();
+        username = new TextField();
+        username.maxWidthProperty().bind(content.widthProperty().multiply(0.6));
+        username.setPromptText("Nome de usuário");
+        VBox.setVgrow(username, Priority.ALWAYS);
+
+        password = new PasswordField();
+        password.maxWidthProperty().bind(content.widthProperty().multiply(0.45));
         password.setPromptText("Senha");
-        VBox.setVgrow(password, Priority.SOMETIMES);
+        VBox.setVgrow(password, Priority.ALWAYS);
 
-        confirmPassword = new TextField();
+        confirmPassword = new PasswordField();
+        confirmPassword.maxWidthProperty().bind(content.widthProperty().multiply(0.45));
         confirmPassword.setPromptText("Confirmar senha");
-        VBox.setVgrow(confirmPassword, Priority.SOMETIMES);
+        VBox.setVgrow(confirmPassword, Priority.ALWAYS);
 
         keepConnected = new CheckBox();
         keepConnected.setText("Mantenha-me conectado");
-        VBox.setVgrow(keepConnected, Priority.SOMETIMES);
+        VBox.setVgrow(keepConnected, Priority.ALWAYS);
 
         create = new Button("Criar conta");
-        VBox.setVgrow(create, Priority.SOMETIMES);
+        VBox.setVgrow(create, Priority.ALWAYS);
 
         alreadyHasAccountLabel = new Label("Já tem uma conta? ");
         loginHyperlink = new Hyperlink("Entre aqui!");
@@ -56,23 +66,29 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
     @Override
     protected void layControls() {
         alreadyHasAccountHBox = new HBox(alreadyHasAccountLabel, loginHyperlink);
+        alreadyHasAccountHBox.setAlignment(Pos.CENTER);
         VBox.setVgrow(alreadyHasAccountHBox, Priority.SOMETIMES);
 
         fields.getChildren().addAll(
                 email,
-                SpacerFactory.createVBoxSpacer(),
+                SpacerFactory.createVBoxSpacer(null),
+                username,
+                SpacerFactory.createVBoxSpacer(null),
                 password,
-                SpacerFactory.createVBoxSpacer(),
+                SpacerFactory.createVBoxSpacer(null),
                 confirmPassword,
-                SpacerFactory.createVBoxSpacer(),
+                SpacerFactory.createVBoxSpacer(null),
                 keepConnected,
-                SpacerFactory.createVBoxSpacer(),
+                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 create,
-                SpacerFactory.createVBoxSpacer(),
+                SpacerFactory.createVBoxSpacer(null),
                 alreadyHasAccountHBox
         );
 
         content.setTop(headerLabel);
+        headerLabel.getStyleClass().add("border-pane-region");
+        BorderPane.setAlignment(headerLabel, Pos.CENTER);
+        headerLabel.getStyleClass().add("border-pane-region");
         content.setCenter(fields);
     }
 
@@ -99,6 +115,10 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
 
     public TextField getEmail() {
         return email;
+    }
+
+    public TextField getUsername() {
+        return username;
     }
 
     public HBox getAlreadyHasAccountHBox() {

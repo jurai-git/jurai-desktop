@@ -43,6 +43,8 @@ public class ApplicationState {
 
         if(newUser != null) {
             setAccountMode(AccountMode.LOGGED_IN);
+        } else {
+            setAccountMode(AccountMode.LOGGING_IN);
         }
     }
 

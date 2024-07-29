@@ -41,15 +41,19 @@
     -fx-padding: 24px;
 }
 
-.content > .header-label {
+.content > .header {
     -fx-padding: 16px 16px 16px 4px !important;
 }
 
-.content > .header-label .text {
+.content > .header .text {
     -fx-font-weight: bold;
     -fx-font-size: 1.8em;
 }
 
 .svg {
     -fx-background-color: transparent;
+}
+
+.hyperlink:focused {
+    -fx-border-width: 0;
 }

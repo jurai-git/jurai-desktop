@@ -2,6 +2,7 @@ package io.jurai;
 
 import io.jurai.data.ApplicationState;
 import io.jurai.ui.MainScene;
+import io.jurai.ui.util.SpacerFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -14,6 +15,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        initialize();
+
         stage.setHeight(800);
         stage.setWidth(1200);
         MainScene scene = new MainScene();
@@ -37,5 +40,9 @@ public class App extends Application {
 
     public static void setCtlThread(Thread t) {
         ctlThread = t;
+    }
+
+    private void initialize() {
+        SpacerFactory.initialize();
     }
 }

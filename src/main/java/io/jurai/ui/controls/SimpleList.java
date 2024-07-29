@@ -90,7 +90,7 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
 
         HBox.setHgrow(headerLabel, Priority.NEVER);
         HBox.setHgrow(searchArea,Priority.ALWAYS);
-        header.getChildren().addAll(headerLabel, SpacerFactory.createHBoxSpacer(), searchArea);
+        header.getChildren().addAll(headerLabel, SpacerFactory.createHBoxSpacer(Priority.ALWAYS), searchArea);
 
         setTop(header);
 
