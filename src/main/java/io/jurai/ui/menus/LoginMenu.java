@@ -7,13 +7,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class LoginMenu extends AbstractMenu<BorderPane> implements Controllable {
-
     private BorderPane content;
     private VBox fields;
     private VBox urls;
 
     private Label title;
-    private TextField email, password;
+    private TextField email;
+    private PasswordField password;
     private CheckBox keepConnected;
     private Button login;
     private Hyperlink forgotPwd, createAccount;
@@ -39,7 +39,7 @@ public class LoginMenu extends AbstractMenu<BorderPane> implements Controllable 
         HBox.setHgrow(email, Priority.ALWAYS);
         email.maxWidthProperty().bind(content.widthProperty().divide(2));
 
-        password = new TextField();
+        password = new PasswordField();
         password.setPromptText("Senha");
         HBox.setHgrow(password, Priority.ALWAYS);
         password.maxWidthProperty().bind(content.widthProperty().divide(2));

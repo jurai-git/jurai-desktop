@@ -68,8 +68,8 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
 
         // mode switching handling
-        pane.getLoginMenu().getCreateAccount().setOnAction(_ -> ApplicationState.setAccountMode(AccountMode.REGISTERING));
-        pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(_ -> ApplicationState.setAccountMode(AccountMode.LOGGING_IN));
+        pane.getLoginMenu().getCreateAccount().setOnAction(e -> ApplicationState.setAccountMode(AccountMode.REGISTERING));
+        pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> ApplicationState.setAccountMode(AccountMode.LOGGING_IN));
 
     }
 

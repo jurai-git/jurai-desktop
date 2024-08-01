@@ -5,6 +5,7 @@ module jurai {
     requires org.controlsfx.controls;
     requires java.naming;
     requires java.desktop;
+    requires java.logging;
 
     opens io.jurai to javafx.graphics, javafx.controls, java.base, org.controlsfx.controls;
 }

@@ -1,9 +1,11 @@
 package io.jurai.ui.menus;
 
 import io.jurai.ui.controls.SidebarNavItem;
+import io.jurai.ui.util.SpacerFactory;
 import io.jurai.util.FileUtils;
 import io.jurai.util.UILogger;
 import javafx.scene.Node;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 

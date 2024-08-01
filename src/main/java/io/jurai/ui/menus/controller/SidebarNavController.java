@@ -10,10 +10,10 @@ import io.jurai.util.UILogger;
 public class SidebarNavController extends AbstractController<SidebarNav> {
     @Override
     protected void attachEvents(SidebarNav pane) {
-        pane.getAccount().setOnAction(_ -> ApplicationState.setActivePane(Pane.AccountPane));
-        pane.getQuickQuery().setOnAction(_ -> ApplicationState.setActivePane(Pane.QuickQueryPane));
-        pane.getDocuments().setOnAction(_ -> ApplicationState.setActivePane(Pane.DocPane));
-        pane.getDashboard().setOnAction(_ -> ApplicationState.setActivePane(Pane.DashboardPane));
+        pane.getAccount().setOnAction(e -> ApplicationState.setActivePane(Pane.AccountPane));
+        pane.getQuickQuery().setOnAction(e -> ApplicationState.setActivePane(Pane.QuickQueryPane));
+        pane.getDocuments().setOnAction(e -> ApplicationState.setActivePane(Pane.DocPane));
+        pane.getDashboard().setOnAction(e -> ApplicationState.setActivePane(Pane.DashboardPane));
     }
 
     private void deactivateAll(SidebarNav pane) {

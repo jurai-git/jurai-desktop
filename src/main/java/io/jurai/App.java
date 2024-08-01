@@ -27,9 +27,9 @@ public class App extends Application {
         ApplicationState.addPropertyChangeListener(e -> {
             if(e.getPropertyName().equals("debugging")) {
                 if((boolean) e.getNewValue()) {
-                    stage.setOnCloseRequest(_ -> ctlThread.interrupt());
+                    stage.setOnCloseRequest(event -> ctlThread.interrupt());
                 } else {
-                    stage.setOnCloseRequest(_ -> {});
+                    stage.setOnCloseRequest(event -> {});
                 }
             }
         });

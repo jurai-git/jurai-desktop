@@ -16,7 +16,7 @@ public class DashboardPaneController extends AbstractController<DashboardPane> {
 
     @Override
     protected void attachEvents(DashboardPane pane) {
-        pane.getLoginHyperlink().setOnAction(_ -> ApplicationState.setActivePane(Pane.AccountPane));
+        pane.getLoginHyperlink().setOnAction(e -> ApplicationState.setActivePane(Pane.AccountPane));
     }
 
     @Override
