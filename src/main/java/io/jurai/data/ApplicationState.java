@@ -5,6 +5,7 @@ import io.jurai.data.model.Model;
 import io.jurai.ui.util.AccountMode;
 import io.jurai.ui.util.Pane;
 import io.jurai.ui.controls.SimpleListItem;
+import io.jurai.ui.util.StageType;
 import io.jurai.util.StateLogger;
 
 import java.beans.PropertyChangeListener;
@@ -17,7 +18,8 @@ public class ApplicationState {
     private static Advogado currentUser = null;
     private static boolean debugging = false;
     private static SimpleListItem<? extends Model> selectedRequerente = null;
-    private static AccountMode accountMode = AccountMode.LOGGING_IN;
+    private static AccountMode accountMode = null;
+    private static StageType stageType = null;
 
     public static void initialize() {
         support.addPropertyChangeListener(propertyChangeEvent -> {
@@ -28,6 +30,7 @@ public class ApplicationState {
         StateLogger.log("initialized StateLogger");
         support.firePropertyChange("activePane", activePane, activePane);
         support.firePropertyChange("selectedRequerente", selectedRequerente, selectedRequerente);
+        setAccountMode(AccountMode.LOGGING_IN);
     }
 
     public static void setActivePane(Pane pane) {
@@ -68,8 +71,19 @@ public class ApplicationState {
         AccountMode oldValue = ApplicationState.accountMode;
         ApplicationState.accountMode = accountMode;
         support.firePropertyChange("accountMode", oldValue, ApplicationState.accountMode);
+
+        if(accountMode == AccountMode.LOGGED_IN) {
+            setStageType(StageType.MAIN_STAGE);
+        } else {
+            setStageType(StageType.SECONDARY_STAGE);
+        }
     }
 
+    private static void setStageType(StageType stageType) {
+        StageType oldValue = ApplicationState.stageType;
+        ApplicationState.stageType = stageType;
+        support.firePropertyChange("stageType", oldValue, ApplicationState.stageType);
+    }
 
     public static Pane getActivePane() {
         return activePane;
@@ -86,6 +100,11 @@ public class ApplicationState {
     public static AccountMode getAccountMode() {
         return accountMode;
     }
+
+    public static StageType getStageType() {
+        return stageType;
+    }
+
 
     public static void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);

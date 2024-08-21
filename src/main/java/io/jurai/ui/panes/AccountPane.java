@@ -19,15 +19,10 @@ public class AccountPane extends AbstractPane {
     @Override
     protected void initControls() {
         view  = new StackPane();
+        view.getStyleClass().add("account-pane");
         view.getStyleClass().add("content");
         loginMenu = new LoginMenu();
-        loginMenu.getContent().maxWidthProperty().bind(view.widthProperty().divide(8).multiply(4));
-        loginMenu.getContent().maxHeightProperty().bind(view.heightProperty().divide(8).multiply(5));
-
         advogadoRegisterMenu = new AdvogadoRegisterMenu();
-        advogadoRegisterMenu.getContent().maxWidthProperty().bind(view.widthProperty().divide(8).multiply(4));
-        advogadoRegisterMenu.getContent().maxHeightProperty().bind(view.heightProperty().divide(8).multiply(5));
-
         accountDashboardMenu = new AccountDashboardMenu();
     }
 

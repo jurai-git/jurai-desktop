@@ -21,9 +21,9 @@
 
 .form {
     -fx-background-color: #3b3b3b;
-    -fx-background-radius: 24px;
+    -fx-background-radius: 16px;
     -fx-padding: 32px 16px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 128, 0.2, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 256, 0.2, 0, 0);
 }
 
 .form .button {

@@ -56,16 +56,18 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 return;
             }
 
+            final String oab = pane.getAdvogadoRegisterMenu().getOab().getText();
+
             Advogado advogado = new Advogado(
                 username,
                 email,
-                pwd
+                pwd,
+                oab
             );
             s.create(advogado);
             s.authenticate(email, pwd);
             new Alert(Alert.AlertType.INFORMATION, "Advogado criado com sucesso!");
         });
-
 
         // mode switching handling
         pane.getLoginMenu().getCreateAccount().setOnAction(e -> ApplicationState.setAccountMode(AccountMode.REGISTERING));

@@ -18,7 +18,7 @@ public class CommandListener implements Runnable {
 
     @Override
     public void run() {
-        dummyUser = new Advogado("AdvogadoPadrao", "EmailPadrao@jurai.com", "SenhaPadrao");
+        dummyUser = new Advogado("AdvogadoPadrao", "EmailPadrao@jurai.com", "SenhaPadrao", "oabPadrao");
         while(running) {
             String input = new Scanner(System.in).nextLine().toLowerCase();
             handleCommand(input);

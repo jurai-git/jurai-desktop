@@ -6,12 +6,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-
 public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Controllable {
 
     private BorderPane content;
 
-    private TextField email, username;
+    private TextField email, username, oab;
     PasswordField password, confirmPassword;
     private CheckBox keepConnected;
     private Button create;
@@ -38,6 +37,11 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
         username.maxWidthProperty().bind(content.widthProperty().multiply(0.6));
         username.setPromptText("Nome de usuário");
         VBox.setVgrow(username, Priority.ALWAYS);
+
+        oab = new TextField();
+        oab.maxWidthProperty().bind(content.widthProperty().multiply(0.6));
+        oab.setPromptText("OAB");
+        VBox.setVgrow(oab, Priority.ALWAYS);
 
         password = new PasswordField();
         password.maxWidthProperty().bind(content.widthProperty().multiply(0.45));
@@ -73,6 +77,8 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
                 email,
                 SpacerFactory.createVBoxSpacer(null),
                 username,
+                SpacerFactory.createVBoxSpacer(null),
+                oab,
                 SpacerFactory.createVBoxSpacer(null),
                 password,
                 SpacerFactory.createVBoxSpacer(null),
@@ -119,6 +125,10 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
 
     public TextField getUsername() {
         return username;
+    }
+
+    public TextField getOab() {
+        return oab;
     }
 
     public HBox getAlreadyHasAccountHBox() {

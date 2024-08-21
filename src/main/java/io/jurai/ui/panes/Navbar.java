@@ -19,6 +19,7 @@ public class Navbar extends AbstractPane {
     @Override
     protected void layControls() {
     }
+
     @Override
     public Pane getView() {
         return view;

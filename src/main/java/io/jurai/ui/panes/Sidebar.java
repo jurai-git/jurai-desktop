@@ -2,8 +2,10 @@ package io.jurai.ui.panes;
 
 import io.jurai.ui.menus.SidebarNav;
 import io.jurai.ui.menus.controller.SidebarNavController;
+import io.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,7 +51,11 @@ public class Sidebar extends AbstractPane {
 
     @Override
     protected void layControls() {
-        view.getChildren().addAll(logo, separator, nav.getContent());
+        view.getChildren().addAll(
+                logo,
+                separator,
+                nav.getContent()
+                );
     }
 
     @Override

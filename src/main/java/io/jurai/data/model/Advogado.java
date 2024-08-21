@@ -13,10 +13,15 @@ public class Advogado implements Model {
     private StringProperty email = new SimpleStringProperty();
     private StringProperty senha = new SimpleStringProperty();
 
-    public Advogado(String nome, String email, String senha) {
+
+
+    private StringProperty oab = new SimpleStringProperty();
+
+    public Advogado(String nome, String email, String senha, String oab) {
         this.nome.set(nome);
         this.email.set(email);
         this.senha.set(senha);
+        this.oab.set(oab);
         id = new Random().nextDouble();
     }
 
@@ -38,6 +43,10 @@ public class Advogado implements Model {
         return senha.get();
     }
 
+    public String getOab() {
+        return oab.get();
+    }
+
     public void setNome(String nome) {
         this.nome.set(nome);
     }
@@ -50,8 +59,15 @@ public class Advogado implements Model {
         this.senha.set(senha);
     }
 
+    public void setOab(String oab) {
+        this.oab.set(oab);
+    }
 
     //property access
+
+    public StringProperty oabProperty() {
+        return oab;
+    }
 
     public StringProperty senhaProperty() {
         return senha;

@@ -4,6 +4,7 @@ import io.jurai.data.ApplicationState;
 import io.jurai.ui.controller.AccountPaneController;
 import io.jurai.ui.controller.DashboardPaneController;
 import io.jurai.ui.controller.NavbarController;
+import io.jurai.ui.controller.SidebarController;
 import io.jurai.ui.util.Pane;
 import io.jurai.ui.menus.LoginMenu;
 import io.jurai.ui.panes.Navbar;
@@ -16,7 +17,7 @@ import javafx.scene.SceneAntialiasing;
 
 import java.awt.*;
 
-public class MainScene {
+public class PrimaryScene {
     private Scene scene;
     private ProportionPane mainPane;
     private Navbar navbar;
@@ -30,7 +31,7 @@ public class MainScene {
     private PlanPane planPane;
     private QuickQueryPane quickQueryPane;
 
-    public MainScene() {
+    public PrimaryScene() {
         initControls();
         layControls();
         attachControllers();
@@ -83,6 +84,11 @@ public class MainScene {
         // dashboard pane
         DashboardPaneController dashboardPaneController = new DashboardPaneController();
         dashboardPaneController.initialize(dashboardPane);
+
+        // sidebar
+        SidebarController sidebarController = new SidebarController();
+        sidebarController.initialize(sidebar);
+
     }
 
     private void attachNotifiers() {
@@ -110,8 +116,13 @@ public class MainScene {
                 mainPane.getChildren().add(dashboardPane.getView());
                 break;
             case PlanPane:
-                break;
+                mainPane.getChildren().removeAll(mainPane.getChildren());
+                layFixedControls();
+                mainPane.getChildren().add(planPane.getView());
             case QuickQueryPane:
+                mainPane.getChildren().removeAll(mainPane.getChildren());
+                layFixedControls();
+                mainPane.getChildren().add(quickQueryPane.getView());
                 break;
             default:
                 UILogger.logError("Tried switching to invalid main pane");

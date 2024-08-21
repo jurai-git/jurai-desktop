@@ -83,6 +83,7 @@ public class SidebarNavItem extends HBox {
     }
 
     private void setupActions() {
+        this.setOnMouseClicked(onAction::accept);
         label.setOnMouseClicked(onAction::accept);
         dot.setOnMouseClicked(onAction::accept);
         iconContainer.setOnMouseClicked(onAction::accept);
@@ -107,6 +108,10 @@ public class SidebarNavItem extends HBox {
         return dot.widthProperty();
     }
 
+    public StackPane getIconContainer() {
+        return iconContainer;
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -116,6 +121,26 @@ public class SidebarNavItem extends HBox {
             this.active = active;
             activationChanged();
         }
+    }
+
+    public void setDotColor(Color c) {
+        dotColorTransition.setFromValue(c);
+        dotColorTransition.setToValue(c);
+        dotColorTransition.play();
+    }
+
+    public void setIconColor(Color c) {
+        iconColorTransition.setFromValue(c);
+        iconColorTransition.setToValue(c);
+        iconColorTransition.play();
+    }
+
+    public void setDotVisible(boolean dotVisible) {
+        dot.setVisible(dotVisible);
+    }
+
+    public boolean isDotVisible() {
+        return dot.isVisible();
     }
 
     public SVGPath getIcon() {

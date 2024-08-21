@@ -1,0 +1,7 @@
+.secondary-scene > .content {
+    -fx-padding-top: 0;
+}
+
+.secondary-scene > * {
+    -fx-padding: 48px !important;
+}

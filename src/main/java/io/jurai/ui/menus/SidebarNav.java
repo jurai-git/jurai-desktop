@@ -4,17 +4,19 @@ import io.jurai.ui.controls.SidebarNavItem;
 import io.jurai.ui.util.SpacerFactory;
 import io.jurai.util.FileUtils;
 import io.jurai.util.UILogger;
-import javafx.scene.Node;
+import javafx.geometry.Side;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
 
 public class SidebarNav extends AbstractMenu<VBox> {
     private VBox content;
-    private SidebarNavItem dashboard, quickQuery, documents, account;
-    private SVGPath dashboardIcon, quickQueryIcon, documentsIcon, accountIcon;
+    private SidebarNavItem dashboard, quickQuery, documents, account, logout;
+    private SVGPath dashboardIcon, quickQueryIcon, documentsIcon, accountIcon, logoutIcon;
 
     public SidebarNav() {
         super();
@@ -37,12 +39,20 @@ public class SidebarNav extends AbstractMenu<VBox> {
 
         account = new SidebarNavItem(accountIcon, "Sua Conta");
         account.dotWidthProperty().bind(content.widthProperty().multiply(0.025));
+
+        logout = new SidebarNavItem(logoutIcon, "Sair");
+        logout.setDotVisible(false);
+        logout.setIconColor(Color.web("#c05050"));
     }
 
     @Override
     protected void layControls() {
-        content.getChildren().addAll(dashboard, quickQuery, documents, account);
-        documents.setActive(true);
+        content.getChildren().addAll(dashboard,
+                quickQuery,
+                documents,
+                account, SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                logout);
+        dashboard.setActive(true);
     }
 
     private void initIcons() {
@@ -58,6 +68,9 @@ public class SidebarNav extends AbstractMenu<VBox> {
 
             accountIcon = new SVGPath();
             accountIcon.setContent(FileUtils.getFileContent("/paths/account.path"));
+
+            logoutIcon = new SVGPath();
+            logoutIcon.setContent(FileUtils.getFileContent("/paths/logout.path"));
         } catch(IOException e) {
             e.printStackTrace();
             UILogger.logError("unable to load sidebar icon paths");
@@ -79,6 +92,10 @@ public class SidebarNav extends AbstractMenu<VBox> {
 
     public SidebarNavItem getDocuments() {
         return documents;
+    }
+
+    public SidebarNavItem getLogout() {
+        return logout;
     }
 
     @Override

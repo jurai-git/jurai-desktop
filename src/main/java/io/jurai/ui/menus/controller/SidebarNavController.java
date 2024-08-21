@@ -1,6 +1,7 @@
 package io.jurai.ui.menus.controller;
 
 import io.jurai.data.ApplicationState;
+import io.jurai.ui.util.AccountMode;
 import io.jurai.ui.util.Pane;
 import io.jurai.ui.controller.AbstractController;
 import io.jurai.ui.controls.SidebarNavItem;
@@ -14,6 +15,11 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
         pane.getQuickQuery().setOnAction(e -> ApplicationState.setActivePane(Pane.QuickQueryPane));
         pane.getDocuments().setOnAction(e -> ApplicationState.setActivePane(Pane.DocPane));
         pane.getDashboard().setOnAction(e -> ApplicationState.setActivePane(Pane.DashboardPane));
+
+        pane.getLogout().setOnAction(e -> {
+            ApplicationState.setCurrentUser(null);
+            ApplicationState.setAccountMode(AccountMode.LOGGING_IN);
+        });
     }
 
     private void deactivateAll(SidebarNav pane) {

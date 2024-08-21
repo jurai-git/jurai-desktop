@@ -10,7 +10,6 @@ public class NavbarController extends AbstractController<Navbar> {
 
     @Override
     protected void attachEvents(Navbar navbar) {
-
     }
 
     @Override

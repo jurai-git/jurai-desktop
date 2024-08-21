@@ -1,11 +1,11 @@
 module jurai {
-    requires javafx.controls;
-    requires javafx.graphics;
+    requires transitive javafx.controls;
+    requires transitive javafx.graphics;
     requires java.base;
-    requires org.controlsfx.controls;
-    requires java.naming;
-    requires java.desktop;
-    requires java.logging;
+    requires transitive org.controlsfx.controls;
+    requires transitive java.naming;
+    requires transitive java.desktop;
+    requires transitive java.logging;
 
     opens io.jurai to javafx.graphics, javafx.controls, java.base, org.controlsfx.controls;
 }
