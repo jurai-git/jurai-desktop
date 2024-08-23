@@ -4,9 +4,6 @@ package io.jurai.ui.controls;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 public class CepTextField extends TextField {
 
     public CepTextField() {

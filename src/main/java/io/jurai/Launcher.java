@@ -1,7 +1,6 @@
 package io.jurai;
 
 import io.jurai.data.ApplicationState;
-import io.jurai.ui.controller.StageController;
 
 public class Launcher {
     public static void main(String[] args) {

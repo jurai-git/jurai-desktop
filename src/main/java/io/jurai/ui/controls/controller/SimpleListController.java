@@ -1,9 +1,7 @@
 package io.jurai.ui.controls.controller;
 
-import io.jurai.data.ApplicationState;
 import io.jurai.data.model.Model;
 import io.jurai.ui.controller.AbstractController;
-import io.jurai.ui.controls.SidebarNavItem;
 import io.jurai.ui.controls.SimpleList;
 import io.jurai.ui.controls.SimpleListItem;
 import javafx.collections.ListChangeListener;

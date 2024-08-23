@@ -6,7 +6,6 @@ import io.jurai.ui.SecondaryScene;
 import io.jurai.ui.controller.Controllable;
 import io.jurai.ui.controller.StageController;
 import io.jurai.ui.util.SpacerFactory;
-import io.jurai.ui.util.StageType;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

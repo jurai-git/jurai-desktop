@@ -30,7 +30,10 @@ public class ProportionPane extends Pane {
             double height = getHeight() * constraints.h;
 
             child.relocate(x, y);
-            child.resize(width, height);
+            child.resize(
+                    Math.max(width, constraints.minWidth.get()),
+                    Math.max(height, constraints.minHeight.get())
+            );
         }
     }
 }

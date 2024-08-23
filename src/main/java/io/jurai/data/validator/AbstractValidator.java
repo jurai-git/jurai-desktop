@@ -1,12 +1,9 @@
 package io.jurai.data.validator;
 
-import io.jurai.data.model.AbstractLabeledEnum;
 import javafx.scene.control.Alert;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public abstract class AbstractValidator<T> {
     private Map<Filter<T>, String> filters;

@@ -1,6 +1,5 @@
 package io.jurai.ui.controller;
 
-import io.jurai.App;
 import io.jurai.data.ApplicationState;
 import io.jurai.ui.panes.DashboardPane;
 import io.jurai.ui.util.AccountMode;

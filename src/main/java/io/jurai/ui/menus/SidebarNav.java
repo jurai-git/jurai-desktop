@@ -4,8 +4,6 @@ import io.jurai.ui.controls.SidebarNavItem;
 import io.jurai.ui.util.SpacerFactory;
 import io.jurai.util.FileUtils;
 import io.jurai.util.UILogger;
-import javafx.geometry.Side;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;

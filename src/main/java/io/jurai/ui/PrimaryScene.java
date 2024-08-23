@@ -7,11 +7,11 @@ import io.jurai.ui.controller.NavbarController;
 import io.jurai.ui.controller.SidebarController;
 import io.jurai.ui.util.Pane;
 import io.jurai.ui.menus.LoginMenu;
-import io.jurai.ui.panes.Navbar;
 import io.jurai.ui.panes.*;
 import io.jurai.ui.panes.layout.NodeConstraints;
 import io.jurai.ui.panes.layout.ProportionPane;
 import io.jurai.util.UILogger;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 
@@ -24,6 +24,7 @@ public class PrimaryScene {
     private LoginMenu loginMenu;
     private Sidebar sidebar;
     private final NodeConstraints mainContentConstraints = new NodeConstraints(0.18f, 0.08f, 0.82f, 0.92f);
+    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     private AccountPane accountPane;
     private DashboardPane dashboardPane;
@@ -59,8 +60,6 @@ public class PrimaryScene {
         mainPane.addConstraints(quickQueryPane.getView(), mainContentConstraints);
         activePaneChanged(ApplicationState.getActivePane());
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
         scene = new Scene(mainPane, screenSize.width * 0.7, screenSize.height * 0.7, false, SceneAntialiasing.BALANCED);
     }
 
@@ -68,7 +67,12 @@ public class PrimaryScene {
         mainPane.addConstraints(navbar.getView(), new NodeConstraints(0, 0, 1, 0.08f));
         mainPane.getChildren().add(navbar.getView());
 
-        mainPane.addConstraints(sidebar.getView(), new NodeConstraints(0, 0, 0.18f, 1));
+
+        mainPane.addConstraints(sidebar.getView(), new NodeConstraints(
+                0, 0, 0.18f, 1,
+                new SimpleFloatProperty(screenSize.width * 0.1f),
+                new SimpleFloatProperty(0)
+        ));
         mainPane.getChildren().add(sidebar.getView());
     }
 

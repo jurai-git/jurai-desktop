@@ -2,7 +2,6 @@ package io.jurai.ui;
 
 import io.jurai.ui.controller.AccountPaneController;
 import io.jurai.ui.panes.AccountPane;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

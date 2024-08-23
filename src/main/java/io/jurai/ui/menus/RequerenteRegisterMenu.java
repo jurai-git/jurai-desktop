@@ -3,7 +3,6 @@ package io.jurai.ui.menus;
 import io.jurai.data.model.EstadoCivil;
 import io.jurai.data.model.Nacionalidade;
 import io.jurai.ui.controls.CepTextField;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;

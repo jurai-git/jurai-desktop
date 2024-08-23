@@ -1,5 +1,6 @@
 package io.jurai.ui.menus;
 
+import io.jurai.ui.animation.DefaultButtonAnimator;
 import io.jurai.ui.controller.Controllable;
 import io.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
@@ -58,6 +59,7 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
         VBox.setVgrow(keepConnected, Priority.ALWAYS);
 
         create = new Button("Criar conta");
+        DefaultButtonAnimator.animate(create);
         VBox.setVgrow(create, Priority.ALWAYS);
 
         alreadyHasAccountLabel = new Label("Já tem uma conta? ");

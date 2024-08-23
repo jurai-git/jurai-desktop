@@ -35,15 +35,6 @@
     -fx-padding: 8px 2em;
 }
 
-.form .button:hover {
-    -fx-background-color: #404040;
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-
-.form .button:pressed {
-    -fx-background-color: #3a3a3a;
-}
 
 .form .check-box{
 }

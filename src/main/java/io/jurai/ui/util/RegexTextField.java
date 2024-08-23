@@ -1,7 +1,5 @@
 package io.jurai.ui.util;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
 public class RegexTextField extends TextField {

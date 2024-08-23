@@ -1,5 +1,6 @@
 package io.jurai.ui.menus;
 
+import io.jurai.ui.animation.DefaultButtonAnimator;
 import io.jurai.ui.controller.Controllable;
 import io.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
@@ -48,6 +49,7 @@ public class LoginMenu extends AbstractMenu<BorderPane> implements Controllable 
         HBox.setHgrow(keepConnected, Priority.ALWAYS);
 
         login = new Button("Login");
+        DefaultButtonAnimator.animate(login);
         HBox.setHgrow(login, Priority.ALWAYS);
 
         forgotPwd = new Hyperlink("Esqueci minha senha");

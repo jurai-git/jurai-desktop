@@ -8,7 +8,6 @@ public class AdvogadoValidator extends AbstractValidator<Advogado> {
 
     public AdvogadoValidator() {
         super();
-        ruleFor(a -> a.getSenha().length() > 7, invalidPasswordMessage);
         ruleFor(a -> a.getEmail().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"), invalidEmailMessage);
     }
 

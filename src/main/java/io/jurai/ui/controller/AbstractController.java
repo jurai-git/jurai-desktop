@@ -1,7 +1,5 @@
 package io.jurai.ui.controller;
 
-import io.jurai.ui.panes.AbstractPane;
-
 public abstract class AbstractController<T extends Controllable> {
     public void initialize(T pane) {
         attachEvents(pane);

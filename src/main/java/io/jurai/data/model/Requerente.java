@@ -2,10 +2,7 @@ package io.jurai.data.model;
 
 import javafx.beans.property.*;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.Map;
-import java.util.Optional;
 
 public class Requerente implements Model {
 

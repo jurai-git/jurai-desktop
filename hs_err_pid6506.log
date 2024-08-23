@@ -1,0 +1,23 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007b03235d574f, pid=6506, tid=6548
+#
+# JRE version: OpenJDK Runtime Environment (22.0.2+9) (build 22.0.2+9)
+# Java VM: OpenJDK 64-Bit Server VM (22.0.2+9, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libc.so.6+0x3f74f]
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %h" (or dumping to /home/mgcv/jurai-desktop/core.6506)
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -javaagent:/opt/idea-IU-241.14494.240/lib/idea_rt.jar=41685:/opt/idea-IU-241.14494.240/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 --module-path=/home/mgcv/.m2/repository/org/openjfx/javafx-controls/22.0.1/javafx-controls-22.0.1-linux.jar:/home/mgcv/.m2/repository/com/google/code/gson/gson/2.11.0/gson-2.11.0.jar:/home/mgcv/.m2/repository/org/controlsfx/controlsfx/11.2.1/controlsfx-11.2.1.jar:/home/mgcv/.m2/repository/com/google/errorprone/error_prone_annotations/2.27.0/error_prone_annotations-2.27.0.jar:/home/mgcv/.m2/repository/org/openjfx/javafx-graphics/22.0.1/javafx-graphics-22.0.1-linux.jar:/home/mgcv/jurai-desktop/target/classes:/home/mgcv/.m2/repository/org/openjfx/javafx-base/22.0.1/javafx-base-22.0.1-linux.jar -Djdk.module.main=jurai jurai/io.jurai.Launcher --debug
+
+Host: Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz, 

@@ -46,9 +46,24 @@
     -fx-padding: 16px 16px 16px 4px !important;
 }
 
+.content .subheader {
+    -fx-padding: 8px 16px 16px 4px !important;
+}
+
 .content > .header .text {
     -fx-font-weight: bold;
     -fx-font-size: 1.8em;
+}
+
+.content .subheader .text {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.3em;
+}
+
+.content-box {
+    -fx-background-color: #333;
+    -fx-background-radius: 12px;
+    -fx-padding: 32px;
 }
 
 .svg {
@@ -57,4 +72,25 @@
 
 .hyperlink:focused {
     -fx-border-width: 0;
+}
+
+.red-button .text {
+    -fx-text-fill: #FF6060;
+}
+
+.button {
+    -fx-border-width: 0;
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #484848, #424242);
+    -fx-background-radius: 0.5em;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 16, 0.2, 0, 0);
+    -fx-cursor: hand;
+    -fx-padding: 8px 2em;
+}
+
+.button:hover {
+    -fx-background-color: #404040;
+}
+
+.button:pressed {
+    -fx-background-color: #3a3a3a;
 }

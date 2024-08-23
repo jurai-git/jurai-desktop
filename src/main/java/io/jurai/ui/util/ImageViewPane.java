@@ -21,7 +21,7 @@ import javafx.scene.layout.Region;
  */
 public class ImageViewPane extends Region {
 
-    private ObjectProperty<ImageView> imageViewProperty = new SimpleObjectProperty<ImageView>();
+    private ObjectProperty<ImageView> imageViewProperty = new SimpleObjectProperty<>();
 
     public ObjectProperty<ImageView> imageViewProperty() {
         return imageViewProperty;
@@ -52,7 +52,7 @@ public class ImageViewPane extends Region {
 
     public ImageViewPane(ImageView imageView) {
         getStyleClass().add("image-pane");
-        imageViewProperty.addListener(new ChangeListener<ImageView>() {
+        imageViewProperty.addListener(new ChangeListener<>() {
 
             @Override
             public void changed(ObservableValue<? extends ImageView> arg0, ImageView oldIV, ImageView newIV) {

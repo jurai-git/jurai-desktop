@@ -1,62 +1,58 @@
 package io.jurai.data.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
-import java.util.*;
+import java.io.Serializable;
 
-public class Advogado implements Model {
+public class Advogado implements Model, Serializable {
 
     // informacoes pessoais
-    private double id;
-    private StringProperty nome = new SimpleStringProperty();
+    private DoubleProperty id = new SimpleDoubleProperty();
+    private StringProperty username = new SimpleStringProperty();
     private StringProperty email = new SimpleStringProperty();
-    private StringProperty senha = new SimpleStringProperty();
-
-
-
     private StringProperty oab = new SimpleStringProperty();
+    private StringProperty accessToken = new SimpleStringProperty();
 
-    public Advogado(String nome, String email, String senha, String oab) {
-        this.nome.set(nome);
+    public Advogado(int id, String nome, String email, String oab, String accessToken) {
+        this.id.set(id);
+        this.username.set(nome);
         this.email.set(email);
-        this.senha.set(senha);
         this.oab.set(oab);
-        id = new Random().nextDouble();
+        this.accessToken.set(accessToken);
+    }
+
+    public String getAccessToken() {
+        return accessToken.get();
+    }
+
+    public ReadOnlyStringProperty accessTokenProperty() {
+        return accessToken;
     }
 
     // getters and setters
 
     public double getId() {
-        return id;
+        return id.get();
     }
 
     public String getNome() {
-        return nome.get();
+        return username.get();
     }
 
     public String getEmail() {
         return email.get();
     }
 
-    public String getSenha() {
-        return senha.get();
-    }
-
     public String getOab() {
         return oab.get();
     }
 
-    public void setNome(String nome) {
-        this.nome.set(nome);
+    public void setUsername(String nome) {
+        this.username.set(nome);
     }
 
     public void setEmail(String email) {
         this.email.set(email);
-    }
-
-    public void setSenha(String senha) {
-        this.senha.set(senha);
     }
 
     public void setOab(String oab) {
@@ -69,21 +65,24 @@ public class Advogado implements Model {
         return oab;
     }
 
-    public StringProperty senhaProperty() {
-        return senha;
-    }
-
     public StringProperty emailProperty() {
         return email;
     }
 
+    public ReadOnlyDoubleProperty idProperty() {
+        return id;
+    }
+
     @Override
     public StringProperty nomeProperty() {
-        return nome;
+        return username;
     }
 
     @Override
     public String toString() {
         return "{io.jurai.data.model.Advogado: " + getNome() + "}";
     }
+
+
+
 }

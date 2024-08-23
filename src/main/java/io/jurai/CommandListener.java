@@ -5,7 +5,6 @@ import io.jurai.data.model.*;
 import javafx.application.Platform;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Scanner;
 
 public class CommandListener implements Runnable {
@@ -18,7 +17,7 @@ public class CommandListener implements Runnable {
 
     @Override
     public void run() {
-        dummyUser = new Advogado("AdvogadoPadrao", "EmailPadrao@jurai.com", "SenhaPadrao", "oabPadrao");
+        dummyUser = new Advogado(1, "nomePadrao", "emailPadrao", "oabPadrao", "tokenPadrao");
         while(running) {
             String input = new Scanner(System.in).nextLine().toLowerCase();
             handleCommand(input);
@@ -75,9 +74,10 @@ public class CommandListener implements Runnable {
                 break;
             default:
                 System.out.println("Invalid fxctl command: " + args[0]);
-                System.out.println("Avaliable commands:\n" +
-                        " --export | -e | export: exports a value to the ApplicationState\n" +
-                        " --stop-debug | -s | stop-debug: stops debugging (once you stop it, you cant turn it back!)");
+                System.out.println("""
+                        Avaliable commands:
+                         --export | -e | export: exports a value to the ApplicationState
+                         --stop-debug | -s | stop-debug: stops debugging (once you stop it, you cant turn it back!)""");
         }
     }
 

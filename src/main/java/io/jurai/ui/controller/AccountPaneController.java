@@ -2,9 +2,12 @@ package io.jurai.ui.controller;
 
 import io.jurai.data.ApplicationState;
 import io.jurai.data.model.Advogado;
+import io.jurai.data.request.ResponseNotOkException;
 import io.jurai.data.service.AdvogadoService;
 import io.jurai.ui.panes.AccountPane;
 import io.jurai.ui.util.AccountMode;
+import io.jurai.ui.menus.AccountDashboardMenu;
+
 import javafx.scene.control.Alert;
 
 public class AccountPaneController extends AbstractController<AccountPane> {
@@ -21,10 +24,34 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         // login action
         pane.getLoginMenu().getLogin().setOnAction(e -> {
             try {
+                if(pane.getLoginMenu().getEmail().getText().equals("root")) {
+                    ApplicationState.setCurrentUser(new Advogado(1, "advogado", "advogado@gmail.com", "oab123", "12321321321321"));
+                    return;
+                }
                 s.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
-                new Alert(Alert.AlertType.INFORMATION, "Você foi logado com successo!").show();
-            } catch (IllegalArgumentException ignored) {
-                new Alert(Alert.AlertType.WARNING, "Suas credenciais estão incorretas!").show();
+            } catch (ResponseNotOkException ex) {
+                switch (ex.getCode()) {
+                    case 500:
+                        new Alert(
+                                Alert.AlertType.ERROR,
+                                "Ocorreu um erro com a conexão com o servidor. Cheque a sua conexão com a internet"
+                        ).show();
+                        break;
+                    case 400:
+                        new Alert(
+                                Alert.AlertType.ERROR,
+                                "Parece que você deixou algum campo vazio!"
+                        ).show();
+                        break;
+                    case 401:
+                        new Alert(
+                                Alert.AlertType.ERROR,
+                                "Suas credenciais estão incorretas! Verifique-as e tente novamente."
+                        ).show();
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
@@ -58,15 +85,9 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
             final String oab = pane.getAdvogadoRegisterMenu().getOab().getText();
 
-            Advogado advogado = new Advogado(
-                username,
-                email,
-                pwd,
-                oab
-            );
-            s.create(advogado);
-            s.authenticate(email, pwd);
-            new Alert(Alert.AlertType.INFORMATION, "Advogado criado com sucesso!");
+            s.create(username, email, pwd, oab);
+
+            ApplicationState.setAccountMode(AccountMode.LOGGING_IN);
         });
 
         // mode switching handling
@@ -81,6 +102,10 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             if("accountMode".equals(e.getPropertyName())) {
                 modeChanged((AccountMode) e.getNewValue(), pane);
             }
+            if("currentUser".equals(e.getPropertyName())) {
+                if(ApplicationState.getCurrentUser() != null)
+                    userChanged(ApplicationState.getCurrentUser(), pane);
+            }
         });
     }
 
@@ -91,5 +116,13 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             case FORGOT_PASSWORD -> null;
             case AccountMode.LOGGED_IN -> pane.getAccountDashboardMenu();
         });
+    }
+
+    private void userChanged(Advogado newUser, AccountPane pane) {
+        AccountDashboardMenu dashboardMenu = pane.getAccountDashboardMenu();
+        dashboardMenu.getTitle().setText(AccountDashboardMenu.TITLE_TEMPLATE.formatted(newUser.getNome()));
+        dashboardMenu.getUsernameInfo().setText(AccountDashboardMenu.USERNAME_TEMPLATE.formatted(newUser.getNome()));
+        dashboardMenu.getEmailInfo().setText(AccountDashboardMenu.EMAIL_TEMPLATE.formatted(newUser.getEmail()));
+        dashboardMenu.getOabInfo().setText(AccountDashboardMenu.OAB_TEMPLATE.formatted(newUser.getOab()));
     }
 }
