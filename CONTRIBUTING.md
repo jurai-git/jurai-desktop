@@ -14,13 +14,13 @@ Procure não notificar os bugs via Whatsapp, DMs, Emails ou outros meios a não 
 Para contribuir com código para o projeto, crie uma nova branch ou dê um fork, e faça uma Pull Request.
 
 É recomendável que você utilize alguma IDE para desenvolvimento em Java.
-A classe que você deverá executar ao desenvolver o projeto é a io.jurai.Launcher.java, que deverá funcionar sem problemas com o maven.
+A classe que você deverá executar ao desenvolver o projeto é a com.jurai.Launcher.java, que deverá funcionar sem problemas com o maven.
 
 O projeto é separado em algumas partes.
 Aqui está uma estrutura geral dos diretórios, juntamente com uma breve descrição de cada um:
 
 ```text
-io
+com
 └── jurai
     ├── data
     │   ├── model
@@ -79,7 +79,8 @@ A injeção será feita por Method Injection, ou seja, as views serão passadas 
 Aqui está um modelo básico de um controller:
 
 ```java
-import io.jurai.data.ApplicationState;
+import com.jurai.data.ApplicationState;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 

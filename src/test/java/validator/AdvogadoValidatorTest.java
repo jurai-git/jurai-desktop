@@ -1,7 +1,7 @@
 package validator;
 
-import io.jurai.data.model.Advogado;
-import io.jurai.data.validator.AdvogadoValidator;
+import com.jurai.data.model.Advogado;
+import com.jurai.data.validator.AdvogadoValidator;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -18,7 +18,7 @@
 
 ---------------  S U M M A R Y ------------
 
-Command Line: -javaagent:/opt/idea-IU-241.14494.240/lib/idea_rt.jar=38023:/opt/idea-IU-241.14494.240/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 --module-path=/home/mgcv/.m2/repository/org/openjfx/javafx-graphics/22.0.1/javafx-graphics-22.0.1-linux.jar:/home/mgcv/jurai-desktop/target/classes:/home/mgcv/.m2/repository/org/controlsfx/controlsfx/11.2.1/controlsfx-11.2.1.jar:/home/mgcv/.m2/repository/org/openjfx/javafx-controls/22.0.1/javafx-controls-22.0.1-linux.jar:/home/mgcv/.m2/repository/org/openjfx/javafx-base/22.0.1/javafx-base-22.0.1-linux.jar -Djdk.module.main=jurai jurai/io.jurai.Launcher --debug
+Command Line: -javaagent:/opt/idea-IU-241.14494.240/lib/idea_rt.jar=38023:/opt/idea-IU-241.14494.240/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 --module-path=/home/mgcv/.m2/repository/org/openjfx/javafx-graphics/22.0.1/javafx-graphics-22.0.1-linux.jar:/home/mgcv/jurai-desktop/target/classes:/home/mgcv/.m2/repository/org/controlsfx/controlsfx/11.2.1/controlsfx-11.2.1.jar:/home/mgcv/.m2/repository/org/openjfx/javafx-controls/22.0.1/javafx-controls-22.0.1-linux.jar:/home/mgcv/.m2/repository/org/openjfx/javafx-base/22.0.1/javafx-base-22.0.1-linux.jar -Djdk.module.main=jurai jurai/com.jurai.Launcher --debug
 
 Host: Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz, 8 cores, 7G, Arch Linux
 Time: Wed Aug 21 05:52:57 2024 -03 elapsed time: 28838.499257 seconds (0d 8h 0m 38s)
@@ -550,13 +550,13 @@ Classes redefined (0 events):
 No events
 
 Internal exceptions (20 events):
-Event: 1.577 Thread 0x0000718fec2d50f0 Exception <a 'java/io/FileNotFoundException'{0x000000008b583370}> (0x000000008b583370) 
+Event: 1.577 Thread 0x0000718fec2d50f0 Exception <a 'java/com/FileNotFoundException'{0x000000008b583370}> (0x000000008b583370)
 thrown [/usr/src/debug/java-openjdk/jdk22u-jdk-22.0.2-9/src/hotspot/share/prims/jni.cpp, line 520]
-Event: 1.578 Thread 0x0000718fec2d50f0 Exception <a 'java/io/FileNotFoundException'{0x000000008b596bf0}> (0x000000008b596bf0) 
+Event: 1.578 Thread 0x0000718fec2d50f0 Exception <a 'java/com/FileNotFoundException'{0x000000008b596bf0}> (0x000000008b596bf0)
 thrown [/usr/src/debug/java-openjdk/jdk22u-jdk-22.0.2-9/src/hotspot/share/prims/jni.cpp, line 520]
-Event: 1.579 Thread 0x0000718fec2d50f0 Exception <a 'java/io/FileNotFoundException'{0x000000008b5a0e88}> (0x000000008b5a0e88) 
+Event: 1.579 Thread 0x0000718fec2d50f0 Exception <a 'java/com/FileNotFoundException'{0x000000008b5a0e88}> (0x000000008b5a0e88)
 thrown [/usr/src/debug/java-openjdk/jdk22u-jdk-22.0.2-9/src/hotspot/share/prims/jni.cpp, line 520]
-Event: 1.582 Thread 0x0000718fec2d50f0 Exception <a 'java/io/FileNotFoundException'{0x000000008b5c9648}> (0x000000008b5c9648) 
+Event: 1.582 Thread 0x0000718fec2d50f0 Exception <a 'java/com/FileNotFoundException'{0x000000008b5c9648}> (0x000000008b5c9648)
 thrown [/usr/src/debug/java-openjdk/jdk22u-jdk-22.0.2-9/src/hotspot/share/prims/jni.cpp, line 520]
 Event: 1.640 Thread 0x0000718fec2d50f0 Exception <a 'java/lang/IncompatibleClassChangeError'{0x000000008b179240}: Found class java.lang.Object, but interface was expected> (0x000000008b179240) 
 thrown [/usr/src/debug/java-openjdk/jdk22u-jdk-22.0.2-9/src/hotspot/share/interpreter/linkResolver.cpp, line 841]
@@ -1714,7 +1714,7 @@ Total number of mappings: 1046
 
 VM Arguments:
 jvm_args: -javaagent:/opt/idea-IU-241.14494.240/lib/idea_rt.jar=38023:/opt/idea-IU-241.14494.240/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 --module-path=/home/mgcv/.m2/repository/org/openjfx/javafx-graphics/22.0.1/javafx-graphics-22.0.1-linux.jar:/home/mgcv/jurai-desktop/target/classes:/home/mgcv/.m2/repository/org/controlsfx/controlsfx/11.2.1/controlsfx-11.2.1.jar:/home/mgcv/.m2/repository/org/openjfx/javafx-controls/22.0.1/javafx-controls-22.0.1-linux.jar:/home/mgcv/.m2/repository/org/openjfx/javafx-base/22.0.1/javafx-base-22.0.1-linux.jar -Djdk.module.main=jurai 
-java_command: jurai/io.jurai.Launcher --debug
+java_command: jurai/com.jurai.Launcher --debug
 java_class_path (initial): /home/mgcv/.m2/repository/org/openjfx/javafx-controls/22.0.1/javafx-controls-22.0.1.jar:/home/mgcv/.m2/repository/org/openjfx/javafx-graphics/22.0.1/javafx-graphics-22.0.1.jar:/home/mgcv/.m2/repository/org/openjfx/javafx-base/22.0.1/javafx-base-22.0.1.jar
 Launcher Type: SUN_STANDARD
 

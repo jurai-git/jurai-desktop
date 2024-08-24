@@ -22,7 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javafx.version>22</javafx.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
-        <mainClass>io.jurai.Launcher</mainClass>
+        <mainClass>com.jurai.Launcher</mainClass>
         <buildDirectory>${project.basedir}/target</buildDirectory>
         <jpackageInputDir>${buildDirectory}/image</jpackageInputDir>
         <jpackageOutputDir>${buildDirectory}/jpackage_outputdir</jpackageOutputDir>
@@ -85,7 +85,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>io.jurai.Launcher</mainClass>
+                    <mainClass>com.jurai.Launcher</mainClass>
                     <arguments>
                         <argument>--add-opens javafx.controls/javafx.scene.control.skin=jurai</argument>
                     </arguments>
@@ -101,7 +101,7 @@
                     <noHeaderFiles>true</noHeaderFiles>
                     <stripDebug>true</stripDebug>
                     <noManPages>true</noManPages>
-                    <mainClass>io.jurai.Launcher</mainClass>
+                    <mainClass>com.jurai.Launcher</mainClass>
                     <launcher>JurAI</launcher>
                     <jlinkImageName>JurAI</jlinkImageName>
                 </configuration>
@@ -125,7 +125,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>io.jurai.Launcher</mainClass>
+                            <mainClass>com.jurai.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -142,7 +142,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>io.jurai.Launcher</mainClass>
+                            <mainClass>com.jurai.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -186,9 +186,9 @@
                 <configuration>
                     <name>JurAI</name>
                     <appVersion>0.0.1</appVersion>
-                    <vendor>io.jurai</vendor>
+                    <vendor>com.jurai</vendor>
                     <destination>target/dist</destination>
-                    <module>jurai/io.jurai.Launcher</module>
+                    <module>jurai/com.jurai.Launcher</module>
                     <runtimeImage>target/JurAI</runtimeImage>
                     <icon>${project.basedir}/src/main/resources/img/icon.png</icon>
                     <javaOptions>

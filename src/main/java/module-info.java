@@ -9,6 +9,6 @@ module jurai {
     requires com.google.gson;
 
 
-    exports io.jurai to javafx.graphics;
-    exports io.jurai.ui.util to javafx.controls;
+    exports com.jurai to javafx.graphics;
+    exports com.jurai.ui.util to javafx.controls;
 }
