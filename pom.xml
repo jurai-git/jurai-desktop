@@ -86,6 +86,9 @@
                 </executions>
                 <configuration>
                     <mainClass>io.jurai.Launcher</mainClass>
+                    <arguments>
+                        <argument>--add-opens javafx.controls/javafx.scene.control.skin=jurai</argument>
+                    </arguments>
                 </configuration>
             </plugin>
 
@@ -189,7 +192,8 @@
                     <runtimeImage>target/JurAI</runtimeImage>
                     <icon>${project.basedir}/src/main/resources/img/icon.png</icon>
                     <javaOptions>
-                    <option>-Dfile.encoding=UTF-8</option>
+                        <option>-Dfile.encoding=UTF-8</option>
+                        <option>--add-opens javafx.controls/javafx.scene.control.skin=jurai</option>
                     </javaOptions>
                 </configuration>
 

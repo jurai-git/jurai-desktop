@@ -18,7 +18,6 @@ public class DefaultButtonAnimator {
         activeOut.setToX(1.08);
         activeOut.setToY(1.08);
 
-
         ScaleTransition hoverIn = new ScaleTransition(Duration.millis(280), button);
         ScaleTransition hoverOut = new ScaleTransition(Duration.millis(280), button);
         PowerEase hoverEase = new PowerEase(3, true);
@@ -41,8 +40,5 @@ public class DefaultButtonAnimator {
         button.setOnMouseReleased(e -> {
             activeOut.playFromStart();
         });
-
-
-
     }
 }

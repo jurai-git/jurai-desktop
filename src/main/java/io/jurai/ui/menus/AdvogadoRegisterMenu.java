@@ -77,19 +77,19 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
 
         fields.getChildren().addAll(
                 email,
-                SpacerFactory.createVBoxSpacer(null),
+                SpacerFactory.createVBoxSpacer(Priority.NEVER),
                 username,
-                SpacerFactory.createVBoxSpacer(null),
+                SpacerFactory.createVBoxSpacer(Priority.NEVER),
                 oab,
-                SpacerFactory.createVBoxSpacer(null),
+                SpacerFactory.createVBoxSpacer(Priority.NEVER),
                 password,
-                SpacerFactory.createVBoxSpacer(null),
+                SpacerFactory.createVBoxSpacer(Priority.NEVER),
                 confirmPassword,
-                SpacerFactory.createVBoxSpacer(null),
+                SpacerFactory.createVBoxSpacer(Priority.NEVER),
                 keepConnected,
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 create,
-                SpacerFactory.createVBoxSpacer(null),
+                SpacerFactory.createVBoxSpacer(Priority.NEVER),
                 alreadyHasAccountHBox
         );
 

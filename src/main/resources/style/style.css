@@ -6,6 +6,9 @@
 @import url("menus/advogado-register.css");
 @import url("util/forms.css");
 @import url("scenes/secondary-scene.css");
+@import url("util/classes.css");
+@import url("controls/basic-tabbed-pane.css");
+@import url(menus/quick-query-tab.css);
 
 /*
 @font-face {
@@ -41,21 +44,17 @@
     -fx-background-color: transparent;
     -fx-padding: 24px;
 }
-
-.content > .header {
+.header {
     -fx-padding: 16px 16px 16px 4px !important;
 }
-
-.content .subheader {
+.subheader {
     -fx-padding: 8px 16px 16px 4px !important;
 }
-
-.content > .header .text {
+.header .text {
     -fx-font-weight: bold;
     -fx-font-size: 1.8em;
 }
-
-.content .subheader .text {
+.subheader .text {
     -fx-font-weight: bold;
     -fx-font-size: 1.3em;
 }
@@ -84,7 +83,7 @@
     -fx-background-radius: 0.5em;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 16, 0.2, 0, 0);
     -fx-cursor: hand;
-    -fx-padding: 8px 2em;
+    -fx-padding: 8px 1em;
 }
 
 .button:hover {
@@ -93,4 +92,16 @@
 
 .button:pressed {
     -fx-background-color: #3a3a3a;
+}
+
+.text-area {
+    -fx-border-width: 2px;
+    -fx-border-color: #555;
+    -fx-border-radius: 8px;
+    -fx-background-color: #383838;
+    -fx-background-radius: 8px;
+}
+
+.text-area > .scroll-pane {
+    -fx-skin: "io.jurai.ui.util.DefaultScrollPaneSkin";
 }

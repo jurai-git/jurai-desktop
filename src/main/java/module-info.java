@@ -8,5 +8,7 @@ module jurai {
     requires transitive java.logging;
     requires com.google.gson;
 
-    opens io.jurai to javafx.graphics, javafx.controls, java.base, org.controlsfx.controls;
+
+    exports io.jurai to javafx.graphics;
+    exports io.jurai.ui.util to javafx.controls;
 }

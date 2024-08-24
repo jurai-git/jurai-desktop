@@ -1,5 +1,9 @@
 package io.jurai.ui.util;
 
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.DoublePropertyBase;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -29,6 +33,35 @@ public class SpacerFactory {
 
         return spacer;
     }
+
+    public static Region createHBoxSpacer(DoubleBinding sizeProperty) {
+        Region spacer = new Region();
+        spacer.minHeightProperty().bind(sizeProperty);
+        spacer.maxHeightProperty().bind(sizeProperty);
+        HBox.setHgrow(spacer, Priority.NEVER);
+        return spacer;
+    }
+
+    public static Region createVBoxSpacer(DoubleBinding sizeProperty) {
+        Region spacer = new Region();
+        spacer.minWidthProperty().bind(sizeProperty);
+        spacer.maxWidthProperty().bind(sizeProperty);
+        VBox.setVgrow(spacer, Priority.NEVER);
+        return spacer;
+    }
+
+    public static Region createHBoxSpacer(int size)  {
+        Region spacer = new Region();
+        HBox.setMargin(spacer, new Insets(0, size, 0, 0));
+        return spacer;
+    }
+
+    public static Region createVBoxSpacer(int size)  {
+        Region spacer = new Region();
+        VBox.setMargin(spacer, new Insets(size, 0, 0, 0));
+        return spacer;
+    }
+
 
     public static Region createVBoxSpacer(Priority p) {
         Region spacer = new Region();

@@ -1,0 +1,7 @@
+.basic-tabbed-pane {
+    -fx-padding: 0 24px 24px 24px !important;
+}
+
+.basic-tabbed-pane .tabs {
+    -fx-padding: 0 0 24px 0;
+}
