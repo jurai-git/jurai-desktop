@@ -1,24 +1,10 @@
 # Produção
 
-O projeto pode ser distribuído em dois formatos principais: como JAR, ou como um instalador.
-
-Para a produção das versões estáveis do projeto, será utilizado a produção com um instalador, dado as mudanças na forma de distribuição de JARs desde o Java 9 pela Oracle.
-Para versões com propósito de testagem, pode ser usado o empacotamento em JAR com dependências.
-
-## Empacotamento em JAR
-
-Se você estiverno Linux, poderá utilizar [este script](build/package_jar_linux.sh), que fará a criação do JAR em build/out/JurAI<Versão>.jar. Se não, siga os seguintes passos:
-
-Execute as etapas `clean` e `package` do ciclo de vida do maven. Isso pode ser feito por meio de uma interface gráfica ou pela linha de comando:
-
-```shell
-mvn clean package
-```
-
-Isso gerará um arquivo jar em target/JurAI-<versão>-jar-with-dependencies.jar. Esse arquivo pode ser distribuído para testers e devs, e poderá ser executado por quem tiver instalado em sua máquina a JDK do Java 22.
-Esse arquivo não deverá ser distribuído para os clientes, ou ser publicado nos binários das versões estáveis do projeto, visto que não contém a JVM adequada para sua execução integrada no executável, e apenas poderá ser executado por quem tiver a SDK do java instalado em sua máquina.
+Para a produção das versões estáveis do projeto, será utilizado a produção com um instalador ou imagem, dado as mudanças na forma de distribuição de JARs desde o Java 9 pela Oracle.
 
 ## Empacotamento em Instalador
+
+O empacotamento em Instalador ou imagem dependerá do sistema operacional para o qual você empacotará o programa.
 
 Execute as etapas `clean` e `compile` do ciclo de vida do maven.
 Se não houverem erros, execute o jlink com o plugin do javafx para maven, com o comando `mvn javafx:jlink`. Isso deverá criar uma imagem do programa com uma JRE embutia, no diretório target/JurAI. Teste a imagem, e se tudo estiver funcionando, você pode continuar para a proxima etapa.
@@ -68,21 +54,35 @@ Para fazer o empacotamento nestes formatos, basta executar o comando jpackage co
 ### empacotamento em deb (linux):
 
 
-Para empacotar um pacote deb, basta executrar o comando `mvn jpackage:jpackag@linux_deb`, como descrito na seção Empacotamento em Instalador.
+Para empacotamento em DEB, será necessário utilizar o ambiente docker, para padronizar algumas bibliotecas.
+Será utilizado uma imagem Debian 11 (Bullseye), com a OpenJDK-17.
+
+Primeiramente, devemos criar e entrar no ambiente Docker. Para fazer isso, veja as instruções na página [Docker.md](Docker.md#debian-11-bullseye)
+
+Agora que você está na shell do ambiente docker, você poderá construir o pacote DEB. rode: 
+```shell
+mvn clean compile javafx:jlink jpackage:jpackage@linux_deb
+```
+Use `exit` para sair do container, e volte para a página [Docker.md]() para saber como extrair os arquivos do container para o host.
+
+Seu DEB deverá estar na pasta `docker-dist/`.
 
 
 ### Empacotamento de AppImage (Linux):
 
 O empacotamento em AppImage é um pouco mais complexo que os outros, então leia as instruções com atenção.
 
+Para empacotamento em AppImage, será necessário utilizar o ambiente docker, para padronizar algumas bibliotecas.
+Será utilizado uma imagem Debian 11 (Bullseye), com a OpenJDK-17.
+
+Primeiramente, devemos criar e entrar no ambiente Docker. Para fazer isso, veja as instruções na página [Docker.md](Docker.md#debian-11-bullseye).
+
+Agora que você está na shell do ambiente docker, você poderá prosseguir com o empacotamento.
+
 Você poderá fazer o empacotamento em AppImage de duas formas. A primeira é rodando [Este script](build/package_appimage_linux.sh), que irá produzir uma AppImage padrão automaticamente para você. Entretanto, para maior controle e customização, é recomendado que você faça a criação da mesma manualmente, como descrito abaixo.
 
-Após ter criado um executável com o JPackage do tipo AppImage, você deverá criar um diretório do tipo AppDir, e criar um AppImage dele com algum programa criador de AppImages. Pessoalmente, eu recomendo o `appimagetool`. Para instalá-lo, execute os seguintes comandos:
-```shell
-sudo wget -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O /usr/local/bin/appimagetool
-```
-Isso irá fazer o download do appimagekit (appimagetool), e colocá-lo em /usr/local/bin.
-Para mais instruções de download e documentação, vide Github do [AppImageKit](https://github.com/AppImage/AppImageKit).
+Após ter criado um executável com o JPackage do tipo AppImage, você deverá criar um diretório do tipo AppDir, e criar um AppImage dele com algum programa criador de AppImages. Pessoalmente, eu recomendo o `appimagetool`, que vem pré-instalado no ambiente docker.
+Para a documentação completa, vide Github do [AppImageKit](https://github.com/AppImage/AppImageKit).
 
 Após isso, você deverá criar um diretório AppDir. [Aqui](https://github.com/AppImage/AppImageKit/wiki/AppDir) está uma referência de como este diretório deverá ser, mas há aqui também a estrutura básica do diretório:
 ```text
@@ -137,7 +137,12 @@ StartupNotify=true
 Modifique-o conforme necessário.
 
 Após ter criado este diretório, crie um AppImage com `appimagetool JurAI.AppDir JurAI_x86_64.AppImage`.
-Verifique se o AppImage está funcionando, e o seu pacote estará pronto.
+
+Use `exit` para sair do container, e volte para a página [Docker.md]() para saber como extrair os arquivos do container para o host.
+
+Verifique se o AppImage extraído está funcionando, e o seu pacote estará pronto.
+
+Para 
 
 #### Troubleshooting
 

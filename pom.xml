@@ -17,8 +17,8 @@
 
     <properties>
         <native.maven.plugin.version>0.9.12</native.maven.plugin.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javafx.version>22</javafx.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
@@ -71,7 +71,6 @@
 
     <build>
         <plugins>
-
             <!-- Plugin to run program via maven -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -113,8 +112,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -193,7 +192,7 @@
                     <icon>${project.basedir}/src/main/resources/img/icon.png</icon>
                     <javaOptions>
                         <option>-Dfile.encoding=UTF-8</option>
-                        <option>--add-opens javafx.controls/javafx.scene.control.skin=jurai</option>
+                        <!-- <option>-add-opens javafx.controls/javafx.scene.control.skin=jurai</option> -->
                     </javaOptions>
                 </configuration>
 

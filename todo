@@ -1,11 +1,16 @@
-account-related {
-    - fix forms animations
-    - create logout
-    - create password recuperation
-    - add account info to accountPane
+functionality related {
+    - add `forgot password` functionality
+    - implement AI services
 }
 
-visual-candy-related {
+visual candy related {
     - add animator classes for more organized code
+    - fix responsiveness
+    - add retractable sidebar (icons-only)
+}
+
+production related {
+    - migrate to GraalVM native-image (instead of jlink-jpackage)
+    - add docker environments for fedora, windows and mac
 }
 

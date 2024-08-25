@@ -36,11 +36,11 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
                 return;
             }
             System.out.println(propertyChangeEvent.getNewValue().toString());
-            SidebarNavItem item = switch(propertyChangeEvent.getNewValue()) {
-                case Pane.AccountPane -> pane.getAccount();
-                case Pane.DashboardPane -> pane.getDashboard();
-                case Pane.QuickQueryPane -> pane.getQuickQuery();
-                case Pane.DocPane -> pane.getDocuments();
+            SidebarNavItem item = switch((Pane) propertyChangeEvent.getNewValue()) {
+                case AccountPane -> pane.getAccount();
+                case DashboardPane -> pane.getDashboard();
+                case QuickQueryPane -> pane.getQuickQuery();
+                case DocPane -> pane.getDocuments();
                 default -> null;
             };
 

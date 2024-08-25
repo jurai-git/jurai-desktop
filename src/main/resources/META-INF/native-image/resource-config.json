@@ -1,0 +1,88 @@
+{
+  "resources":{
+  "includes":[{
+    "pattern":"\\QMETA-INF/fonts.mf\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.time.zone.ZoneRulesProvider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.util.spi.ResourceBundleControlProvider\\E"
+  }, {
+    "pattern":"\\Qcom/sun/glass/utils/NativeLibLoader.class\\E"
+  }, {
+    "pattern":"\\Qcom/sun/javafx/scene/control/skin/modena/modena.bss\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/DrawRoundRect_Color.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/DrawRoundRect_LinearGradient_PAD.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/FillPgram_Color.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/FillRoundRect_Color.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/FillRoundRect_LinearGradient_PAD.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/Mask_TextureSuper.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/Solid_TextureFirstPassLCD.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/Solid_TextureRGB.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/Solid_TextureSecondPassLCD.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/prism/es2/glsl/Texture_Color.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/scenario/effect/impl/es2/glsl/LinearConvolveShadow_12.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/scenario/effect/impl/es2/glsl/LinearConvolveShadow_128.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/scenario/effect/impl/es2/glsl/LinearConvolveShadow_20.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/scenario/effect/impl/es2/glsl/LinearConvolveShadow_64.frag\\E"
+  }, {
+    "pattern":"\\Qcom/sun/scenario/effect/impl/es2/glsl/LinearConvolveShadow_8.frag\\E"
+  }, {
+    "pattern":"\\Qimg/horizontal_logo.png\\E"
+  }, {
+    "pattern":"\\Qimg/jurai-text-white-antialias.png\\E"
+  }, {
+    "pattern":"\\Qlibglass.so\\E"
+  }, {
+    "pattern":"\\Qlibglassgtk3.so\\E"
+  }, {
+    "pattern":"\\Qlibjavafx_font.so\\E"
+  }, {
+    "pattern":"\\Qlibjavafx_font_freetype.so\\E"
+  }, {
+    "pattern":"\\Qlibjavafx_font_pango.so\\E"
+  }, {
+    "pattern":"\\Qlibprism_es2.so\\E"
+  }, {
+    "pattern":"\\Qpaths/account.path\\E"
+  }, {
+    "pattern":"\\Qpaths/dashboard.path\\E"
+  }, {
+    "pattern":"\\Qpaths/docs.path\\E"
+  }, {
+    "pattern":"\\Qpaths/logout.path\\E"
+  }, {
+    "pattern":"\\Qpaths/quickquery.path\\E"
+  }, {
+    "pattern":"\\Qpaths/search.path\\E"
+  }, {
+    "pattern":"\\Qstyle/style.css\\E"
+  }, {
+    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt72b/ubidi.icu\\E"
+  }]},
+  "bundles":[{
+    "name":"com.sun.javafx.tk.quantum.QuantumMessagesBundle",
+    "locales":[""]
+  }, {
+    "name":"com/sun/javafx/scene/control/skin/resources/controls",
+    "locales":[""]
+  }, {
+    "name":"sun.awt.resources.awt",
+    "classNames":["sun.awt.resources.awt"]
+  }]
+}

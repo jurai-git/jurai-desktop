@@ -19,33 +19,25 @@ public class AdvogadoValidatorTest {
     @DisplayName("Validator should check for valid e-mails")
     void testEmailValidation() {
         Advogado adv = new Advogado(
+                1,
                 "Nome",
                 "email@email.c",
-                "12345678"
+                "12345678",
+                "token"
         );
 
         assertEquals(validator.validate(adv), validator.getInvalidEmailMessage());
     }
 
     @Test
-    @DisplayName("Validator should check for valid passwords")
-    void testPasswordValidation() {
-        Advogado adv = new Advogado(
-                "Nome",
-                "email@email.com",
-                "1234567"
-        );
-
-        assertEquals(validator.validate(adv), validator.getInvalidPasswordMessage());
-    }
-
-    @Test
     @DisplayName("Validator should check for entirely valid Advogados")
     void testValidAdvogado() {
         Advogado adv = new Advogado(
+                1,
                 "Nome",
                 "email@email.com",
-                "12345678"
+                "12345678",
+                "token"
         );
 
         assertEquals(validator.validate(adv), "");

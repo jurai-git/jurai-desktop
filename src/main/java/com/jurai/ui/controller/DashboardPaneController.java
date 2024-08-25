@@ -29,11 +29,15 @@ public class DashboardPaneController extends AbstractController<DashboardPane> {
 
     private void accountModeSwitched(AccountMode newMode, DashboardPane pane) {
         pane.getView().getChildren().removeAll(pane.getView().getChildren());
+        if(newMode == null) {
+            pane.getView().getChildren().add(pane.getInactiveView());
+            return;
+        }
         switch (newMode) {
             case LOGGED_IN:
                 pane.getView().getChildren().add(pane.getActiveView());
                 break;
-            case null, default:
+            default:
                 pane.getView().getChildren().add(pane.getInactiveView());
         }
     }

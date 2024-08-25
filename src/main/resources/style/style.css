@@ -103,5 +103,5 @@
 }
 
 .text-area > .scroll-pane {
-    -fx-skin: "io.jurai.ui.util.DefaultScrollPaneSkin";
+    -fx-skin: "com.jurai.ui.util.DefaultScrollPaneSkin";
 }

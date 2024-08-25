@@ -111,10 +111,10 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
     private void modeChanged(AccountMode newMode, AccountPane pane) {
         pane.setPane(switch(newMode) {
-            case AccountMode.LOGGING_IN -> pane.getLoginMenu();
-            case AccountMode.REGISTERING -> pane.getAdvogadoRegisterMenu();
+            case LOGGING_IN -> pane.getLoginMenu();
+            case REGISTERING -> pane.getAdvogadoRegisterMenu();
             case FORGOT_PASSWORD -> null;
-            case AccountMode.LOGGED_IN -> pane.getAccountDashboardMenu();
+            case LOGGED_IN -> pane.getAccountDashboardMenu();
         });
     }
 
