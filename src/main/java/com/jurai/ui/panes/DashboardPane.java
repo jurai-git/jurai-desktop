@@ -1,5 +1,7 @@
 package com.jurai.ui.panes;
 
+import com.jurai.data.ApplicationState;
+import com.jurai.data.model.Advogado;
 import com.jurai.ui.controls.SimpleList;
 import com.jurai.ui.menus.RequerenteInfoMenu;
 import javafx.geometry.Pos;
@@ -14,7 +16,7 @@ public class DashboardPane extends AbstractPane {
     private BorderPane activeView;
     private VBox inactiveView;
     private Hyperlink loginHyperlink;
-    private SimpleList<?> requerentesList;
+    private SimpleList<Advogado> requerentesList;
     private RequerenteInfoMenu requerenteInfoMenu;
 
     public DashboardPane() {
@@ -32,6 +34,8 @@ public class DashboardPane extends AbstractPane {
         activeView.getStyleClass().addAll("content", "border-pane");
         requerentesList = new SimpleList<>("Requerentes");
         requerenteInfoMenu = new RequerenteInfoMenu();
+
+        requerentesList.getListItems().add(ApplicationState.getCurrentUser());
     }
 
     @Override

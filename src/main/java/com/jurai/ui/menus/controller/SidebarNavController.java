@@ -35,7 +35,6 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
             if(!"activePane".equals(propertyChangeEvent.getPropertyName())) {
                 return;
             }
-            System.out.println(propertyChangeEvent.getNewValue().toString());
             SidebarNavItem item = switch((Pane) propertyChangeEvent.getNewValue()) {
                 case AccountPane -> pane.getAccount();
                 case DashboardPane -> pane.getDashboard();

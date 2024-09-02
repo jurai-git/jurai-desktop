@@ -1,5 +1,5 @@
 .basic-tabbed-pane {
-    -fx-padding: 0 24px 24px 24px !important;
+    -fx-padding: 0 16px 16px 16px !important;
 }
 
 .basic-tabbed-pane .tabs {

@@ -1,7 +1,7 @@
-.secondary-scene > .content {
-    -fx-padding-top: 0;
+.secondary-scene > .account-pane {
+    -fx-padding: 42px !important;
 }
 
-.secondary-scene > * {
-    -fx-padding: 48px !important;
+.secondary-scene .logo {
+    -fx-padding: 32px 0 0 0;
 }

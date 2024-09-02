@@ -8,7 +8,8 @@
 @import url("scenes/secondary-scene.css");
 @import url("util/classes.css");
 @import url("controls/basic-tabbed-pane.css");
-@import url(menus/quick-query-tab.css);
+@import url("menus/quick-query-tab.css");
+@import url("controls/arrow-toggle-button.css");
 
 /*
 @font-face {
@@ -25,19 +26,25 @@
 */
 
 @font-face {
-    font-family: 'Blender Pro';
-    src:
-        url("../fonts/BlenderPro-Book.ttf") format("truetype");
+    src: url("../fonts/BlenderProMedium.ttf");
 }
+@font-face {
+    src: url("../fonts/BlenderPro-Book.ttf");
+}
+@font-face {
+    src: url("../fonts/Exo2-VariableFont_wght.ttf");
+}
+
 * {
-    -fx-font-family: 'Blender Pro Medium';
+    -fx-font-family: 'Exo 2';
+    -fx-font-style: Regular;
     -fx-font-size: 15pt;
     -fx-base: #333;
     -fx-text-fill: white;
 }
 
 .root-pane {
-    -fx-background-color: #444;
+    -fx-background-color: #202024;
 }
 
 .content {

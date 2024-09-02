@@ -1,8 +1,10 @@
 .sidebar {
-    -fx-background-color: #333;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 24, 0, 0, 0);
+    -fx-background-color: #19191d;
+    /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 24, 0, 0, 0);*/
     -fx-padding: 12px 24px 24px 24px;
     -fx-background-radius: 0 12px 0 0;
+    -fx-border-color: #2b2b2f;
+    -fx-border-width: 0 2.5px 0 0;
 }
 
 .separator {
@@ -15,8 +17,12 @@
 }
 
 .sidebar-nav {
-    -fx-background-color: #484848;
+    -fx-background-color: transparent;
     -fx-background-radius: 10px;
+}
+
+.sidebar-nav:iconsOnly {
+    -fx-background-color: transparent !important;
 }
 
 .sidebar-nav > * {

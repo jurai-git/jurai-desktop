@@ -1,13 +1,20 @@
 package com.jurai.ui.menus;
 
+import com.jurai.data.ApplicationData;
+import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.controls.SidebarNavItem;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
 import com.jurai.util.UILogger;
+import javafx.animation.ScaleTransition;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.css.PseudoClass;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -27,16 +34,19 @@ public class SidebarNav extends AbstractMenu<VBox> {
         content.getStyleClass().add("sidebar-nav");
 
         dashboard = new SidebarNavItem(dashboardIcon, "Dashboard");
-        dashboard.dotWidthProperty().bind(content.widthProperty().multiply(0.025));
+        dashboard.dotWidthProperty().set(4);
 
         quickQuery = new SidebarNavItem(quickQueryIcon, "Consulta Rápida");
-        quickQuery.dotWidthProperty().bind(content.widthProperty().multiply(0.025));
+        quickQuery.dotWidthProperty().set(4);
 
         documents = new SidebarNavItem(documentsIcon, "Documentos");
-        documents.dotWidthProperty().bind(content.widthProperty().multiply(0.025));
+        documents.dotWidthProperty().set(4);
 
         account = new SidebarNavItem(accountIcon, "Sua Conta");
-        account.dotWidthProperty().bind(content.widthProperty().multiply(0.025));
+        account.dotWidthProperty().set(4);
+
+
+        ApplicationData.defaultIconSizeProperty().bind(account.getIconContainer().widthProperty());
 
         logout = new SidebarNavItem(logoutIcon, "Sair");
         logout.setDotVisible(false);
@@ -45,10 +55,12 @@ public class SidebarNav extends AbstractMenu<VBox> {
 
     @Override
     protected void layControls() {
-        content.getChildren().addAll(dashboard,
+        content.getChildren().addAll(
+                dashboard,
                 quickQuery,
                 documents,
-                account, SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                account,
+                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 logout);
         dashboard.setActive(true);
     }
@@ -73,6 +85,20 @@ public class SidebarNav extends AbstractMenu<VBox> {
             e.printStackTrace();
             UILogger.logError("unable to load sidebar icon paths");
             UILogger.logWarning("Proceding without sidebar icons");
+        }
+    }
+
+    public void setIconsOnly(boolean iconsOnly) {
+        dashboard.setIconsOnly(iconsOnly);
+        quickQuery.setIconsOnly(iconsOnly);
+        documents.setIconsOnly(iconsOnly);
+        account.setIconsOnly(iconsOnly);
+        logout.setIconsOnly(iconsOnly);
+
+        if(iconsOnly) {
+            content.pseudoClassStateChanged(PseudoClass.getPseudoClass("iconsOnly"), true);
+        } else {
+            content.pseudoClassStateChanged(PseudoClass.getPseudoClass("iconsOnly"), false);
         }
     }
 

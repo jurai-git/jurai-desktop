@@ -14,10 +14,6 @@ public class HomePane extends AbstractPane {
     private ImageView logo;
     BorderPane imageViewWrapper;
 
-    public HomePane() {
-        super();
-    }
-
     @Override
     protected void initControls() {
         view = new VBox();

@@ -1,5 +1,7 @@
 package com.jurai.ui.panes.layout;
 
+import com.jurai.ui.controls.ArrowToggleButton;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
@@ -16,24 +18,45 @@ public class ProportionPane extends Pane {
         requestLayout();
     }
 
+    public void recalculateLayoutPosition(Node n) {
+        NodeConstraints c = constraintsMap.get(n);
+        n.relocate(getWidth() * c.xProperty.get(), getHeight() * c.yProperty.get());
+    }
+
+    public void recalculateLayoutSize(Node n) {
+        NodeConstraints c = constraintsMap.get(n);
+        n.resize(getWidth() * c.wProperty.get(), getHeight() * c.hProperty.get());
+    }
+
     @Override
     protected void layoutChildren() {
 
         for(Node child : getChildren()) {
+            if(!child.isManaged()) {
+                continue;
+            }
+
             NodeConstraints constraints = constraintsMap.get(child);
 
-            if(constraints == null) constraints = new NodeConstraints();
+            double x = getWidth() * constraints.xProperty.get();
+            double y = getHeight() * constraints.yProperty.get();
 
-            double x = getWidth() * constraints.x;
-            double y = getHeight() * constraints.y;
-            double width = getWidth() * constraints.w;
-            double height = getHeight() * constraints.h;
+            if(constraints.anchor == NodeConstraints.Anchor.TOP_RIGHT) {
+                double widthPropertyValue = (constraints.exclusiveWProperty.get() == -1) ?
+                                constraints.wProperty.get() * getWidth() :
+                                constraints.exclusiveWProperty.get();
+
+                x = getWidth() - widthPropertyValue + getWidth() * constraints.xProperty.get();
+            }
+            double width = getWidth() * constraints.wProperty.get();
+            double height = getHeight() * constraints.hProperty.get();
+
+            if(constraints.exclusiveWProperty.get() != -1) {
+                width = constraints.exclusiveWProperty.get();
+            }
 
             child.relocate(x, y);
-            child.resize(
-                    Math.max(width, constraints.minWidth.get()),
-                    Math.max(height, constraints.minHeight.get())
-            );
+            child.resize(width, height);
         }
     }
 }

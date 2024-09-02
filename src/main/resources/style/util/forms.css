@@ -1,5 +1,5 @@
 .form .vbox > * {
-    -fx-padding: 16px 0;
+    -fx-padding: 3px 0;
 }
 
 .form .text-field {

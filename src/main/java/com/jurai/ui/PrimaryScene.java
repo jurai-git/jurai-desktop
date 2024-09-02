@@ -1,30 +1,39 @@
 package com.jurai.ui;
 
+import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
+import com.jurai.ui.animation.SidebarAnimator;
 import com.jurai.ui.controller.AccountPaneController;
 import com.jurai.ui.controller.DashboardPaneController;
 import com.jurai.ui.controller.NavbarController;
 import com.jurai.ui.controller.SidebarController;
+import com.jurai.ui.controls.ArrowToggleButton;
 import com.jurai.ui.util.Pane;
 import com.jurai.ui.menus.LoginMenu;
 import com.jurai.ui.panes.*;
 import com.jurai.ui.panes.layout.NodeConstraints;
 import com.jurai.ui.panes.layout.ProportionPane;
 import com.jurai.util.UILogger;
+import javafx.animation.Timeline;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class PrimaryScene {
     private Scene scene;
     private ProportionPane mainPane;
     private Navbar navbar;
-    private LoginMenu loginMenu;
     private Sidebar sidebar;
-    private final NodeConstraints mainContentConstraints = new NodeConstraints(0.18f, 0.08f, 0.82f, 0.92f);
-    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private ArrowToggleButton sidebarToggleButton;
+    private final NodeConstraints mainContentConstraints = new NodeConstraints(0, 0.06f, 0.82f, 0.92f);
+    private NodeConstraints sidebarConstraints, sidebarToggleConstraints;
+    private Timeline sidebarShowAnimation, sidebarHideAnimation;
 
     private AccountPane accountPane;
     private DashboardPane dashboardPane;
@@ -37,43 +46,51 @@ public class PrimaryScene {
         layControls();
         attachControllers();
         attachNotifiers();
+        attachEvents();
     }
 
     private void initControls() {
         mainPane = new ProportionPane();
         mainPane.getStyleClass().add("root-pane");
         navbar = new Navbar();
-        loginMenu = new LoginMenu();
         accountPane = new AccountPane();
         dashboardPane = new DashboardPane();
         homePane = new HomePane();
         planPane = new PlanPane();
         sidebar = new Sidebar();
         quickQueryPane = new QuickQueryPane();
+        sidebarToggleButton = new ArrowToggleButton();
     }
 
     private void layControls() {
+        ApplicationData.headerHeightProperty().bind(mainPane.heightProperty().multiply(0.06));
         mainPane.addConstraints(accountPane.getView(), mainContentConstraints);
         mainPane.addConstraints(dashboardPane.getView(), mainContentConstraints);
         mainPane.addConstraints(homePane.getView(), mainContentConstraints);
         mainPane.addConstraints(planPane.getView(), mainContentConstraints);
         mainPane.addConstraints(quickQueryPane.getView(), mainContentConstraints);
-        activePaneChanged(ApplicationState.getActivePane());
+        mainPane.addConstraints(navbar.getView(), new NodeConstraints(0, 0, 1, 0.06f));
 
-        scene = new Scene(mainPane, screenSize.width * 0.7, screenSize.height * 0.7, false, SceneAntialiasing.BALANCED);
+        mainContentConstraints.exclusiveWProperty.bind(mainPane.widthProperty().subtract(sidebar.getView().widthProperty()));
+        mainContentConstraints.anchor = NodeConstraints.Anchor.TOP_RIGHT;
+
+        sidebarConstraints = new NodeConstraints(0, 0, 0.2f, 1);
+        mainPane.addConstraints(sidebar.getView(), sidebarConstraints);
+        sidebarToggleConstraints = new NodeConstraints(0.16f, 0.02f, 0.04f, 0.04f);
+        sidebarToggleConstraints.exclusiveWProperty.bind(sidebarToggleButton.heightProperty());
+        sidebarToggleButton.translateXProperty().bind(mainPane.widthProperty().subtract(mainPane.heightProperty()).multiply(0.02));
+        mainPane.addConstraints(sidebarToggleButton, sidebarToggleConstraints);
+
+        activePaneChanged(ApplicationState.getActivePane());
+        sidebarModeUpdated(false);
+
+        scene = new Scene(mainPane, ApplicationData.getScreenSize().width * 0.7, ApplicationData.getScreenSize().height * 0.7, false, SceneAntialiasing.BALANCED);
     }
 
     private void layFixedControls() {
-        mainPane.addConstraints(navbar.getView(), new NodeConstraints(0, 0, 1, 0.08f));
-        mainPane.getChildren().add(navbar.getView());
-
-
-        mainPane.addConstraints(sidebar.getView(), new NodeConstraints(
-                0, 0, 0.18f, 1,
-                new SimpleFloatProperty(screenSize.width * 0.1f),
-                new SimpleFloatProperty(0)
-        ));
         mainPane.getChildren().add(sidebar.getView());
+        mainPane.getChildren().add(navbar.getView());
+        mainPane.getChildren().add(sidebarToggleButton);
     }
 
     private void attachControllers() {
@@ -92,7 +109,6 @@ public class PrimaryScene {
         // sidebar
         SidebarController sidebarController = new SidebarController();
         sidebarController.initialize(sidebar);
-
     }
 
     private void attachNotifiers() {
@@ -101,6 +117,22 @@ public class PrimaryScene {
                 activePaneChanged((Pane) e.getNewValue());
             }
         });
+        mainPane.widthProperty().addListener((observableValue, number, t1) -> {
+            if(number.doubleValue() < (double) ApplicationData.getScreenSize().width / 2 && sidebarToggleButton.isActive()) {
+                sidebarToggleButton.actuate();
+            }
+        });
+    }
+
+    private void attachEvents() {
+        sidebarToggleButton.addActiveListener((observableValue, aBoolean, t1) -> {
+            sidebarModeUpdated(aBoolean);
+        });
+    }
+
+    private void sidebarModeUpdated(boolean iconsOnly) {
+        sidebar.setIconsOnly(iconsOnly);
+        SidebarAnimator.getSidebarAnimation(sidebar, sidebarConstraints, mainPane).playFromStart();
     }
 
     public Scene getScene() {

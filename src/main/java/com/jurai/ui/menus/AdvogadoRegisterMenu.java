@@ -76,20 +76,21 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Co
         VBox.setVgrow(alreadyHasAccountHBox, Priority.SOMETIMES);
 
         fields.getChildren().addAll(
+                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 email,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.05)),
                 username,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.05)),
                 oab,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.05)),
                 password,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.05)),
                 confirmPassword,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.05)),
                 keepConnected,
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 create,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.05)),
                 alreadyHasAccountHBox
         );
 

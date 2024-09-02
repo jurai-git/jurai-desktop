@@ -15,7 +15,7 @@ docker build -t jfx
 Após isso, inicie a imagem e entre nela com a shell interativa. Atenção! Isso deverá ser feito no diretório raiz do projeto.
 
 ```shell
-docker run --rm -it jfx bash
+docker run --rm -it -v "$(pwd)":/app -v "$(pwd)/docker-dist:/app/target" jfx bash 
 ```
 
 Nesta shell, você poderá rodar os comandos para fazer a construção do programa, como `mvn clean compile javafx:jlink`.

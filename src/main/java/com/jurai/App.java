@@ -1,5 +1,6 @@
 package com.jurai;
 
+import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
@@ -46,6 +47,7 @@ public class App extends Application implements Controllable {
         secondaryStage.setScene(secondaryScene.getScene());
 
         ApplicationState.initialize();
+        ApplicationData.initialize();
     }
 
     private void selfAttachControllers() {

@@ -1,19 +1,31 @@
 package com.jurai.ui.panes;
 
+import com.jurai.data.ApplicationData;
+import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.menus.SidebarNav;
 import com.jurai.ui.menus.controller.SidebarNavController;
+import javafx.animation.ScaleTransition;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 public class Sidebar extends AbstractPane {
     private VBox view;
-    private ImageView logo;
     private Separator separator;
+    private Region headerSpacer;
     private SidebarNav nav;
+    private boolean iconsOnly;
+    private DoubleProperty finalWidth = new SimpleDoubleProperty();
+    private DoubleProperty initialWidth = new SimpleDoubleProperty();
+
+    private ScaleTransition separatorTransition;
+
 
     public Sidebar() {
         super();
@@ -26,20 +38,20 @@ public class Sidebar extends AbstractPane {
         view.setAlignment(Pos.TOP_CENTER);
         view.getStyleClass().add("sidebar");
 
-        logo = new ImageView();
-        Image logoImg = new Image(getClass().getResource("/img/jurai-text-white-antialias.png").toExternalForm());
-        logo.setImage(logoImg);
-        logo.setSmooth(true);
-        logo.setPreserveRatio(true);
-        logo.fitWidthProperty().bind(view.widthProperty().multiply(0.7));
-
         separator = new Separator();
         separator.setOrientation(Orientation.HORIZONTAL);
         VBox.setVgrow(separator, Priority.NEVER);
         separator.getStyleClass().add("separator");
 
+        headerSpacer = new Region();
+        headerSpacer.minHeightProperty().bind(ApplicationData.headerHeightProperty());
+
         nav = new SidebarNav();
         VBox.setVgrow(nav.getContent(), Priority.ALWAYS);
+
+        separatorTransition = new ScaleTransition(Duration.millis(300), separator);
+        separatorTransition.setInterpolator(new PowerEase(2, true));
+
     }
 
     private void attachControllers() {
@@ -50,10 +62,45 @@ public class Sidebar extends AbstractPane {
     @Override
     protected void layControls() {
         view.getChildren().addAll(
-            logo,
-            separator,
+            headerSpacer,
             nav.getContent()
         );
+    }
+
+    private void recalculateWidthProperty() {
+        finalWidth.unbind();
+        initialWidth.unbind();
+        if(iconsOnly) {
+            initialWidth.bind(ApplicationData.defaultIconSizeProperty().multiply(10));
+            finalWidth.bind(ApplicationData.defaultIconSizeProperty().multiply(3));
+            separatorTransition.setToX(0);
+            separatorTransition.setToY(0);
+            separatorTransition.playFromStart();
+        } else {
+            initialWidth.bind(ApplicationData.defaultIconSizeProperty().multiply(3));
+            finalWidth.bind(ApplicationData.defaultIconSizeProperty().multiply(10));
+            separatorTransition.setToX(1);
+            separatorTransition.setToY(1);
+            separatorTransition.playFromStart();
+        }
+    }
+
+    public DoubleProperty finalWidthProperty() {
+        return finalWidth;
+    }
+
+    public DoubleProperty initialWidthProperty() {
+        return initialWidth;
+    }
+
+    public boolean isIconsOnly() {
+        return iconsOnly;
+    }
+
+    public void setIconsOnly(boolean iconsOnly) {
+        this.iconsOnly = iconsOnly;
+        recalculateWidthProperty();
+        nav.setIconsOnly(iconsOnly);
     }
 
     @Override

@@ -82,6 +82,15 @@ public class SidebarNavItem extends HBox {
         getChildren().add(label);
     }
 
+    public void setIconsOnly(boolean iconsOnly) {
+        try {
+            if (iconsOnly)
+                getChildren().remove(label);
+            else
+                getChildren().add(label);
+        } catch (IllegalArgumentException ignored) {}
+    }
+
     private void setupActions() {
         this.setOnMouseClicked(onAction::accept);
         label.setOnMouseClicked(onAction::accept);

@@ -65,10 +65,13 @@ public class LoginMenu extends AbstractMenu<BorderPane> implements Controllable 
         fields.setAlignment(Pos.CENTER);
         fields.getChildren().addAll(
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
-                email, SpacerFactory.createVBoxSpacer(Priority.NEVER),
-                password, SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                email,
+                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.07)),
+                password,
+                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 keepConnected,
-                urls, SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                urls,
+                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 login
         );
 

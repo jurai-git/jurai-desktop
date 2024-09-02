@@ -27,6 +27,7 @@ public class SecondaryScene {
 
         headerLogo.fitWidthProperty().bind(content.heightProperty().multiply(0.3));
         headerLogoWrapper = new StackPane(headerLogo);
+        headerLogoWrapper.getStyleClass().add("logo");
 
         content.setCenter(accountPane.getView());
         content.setTop(headerLogoWrapper);

@@ -1,10 +1,15 @@
 package com.jurai.ui.panes;
 
+import com.jurai.data.ApplicationData;
+import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 public class Navbar extends AbstractPane {
     private HBox view;
+    private ImageView logo;
 
     public Navbar() {
         super();
@@ -14,10 +19,21 @@ public class Navbar extends AbstractPane {
     protected void initControls() {
         view = new HBox();
         view.getStyleClass().add("navbar");
+
+        logo = new ImageView();
+        Image logoImg = new Image(getClass().getResource("/img/jurai-text-white-antialias-8.png").toExternalForm());
+        logo.setImage(logoImg);
+        logo.setSmooth(true);
+        logo.setPreserveRatio(true);
+        logo.fitHeightProperty().bind(view.heightProperty().multiply(0.5));
     }
 
     @Override
     protected void layControls() {
+        view.getChildren().addAll(
+                logo
+        );
+        view.setAlignment(Pos.CENTER_LEFT);
     }
 
     @Override

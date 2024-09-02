@@ -16,7 +16,6 @@ public class SpacerFactory {
         g.getChildren().add(l);
         Scene s = new Scene(g);
         g.layout();
-        System.out.println(l.getHeight());
     }
 
     public static Region createHBoxSpacer(Priority p) {
@@ -34,17 +33,15 @@ public class SpacerFactory {
 
     public static Region createHBoxSpacer(DoubleBinding sizeProperty) {
         Region spacer = new Region();
-        spacer.minHeightProperty().bind(sizeProperty);
         spacer.maxHeightProperty().bind(sizeProperty);
-        HBox.setHgrow(spacer, Priority.NEVER);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
         return spacer;
     }
 
     public static Region createVBoxSpacer(DoubleBinding sizeProperty) {
         Region spacer = new Region();
-        spacer.minWidthProperty().bind(sizeProperty);
-        spacer.maxWidthProperty().bind(sizeProperty);
-        VBox.setVgrow(spacer, Priority.NEVER);
+        spacer.maxHeightProperty().bind(sizeProperty);
+        VBox.setVgrow(spacer, Priority.ALWAYS);
         return spacer;
     }
 

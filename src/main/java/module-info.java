@@ -7,6 +7,8 @@ module jurai {
     requires transitive java.desktop;
     requires transitive java.logging;
     requires com.google.gson;
+    requires java.sql;
+    requires jdk.compiler;
 
 
     exports com.jurai to javafx.graphics;

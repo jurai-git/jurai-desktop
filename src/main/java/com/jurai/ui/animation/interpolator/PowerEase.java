@@ -3,10 +3,10 @@ package com.jurai.ui.animation.interpolator;
 import javafx.animation.Interpolator;
 
 public class PowerEase extends Interpolator {
-    private int strength;
+    private double strength;
     private boolean reverse;
 
-    public PowerEase(int strength, boolean reverse) {
+    public PowerEase(double strength, boolean reverse) {
         this.reverse = reverse;
         this.strength = strength;
     }

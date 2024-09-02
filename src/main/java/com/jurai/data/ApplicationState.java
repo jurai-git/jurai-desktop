@@ -11,7 +11,7 @@ import com.jurai.util.StateLogger;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ApplicationState {
+public final class ApplicationState {
     private static final PropertyChangeSupport support = new PropertyChangeSupport(new ApplicationState());
 
     private static Pane activePane = Pane.DashboardPane;
@@ -22,12 +22,8 @@ public class ApplicationState {
     private static StageType stageType = null;
 
     public static void initialize() {
-        support.addPropertyChangeListener(propertyChangeEvent -> {
-            String oldValueString = (propertyChangeEvent.getOldValue() == null) ? "null" : propertyChangeEvent.getOldValue().toString();
-            String newValueString = (propertyChangeEvent.getNewValue() == null) ? "null" : propertyChangeEvent.getNewValue().toString();
-            StateLogger.log((propertyChangeEvent.getPropertyName() + " changed from " + oldValueString + " to " + newValueString));
-        });
-        StateLogger.log("initialized StateLogger");
+        ApplicationData.initializeSupportLogging(support);
+        StateLogger.log("initialized Application state logging");
         support.firePropertyChange("activePane", activePane, activePane);
         support.firePropertyChange("selectedRequerente", selectedRequerente, selectedRequerente);
         setAccountMode(AccountMode.LOGGING_IN);
@@ -105,12 +101,8 @@ public class ApplicationState {
         return stageType;
     }
 
-
-    public static void addPropertyChangeListener(PropertyChangeListener listener) {
-        support.addPropertyChangeListener(listener);
+    public static void addPropertyChangeListener(PropertyChangeListener l) {
+        support.addPropertyChangeListener(l);
     }
 
-    public static void removePropertyChangeListener(PropertyChangeListener listener) {
-        support.removePropertyChangeListener(listener);
-    }
 }
