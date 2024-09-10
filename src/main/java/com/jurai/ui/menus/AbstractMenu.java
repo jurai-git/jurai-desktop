@@ -1,12 +1,16 @@
 package com.jurai.ui.menus;
 
+import com.jurai.ui.BaseView;
+import com.jurai.ui.LazyLoaded;
 import com.jurai.ui.controller.Controllable;
 import javafx.scene.layout.Pane;
 
-public abstract class AbstractMenu<T extends Pane> implements Controllable {
+public abstract class AbstractMenu<T extends Pane> implements Controllable, BaseView {
     public AbstractMenu() {
         initControls();
-        layControls();
+        if (!LazyLoaded.class.isAssignableFrom(this.getClass())) {
+            layControls();
+        }
     }
 
     protected abstract void initControls();

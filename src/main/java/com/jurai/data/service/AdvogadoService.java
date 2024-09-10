@@ -36,13 +36,13 @@ public class AdvogadoService {
             String oab
     ) throws ResponseNotOkException {
         try {
-        Map<String, String> advogado = new HashMap<>();
-        advogado.put("username", username);
-        advogado.put("email", email);
-        advogado.put("password", password);
-        advogado.put("oab", oab);
+        JsonObject advogadoJson = new JsonObject();
+        advogadoJson.addProperty("username", username);
+        advogadoJson.addProperty("email", email);
+        advogadoJson.addProperty("password", password);
+        advogadoJson.addProperty("oab", oab);
 
-        JsonObject response = requestHandler.post("/advogado/new", JsonUtils.asJson(gson.toJson(advogado)));
+        JsonObject response = requestHandler.post("/advogado/new", advogadoJson);
         EventLogger.log("Response on advogado creation: " +  response.toString());
 
         } catch(ResponseNotOkException e) {
@@ -56,19 +56,19 @@ public class AdvogadoService {
     }
 
     public void authenticate(String uname, String password) throws ResponseNotOkException {
-        Map<String, String> body = new HashMap<>();
-        body.put("password", password);
-        body.put("username", uname);
-        String jsonifiedBody = gson.toJson(body);
+        JsonObject body = new JsonObject();
+        body.addProperty("username", uname);
+        body.addProperty("password", password);
 
         try {
-            JsonObject response = requestHandler.post("/advogado/get", JsonUtils.asJson(jsonifiedBody));
+            JsonObject response = requestHandler.post("/advogado/get", body);
             Advogado advogado = gson.fromJson(response.get("advogado"), Advogado.class);
             ApplicationState.setCurrentUser(advogado);
         }catch(ResponseNotOkException e) {
             throw e;
         }
     }
+
     public void reloadRequerentes() throws ResponseNotOkException {
         Map<String, String> body = new HashMap<>();
         Advogado currentUser = ApplicationState.getCurrentUser();
@@ -94,7 +94,6 @@ public class AdvogadoService {
         System.out.println(body);
         try {
             JsonObject response = requestHandler.post("/requerente/new", body);
-
             reloadRequerentes();
         } catch(ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService.addRequerente(): error " + e.getCode());
