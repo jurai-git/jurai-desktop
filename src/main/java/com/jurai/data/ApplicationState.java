@@ -2,6 +2,7 @@ package com.jurai.data;
 
 import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Model;
+import com.jurai.ui.modal.Modal;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.Pane;
 import com.jurai.ui.controls.SimpleListItem;

@@ -7,14 +7,17 @@ import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Runnable;
 
 public class BasicTabbedPane extends BorderPane {
     private final List<BasicTab> tabs = new ArrayList<>();
     private HBox tabHeaders;
     private BasicTab activeTab;
+    private Runnable onTabChanged;
 
     public BasicTabbedPane() {
         super();
+        
         getStyleClass().add("basic-tabbed-pane");
         tabHeaders = new HBox();
         tabHeaders.getStyleClass().add("tabs");
@@ -43,6 +46,16 @@ public class BasicTabbedPane extends BorderPane {
     private void tabClicked(BasicTab tab) {
         if(activeTab != tab) {
             setActiveTab(tab);
+            onTabChanged.run();
         }
     }
+
+    public BasicTab getActiveTab() {
+        return activeTab;
+    }
+
+    public void setOnTabChanged(Runnable onTabChanged) {
+        this.onTabChanged = onTabChanged;
+    }
+
 }

@@ -21,6 +21,7 @@ public class App extends Application implements Controllable {
 
     public static void main(String[] args) {
         launch(args);
+        ctlThread.start();
     }
 
     @Override

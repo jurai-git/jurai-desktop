@@ -1,23 +1,20 @@
 package com.jurai.ui.panes;
 
-import com.jurai.data.ApplicationState;
-import com.jurai.data.model.Advogado;
-import com.jurai.ui.controls.SimpleList;
-import com.jurai.ui.menus.RequerenteInfoMenu;
-import javafx.geometry.Pos;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
+import com.jurai.ui.menus.DemandaDashboardMenu;
+import com.jurai.ui.menus.RequerenteDashboardMenu;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 public class DashboardPane extends AbstractPane {
-    private StackPane view;
-    private BorderPane activeView;
-    private VBox inactiveView;
-    private Hyperlink loginHyperlink;
-    private SimpleList<Advogado> requerentesList;
-    private RequerenteInfoMenu requerenteInfoMenu;
+    private BorderPane view;
+    private GridPane centerContent;
+    private ColumnConstraints left, right;
+    private RowConstraints top, bottom;
+    private RequerenteDashboardMenu requerenteDashboardMenu;
+    private DemandaDashboardMenu demandaDashboardMenu;
 
     public DashboardPane() {
         super();
@@ -25,17 +22,16 @@ public class DashboardPane extends AbstractPane {
 
     @Override
     protected void initControls() {
-        view = new StackPane();
-        activeView = new BorderPane();
-        inactiveView = new VBox();
-        loginHyperlink = new Hyperlink("clique aqui para fazer log-in");
-        inactiveView.getStyleClass().addAll("content", "vbox");
-        inactiveView.setAlignment(Pos.TOP_CENTER);
-        activeView.getStyleClass().addAll("content", "border-pane");
-        requerentesList = new SimpleList<>("Requerentes");
-        requerenteInfoMenu = new RequerenteInfoMenu();
+        view = new BorderPane();
+        view.getStyleClass().addAll("content", "border-pane", "no-bottom-padding");
+        requerenteDashboardMenu = new RequerenteDashboardMenu();
+        demandaDashboardMenu = new DemandaDashboardMenu();
 
-        requerentesList.getListItems().add(ApplicationState.getCurrentUser());
+        centerContent = new GridPane();
+        left = new ColumnConstraints();
+        right = new ColumnConstraints();
+        bottom = new RowConstraints();
+        top = new RowConstraints();
     }
 
     @Override
@@ -43,32 +39,24 @@ public class DashboardPane extends AbstractPane {
         final Label dl = new Label("Dashboard");
         dl.getStyleClass().add("header");
 
-        activeView.setTop(dl);
-        activeView.setCenter(requerentesList);
-        activeView.setRight(requerenteInfoMenu.getContent());
+        left.setPercentWidth(45);
+        right.setPercentWidth(55);
+        bottom.setPercentHeight(45);
+        top.setPercentHeight(55);
+        centerContent.setHgap(16);
+        centerContent.setVgap(16);
+        centerContent.getColumnConstraints().addAll(left, right);
+        centerContent.getRowConstraints().addAll(top, bottom);
+        centerContent.add(requerenteDashboardMenu.getContent(), 0, 0, 1, 2);
+        centerContent.add(demandaDashboardMenu.getContent(), 1, 0, 1, 1);
 
-        final Label notLoggedHeader = new Label("Parece que você não está logado!");
-        notLoggedHeader.getStyleClass().add("header");
-        final Label notLoggedLabel = new Label("Para acessar essa página, você deverá fazer login.");
-        inactiveView.getChildren().addAll(notLoggedHeader, notLoggedLabel, loginHyperlink);
-    }
-
-    public Hyperlink getLoginHyperlink() {
-        return loginHyperlink;
-    }
-
-    public BorderPane getActiveView() {
-        return activeView;
-    }
-
-    public VBox getInactiveView() {
-        return inactiveView;
+        view.setTop(dl);
+        view.setCenter(centerContent);
     }
 
     @Override
-    public StackPane getView() {
+    public BorderPane getView() {
         return view;
     }
-
 
 }

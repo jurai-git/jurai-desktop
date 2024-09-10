@@ -8,23 +8,23 @@ import javafx.util.Duration;
 public class DefaultButtonAnimator {
     public static void animate(Button button) {
 
-        ScaleTransition activeIn = new ScaleTransition(Duration.millis(280), button);
-        ScaleTransition activeOut = new ScaleTransition(Duration.millis(280), button);
-        PowerEase activeEase = new PowerEase(4, true);
+        ScaleTransition activeIn = new ScaleTransition(Duration.millis(250), button);
+        ScaleTransition activeOut = new ScaleTransition(Duration.millis(250), button);
+        PowerEase activeEase = new PowerEase(5, true);
         activeIn.setInterpolator(activeEase);
         activeOut.setInterpolator(activeEase);
         activeIn.setToX(1);
         activeIn.setToY(1);
-        activeOut.setToX(1.08);
-        activeOut.setToY(1.08);
+        activeOut.setToX(1.05);
+        activeOut.setToY(1.05);
 
-        ScaleTransition hoverIn = new ScaleTransition(Duration.millis(280), button);
-        ScaleTransition hoverOut = new ScaleTransition(Duration.millis(280), button);
-        PowerEase hoverEase = new PowerEase(3, true);
+        ScaleTransition hoverIn = new ScaleTransition(Duration.millis(300), button);
+        ScaleTransition hoverOut = new ScaleTransition(Duration.millis(300), button);
+        PowerEase hoverEase = new PowerEase(3.2, true);
         hoverIn.setInterpolator(hoverEase);
         hoverOut.setInterpolator(hoverEase);
-        hoverIn.setToX(1.08);
-        hoverIn.setToY(1.08);
+        hoverIn.setToX(1.05);
+        hoverIn.setToY(1.05);
         hoverOut.setToX(1);
         hoverOut.setToY(1);
 

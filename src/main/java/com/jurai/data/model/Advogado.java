@@ -1,6 +1,7 @@
 package com.jurai.data.model;
 
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ public class Advogado implements Model, Serializable {
     private StringProperty email = new SimpleStringProperty();
     private StringProperty oab = new SimpleStringProperty();
     private StringProperty accessToken = new SimpleStringProperty();
+    private ObservableList<Requerente> requerentes = new SimpleListProperty<>();
 
     public Advogado(int id, String nome, String email, String oab, String accessToken) {
         this.id.set(id);
@@ -73,6 +75,10 @@ public class Advogado implements Model, Serializable {
         return id;
     }
 
+    public ObservableList<Requerente> getRequerentes() {
+        return requerentes;
+    }
+
     @Override
     public StringProperty nomeProperty() {
         return username;
@@ -82,7 +88,5 @@ public class Advogado implements Model, Serializable {
     public String toString() {
         return "{io.jurai.data.model.Advogado: " + getNome() + "}";
     }
-
-
 
 }

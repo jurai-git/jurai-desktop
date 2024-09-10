@@ -1,9 +1,8 @@
-package com.jurai.ui.menus.controller;
+package com.jurai.ui.controller;
 
 import com.jurai.data.ApplicationState;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.Pane;
-import com.jurai.ui.controller.AbstractController;
 import com.jurai.ui.controls.SidebarNavItem;
 import com.jurai.ui.menus.SidebarNav;
 import com.jurai.util.UILogger;

@@ -2,9 +2,13 @@ package com.jurai;
 
 import com.jurai.data.ApplicationState;
 import com.jurai.data.model.*;
+import com.jurai.data.serializer.AdvogadoSerializer;
+import com.jurai.data.serializer.RequerenteSerializer;
+import com.jurai.data.service.AdvogadoService;
 import javafx.application.Platform;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 public class CommandListener implements Runnable {
@@ -41,26 +45,20 @@ public class CommandListener implements Runnable {
 
     private void handleFxctl(String[] args) {
         switch(args[0]) {
-            case "export":
-            case "--export":
-            case "-e":
-                String key = args[1];
-                String newValue = args[2];
-                try {
-                    switch (key) {
-                        case "currentuser":
-                            if(newValue.equals("default")) {
-                                Platform.runLater(() -> ApplicationState.setCurrentUser(dummyUser));
-                            } else {
-                                System.out.println("Custom user setting is not yet supported");
-                            }
-                            break;
-                        default:
-                            System.out.println("Invalid key: " + key);
+            case "import":
+                if(args[1].equals("requerente")) {
+                    Requerente r = new Requerente(Integer.toString(new Random().nextInt()), "nome",
+                            "nomeSocial", "F", false, "12312312", "ssp",
+                            "solteira", "brasileira", "profissao", "123123123",
+                            "logradouro", Integer.toString(new Random().nextInt()), "123", "comp",
+                            "bairro", "estado", "cidade");
+                    System.out.println(r);
+                    try {
+                        new AdvogadoService().addRequerente(r);
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                        System.out.println("bééééééé");
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Invalid value: " + newValue);
                 }
                 break;
             case "stop-debug":

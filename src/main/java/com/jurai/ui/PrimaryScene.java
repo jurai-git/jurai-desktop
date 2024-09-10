@@ -3,38 +3,29 @@ package com.jurai.ui;
 import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.SidebarAnimator;
-import com.jurai.ui.controller.AccountPaneController;
-import com.jurai.ui.controller.DashboardPaneController;
-import com.jurai.ui.controller.NavbarController;
-import com.jurai.ui.controller.SidebarController;
+import com.jurai.ui.controller.*;
 import com.jurai.ui.controls.ArrowToggleButton;
+import com.jurai.ui.modal.ModalHandler;
+import com.jurai.ui.modal.RequerenteRegisterModal;
 import com.jurai.ui.util.Pane;
-import com.jurai.ui.menus.LoginMenu;
 import com.jurai.ui.panes.*;
 import com.jurai.ui.panes.layout.NodeConstraints;
 import com.jurai.ui.panes.layout.ProportionPane;
 import com.jurai.util.UILogger;
 import javafx.animation.Timeline;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
-
-import javax.swing.*;
-import java.awt.*;
+import javafx.scene.layout.StackPane;
 
 public class PrimaryScene {
     private Scene scene;
+    private StackPane modalRoot;
     private ProportionPane mainPane;
     private Navbar navbar;
     private Sidebar sidebar;
     private ArrowToggleButton sidebarToggleButton;
     private final NodeConstraints mainContentConstraints = new NodeConstraints(0, 0.06f, 0.82f, 0.92f);
     private NodeConstraints sidebarConstraints, sidebarToggleConstraints;
-    private Timeline sidebarShowAnimation, sidebarHideAnimation;
-
     private AccountPane accountPane;
     private DashboardPane dashboardPane;
     private HomePane homePane;
@@ -43,6 +34,7 @@ public class PrimaryScene {
 
     public PrimaryScene() {
         initControls();
+        ModalHandler.initialize(modalRoot, mainPane);
         layControls();
         attachControllers();
         attachNotifiers();
@@ -51,6 +43,7 @@ public class PrimaryScene {
 
     private void initControls() {
         mainPane = new ProportionPane();
+        modalRoot = new StackPane(mainPane);
         mainPane.getStyleClass().add("root-pane");
         navbar = new Navbar();
         accountPane = new AccountPane();
@@ -84,7 +77,7 @@ public class PrimaryScene {
         activePaneChanged(ApplicationState.getActivePane());
         sidebarModeUpdated(false);
 
-        scene = new Scene(mainPane, ApplicationData.getScreenSize().width * 0.7, ApplicationData.getScreenSize().height * 0.7, false, SceneAntialiasing.BALANCED);
+        scene = new Scene(modalRoot, ApplicationData.getScreenSize().width * 0.7, ApplicationData.getScreenSize().height * 0.7, false, SceneAntialiasing.BALANCED);
     }
 
     private void layFixedControls() {
@@ -102,7 +95,6 @@ public class PrimaryScene {
         AccountPaneController accountPaneController = new AccountPaneController();
         accountPaneController.initialize(accountPane);
 
-        // dashboard pane
         DashboardPaneController dashboardPaneController = new DashboardPaneController();
         dashboardPaneController.initialize(dashboardPane);
 
@@ -113,12 +105,12 @@ public class PrimaryScene {
 
     private void attachNotifiers() {
         ApplicationState.addPropertyChangeListener(e -> {
-            if("activePane".equals(e.getPropertyName())) {
+            if ("activePane".equals(e.getPropertyName())) {
                 activePaneChanged((Pane) e.getNewValue());
             }
         });
         mainPane.widthProperty().addListener((observableValue, number, t1) -> {
-            if(number.doubleValue() < (double) ApplicationData.getScreenSize().width / 2 && sidebarToggleButton.isActive()) {
+            if (number.doubleValue() < (double) ApplicationData.getScreenSize().width / 2 && sidebarToggleButton.isActive()) {
                 sidebarToggleButton.actuate();
             }
         });

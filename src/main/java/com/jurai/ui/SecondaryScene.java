@@ -18,6 +18,7 @@ public class SecondaryScene {
     public SecondaryScene() {
         content = new BorderPane();
         content.getStyleClass().add("secondary-scene");
+        content.getStyleClass().add("root-pane");
         accountPane = new AccountPane();
         headerLogo = new ImageView();
         Image logoImg = new Image(getClass().getResource("/img/jurai-text-white-antialias.png").toExternalForm());

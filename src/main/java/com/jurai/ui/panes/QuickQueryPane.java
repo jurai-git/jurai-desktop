@@ -1,4 +1,5 @@
 package com.jurai.ui.panes;
+
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
 import com.jurai.ui.menus.QuickQueryTab;
@@ -35,6 +36,13 @@ public class QuickQueryPane extends AbstractPane {
         tabbedPane.addTab(pdfTab);
         tabbedPane.addTab(ementaTab);
         tabbedPane.setActiveTab(pdfTab);
+        tabbedPane.setOnTabChanged(() -> {
+            if(tabbedPane.getActiveTab().equals(pdfTab)) {
+                quickQueryTab.setMode(QuickQueryTab.Mode.PDF);
+            } else {
+                quickQueryTab.setMode(QuickQueryTab.Mode.EMENTA);
+            }
+        });
 
         title = new Label("Consulta Rápida");
         title.getStyleClass().add("header");
@@ -47,8 +55,8 @@ public class QuickQueryPane extends AbstractPane {
     protected void layControls() {
         centerContent.setTop(subtitle);
         BorderPane.setAlignment(tabbedPane, Pos.CENTER);
-        tabbedPane.maxWidthProperty().bind(centerContent.widthProperty().multiply(0.7));
-        tabbedPane.maxHeightProperty().bind(centerContent.heightProperty().subtract(subtitle.heightProperty()).multiply(0.8));
+        tabbedPane.maxWidthProperty().bind(centerContent.widthProperty().multiply(0.9));
+        tabbedPane.maxHeightProperty().bind(centerContent.heightProperty().subtract(subtitle.heightProperty()).multiply(0.9));
         centerContent.setCenter(tabbedPane);
 
         view.setTop(title);

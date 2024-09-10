@@ -10,20 +10,19 @@ import java.util.Map;
 public class Demanda implements Model {
     private double id;
 
-    private StringProperty foro = new SimpleStringProperty();
-    private StringProperty competencia = new SimpleStringProperty();
-    private StringProperty classe = new SimpleStringProperty();
-    private StringProperty assuntoPrincipal = new SimpleStringProperty();
-    private BooleanProperty pedidoLiminar = new SimpleBooleanProperty(false);
-    private BooleanProperty segJustica = new SimpleBooleanProperty(false);
-    private DoubleProperty valorAcao = new SimpleDoubleProperty();
-    private BooleanProperty dispensaLegal = new SimpleBooleanProperty(false);
-    private BooleanProperty justicaGratuita = new SimpleBooleanProperty(false);
-    private BooleanProperty guiaCustas = new SimpleBooleanProperty(false);
-    private StringProperty resumo = new SimpleStringProperty();
-    private StringProperty statusDemanda = new SimpleStringProperty();
-
-    private StringProperty identificacao = new SimpleStringProperty("");
+    private final StringProperty foro = new SimpleStringProperty();
+    private final StringProperty competencia = new SimpleStringProperty();
+    private final StringProperty classe = new SimpleStringProperty();
+    private final StringProperty assuntoPrincipal = new SimpleStringProperty();
+    private final BooleanProperty pedidoLiminar = new SimpleBooleanProperty(false);
+    private final BooleanProperty segJustica = new SimpleBooleanProperty(false);
+    private final DoubleProperty valorAcao = new SimpleDoubleProperty();
+    private final BooleanProperty dispensaLegal = new SimpleBooleanProperty(false);
+    private final BooleanProperty justicaGratuita = new SimpleBooleanProperty(false);
+    private final BooleanProperty guiaCustas = new SimpleBooleanProperty(false);
+    private final StringProperty resumo = new SimpleStringProperty();
+    private final StringProperty statusDemanda = new SimpleStringProperty();
+    private final StringProperty identificacao = new SimpleStringProperty("");
 
     private ObjectProperty<Requerente> requerente = new SimpleObjectProperty<>();
 

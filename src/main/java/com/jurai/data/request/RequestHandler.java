@@ -44,7 +44,7 @@ public class RequestHandler {
 
         int code = con.getResponseCode();
         EventLogger.log("request code: " + code);
-        if (code != 200) {
+        if (code/100 != 2) {
             throw new ResponseNotOkException(code);
         }
         

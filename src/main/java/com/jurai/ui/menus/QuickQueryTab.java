@@ -15,8 +15,7 @@ public class QuickQueryTab extends AbstractMenu<BorderPane> {
     private HBox form, bottomRegion;
     private VBox oddsBox, argumentsBox;
     private BorderPane argumentsContainer;
-    private Button send, openFileChooser;
-    private TextField ementaTextField;
+    private Button send, openFileChooser, inputEmentaBtn;
     private FileChooser fileChooser;
     private Mode mode = Mode.PDF;
 
@@ -27,20 +26,21 @@ public class QuickQueryTab extends AbstractMenu<BorderPane> {
     @Override
     protected void initControls() {
         send = new Button("Enviar");
+        send.getStyleClass().add("blue-button");
         HBox.setHgrow(send, Priority.ALWAYS);
         DefaultButtonAnimator.animate(send);
+
         openFileChooser = new Button("Escolher documento");
         HBox.setHgrow(openFileChooser, Priority.ALWAYS);
         DefaultButtonAnimator.animate(openFileChooser);
-        ementaTextField = new TextField("Nenhuma ementa inserida");
-        ementaTextField.setEditable(false);
+
+        inputEmentaBtn = new Button("Inserir ementa");
+        DefaultButtonAnimator.animate(inputEmentaBtn);
         fileChooser = new FileChooser();
 
         oddsResult = new Label("Nenhuma previsão");
         argumentsHeader = new Label("Argumentos:");
-        //argumentsHeader.getStyleClass().add("subheader");
         oddsHeader = new Label("Previsão:");
-        //oddsHeader.getStyleClass().add("subheader");
 
         final Insets emptyInsets = new Insets(0, 0, 0, 0);
         argument1 = new TextArea("Argumento 1: Nenhum argumento");
@@ -57,6 +57,7 @@ public class QuickQueryTab extends AbstractMenu<BorderPane> {
         argumentsContainer = new BorderPane();
         form = new HBox();
         form.getStyleClass().add("query-form");
+        form.setSpacing(12);
         tabContent = new BorderPane();
         tabContent.getStyleClass().add("quick-query-tab");
         bottomRegion = new HBox();
@@ -112,7 +113,6 @@ public class QuickQueryTab extends AbstractMenu<BorderPane> {
         this.mode = newMode;
         switch(mode) {
             case PDF:
-                ementaTextField.setText("Nenhuma ementa inserida!");
                 layFormControlsAsPDF();
                 break;
             case EMENTA:
@@ -121,13 +121,14 @@ public class QuickQueryTab extends AbstractMenu<BorderPane> {
     }
 
     private void layFormControlsAsPDF() {
-        form.getChildren().removeAll(form.getChildren());
+         
+	form.getChildren().removeAll(form.getChildren());
         form.getChildren().addAll(
-                SpacerFactory.createHBoxSpacer(Priority.SOMETIMES),
+                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
                 openFileChooser,
-                SpacerFactory.createHBoxSpacer(form.widthProperty().multiply(0.1)),
+                SpacerFactory.createHBoxSpacer(12),
                 send,
-                SpacerFactory.createHBoxSpacer(Priority.SOMETIMES)
+                SpacerFactory.createHBoxSpacer(Priority.ALWAYS)
         );
     }
 
@@ -135,8 +136,8 @@ public class QuickQueryTab extends AbstractMenu<BorderPane> {
         form.getChildren().removeAll(form.getChildren());
         form.getChildren().addAll(
                 SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
-                ementaTextField,
-                SpacerFactory.createHBoxSpacer(form.widthProperty().multiply(0.1)),
+                inputEmentaBtn,
+                SpacerFactory.createHBoxSpacer(12),
                 send,
                 SpacerFactory.createHBoxSpacer(Priority.ALWAYS)
         );

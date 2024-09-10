@@ -3,15 +3,13 @@ package com.jurai.ui.panes;
 import com.jurai.data.ApplicationData;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.menus.SidebarNav;
-import com.jurai.ui.menus.controller.SidebarNavController;
+import com.jurai.ui.controller.SidebarNavController;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Separator;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 

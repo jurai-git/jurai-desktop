@@ -2,7 +2,7 @@ package com.jurai.data.model;
 
 import java.util.List;
 
-public enum EstadoCivil implements LabeledEnum{
+public enum EstadoCivil implements LabeledEnum {
 
     SOLTEIRO("Solteiro(a)"),
     CASADO("Casado(a)"),

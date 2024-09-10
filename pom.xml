@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.jurai</groupId>
+    <groupId>com.jurai</groupId>
     <artifactId>JurAI</artifactId>
     <version>0.0.1</version>
 
@@ -90,6 +90,9 @@
                     </arguments>
                 </configuration>
             </plugin>
+
+
+
 
             <!-- Plugin to create modularized image -->
             <plugin>
@@ -239,7 +242,13 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.3.1</version>
             </plugin>
-
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.extensions</groupId>
+                <artifactId>maven-build-cache-extension</artifactId>
+                <version>1.2.0</version>
+            </extension>
+        </extensions>
     </build>
 </project>

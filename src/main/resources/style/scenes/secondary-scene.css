@@ -1,3 +1,7 @@
+.secondary-scene {
+    -fx-background-color: #141416;
+}
+
 .secondary-scene > .account-pane {
     -fx-padding: 42px !important;
 }

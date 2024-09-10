@@ -9,6 +9,7 @@ import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.menus.AccountDashboardMenu;
 
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
 
 public class AccountPaneController extends AbstractController<AccountPane> {
     AdvogadoService s;
@@ -22,6 +23,12 @@ public class AccountPaneController extends AbstractController<AccountPane> {
     @Override
     protected void attachEvents(AccountPane pane) {
         // login action
+        pane.getLoginMenu().getPassword().setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ENTER) {
+                pane.getLoginMenu().getLogin().fire();
+            }
+        });
+
         pane.getLoginMenu().getLogin().setOnAction(e -> {
             try {
                 if(pane.getLoginMenu().getEmail().getText().equals("root")) {
@@ -56,6 +63,12 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         });
 
         //register action
+        pane.getAdvogadoRegisterMenu().getConfirmPassword().setOnKeyTyped(e -> {
+            if(e.getCode() == KeyCode.ENTER) {
+                pane.getAdvogadoRegisterMenu().getCreateButton().fire();
+            }
+        });
+
         pane.getAdvogadoRegisterMenu().getCreateButton().setOnAction(e -> {
             final String pwd = pane.getAdvogadoRegisterMenu().getPassword().getText();
             if(!
@@ -84,8 +97,11 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             }
 
             final String oab = pane.getAdvogadoRegisterMenu().getOab().getText();
+            try {
+                s.create(username, email, pwd, oab);
+            } catch(Exception ignored) {
 
-            s.create(username, email, pwd, oab);
+            }
 
             ApplicationState.setAccountMode(AccountMode.LOGGING_IN);
         });
