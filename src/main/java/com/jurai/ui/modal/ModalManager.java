@@ -3,59 +3,82 @@ package com.jurai.ui.modal;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.animation.interpolator.SmoothEase;
 import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
 public class ModalManager {
-    private static StackPane root;
-    private static Node content;
-    private static Modal activeModal;
-    private static ScaleTransition scaleInTransition;
-    private static ScaleTransition scaleOutTransition;
-    private static FadeTransition fadeInTransition;
-    private static FadeTransition fadeOutTransition;
+    private static ModalManager instance;
+    private StackPane root;
+    private Node content;
+    private Modal activeModal;
+    private ScaleTransition scaleInTransition;
+    private ScaleTransition scaleOutTransition;
+    private FadeTransition fadeInTransition;
+    private FadeTransition fadeOutTransition;
+    private Map<String, Supplier<Modal>> modalFactories = new HashMap<>();
+
+    private ModalManager(StackPane root, Node content) {
+        this.root = root;
+        this.content = content;
+        initializeTransitions();
+    }
 
     public static void initialize(StackPane root, Node content) {
-        ModalManager.root = root;
-        ModalManager.content = content;
-
-        scaleInTransition = new ScaleTransition(Duration.millis(350));
-        scaleInTransition.setFromX(0);
-        scaleInTransition.setFromY(0);
-        scaleInTransition.setToX(1);
-        scaleInTransition.setToY(1);
-        scaleInTransition.setInterpolator(new PowerEase(3.2, true));
-
-        scaleOutTransition = new ScaleTransition(Duration.millis(300));
-        scaleOutTransition.setFromX(1);
-        scaleOutTransition.setFromY(1);
-        scaleOutTransition.setToX(0);
-        scaleOutTransition.setToY(0);
-        scaleOutTransition.setInterpolator(new SmoothEase());
-
-        fadeInTransition = new FadeTransition(Duration.millis(350));
-        fadeInTransition.setFromValue(0);
-        fadeInTransition.setToValue(1);
-        fadeInTransition.setInterpolator(new PowerEase(3.2, true));
-
-        fadeOutTransition = new FadeTransition(Duration.millis(300));
-        fadeOutTransition.setFromValue(1);
-        fadeOutTransition.setToValue(0);
-        fadeOutTransition.setInterpolator(new SmoothEase());
+        if (instance == null) {
+            instance = new ModalManager(root, content);
+        }
     }
 
-    public static void registerModal(Modal m) {
-        root.getChildren().add(m.getContent());
-        m.getContent().setScaleX(0);
+    public static ModalManager getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("ModalManager is not initialized. Call initialize() first.");
+        }
+        return instance;
     }
 
-    public static void requestModal(Modal m) {
-        if(activeModal != null) {
+    public void registerModalFactory(String key, Supplier<Modal> modalFactory) {
+        modalFactories.put(key, modalFactory);
+    }
+
+    private void initializeTransitions() {
+        scaleInTransition = createScaleTransition(350, 0, 0, 1, 1, new PowerEase(3.2, true));
+        scaleOutTransition = createScaleTransition(300, 1, 1, 0, 0, new SmoothEase());
+        fadeInTransition = createFadeTransition(350, 0, 1, new PowerEase(3.2, true));
+        fadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase());
+    }
+
+    private ScaleTransition createScaleTransition(int duration, double fromX, double fromY, double toX, double toY, Interpolator interpolator) {
+        ScaleTransition transition = new ScaleTransition(Duration.millis(duration));
+        transition.setFromX(fromX);
+        transition.setFromY(fromY);
+        transition.setToX(toX);
+        transition.setToY(toY);
+        transition.setInterpolator(interpolator);
+        return transition;
+    }
+
+    private FadeTransition createFadeTransition(int duration, double fromValue, double toValue, Interpolator interpolator) {
+        FadeTransition transition = new FadeTransition(Duration.millis(duration));
+        transition.setFromValue(fromValue);
+        transition.setToValue(toValue);
+        transition.setInterpolator(interpolator);
+        return transition;
+    }
+
+    public void requestModal(String key) {
+        if (activeModal != null) {
             activeModal.dispose();
         }
+        Modal m = modalFactories.get(key).get();
+        root.getChildren().add(m.getContent());
         m.getContent().maxWidthProperty().bind(root.widthProperty().multiply(0.7));
         m.getContent().maxHeightProperty().bind(root.heightProperty().multiply(0.8));
         activeModal = m;
@@ -70,8 +93,12 @@ public class ModalManager {
         content.setEffect(new GaussianBlur(14));
     }
 
-    public static void exitModal() {
-        if(activeModal == null) return;
+    public void exitModal() {
+        if (activeModal == null) return;
+        scaleOutTransition.setOnFinished(e -> {
+            root.getChildren().remove(activeModal.getContent());
+            activeModal = null;
+        });
         scaleOutTransition.playFromStart();
         fadeOutTransition.playFromStart();
         content.setEffect(null);

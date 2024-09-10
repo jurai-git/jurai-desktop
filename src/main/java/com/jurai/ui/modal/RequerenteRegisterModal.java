@@ -1,5 +1,6 @@
 package com.jurai.ui.modal;
 
+import com.jurai.ui.controller.RequerenteModalController;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
 import com.jurai.ui.controls.HGroup;
@@ -21,22 +22,6 @@ public class RequerenteRegisterModal extends Modal<BasicTabbedPane> {
     private HBox personalInfoActions, generalInfoActions, addressInfoActions;
     private Button personalInfoNext, cancel, generalInfoNext, generalInfoPrevious, addressInfoPrevious, create;
 
-    /*
-    cpf_cnpj, nome,
-        nome_social, genero, idoso, rg,
-        orgao_emissor, estado_civil, nacionalidade,
-        profissao, cep, logradouro,
-        email, num_imovel, complemento,
-        bairro, estado, cidade,
-        advogado_id
-
-    pessoal: nome, nome social email,
-    idoso, genero
-
-    geral: rg, cpf/cnpj, orgao_emissor, profissao, estado civil, nacionalidade
-
-    endereco: CEP, Estado, cidade, bairro, rua, número, complemento, logradouro
-     */
     private TextFieldSet
             cpfCnpj, nome, nomeSocial, genero, rg, orgaoEmissor, estadoCivil,
             nacionalidade, profissao, cep, logradouro, email, numero,
@@ -44,7 +29,7 @@ public class RequerenteRegisterModal extends Modal<BasicTabbedPane> {
     private RadioButton isIdoso;
 
     public RequerenteRegisterModal() {
-        super();
+        super("requerenteRegisterModal");
     }
 
     @Override

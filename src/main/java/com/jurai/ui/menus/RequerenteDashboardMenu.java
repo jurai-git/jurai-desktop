@@ -18,12 +18,15 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> implements Contr
     private VBox content;
     private HBox form;
     private Button addRequerente, editDeleteRequerente;
-    private RequerenteRegisterModal requerenteRegisterModal;
 
     public RequerenteDashboardMenu() {
         super();
-        attachControllers();
-        ModalManager.registerModal(requerenteRegisterModal);
+        ModalManager.getInstance().registerModalFactory("requerenteRegisterModal", () -> {
+            RequerenteRegisterModal modal = new RequerenteRegisterModal();
+            RequerenteModalController controller = new RequerenteModalController();
+            controller.initialize(modal);
+            return modal;
+        });
     }
 
     @Override
@@ -36,7 +39,6 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> implements Contr
         DefaultButtonAnimator.animate(addRequerente);
         editDeleteRequerente = new Button("Editar requerente");
         DefaultButtonAnimator.animate(editDeleteRequerente);
-        requerenteRegisterModal = new RequerenteRegisterModal();
     }
 
     @Override
@@ -58,11 +60,6 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> implements Contr
         content.getChildren().addAll(requerentesList, form);
     }
 
-    private void attachControllers() {
-        RequerenteModalController modalController = new RequerenteModalController();
-        modalController.initialize(requerenteRegisterModal);
-    }
-
     @Override
     public VBox getContent() {
         return content;
@@ -76,7 +73,4 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> implements Contr
         return editDeleteRequerente;
     }
 
-    public RequerenteRegisterModal getRequerenteRegisterModal() {
-        return requerenteRegisterModal;
-    }
 }
