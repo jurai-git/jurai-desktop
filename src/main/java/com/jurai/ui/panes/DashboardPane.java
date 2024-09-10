@@ -1,5 +1,6 @@
 package com.jurai.ui.panes;
 
+import com.jurai.ui.controller.RequerenteDashboardController;
 import com.jurai.ui.menus.DemandaDashboardMenu;
 import com.jurai.ui.menus.RequerenteDashboardMenu;
 import javafx.scene.layout.BorderPane;
@@ -18,6 +19,7 @@ public class DashboardPane extends AbstractPane {
 
     public DashboardPane() {
         super();
+        attachControllers();
     }
 
     @Override
@@ -54,9 +56,13 @@ public class DashboardPane extends AbstractPane {
         view.setCenter(centerContent);
     }
 
+    private void attachControllers() {
+        RequerenteDashboardController requerenteController = new RequerenteDashboardController();
+        requerenteController.initialize(requerenteDashboardMenu);
+    }
+
     @Override
     public BorderPane getView() {
         return view;
     }
-
 }

@@ -5,14 +5,12 @@ import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.SidebarAnimator;
 import com.jurai.ui.controller.*;
 import com.jurai.ui.controls.ArrowToggleButton;
-import com.jurai.ui.modal.ModalHandler;
-import com.jurai.ui.modal.RequerenteRegisterModal;
+import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.Pane;
 import com.jurai.ui.panes.*;
 import com.jurai.ui.panes.layout.NodeConstraints;
 import com.jurai.ui.panes.layout.ProportionPane;
 import com.jurai.util.UILogger;
-import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.layout.StackPane;
@@ -34,7 +32,6 @@ public class PrimaryScene {
 
     public PrimaryScene() {
         initControls();
-        ModalHandler.initialize(modalRoot, mainPane);
         layControls();
         attachControllers();
         attachNotifiers();
@@ -44,6 +41,7 @@ public class PrimaryScene {
     private void initControls() {
         mainPane = new ProportionPane();
         modalRoot = new StackPane(mainPane);
+        ModalManager.initialize(modalRoot, mainPane);
         mainPane.getStyleClass().add("root-pane");
         navbar = new Navbar();
         accountPane = new AccountPane();

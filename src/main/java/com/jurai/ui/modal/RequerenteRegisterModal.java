@@ -43,6 +43,10 @@ public class RequerenteRegisterModal extends Modal<BasicTabbedPane> {
             complemento, bairro, estado, cidade;
     private RadioButton isIdoso;
 
+    public RequerenteRegisterModal() {
+        super();
+    }
+
     @Override
     protected void initControls() {
         content = new BasicTabbedPane();

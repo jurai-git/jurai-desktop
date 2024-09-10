@@ -11,6 +11,9 @@ public class RequerenteModalController extends AbstractController<RequerenteRegi
         pane.getGeneralInfoPrevious().setOnAction(e -> {
             pane.setActiveTab(pane.getPersonalInfo());
         });
+        pane.getCancel().setOnAction(e -> {
+            pane.dispose();
+        });
 
     }
 

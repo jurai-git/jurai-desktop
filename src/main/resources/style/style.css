@@ -130,3 +130,12 @@
 .content.no-bottom-padding {
     -fx-padding: 24px 24px 0 24px;
 }
+
+.modal {
+    -fx-padding: 2em;
+    -fx-background-radius: 12px;
+    -fx-background-color: rgba(26, 26, 29, 0.8);
+    -fx-border-width: 2px;
+    -fx-border-color: #2b2b2f;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 256, 0.4, 0, 0);
+}
