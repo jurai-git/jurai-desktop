@@ -44,6 +44,10 @@
     -fx-spacing: 0.5em;
 }
 
+.form .fieldset * {
+    -fx-alignment: center-left !important;
+}
+
 .form .button {
     -fx-padding: 8px 2em;
 }
@@ -94,4 +98,8 @@
 
 .buttons-row {
     -fx-padding: 1em 0 0 0 !important;
+}
+
+.form .fields {
+    -fx-alignment: center;
 }

@@ -65,12 +65,14 @@ public class RequerenteRegisterModal extends Modal<BasicTabbedPane> {
         // personalInfo
         personalInfoContent = new VBox();
         personalInfoForm = new VBox();
+        personalInfoForm.getStyleClass().add("fields");
         personalInfoActions = new HBox();
         personalInfo = new BasicTab("Infos. pessoais", personalInfoContent);
 
         // generalInfo
         generalInfoContent = new VBox();
         generalInfoForm = new VBox();
+        generalInfoForm.getStyleClass().add("fields");
         generalInfoActions = new HBox();
         generalInfo = new BasicTab("Infos. Gerais", generalInfoContent);
 
@@ -78,6 +80,7 @@ public class RequerenteRegisterModal extends Modal<BasicTabbedPane> {
         addressInfoContent = new VBox();
         addressInfoActions = new HBox();
         addressInfoForm = new VBox();
+        addressInfoForm.getStyleClass().add("fields");
         addressInfo = new BasicTab("Endereço", addressInfoContent);
 
         content.addTab(personalInfo);
