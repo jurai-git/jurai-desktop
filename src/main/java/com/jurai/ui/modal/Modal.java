@@ -1,8 +1,10 @@
 package com.jurai.ui.modal;
 
 import com.jurai.ui.menus.AbstractMenu;
+import javafx.scene.CacheHint;
 import javafx.scene.layout.Pane;
 
+@LoadingStrategy
 public abstract class Modal<T extends Pane> extends AbstractMenu<T> {
     private String name;
 
@@ -10,6 +12,9 @@ public abstract class Modal<T extends Pane> extends AbstractMenu<T> {
         super();
         this.name = name;
         getContent().getStyleClass().add("modal");
+        getContent().setCache(true);
+        getContent().setCacheHint(CacheHint.SCALE);
+        getContent().setCacheShape(true);
     }
 
     public void show() {

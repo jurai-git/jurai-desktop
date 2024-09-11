@@ -9,13 +9,7 @@ import javafx.scene.layout.*;
 
 public class SpacerFactory {
 
-    private static final TextField l = new TextField("aaa");
-
     public static void initialize() {
-        Group g = new Group();
-        g.getChildren().add(l);
-        Scene s = new Scene(g);
-        g.layout();
     }
 
     public static Region createHBoxSpacer(Priority p) {
@@ -25,7 +19,6 @@ public class SpacerFactory {
             HBox.setHgrow(spacer, p);
         } else {
             HBox.setHgrow(spacer, Priority.NEVER);
-            spacer.minWidthProperty().bind(l.minHeightProperty());
         }
 
         return spacer;
@@ -65,7 +58,6 @@ public class SpacerFactory {
             VBox.setVgrow(spacer, p);
         } else {
             VBox.setVgrow(spacer, Priority.NEVER);
-            spacer.minHeightProperty().bind(l.minHeightProperty());
         }
 
         return spacer;

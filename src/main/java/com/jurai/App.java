@@ -7,6 +7,7 @@ import com.jurai.ui.SecondaryScene;
 import com.jurai.ui.controller.Controllable;
 import com.jurai.ui.controller.StageController;
 import com.jurai.ui.util.SpacerFactory;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -18,6 +19,10 @@ public class App extends Application implements Controllable {
     private Stage primaryStage;
     private Stage secondaryStage;
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private long lastFrameTime = 0;
+    private int frameCount = 0;
+    private double fps = 0;
+    private double elapsedTime = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -49,6 +54,26 @@ public class App extends Application implements Controllable {
 
         ApplicationState.initialize();
         ApplicationData.initialize();
+
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (lastFrameTime != 0) {
+                    long elapsedNanos = now - lastFrameTime;
+                    elapsedTime += elapsedNanos;
+                    frameCount++;
+
+                    if (elapsedTime >= 100_000_000) {
+                        fps = frameCount / (elapsedTime / 1_000_000_000.0);
+                        System.out.println("FPS: " + fps);
+                        elapsedTime = 0;
+                        frameCount = 0;
+                    }
+                }
+                lastFrameTime = now;
+            }
+        };
+        timer.start();
     }
 
     private void selfAttachControllers() {

@@ -11,6 +11,7 @@ import com.jurai.ui.panes.*;
 import com.jurai.ui.panes.layout.NodeConstraints;
 import com.jurai.ui.panes.layout.ProportionPane;
 import com.jurai.util.UILogger;
+import javafx.scene.CacheHint;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.layout.StackPane;
@@ -74,6 +75,12 @@ public class PrimaryScene {
 
         activePaneChanged(ApplicationState.getActivePane());
         sidebarModeUpdated(false);
+
+        mainPane.setCache(true);
+        mainPane.setCacheHint(CacheHint.SPEED);
+        mainPane.setCacheShape(true);
+        sidebar.getView().setCache(true);
+        sidebar.getView().setCacheHint(CacheHint.SPEED);
 
         scene = new Scene(modalRoot, ApplicationData.getScreenSize().width * 0.7, ApplicationData.getScreenSize().height * 0.7, false, SceneAntialiasing.BALANCED);
     }

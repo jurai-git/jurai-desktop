@@ -26,7 +26,7 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> implements Contr
             RequerenteModalController controller = new RequerenteModalController();
             controller.initialize(modal);
             return modal;
-        });
+        }, RequerenteRegisterModal.class);
     }
 
     @Override

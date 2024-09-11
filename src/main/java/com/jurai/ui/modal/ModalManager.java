@@ -2,9 +2,11 @@ package com.jurai.ui.modal;
 
 import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.animation.interpolator.SmoothEase;
+import com.jurai.util.Either;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
@@ -23,7 +25,7 @@ public class ModalManager {
     private ScaleTransition scaleOutTransition;
     private FadeTransition fadeInTransition;
     private FadeTransition fadeOutTransition;
-    private Map<String, Supplier<Modal>> modalFactories = new HashMap<>();
+    private Map<String, Either<Supplier<Modal>, Modal>> modalFactories = new HashMap<>();
 
     private ModalManager(StackPane root, Node content) {
         this.root = root;
@@ -44,8 +46,15 @@ public class ModalManager {
         return instance;
     }
 
-    public void registerModalFactory(String key, Supplier<Modal> modalFactory) {
-        modalFactories.put(key, modalFactory);
+    public <T extends Modal<?>> void registerModalFactory(String key, Supplier<Modal> modalFactory, Class<T> classOfT) {
+
+        if(classOfT.getAnnotation(LoadingStrategy.class).value() == LoadingStrategy.Strategy.EAGER) {
+            // if the loading strategy is eager, we store an instance of the object directly
+            modalFactories.put(key, Either.right(modalFactory.get()));
+        } else {
+            // if it is lazy, we just store the factory
+            modalFactories.put(key, Either.left(modalFactory));
+        }
     }
 
     private void initializeTransitions() {
@@ -77,7 +86,7 @@ public class ModalManager {
         if (activeModal != null) {
             activeModal.dispose();
         }
-        Modal m = modalFactories.get(key).get();
+        Modal m = modalFactories.get(key).ifLPresentOrElse(Supplier::get, modal -> modal);
         root.getChildren().add(m.getContent());
         m.getContent().maxWidthProperty().bind(root.widthProperty().multiply(0.7));
         m.getContent().maxHeightProperty().bind(root.heightProperty().multiply(0.8));
