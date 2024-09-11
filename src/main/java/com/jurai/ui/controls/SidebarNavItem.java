@@ -1,7 +1,7 @@
 package com.jurai.ui.controls;
 
 import com.jurai.ui.animation.PropertyBindPair;
-import com.jurai.ui.animation.SimplePropertyBindAnimation;
+import com.jurai.ui.animation.PropertyBindAnimation;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
@@ -23,7 +23,7 @@ public class SidebarNavItem extends HBox {
     private SVGPath icon;
     private StackPane iconContainer;
     private Label label;
-    private SimplePropertyBindAnimation dotWarpTransition;
+    private PropertyBindAnimation dotWarpTransition;
     private FillTransition dotColorTransition;
     private FillTransition iconColorTransition;
     private Consumer<Event> onAction;
@@ -48,7 +48,7 @@ public class SidebarNavItem extends HBox {
 
     private void initializeAnimations() {
 
-        dotWarpTransition = new SimplePropertyBindAnimation(
+        dotWarpTransition = new PropertyBindAnimation(
                 new PropertyBindPair<>(dot.heightProperty(), dot.widthProperty().multiply(1.5)),
                 new PropertyBindPair<>(dot.heightProperty(), dot.widthProperty().multiply(3.5)),
                 new PowerEase(4, true),

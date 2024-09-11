@@ -13,7 +13,6 @@ public class RequerenteSerializer implements JsonSerializer<Requerente>, JsonDes
 
         // Java JSON parsing code
         int idRequerente = jsonObject.get("id_requerente").getAsInt();
-        boolean pessoaFisica = jsonObject.get("pessoa_fisica").getAsBoolean();
         String cpfCnpj = jsonObject.get("cpf_cnpj").getAsString();
         String nome = jsonObject.get("nome").getAsString();
         String nomeSocial = jsonObject.get("nome_social").getAsString();

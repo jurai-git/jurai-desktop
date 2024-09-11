@@ -55,7 +55,7 @@ public class App extends Application implements Controllable {
         ApplicationState.initialize();
         ApplicationData.initialize();
 
-        AnimationTimer timer = new AnimationTimer() {
+        /*AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if (lastFrameTime != 0) {
@@ -73,7 +73,7 @@ public class App extends Application implements Controllable {
                 lastFrameTime = now;
             }
         };
-        timer.start();
+        timer.start();*/
     }
 
     private void selfAttachControllers() {

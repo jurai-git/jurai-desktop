@@ -1,9 +1,11 @@
 package com.jurai.data.model;
 
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Advogado implements Model, Serializable {
 
@@ -13,7 +15,7 @@ public class Advogado implements Model, Serializable {
     private StringProperty email = new SimpleStringProperty();
     private StringProperty oab = new SimpleStringProperty();
     private StringProperty accessToken = new SimpleStringProperty();
-    private ObservableList<Requerente> requerentes = new SimpleListProperty<>();
+    private ObservableList<Requerente> requerentes = FXCollections.observableArrayList();
 
     public Advogado(int id, String nome, String email, String oab, String accessToken) {
         this.id.set(id);

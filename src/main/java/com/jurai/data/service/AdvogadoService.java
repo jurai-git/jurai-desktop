@@ -13,7 +13,10 @@ import com.jurai.data.serializer.AdvogadoSerializer;
 import com.jurai.data.serializer.RequerenteSerializer;
 import com.jurai.data.util.JsonUtils;
 import com.jurai.util.EventLogger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +67,7 @@ public class AdvogadoService {
             JsonObject response = requestHandler.post("/advogado/get", body);
             Advogado advogado = gson.fromJson(response.get("advogado"), Advogado.class);
             ApplicationState.setCurrentUser(advogado);
+            reloadRequerentes();
         }catch(ResponseNotOkException e) {
             throw e;
         }
@@ -80,10 +84,13 @@ public class AdvogadoService {
             List<Requerente> requerentes =
                 response.get("requerentes_list").getAsJsonArray().asList().stream().
                 map(element -> gson.fromJson(element, Requerente.class)).toList();
-            currentUser.getRequerentes().removeAll(currentUser.getRequerentes());
-            currentUser.getRequerentes().addAll(requerentes);
+
+                currentUser.getRequerentes().clear();
+                currentUser.getRequerentes().addAll(requerentes);
+            EventLogger.log("Loaded requerentes for advogado " + currentUser.getNome());
         } catch(ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService.loadRequerentes(): error " + e.getCode());
+            System.out.println(e.getMessage());
             throw e;
         }
     }

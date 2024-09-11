@@ -1,13 +1,14 @@
 package com.jurai.ui.modal;
 
+import com.jurai.ui.animation.*;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.animation.interpolator.SmoothEase;
 import com.jurai.util.Either;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
-import javafx.scene.CacheHint;
 import javafx.scene.Node;
+import javafx.scene.effect.Effect;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -18,14 +19,14 @@ import java.util.function.Supplier;
 
 public class ModalManager {
     private static ModalManager instance;
-    private StackPane root;
-    private Node content;
+    private final StackPane root;
+    private final Node content;
     private Modal activeModal;
-    private ScaleTransition scaleInTransition;
     private ScaleTransition scaleOutTransition;
     private FadeTransition fadeInTransition;
     private FadeTransition fadeOutTransition;
-    private Map<String, Either<Supplier<Modal>, Modal>> modalFactories = new HashMap<>();
+    private BlurTransition blurTransition;
+    private final Map<String, Either<Supplier<Modal>, Modal>> modalFactories = new HashMap<>();
 
     private ModalManager(StackPane root, Node content) {
         this.root = root;
@@ -58,10 +59,20 @@ public class ModalManager {
     }
 
     private void initializeTransitions() {
-        scaleInTransition = createScaleTransition(350, 0, 0, 1, 1, new PowerEase(3.2, true));
         scaleOutTransition = createScaleTransition(300, 1, 1, 0, 0, new SmoothEase());
         fadeInTransition = createFadeTransition(350, 0, 1, new PowerEase(3.2, true));
         fadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase());
+        blurTransition = createBlurTransition(500, new GaussianBlur(0), new GaussianBlur(16), new PowerEase(2, true), this.content);
+    }
+
+    private BlurTransition createBlurTransition(int duration, GaussianBlur fromBlur, GaussianBlur toBlur, Interpolator interpolator, Node content) {
+        return new BlurTransition(
+                400,
+                toBlur,
+                fromBlur,
+                interpolator,
+                content
+        );
     }
 
     private ScaleTransition createScaleTransition(int duration, double fromX, double fromY, double toX, double toY, Interpolator interpolator) {
@@ -92,14 +103,14 @@ public class ModalManager {
         m.getContent().maxHeightProperty().bind(root.heightProperty().multiply(0.8));
         activeModal = m;
 
-        scaleInTransition.setNode(m.getContent());
         scaleOutTransition.setNode(m.getContent());
-        scaleInTransition.playFromStart();
-
         fadeInTransition.setNode(m.getContent());
         fadeOutTransition.setNode(m.getContent());
+
         fadeInTransition.playFromStart();
-        content.setEffect(new GaussianBlur(14));
+        blurTransition.playFromStart();
+        m.getContent().setScaleX(1);
+        m.getContent().setScaleY(1);
     }
 
     public void exitModal() {
@@ -108,6 +119,7 @@ public class ModalManager {
             root.getChildren().remove(activeModal.getContent());
             activeModal = null;
         });
+        blurTransition.playFromEnd();
         scaleOutTransition.playFromStart();
         fadeOutTransition.playFromStart();
         content.setEffect(null);

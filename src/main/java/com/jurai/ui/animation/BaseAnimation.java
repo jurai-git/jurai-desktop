@@ -6,24 +6,11 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class SimplePropertyAnimation {
+public abstract class BaseAnimation {
     protected KeyFrame startKeyFrame;
     protected KeyFrame endKeyFrame;
     protected Timeline timeline;
 
-    protected SimplePropertyAnimation() {}
-
-    public SimplePropertyAnimation(PropertyPair start, PropertyPair end, Interpolator interpolator, double duration) {
-        KeyValue startKeyValue = new KeyValue(start.p1, start.p2, interpolator);
-        KeyValue endKeyValue = new KeyValue(end.p1, end.p2, interpolator);
-
-        startKeyFrame = new KeyFrame(Duration.millis(duration), startKeyValue);
-        endKeyFrame = new KeyFrame(Duration.millis(duration), endKeyValue);
-
-        timeline = new Timeline();
-        timeline.playFromStart();
-        timeline.setCycleCount(1);
-    }
 
     public Timeline getTimeline() {
         return timeline;
@@ -48,4 +35,6 @@ public class SimplePropertyAnimation {
             playFromEnd();
         }
     }
+
+
 }
