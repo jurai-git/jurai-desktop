@@ -39,13 +39,6 @@
             <version>22.0.1</version>
         </dependency>
 
-        <!-- javafx extra controls -->
-        <dependency>
-            <groupId>org.controlsfx</groupId>
-            <artifactId>controlsfx</artifactId>
-            <version>11.2.1</version>
-        </dependency>
-
         <!-- junit dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
