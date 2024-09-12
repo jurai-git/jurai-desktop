@@ -6,6 +6,7 @@ import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
 import com.jurai.util.UILogger;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -16,7 +17,7 @@ import javafx.scene.shape.SVGPath;
 
 public class SimpleList<T extends Model> extends BorderPane implements Controllable {
     private String headerText;
-    
+
     private Label headerLabel;
     private StackPane searchIconContainer;
     private TextField searchTextField;
@@ -25,13 +26,14 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
     private HBox searchArea;
     private ScrollPane scrollPane;
     private VBox listItemsContainer;
-    private final ObservableList<T> listItems = FXCollections.observableArrayList();
+    private final ObservableList<SimpleListItem<T>> listItems = FXCollections.observableArrayList();
+    private final ObservableList<T> listObjects = FXCollections.observableArrayList();
 
     //constructors
     public SimpleList() {
         this("Header");
     }
-    
+
     public SimpleList(String headerText) {
         super();
         getStyleClass().add("simple-list");
@@ -62,7 +64,6 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
         searchArea = new HBox();
         searchArea.getStyleClass().add("search-area");
 
-
         searchTextField = new TextField();
         searchTextField.setPromptText("Buscar");
         searchTextField.getStyleClass().add("search-tf");
@@ -84,7 +85,7 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
         HBox.setHgrow(searchIconContainer, Priority.NEVER);
         HBox.setHgrow(searchTextField, Priority.ALWAYS);
         searchArea.getChildren().addAll(searchTextField, searchIconContainer);
-        searchArea.maxWidthProperty().bind(header.widthProperty().multiply(0.3));
+        searchArea.prefWidthProperty().bind(header.widthProperty().multiply(0.3));
 
         HBox.setHgrow(headerLabel, Priority.NEVER);
         HBox.setHgrow(searchArea,Priority.ALWAYS);
@@ -102,15 +103,22 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
 
     }
 
-
-    // misc
-
     private void initData() {
+        listObjects.addListener((ListChangeListener<T>) change -> {
+            System.out.println("listObjects changed");
+            listItemsContainer.getChildren().clear();
+            listItemsContainer.getChildren().addAll(listObjects.stream().map(this::createListItem).toList());
+        });
+    }
 
+    public SimpleListItem<T> createListItem(T object) {
+        var item =  new SimpleListItem<>(object);
+        HBox.setHgrow(item, Priority.ALWAYS);
+        VBox.setVgrow(item, Priority.ALWAYS);
+        return item;
     }
 
     //getters & setters
-
 
     public void setHeaderText(String headerText) {
         this.headerText = headerText;
@@ -125,8 +133,8 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
         return headerLabel;
     }
 
-    public ObservableList<T> getListItems() {
-        return listItems;
+    public ObservableList<T> getListObjects() {
+        return listObjects;
     }
 
     public VBox getListItemsContainer() {

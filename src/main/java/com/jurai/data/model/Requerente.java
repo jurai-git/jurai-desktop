@@ -96,7 +96,7 @@ public class Requerente implements Model {
 
     @Override
     public StringProperty nomeProperty() {
-        return nomeSocial.get() == "" ? nome : nomeSocial;
+        return nomeSocial.get().strip().isEmpty() ? nome : nomeSocial;
     }
 
     public void setNome(String nome) {

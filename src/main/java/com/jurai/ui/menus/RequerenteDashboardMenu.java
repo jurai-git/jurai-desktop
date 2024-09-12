@@ -73,4 +73,7 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> implements Contr
         return editDeleteRequerente;
     }
 
+    public SimpleList<Requerente> getRequerentesList() {
+        return requerentesList;
+    }
 }

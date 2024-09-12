@@ -11,6 +11,7 @@ public class SimpleListController extends AbstractController<SimpleList<? extend
     @Override
     protected void attachEvents(SimpleList<? extends Model> pane) {
 
+        /*
         // list syncronizer
         pane.getListItems().addListener((ListChangeListener<Model>) change -> {
             while(change.next()) {
@@ -27,7 +28,7 @@ public class SimpleListController extends AbstractController<SimpleList<? extend
                     });
                 }
             }
-        });
+        }); */
     }
 
     @Override
