@@ -25,6 +25,8 @@ public class App extends Application implements Controllable {
     private double elapsedTime = 0;
 
     public static void main(String[] args) {
+        System.setProperty("prism.lcdtext", "false");
+
         launch(args);
         ctlThread.start();
     }

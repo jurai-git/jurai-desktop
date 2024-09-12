@@ -1,5 +1,6 @@
 package com.jurai.ui.controls;
 
+import com.jurai.data.ApplicationData;
 import com.jurai.data.model.Model;
 import com.jurai.ui.controller.Controllable;
 import com.jurai.ui.util.SpacerFactory;
@@ -8,6 +9,7 @@ import com.jurai.util.UILogger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -78,6 +80,7 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
         headerLabel.minWidthProperty().bind(header.widthProperty().multiply(0.15));
 
         listItemsContainer = new VBox();
+        listItemsContainer.setFillWidth(true);
         listItemsContainer.getStyleClass().add("list-items");
     }
 
@@ -88,14 +91,20 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
         searchArea.prefWidthProperty().bind(header.widthProperty().multiply(0.3));
 
         HBox.setHgrow(headerLabel, Priority.NEVER);
-        HBox.setHgrow(searchArea,Priority.ALWAYS);
+        HBox.setHgrow(searchArea, Priority.ALWAYS);
         header.getChildren().addAll(headerLabel, SpacerFactory.createHBoxSpacer(Priority.ALWAYS), searchArea);
 
         setTop(header);
 
-        scrollPane = new ScrollPane(listItemsContainer);
+        VBox wrapper = new VBox(listItemsContainer);
+        VBox.setVgrow(listItemsContainer, Priority.ALWAYS);
+        listItemsContainer.setFillWidth(true);
+
+        scrollPane = new ScrollPane(wrapper);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setBackground(Background.EMPTY);
         scrollPane.getStyleClass().add("scroll-pane");
+        scrollPane.setFitToWidth(true);
         setCenter(scrollPane);
     }
 
@@ -113,8 +122,10 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
 
     public SimpleListItem<T> createListItem(T object) {
         var item =  new SimpleListItem<>(object);
+        item.setFillHeight(true);
         HBox.setHgrow(item, Priority.ALWAYS);
-        VBox.setVgrow(item, Priority.ALWAYS);
+        double em = ApplicationData.getEm();
+        VBox.setMargin(item, new Insets(em*0.5, 0, em*0.5, 0));
         return item;
     }
 

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 public class SimpleListItem<T extends Model> extends HBox implements Controllable {
     private Label nameLabel;
@@ -17,6 +18,7 @@ public class SimpleListItem<T extends Model> extends HBox implements Controllabl
 
     public SimpleListItem(T object) {
         this.object = object;
+        this.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2, 2, 2, 2))));
         selected = false;
         initControls();
         layControls();
@@ -28,15 +30,18 @@ public class SimpleListItem<T extends Model> extends HBox implements Controllabl
         nameLabel.textProperty().bind(object.nomeProperty());
 
         dot = new Rectangle();
+        dot.getStyleClass().add("dot");
         dot.setFill(Color.web("#666"));
         dot.arcWidthProperty().bind(dot.widthProperty());
         dot.arcHeightProperty().bind(dot.widthProperty());
-
-        dot.heightProperty().bind(heightProperty().subtract(paddingProperty().get().getTop()*2).multiply(0.8));
-        dot.widthProperty().bind(widthProperty().multiply(0.03));
+        dot.translateYProperty().bind(nameLabel.heightProperty().multiply(0.2));
+        dot.heightProperty().bind(nameLabel.heightProperty().multiply(0.6));
+        dot.widthProperty().bind(dot.heightProperty().multiply(0.2));
     }
 
     private void layControls() {
+        double em = Font.getDefault().getSize();
+        System.out.println("em: " + em);
         VBox.setVgrow(this, Priority.NEVER);
         getChildren().addAll(dot, nameLabel);
     }
