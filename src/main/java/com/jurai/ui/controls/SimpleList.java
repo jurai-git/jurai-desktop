@@ -6,6 +6,9 @@ import com.jurai.ui.controller.Controllable;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
 import com.jurai.util.UILogger;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -15,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 
 public class SimpleList<T extends Model> extends BorderPane implements Controllable {
@@ -30,6 +34,7 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
     private VBox listItemsContainer;
     private final ObservableList<SimpleListItem<T>> listItems = FXCollections.observableArrayList();
     private final ObservableList<T> listObjects = FXCollections.observableArrayList();
+    private ObjectProperty<SimpleListItem<T>> selectedItem = new SimpleObjectProperty<>();
 
     //constructors
     public SimpleList() {
@@ -95,16 +100,15 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
         header.getChildren().addAll(headerLabel, SpacerFactory.createHBoxSpacer(Priority.ALWAYS), searchArea);
 
         setTop(header);
-
-        VBox wrapper = new VBox(listItemsContainer);
-        VBox.setVgrow(listItemsContainer, Priority.ALWAYS);
         listItemsContainer.setFillWidth(true);
 
-        scrollPane = new ScrollPane(wrapper);
+        listItemsContainer.getStyleClass().add("items-container");
+        scrollPane = new ScrollPane(listItemsContainer);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setBackground(Background.EMPTY);
         scrollPane.getStyleClass().add("scroll-pane");
         scrollPane.setFitToWidth(true);
+
         setCenter(scrollPane);
     }
 
@@ -116,20 +120,51 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
         listObjects.addListener((ListChangeListener<T>) change -> {
             System.out.println("listObjects changed");
             listItemsContainer.getChildren().clear();
-            listItemsContainer.getChildren().addAll(listObjects.stream().map(this::createListItem).toList());
+            listObjects.forEach(this::createListItem);
+            listItemsContainer.setClip(null);
         });
     }
 
-    public SimpleListItem<T> createListItem(T object) {
+    public void createListItem(T object) {
         var item =  new SimpleListItem<>(object);
+        item.setOnMouseClicked(event -> {
+            setSelectedItem(item);
+        });
         item.setFillHeight(true);
         HBox.setHgrow(item, Priority.ALWAYS);
         double em = ApplicationData.getEm();
         VBox.setMargin(item, new Insets(em*0.5, 0, em*0.5, 0));
-        return item;
+        listItemsContainer.getChildren().add(item);
+        listItemsContainer.setClip(null);
     }
 
     //getters & setters
+
+    public void addSelectedItemListener(ChangeListener<SimpleListItem<T>> listener) {
+        selectedItem.addListener(listener);
+    }
+
+    public void setSelectedItem(SimpleListItem<T> item) {
+        if(selectedItem.get() == null) {
+            selectedItem.set(item);
+            item.setSelected(true);
+            return;
+        }
+
+        if(selectedItem.get().equals(item)) {
+            item.setSelected(false);
+            selectedItem.set(null);
+        } else {
+            selectedItem.get().setSelected(false);
+            selectedItem.set(item);
+            item.setSelected(true);
+        }
+
+    }
+
+    public SimpleListItem<T> getSelectedItem() {
+        return selectedItem.get();
+    }
 
     public void setHeaderText(String headerText) {
         this.headerText = headerText;

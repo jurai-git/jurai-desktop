@@ -3,12 +3,11 @@ package com.jurai.ui.controller;
 import com.jurai.data.model.Requerente;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
+import com.jurai.ui.modal.RequerenteModal;
 import com.jurai.ui.modal.RequerenteRegisterModal;
 import javafx.scene.control.Alert;
 
-import javax.swing.*;
-
-public class RequerenteModalController extends AbstractController<RequerenteRegisterModal> {
+public class RequerenteRegisterModalController extends AbstractController<RequerenteRegisterModal> {
     private final AdvogadoService advogadoService = new AdvogadoService();
 
     @Override

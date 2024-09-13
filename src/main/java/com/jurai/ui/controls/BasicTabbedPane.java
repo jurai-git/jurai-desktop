@@ -44,10 +44,9 @@ public class BasicTabbedPane extends BorderPane {
     }
 
     private void tabClicked(BasicTab tab) {
-        if(activeTab != tab) {
-            setActiveTab(tab);
-            onTabChanged.run();
-        }
+        if(activeTab == tab) return;
+        if(onTabChanged != null) onTabChanged.run();
+        setActiveTab(tab);
     }
 
     public BasicTab getActiveTab() {

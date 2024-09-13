@@ -9,7 +9,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class DemandaDashboardMenu extends AbstractMenu<VBox> {
-
     private VBox content;
     private HBox form;
     private Button addDemanda, editDeleteDemanda;

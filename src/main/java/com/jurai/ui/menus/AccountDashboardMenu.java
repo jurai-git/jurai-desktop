@@ -1,6 +1,6 @@
 package com.jurai.ui.menus;
 
-import com.jurai.ui.animation.DefaultButtonAnimator;
+import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -38,9 +38,9 @@ public class AccountDashboardMenu extends AbstractMenu<BorderPane> {
         oabInfo.setAlignment(Pos.TOP_LEFT);
 
         editInfo = new Button("Editar informações");
-        DefaultButtonAnimator.animate(editInfo);
+        HoverAnimator.animateAll(editInfo, 1, 1);
         deleteAccount = new Button("Deletar conta");
-        DefaultButtonAnimator.animate(deleteAccount);
+        HoverAnimator.animateAll(deleteAccount, 1, 1);
         deleteAccount.getStyleClass().add("red-button");
 
         centerBox = new BorderPane();

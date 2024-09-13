@@ -34,6 +34,21 @@ public class RequestHandler {
             throw new ResponseNotOkException(500);
         }
     }
+    public JsonObject put(String endpoint, JsonObject body) throws ResponseNotOkException {
+        try {
+            URL url = new URL(baseUrl + endpoint);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("PUT");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            con.setDoOutput(true);
+            return makeRequest(con, body);
+        } catch (ResponseNotOkException e) {
+            throw e;
+        } catch(Exception e) {
+            throw new ResponseNotOkException(500);
+        }
+    }
 
     private JsonObject makeRequest(HttpURLConnection con, JsonObject body) throws ResponseNotOkException, IOException {
 

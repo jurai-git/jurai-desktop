@@ -1,18 +1,30 @@
 package com.jurai.ui.controls;
 
 import com.jurai.data.model.Model;
+import com.jurai.ui.animation.HoverAnimator;
+import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.controller.Controllable;
+import javafx.animation.FillTransition;
+import javafx.animation.StrokeTransition;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
+import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 
 public class SimpleListItem<T extends Model> extends HBox implements Controllable {
     private Label nameLabel;
     private Rectangle dot;
     private boolean selected;
+    private FillTransition dotColorTransition, backgroundColorTransition, textFillTransition;
+    private StrokeTransition borderColorTransition;
 
     T object;
 
@@ -22,6 +34,7 @@ public class SimpleListItem<T extends Model> extends HBox implements Controllabl
         selected = false;
         initControls();
         layControls();
+        initAnimations();
     }
 
     private void initControls() {
@@ -40,19 +53,29 @@ public class SimpleListItem<T extends Model> extends HBox implements Controllabl
     }
 
     private void layControls() {
-        double em = Font.getDefault().getSize();
-        System.out.println("em: " + em);
         VBox.setVgrow(this, Priority.NEVER);
         getChildren().addAll(dot, nameLabel);
     }
 
     private void initAnimations() {
+        PowerEase interpolator = new PowerEase(2.5, true);
+        dotColorTransition = new FillTransition(Duration.millis(280), dot);
+        dotColorTransition.setFromValue(Color.web("#666"));
+        dotColorTransition.setToValue(Color.web("#539CD4"));
+        dotColorTransition.setInterpolator(interpolator);
 
+        Shape textFillProperty = new Rectangle();
+        textFillProperty.setFill(Color.web("#888"));
+        nameLabel.textFillProperty().bind(textFillProperty.fillProperty());
+        textFillTransition = new FillTransition(Duration.millis(280), textFillProperty);
+        textFillTransition.setFromValue(Color.web("#888"));
+        textFillTransition.setToValue(Color.web("#fff"));
+        textFillTransition.setInterpolator(interpolator);
+
+        HoverAnimator.animateAll(this, 0.5, 0.8);
     }
 
-
     //getters & setters
-
 
     public boolean isSelected() {
         return selected;
@@ -60,10 +83,16 @@ public class SimpleListItem<T extends Model> extends HBox implements Controllabl
 
     public void setSelected(boolean selected) {
         this.selected = selected;
-        if(selected) {
-            dot.setFill(Color.web("#539CD4"));
+        if (selected) {
+            dotColorTransition.setRate(1);
+            dotColorTransition.play();
+            textFillTransition.setRate(1);
+            textFillTransition.play();
         } else {
-            dot.setFill(Color.web("#666"));
+            dotColorTransition.setRate(-2.5);
+            dotColorTransition.play();
+            textFillTransition.setRate(-2);
+            textFillTransition.play();
         }
     }
 

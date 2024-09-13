@@ -1,20 +1,15 @@
 package com.jurai.ui.menus;
 
 import com.jurai.data.ApplicationData;
-import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.controls.SidebarNavItem;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
 import com.jurai.util.UILogger;
-import javafx.animation.ScaleTransition;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.css.PseudoClass;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
-import javafx.util.Duration;
 
 import java.io.IOException;
 

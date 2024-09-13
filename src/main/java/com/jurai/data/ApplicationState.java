@@ -2,6 +2,7 @@ package com.jurai.data;
 
 import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Model;
+import com.jurai.data.model.Requerente;
 import com.jurai.ui.modal.Modal;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.Pane;
@@ -18,9 +19,9 @@ public final class ApplicationState {
     private static Pane activePane = Pane.DashboardPane;
     private static Advogado currentUser = null;
     private static boolean debugging = false;
-    private static SimpleListItem<? extends Model> selectedRequerente = null;
     private static AccountMode accountMode = null;
     private static StageType stageType = null;
+    private static Requerente selectedRequerente = null;
 
     public static void initialize() {
         ApplicationData.initializeSupportLogging(support);
@@ -54,14 +55,10 @@ public final class ApplicationState {
         support.firePropertyChange("debugging", old, debugging);
     }
 
-    public static SimpleListItem<? extends Model> getSelectedRequerente() {
-        return selectedRequerente;
-    }
-
-    public static void setSelectedRequerente(SimpleListItem<? extends Model> selectedRequerente) {
-        SimpleListItem<? extends Model> oldValue = ApplicationState.selectedRequerente;
+    public static void setSelectedRequerente(Requerente selectedRequerente) {
+        Requerente oldValue = ApplicationState.selectedRequerente;
         ApplicationState.selectedRequerente = selectedRequerente;
-        support.firePropertyChange("selectedRequerente", oldValue, ApplicationState.selectedRequerente);
+        support.firePropertyChange("selectedRequerente", oldValue, selectedRequerente);
     }
 
     public static void setAccountMode(AccountMode accountMode) {
@@ -80,6 +77,10 @@ public final class ApplicationState {
         StageType oldValue = ApplicationState.stageType;
         ApplicationState.stageType = stageType;
         support.firePropertyChange("stageType", oldValue, ApplicationState.stageType);
+    }
+
+    public static Requerente getSelectedRequerente() {
+        return selectedRequerente;
     }
 
     public static Pane getActivePane() {

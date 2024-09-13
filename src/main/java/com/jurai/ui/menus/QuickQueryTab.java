@@ -1,6 +1,6 @@
 package com.jurai.ui.menus;
 
-import com.jurai.ui.animation.DefaultButtonAnimator;
+import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -28,14 +28,14 @@ public class QuickQueryTab extends AbstractMenu<BorderPane> {
         send = new Button("Enviar");
         send.getStyleClass().add("blue-button");
         HBox.setHgrow(send, Priority.ALWAYS);
-        DefaultButtonAnimator.animate(send);
+        HoverAnimator.animateAll(send, 1, 1);
 
         openFileChooser = new Button("Escolher documento");
         HBox.setHgrow(openFileChooser, Priority.ALWAYS);
-        DefaultButtonAnimator.animate(openFileChooser);
+        HoverAnimator.animateAll(openFileChooser, 1, 1);
 
         inputEmentaBtn = new Button("Inserir ementa");
-        DefaultButtonAnimator.animate(inputEmentaBtn);
+        HoverAnimator.animateAll(inputEmentaBtn, 1, 1);
         fileChooser = new FileChooser();
 
         oddsResult = new Label("Nenhuma previsão");

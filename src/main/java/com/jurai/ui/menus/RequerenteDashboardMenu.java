@@ -1,11 +1,14 @@
 package com.jurai.ui.menus;
 
 import com.jurai.data.model.Requerente;
-import com.jurai.ui.animation.DefaultButtonAnimator;
+import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controller.Controllable;
-import com.jurai.ui.controller.RequerenteModalController;
+import com.jurai.ui.controller.RequerenteEditingModalController;
+import com.jurai.ui.controller.RequerenteRegisterModalController;
 import com.jurai.ui.controls.SimpleList;
 import com.jurai.ui.modal.ModalManager;
+import com.jurai.ui.modal.RequerenteEditingModal;
+import com.jurai.ui.modal.RequerenteModal;
 import com.jurai.ui.modal.RequerenteRegisterModal;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
@@ -23,10 +26,17 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> implements Contr
         super();
         ModalManager.getInstance().registerModalFactory("requerenteRegisterModal", () -> {
             RequerenteRegisterModal modal = new RequerenteRegisterModal();
-            RequerenteModalController controller = new RequerenteModalController();
+            RequerenteRegisterModalController controller = new RequerenteRegisterModalController();
             controller.initialize(modal);
             return modal;
         }, RequerenteRegisterModal.class);
+        ModalManager.getInstance().registerModalFactory("requerenteEditingModal", () -> {
+            Requerente r = requerentesList.getSelectedItem().getObject();
+            RequerenteEditingModal modal = new RequerenteEditingModal(requerentesList.getSelectedItem().getObject());
+            RequerenteEditingModalController controller = new RequerenteEditingModalController();
+            controller.initialize(modal);
+            return modal;
+        }, RequerenteEditingModal.class);
     }
 
     @Override
@@ -36,9 +46,9 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> implements Contr
         form = new HBox();
         form.getStyleClass().addAll("buttons-row");
         addRequerente = new Button("Adicionar requerente");
-        DefaultButtonAnimator.animate(addRequerente);
+        HoverAnimator.animateAll(addRequerente, 1, 1);
         editDeleteRequerente = new Button("Editar requerente");
-        DefaultButtonAnimator.animate(editDeleteRequerente);
+        HoverAnimator.animateAll(editDeleteRequerente, 1, 1);
     }
 
     @Override

@@ -52,7 +52,11 @@
 }
 
 .simple-list .scroll-pane {
-    -fx-padding: 8px 16px;
+    /*-fx-padding: 8px 16px;*/
+}
+
+.simple-list .items-container {
+    -fx-padding: 0.5em 0.8em;
 }
 
 .simple-list .scroll-pane .scroll-bar:vertical .thumb {
