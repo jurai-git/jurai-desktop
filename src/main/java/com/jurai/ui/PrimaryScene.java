@@ -68,9 +68,9 @@ public class PrimaryScene {
 
         sidebarConstraints = new NodeConstraints(0, 0, 0.2f, 1);
         mainPane.addConstraints(sidebar.getView(), sidebarConstraints);
-        sidebarToggleConstraints = new NodeConstraints(0.16f, 0.02f, 0.04f, 0.04f);
+        sidebarToggleConstraints = new NodeConstraints(0.16f, 0.01f, 0.04f, 0.04f);
         sidebarToggleConstraints.exclusiveWProperty.bind(sidebarToggleButton.heightProperty());
-        sidebarToggleButton.translateXProperty().bind(mainPane.widthProperty().subtract(mainPane.heightProperty()).multiply(0.02));
+
         mainPane.addConstraints(sidebarToggleButton, sidebarToggleConstraints);
 
         activePaneChanged(ApplicationState.getActivePane());
@@ -130,6 +130,10 @@ public class PrimaryScene {
     private void sidebarModeUpdated(boolean iconsOnly) {
         sidebar.setIconsOnly(iconsOnly);
         SidebarAnimator.getSidebarAnimation(sidebar, sidebarConstraints, mainPane).playFromStart();
+    }
+
+    public void setSidebarMode(boolean iconsOnly) {
+        sidebarModeUpdated(iconsOnly);
     }
 
     public Scene getScene() {

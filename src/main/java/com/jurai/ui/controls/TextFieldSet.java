@@ -6,25 +6,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 
-public class TextFieldSet extends VBox {
-    private Label name;
-    private TextField input;
+public final class TextFieldSet extends FieldSet<TextField> {
 
     public TextFieldSet(String name) {
-        super();
-        getStyleClass().add("fieldset");
-        this.name = new Label(name);
-        input = new TextField();
-        input.setPromptText(name);
-        initComponents();
+        super(name, TextField.class);
     }
-
-    private void initComponents() {
-        VBox.setVgrow(input, Priority.ALWAYS);
-        VBox.setVgrow(name, Priority.ALWAYS);
-        getChildren().addAll(name, input);
-    }
-
     
     public String getText() {
         return input.getText();

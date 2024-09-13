@@ -171,6 +171,10 @@ public class SimpleList<T extends Model> extends BorderPane implements Controlla
         headerLabel.setText(headerText);
     }
 
+    public TextField getSearchTextField() {
+        return searchTextField;
+    }
+
     public String getHeaderText() {
         return headerText;
     }

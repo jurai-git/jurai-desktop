@@ -9,6 +9,7 @@ import com.jurai.ui.controller.StageController;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ public class App extends Application implements Controllable {
     private static App currentInstance;
     private Stage primaryStage;
     private Stage secondaryStage;
+    private PrimaryScene primaryScene;
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private long lastFrameTime = 0;
     private int frameCount = 0;
@@ -42,7 +44,8 @@ public class App extends Application implements Controllable {
         this.primaryStage = stage;
         stage.setHeight(screenSize.height * 0.8);
         stage.setWidth(screenSize.width * 0.8);
-        PrimaryScene primaryScene = new PrimaryScene();
+        stage.centerOnScreen();
+        primaryScene = new PrimaryScene();
         primaryScene.getScene().getStylesheets().add(css);
         stage.setScene(primaryScene.getScene());
 
@@ -50,32 +53,13 @@ public class App extends Application implements Controllable {
         secondaryStage = new Stage();
         stage.setHeight(screenSize.height * 0.6);
         stage.setWidth(screenSize.width * 0.3);
+        secondaryStage.centerOnScreen();
         SecondaryScene secondaryScene = new SecondaryScene();
         secondaryScene.getScene().getStylesheets().add(css);
         secondaryStage.setScene(secondaryScene.getScene());
 
         ApplicationState.initialize();
         ApplicationData.initialize();
-
-        /*AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (lastFrameTime != 0) {
-                    long elapsedNanos = now - lastFrameTime;
-                    elapsedTime += elapsedNanos;
-                    frameCount++;
-
-                    if (elapsedTime >= 100_000_000) {
-                        fps = frameCount / (elapsedTime / 1_000_000_000.0);
-                        System.out.println("FPS: " + fps);
-                        elapsedTime = 0;
-                        frameCount = 0;
-                    }
-                }
-                lastFrameTime = now;
-            }
-        };
-        timer.start();*/
     }
 
     private void selfAttachControllers() {
@@ -85,6 +69,10 @@ public class App extends Application implements Controllable {
 
     public static App getCurrentInstance() {
         return currentInstance;
+    }
+
+    public PrimaryScene getPrimaryScene() {
+        return primaryScene;
     }
 
     public Stage getPrimaryStage() {

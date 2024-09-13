@@ -8,7 +8,6 @@ import com.jurai.ui.controller.RequerenteRegisterModalController;
 import com.jurai.ui.controls.SimpleList;
 import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.modal.RequerenteEditingModal;
-import com.jurai.ui.modal.RequerenteModal;
 import com.jurai.ui.modal.RequerenteRegisterModal;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;

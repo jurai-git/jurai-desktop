@@ -42,6 +42,10 @@ public class DemandaDashboardMenu extends AbstractMenu<VBox> {
         content.getChildren().addAll(demandaList, form);
     }
 
+    public SimpleList<Demanda> getDemandaList() {
+        return demandaList;
+    }
+
     @Override
     public VBox getContent() {
         return content;

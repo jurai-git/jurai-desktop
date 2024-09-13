@@ -24,6 +24,7 @@ public class StageController extends AbstractController<App> {
             case MAIN_STAGE -> {
                 app.getPrimaryStage().show();
                 app.getSecondaryStage().hide();
+                app.getPrimaryScene().setSidebarMode(true);
             }
             case SECONDARY_STAGE -> {
                 app.getSecondaryStage().show();

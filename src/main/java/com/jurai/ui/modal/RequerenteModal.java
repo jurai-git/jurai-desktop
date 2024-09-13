@@ -28,7 +28,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
 
     public RequerenteModal(String name) {
         super(name);
-        System.out.println("Creating requerenteRegisterModal");
+        System.out.println("Creating generic requerenteModal");
     }
 
     @Override
