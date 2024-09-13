@@ -4,9 +4,12 @@ functionality related {
 }
 
 visual candy related {
-    - add animator classes for more organized code
-    - fix responsiveness
-    - add retractable sidebar (icons-only)
+    - fix some animations
+}
+
+code related {
+    -  add unit tests
+    - make SimpleList's search text field search for themselves, instead of the parent having to do the search
 }
 
 production related {
