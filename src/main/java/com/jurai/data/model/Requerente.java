@@ -1,6 +1,7 @@
 package com.jurai.data.model;
 
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.Map;
@@ -33,7 +34,7 @@ public class Requerente implements Model {
     private StringProperty cidade = new SimpleStringProperty();
 
     // FKs
-    private ObservableList<Demanda> demandas = new SimpleListProperty<>();
+    private ObservableList<Demanda> demandas = FXCollections.observableArrayList();
 
     public Requerente(String cpfCnpj,
                       String nome, String nomeSocial, String genero, boolean idoso,

@@ -2,7 +2,6 @@ package com.jurai.ui.controls;
 
 import com.jurai.data.ApplicationData;
 import com.jurai.data.model.Model;
-import com.jurai.ui.controller.Controllable;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
 import com.jurai.util.UILogger;
@@ -18,10 +17,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 
-public class SimpleList<T extends Model> extends BorderPane implements Controllable {
+public class SimpleList<T extends Model> extends BorderPane {
     private String headerText;
 
     private Label headerLabel;

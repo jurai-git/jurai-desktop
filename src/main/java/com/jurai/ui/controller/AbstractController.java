@@ -1,6 +1,6 @@
 package com.jurai.ui.controller;
 
-public abstract class AbstractController<T extends Controllable> {
+public abstract class AbstractController<T> {
     public void initialize(T pane) {
         attachEvents(pane);
         attachNotifiers(pane);

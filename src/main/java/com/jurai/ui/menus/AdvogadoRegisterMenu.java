@@ -1,13 +1,12 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controller.Controllable;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> implements Controllable {
+public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> {
 
     private BorderPane content;
 

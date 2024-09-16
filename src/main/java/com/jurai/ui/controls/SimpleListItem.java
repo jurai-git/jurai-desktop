@@ -3,23 +3,16 @@ package com.jurai.ui.controls;
 import com.jurai.data.model.Model;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.animation.interpolator.PowerEase;
-import com.jurai.ui.controller.Controllable;
 import javafx.animation.FillTransition;
 import javafx.animation.StrokeTransition;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
-public class SimpleListItem<T extends Model> extends HBox implements Controllable {
+public class SimpleListItem<T extends Model> extends HBox {
     private Label nameLabel;
     private Rectangle dot;
     private boolean selected;

@@ -1,7 +1,10 @@
 package com.jurai.ui.menus;
 
 import com.jurai.data.model.Demanda;
+import com.jurai.ui.controller.DemandaRegisterController;
 import com.jurai.ui.controls.SimpleList;
+import com.jurai.ui.modal.DemandaRegisterModal;
+import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -14,6 +17,15 @@ public class DemandaDashboardMenu extends AbstractMenu<VBox> {
     private Button addDemanda, editDeleteDemanda;
     private SimpleList<Demanda> demandaList;
 
+    public DemandaDashboardMenu() {
+        super();
+        ModalManager.getInstance().registerModalFactory("demandaRegisterModal", () -> {
+            DemandaRegisterModal modal = new DemandaRegisterModal();
+            DemandaRegisterController modalController = new DemandaRegisterController();
+            modalController.initialize(modal);
+            return modal;
+        }, DemandaRegisterModal.class);
+    }
 
     @Override
     protected void initControls() {
@@ -44,6 +56,14 @@ public class DemandaDashboardMenu extends AbstractMenu<VBox> {
 
     public SimpleList<Demanda> getDemandaList() {
         return demandaList;
+    }
+
+    public Button getAddDemanda() {
+        return addDemanda;
+    }
+
+    public Button getEditDeleteDemanda() {
+        return editDeleteDemanda;
     }
 
     @Override

@@ -4,17 +4,14 @@ import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
-import com.jurai.ui.controller.Controllable;
 import com.jurai.ui.controller.StageController;
 import com.jurai.ui.util.SpacerFactory;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.awt.*;
 
-public class App extends Application implements Controllable {
+public class App extends Application {
     private static Thread ctlThread;
     private static App currentInstance;
     private Stage primaryStage;

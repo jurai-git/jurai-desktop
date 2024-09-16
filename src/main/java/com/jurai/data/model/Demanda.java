@@ -1,5 +1,6 @@
 package com.jurai.data.model;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.util.EventLogger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
@@ -8,7 +9,7 @@ import javafx.beans.property.*;
 import java.util.Map;
 
 public class Demanda implements Model {
-    private double id;
+    private DoubleProperty id = new SimpleDoubleProperty();
 
     private final StringProperty foro = new SimpleStringProperty();
     private final StringProperty competencia = new SimpleStringProperty();
@@ -19,78 +20,68 @@ public class Demanda implements Model {
     private final DoubleProperty valorAcao = new SimpleDoubleProperty();
     private final BooleanProperty dispensaLegal = new SimpleBooleanProperty(false);
     private final BooleanProperty justicaGratuita = new SimpleBooleanProperty(false);
-    private final BooleanProperty guiaCustas = new SimpleBooleanProperty(false);
-    private final StringProperty resumo = new SimpleStringProperty();
+    private final BooleanProperty guiaCustas = new SimpleBooleanProperty(false); // TODO: trocar para arquivo
+    private final StringProperty resumo = new SimpleStringProperty(); // TODO: texto médio/longo
     private final StringProperty statusDemanda = new SimpleStringProperty();
     private final StringProperty identificacao = new SimpleStringProperty("");
 
-    private ObjectProperty<Requerente> requerente = new SimpleObjectProperty<>();
-
-    public Demanda(String foro,
+    public Demanda(
+                    String foro,
                    String competencia,
                    String classe,
                    String assuntoPrincipal,
+                   boolean pedidoLiminar,
+                   boolean segJustica,
                    Double valorAcao,
+                   boolean dispensaLegal,
+                   boolean justicaGratuita,
+                   boolean guiaCustas,
                    String resumo,
                    String statusDemanda,
-                   Requerente requerente,
-                   Map<String, Object> optional) {
+                   String identificacao
+                    ) {
 
         this.foro.set(foro);
         this.competencia.set(competencia);
         this.classe.set(classe);
         this.assuntoPrincipal.set(assuntoPrincipal);
+        this.pedidoLiminar.set(pedidoLiminar);
+        this.segJustica.set(segJustica);
         this.valorAcao.set(valorAcao);
+        this.dispensaLegal.set(dispensaLegal);
+        this.justicaGratuita.set(justicaGratuita);
+        this.guiaCustas.set(guiaCustas);
         this.resumo.set(resumo);
         this.statusDemanda.set(statusDemanda);
-        this.requerente.set(requerente);
+        this.identificacao.set(identificacao);
+    }
 
-        optional.forEach((key, object) -> {
-            try {
-                switch (key) {
-                    case ("pedidoLiminar"):
-                        pedidoLiminar.set((Boolean) object);
-                        break;
-                    case ("segJustica"):
-                        segJustica.set((Boolean) object);
-                        break;
-                    case ("dispensaLegal"):
-                        dispensaLegal.set((Boolean) object);
-                        break;
-                    case ("justicaGratuira"):
-                        justicaGratuita.set((Boolean) object);
-                        break;
-                    case ("guiaCustas"):
-                        guiaCustas.set((Boolean) object);
-                        break;
-                    case ("identificacao"):
-                        identificacao.set((String) object);
-                        break;
-                    default:
-                        break;
-                }
-            } catch(ClassCastException e) {
-                EventLogger.logError("Wrong type in optional field in Demanda constructor");
-            }
-        });
-
-        // se a identificacao nao for colocada, linkar ela com "Processo de: " + o nome do requerente
-        if(identificacao.get().isEmpty()) {
-            final StringBinding binding = Bindings.createStringBinding(() ->
-                            "Processo de: " + requerente.nomeProperty().get(),
-                            requerente.nomeProperty()
-            );
-
-            identificacao.bind(binding);
-        }
+    public Demanda(
+            int id,
+            String foro,
+            String competencia,
+            String classe,
+            String assuntoPrincipal,
+            boolean pedidoLiminar,
+            boolean segJustica,
+            Double valorAcao,
+            boolean dispensaLegal,
+            boolean justicaGratuita,
+            boolean guiaCustas,
+            String resumo,
+            String statusDemanda,
+            String identificacao
+    ) {
+        this(foro, competencia, classe, assuntoPrincipal, pedidoLiminar, segJustica, valorAcao, dispensaLegal, justicaGratuita, guiaCustas, resumo, statusDemanda, identificacao);
+        this.id.set(id);
     }
 
     public double getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(double id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public String getForo() {
@@ -248,17 +239,5 @@ public class Demanda implements Model {
 
     public void setNome(String identificacao) {
         this.identificacao.set(identificacao);
-    }
-
-    public Requerente getRequerente() {
-        return requerente.get();
-    }
-
-    public ObjectProperty<Requerente> requerenteProperty() {
-        return requerente;
-    }
-
-    public void setRequerente(Requerente requerente) {
-        this.requerente.set(requerente);
     }
 }

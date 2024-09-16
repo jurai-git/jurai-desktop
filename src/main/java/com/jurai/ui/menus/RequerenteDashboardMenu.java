@@ -2,7 +2,6 @@ package com.jurai.ui.menus;
 
 import com.jurai.data.model.Requerente;
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controller.Controllable;
 import com.jurai.ui.controller.RequerenteEditingModalController;
 import com.jurai.ui.controller.RequerenteRegisterModalController;
 import com.jurai.ui.controls.SimpleList;
@@ -15,7 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class RequerenteDashboardMenu extends AbstractMenu<VBox> implements Controllable {
+public class RequerenteDashboardMenu extends AbstractMenu<VBox> {
     private SimpleList<Requerente> requerentesList;
     private VBox content;
     private HBox form;

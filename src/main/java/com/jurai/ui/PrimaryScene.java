@@ -24,10 +24,9 @@ public class PrimaryScene {
     private Sidebar sidebar;
     private ArrowToggleButton sidebarToggleButton;
     private final NodeConstraints mainContentConstraints = new NodeConstraints(0, 0.06f, 0.82f, 0.92f);
-    private NodeConstraints sidebarConstraints, sidebarToggleConstraints;
+    private NodeConstraints sidebarConstraints;
     private AccountPane accountPane;
     private DashboardPane dashboardPane;
-    private HomePane homePane;
     private PlanPane planPane;
     private QuickQueryPane quickQueryPane;
 
@@ -47,7 +46,6 @@ public class PrimaryScene {
         navbar = new Navbar();
         accountPane = new AccountPane();
         dashboardPane = new DashboardPane();
-        homePane = new HomePane();
         planPane = new PlanPane();
         sidebar = new Sidebar();
         quickQueryPane = new QuickQueryPane();
@@ -58,7 +56,6 @@ public class PrimaryScene {
         ApplicationData.headerHeightProperty().bind(mainPane.heightProperty().multiply(0.06));
         mainPane.addConstraints(accountPane.getView(), mainContentConstraints);
         mainPane.addConstraints(dashboardPane.getView(), mainContentConstraints);
-        mainPane.addConstraints(homePane.getView(), mainContentConstraints);
         mainPane.addConstraints(planPane.getView(), mainContentConstraints);
         mainPane.addConstraints(quickQueryPane.getView(), mainContentConstraints);
         mainPane.addConstraints(navbar.getView(), new NodeConstraints(0, 0, 1, 0.06f));
@@ -68,7 +65,7 @@ public class PrimaryScene {
 
         sidebarConstraints = new NodeConstraints(0, 0, 0.2f, 1);
         mainPane.addConstraints(sidebar.getView(), sidebarConstraints);
-        sidebarToggleConstraints = new NodeConstraints(0.16f, 0.01f, 0.04f, 0.04f);
+        NodeConstraints sidebarToggleConstraints = new NodeConstraints(0.16f, 0.01f, 0.04f, 0.04f);
         sidebarToggleConstraints.exclusiveWProperty.bind(sidebarToggleButton.heightProperty());
 
         mainPane.addConstraints(sidebarToggleButton, sidebarToggleConstraints);

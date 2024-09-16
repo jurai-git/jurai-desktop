@@ -10,6 +10,7 @@ public final class TextFieldSet extends FieldSet<TextField> {
 
     public TextFieldSet(String name) {
         super(name, TextField.class);
+        input.setPromptText(name);
     }
     
     public String getText() {
