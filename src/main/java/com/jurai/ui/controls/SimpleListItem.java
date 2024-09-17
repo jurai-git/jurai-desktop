@@ -65,7 +65,7 @@ public class SimpleListItem<T extends Model> extends HBox {
         textFillTransition.setToValue(Color.web("#fff"));
         textFillTransition.setInterpolator(interpolator);
 
-        HoverAnimator.animateAll(this, 0.5, 0.8);
+        HoverAnimator.animateAll(this, 0.3, 0.5);
     }
 
     //getters & setters

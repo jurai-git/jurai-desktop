@@ -62,12 +62,13 @@ public class ModalManager {
         scaleOutTransition = createScaleTransition(300, 1, 1, 0, 0, new SmoothEase());
         fadeInTransition = createFadeTransition(350, 0, 1, new PowerEase(3.2, true));
         fadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase());
-        blurTransition = createBlurTransition(500, new GaussianBlur(0), new GaussianBlur(16), new PowerEase(2, true), this.content);
+        blurTransition = createBlurTransition(new GaussianBlur(0), new GaussianBlur(16), new PowerEase(2, true), this.content);
     }
 
-    private BlurTransition createBlurTransition(int duration, GaussianBlur fromBlur, GaussianBlur toBlur, Interpolator interpolator, Node content) {
+    private BlurTransition createBlurTransition(GaussianBlur fromBlur, GaussianBlur toBlur, Interpolator interpolator, Node content) {
         return new BlurTransition(
-                400,
+                30
+                ,
                 toBlur,
                 fromBlur,
                 interpolator,

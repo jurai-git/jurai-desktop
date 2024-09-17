@@ -1,22 +1,14 @@
 package com.jurai.ui.controller;
 
 import com.jurai.data.ApplicationState;
-import com.jurai.data.model.Model;
 import com.jurai.data.model.Requerente;
 import com.jurai.ui.controls.SimpleList;
 import com.jurai.ui.controls.SimpleListItem;
 import com.jurai.ui.menus.RequerenteDashboardMenu;
 import com.jurai.ui.modal.ModalManager;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class RequerenteDashboardController extends AbstractController<RequerenteDashboardMenu>  {
     @Override
@@ -32,9 +24,9 @@ public class RequerenteDashboardController extends AbstractController<Requerente
             ApplicationState.setSelectedRequerente(newValue == null ? null : newValue.getObject());
             if(newValue == null) {
                 pane.getEditDeleteRequerente().setDisable(true);
-                return;
+            } else {
+                pane.getEditDeleteRequerente().setDisable(false);
             }
-            pane.getEditDeleteRequerente().setDisable(false);
         });
 
         TextField searchTextField = pane.getRequerentesList().getSearchTextField();
