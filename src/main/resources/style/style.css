@@ -100,12 +100,17 @@
 }
 
 .blue-button {
-    -fx-border-width: 0;
+    -fx-border-color: transparent;
     -fx-background-color: rgba(83, 156, 212, 0.6);
 }
 
+.blue-button:pressed {
+    -fx-background-color: rgba(83, 156, 212, 0.2) !important;
+    -fx-border-color: #1d1d22;
+}
+
 .empty-button {
-    -fx-backgorund-color: transparent;
+    -fx-background-color: transparent;
     -fx-border-width: 0;
 }
 

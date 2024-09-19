@@ -9,7 +9,7 @@ import com.jurai.ui.modal.RequerenteRegisterModal;
 import javafx.scene.control.Alert;
 
 public class RequerenteEditingModalController extends AbstractController<RequerenteEditingModal> {
-    private final RequerenteService requerenteService = new RequerenteService();
+    private final RequerenteService requerenteService = RequerenteService.getInstance();
 
     @Override
     protected void attachEvents(RequerenteEditingModal pane) {

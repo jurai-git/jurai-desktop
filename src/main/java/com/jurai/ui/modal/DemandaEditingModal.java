@@ -29,6 +29,10 @@ public class DemandaEditingModal extends DemandaModal {
         resumo.setText(object.getResumo());
     }
 
+    public Demanda getObject() {
+        return object;
+    }
+
     @Override
     protected void initButtons() {
         save = new Button("Salvar");

@@ -45,7 +45,7 @@ public class DemandaDashboardMenu extends AbstractMenu<VBox> {
         form.getStyleClass().add("buttons-row");
         addDemanda = new Button("Adicionar");
         addDemanda.setDisable(true);
-        editDeleteDemanda = new Button("Vizualizar/editar");
+        editDeleteDemanda = new Button("Visualizar/editar");
         editDeleteDemanda.setDisable(true);
     }
 

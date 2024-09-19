@@ -20,15 +20,20 @@ import java.util.List;
 import java.util.Map;
 
 public class RequerenteService {
+    private static final RequerenteService instance = new RequerenteService();
     private final RequestHandler requestHandler = new RequestHandler("http://127.0.0.1:5000");
     private final Gson gson;
 
-    public RequerenteService() {
+    private RequerenteService() {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Advogado.class, new AdvogadoSerializer());
         builder.registerTypeAdapter(Requerente.class, new RequerenteSerializer());
         builder.registerTypeAdapter(Demanda.class, new DemandaSerializer());
         gson = builder.create();
+    }
+
+    public static RequerenteService getInstance() {
+        return instance;
     }
 
     public void update(Requerente r) throws ResponseNotOkException {
@@ -57,33 +62,11 @@ public class RequerenteService {
 
         try {
             JsonObject response = requestHandler.post("/demanda/new", body);
-            reloadDemandas();
+            DemandaService.getInstance().reloadDemandas();
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on RequerenteService::addDemanda: error " + e.getCode());
         }
     }
 
-    public void reloadDemandas() {
-        JsonObject body = new JsonObject();
-        Requerente selectedRequerente = ApplicationState.getInstance().getSelectedRequerente();
-        Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
-
-        body.addProperty("access_token", currentUser.getAccessToken());
-        body.addProperty("id_requerente", selectedRequerente.getIdRequerente());
-
-        try {
-            JsonObject response = requestHandler.post("/requerente/demandas", body);
-            List<Demanda> demandas =
-                    response.get("demanda_list").getAsJsonArray().asList().stream().
-                            map(element -> gson.fromJson(element, Demanda.class)).toList();
-
-            selectedRequerente.demandas().clear();
-            selectedRequerente.demandas().addAll(demandas);
-            EventLogger.log("Loaded requerentes for advogado " + currentUser.getNome());
-        } catch(ResponseNotOkException e) {
-            EventLogger.logError("Error communicating to API on AdvogadoService.loadRequerentes(): error " + e.getCode());
-            System.out.println(e.getMessage());
-        }
-    }
 
 }

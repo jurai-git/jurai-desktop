@@ -1,5 +1,6 @@
 package com.jurai.ui.modal;
 
+import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
 import com.jurai.ui.controls.HGroup;
@@ -38,9 +39,13 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
     protected void initControls() {
         initButtons();
         tab2Cancel = new Button("Cancelar");
+        HoverAnimator.animateAll(tab2Cancel, 1, 1);
         tab1Cancel = new Button("Cancelar");
+        HoverAnimator.animateAll(tab1Cancel, 1, 1);
         next = new Button("Próximo");
+        HoverAnimator.animateAll(next, 1, 1);
         previous = new Button("Anterior");
+        HoverAnimator.animateAll(previous, 1, 1);
         identificacao = new TextFieldSet("Identificação");
         foro = new TextFieldSet("Foro");
         status = new TextFieldSet("Status");

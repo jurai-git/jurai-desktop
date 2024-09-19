@@ -9,7 +9,7 @@ import com.jurai.ui.modal.DemandaRegisterModal;
 import com.jurai.util.UILogger;
 
 public class DemandaRegisterController extends AbstractController<DemandaRegisterModal> {
-    private final RequerenteService requerenteService = new RequerenteService();
+    private final RequerenteService requerenteService = RequerenteService.getInstance();
 
     @Override
     protected void attachEvents(DemandaRegisterModal pane) {

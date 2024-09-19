@@ -1,5 +1,6 @@
 package com.jurai.ui.modal;
 
+import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
 import com.jurai.ui.controls.HGroup;
@@ -114,6 +115,8 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         personalInfoActions.getChildren().addAll(
                 personalCancel, SpacerFactory.createHBoxSpacer(Priority.ALWAYS), personalInfoNext
         );
+        HoverAnimator.animateAll(personalCancel, 1, 1);
+        HoverAnimator.animateAll(personalInfoNext, 1, 1);
 
         VBox.setVgrow(personalInfoForm, Priority.ALWAYS);
         VBox.setVgrow(personalInfoActions, Priority.NEVER);
@@ -151,6 +154,9 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
                 SpacerFactory.createHBoxSpacer(12),
                 generalInfoNext
         );
+        HoverAnimator.animateAll(generalCancel, 1, 1);
+        HoverAnimator.animateAll(generalInfoPrevious, 1, 1);
+        HoverAnimator.animateAll(generalInfoNext, 1, 1);
 
         VBox.setVgrow(generalInfoActions, Priority.NEVER);
         VBox.setVgrow(generalInfoForm, Priority.ALWAYS);
@@ -192,6 +198,9 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
                 SpacerFactory.createHBoxSpacer(12),
                 create
         );
+        HoverAnimator.animateAll(create, 1, 1);
+        HoverAnimator.animateAll(addressCancel, 1, 1);
+        HoverAnimator.animateAll(addressInfoPrevious, 1, 1);
 
         VBox.setVgrow(addressInfoActions, Priority.NEVER);
         VBox.setVgrow(addressInfoForm, Priority.ALWAYS);

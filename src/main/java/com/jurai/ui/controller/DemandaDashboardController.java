@@ -2,9 +2,13 @@ package com.jurai.ui.controller;
 
 import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Demanda;
+import com.jurai.data.request.ResponseNotOkException;
+import com.jurai.data.service.DemandaService;
 import com.jurai.data.service.RequerenteService;
 import com.jurai.ui.menus.DemandaDashboardMenu;
 import com.jurai.ui.modal.ModalManager;
+import com.jurai.util.EventLogger;
+import com.jurai.util.UILogger;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 
@@ -33,7 +37,11 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
         ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
             if("selectedRequerente".equals(propertyChangeEvent.getPropertyName())) {
                 if(ApplicationState.getInstance().getSelectedRequerente() != null) {
-                    new RequerenteService().reloadDemandas();
+                    try {
+                        DemandaService.getInstance().reloadDemandas();
+                    } catch (ResponseNotOkException e) {
+                        UILogger.logError("Error loading requerente's demandas: " + e.getMessage());
+                    }
                     bindDemandaList(pane.getDemandaList().getListObjects());
                     pane.getAddDemanda().setDisable(false);
                 } else {
