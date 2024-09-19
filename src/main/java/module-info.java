@@ -8,6 +8,8 @@ module jurai {
     requires com.google.gson;
     requires java.sql;
     requires jdk.compiler;
+    requires java.management;
+    requires org.controlsfx.controls;
 
 
     exports com.jurai to javafx.graphics;

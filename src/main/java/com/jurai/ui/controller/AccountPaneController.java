@@ -4,6 +4,7 @@ import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
+import com.jurai.ui.modal.popup.Notification;
 import com.jurai.ui.panes.AccountPane;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.menus.AccountDashboardMenu;
@@ -37,6 +38,8 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 }
                 s.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
             } catch (ResponseNotOkException ex) {
+                new Notification("Deu erro aqui!").show();
+                /*
                 switch (ex.getCode()) {
                     case 500:
                         new Alert(
@@ -58,7 +61,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                         break;
                     default:
                         break;
-                }
+                }*/
             }
         });
 

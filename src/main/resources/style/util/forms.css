@@ -55,6 +55,7 @@
 
 .form .check-box * {
     -fx-base: #202024;
+    -fx-spacing: 0.5em;
 }
 
 .form .check-box > .box {

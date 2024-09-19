@@ -201,6 +201,28 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         );
     }
 
+    public void clear() {
+        cpfCnpj.getInput().clear();
+        nome.getInput().clear();
+        nomeSocial.getInput().clear();
+        genero.getInput().clear();
+        rg.getInput().clear();
+        orgaoEmissor.getInput().clear();
+        estadoCivil.getInput().clear();
+        nacionalidade.getInput().clear();
+        profissao.getInput().clear();
+        cep.getInput().clear();
+        logradouro.getInput().clear();
+        email.getInput().clear();
+        numero.getInput().clear();
+        complemento.getInput().clear();
+        bairro.getInput().clear();
+        estado.getInput().clear();
+        cidade.getInput().clear();
+        isIdoso.setSelected(false);
+    }
+
+
     public Button getPersonalInfoNext() {
         return personalInfoNext;
     }

@@ -4,11 +4,13 @@ import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Model;
 import com.jurai.data.model.Requerente;
 import com.jurai.ui.modal.Modal;
+import com.jurai.ui.modal.popup.Popup;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.Pane;
 import com.jurai.ui.controls.SimpleListItem;
 import com.jurai.ui.util.StageType;
 import com.jurai.util.StateLogger;
+import javafx.stage.Stage;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -22,6 +24,8 @@ public final class ApplicationState {
     private static AccountMode accountMode = null;
     private static StageType stageType = null;
     private static Requerente selectedRequerente = null;
+    private static Popup currentPopup = null;
+    private static Stage currentStage = null;
 
     public static void initialize() {
         ApplicationData.initializeSupportLogging(support);
@@ -79,8 +83,31 @@ public final class ApplicationState {
         support.firePropertyChange("stageType", oldValue, ApplicationState.stageType);
     }
 
+    public static void setCurrentStage(Stage currentStage) {
+        var oldvalue = ApplicationState.currentStage;
+        ApplicationState.currentStage = currentStage;
+        support.firePropertyChange("currentStage", oldvalue, currentStage);
+    }
+
+    public static Popup getCurrentPopup() {
+        return currentPopup;
+    }
+
+    public static void setCurrentPopup(Popup newPopup) {
+        var oldValue = currentPopup;
+        currentPopup = newPopup;
+        if(oldValue != null) {
+            oldValue.close();
+        }
+        support.firePropertyChange("currentPopup", oldValue, newPopup);
+    }
+
     public static Requerente getSelectedRequerente() {
         return selectedRequerente;
+    }
+
+    public static Stage getCurrentStage() {
+        return currentStage;
     }
 
     public static Pane getActivePane() {

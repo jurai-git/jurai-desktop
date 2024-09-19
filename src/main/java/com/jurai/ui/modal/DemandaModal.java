@@ -6,6 +6,7 @@ import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.TextFieldSet;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -19,7 +20,7 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
             classe, assuntoPrincipal,
             valorAcao, resumo;
 
-    protected RadioButton pedidoLiminar, segredoJustica, dispensaLegal, justicaGratiuta, guiaCustas;
+    protected CheckBox pedidoLiminar, segredoJustica, dispensaLegal, justicaGratiuta, guiaCustas;
 
     private BasicTabbedPane content;
     private BasicTab tab1, tab2;
@@ -46,12 +47,12 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
         competencia = new TextFieldSet("Competência");
         classe = new TextFieldSet("Classe");
         assuntoPrincipal = new TextFieldSet("Assunto Principal");
-        pedidoLiminar = new RadioButton("Pedido Liminar");
-        segredoJustica = new RadioButton("Segredo de Justiça");
+        pedidoLiminar = new CheckBox("Pedido Liminar");
+        segredoJustica = new CheckBox("Segredo de Justiça");
         valorAcao = new TextFieldSet("Valor da Ação");
-        dispensaLegal = new RadioButton("Dispensa Legal");
-        justicaGratiuta = new RadioButton("Justiça Gratuita");
-        guiaCustas = new RadioButton("Guia de Custas");
+        dispensaLegal = new CheckBox("Dispensa Legal");
+        justicaGratiuta = new CheckBox("Justiça Gratuita");
+        guiaCustas = new CheckBox("Guia de Custas");
         resumo = new TextFieldSet("Resumo");
 
         // tab1
@@ -181,15 +182,15 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
     }
 
     public boolean getGuiaCustas() {
-        return guiaCustas.isArmed();
+        return guiaCustas.isSelected();
     }
 
     public boolean getJusticaGratiuta() {
-        return justicaGratiuta.isArmed();
+        return justicaGratiuta.isSelected();
     }
 
     public boolean getDispensaLegal() {
-        return dispensaLegal.isArmed();
+        return dispensaLegal.isSelected();
     }
 
     public String getValorAcao() {
@@ -197,11 +198,11 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
     }
 
     public boolean getSegredoJustica() {
-        return segredoJustica.isArmed();
+        return segredoJustica.isSelected();
     }
 
     public boolean getPedidoLiminar() {
-        return pedidoLiminar.isArmed();
+        return pedidoLiminar.isSelected();
     }
 
     public String getAssuntoPrincipal() {

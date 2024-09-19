@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class ModalManager {
-    private static ModalManager instance;
+    private static volatile ModalManager instance;
     private final StackPane root;
     private final Node content;
     private Modal activeModal;
@@ -36,7 +36,11 @@ public class ModalManager {
 
     public static void initialize(StackPane root, Node content) {
         if (instance == null) {
-            instance = new ModalManager(root, content);
+            synchronized (ModalManager.class) {
+                if(instance == null) {
+                    instance = new ModalManager(root, content);
+                }
+            }
         }
     }
 
@@ -48,7 +52,6 @@ public class ModalManager {
     }
 
     public <T extends Modal<?>> void registerModalFactory(String key, Supplier<Modal> modalFactory, Class<T> classOfT) {
-
         if(classOfT.getAnnotation(LoadingStrategy.class).value() == LoadingStrategy.Strategy.EAGER) {
             // if the loading strategy is eager, we store an instance of the object directly
             modalFactories.put(key, Either.right(modalFactory.get()));
@@ -67,8 +70,7 @@ public class ModalManager {
 
     private BlurTransition createBlurTransition(GaussianBlur fromBlur, GaussianBlur toBlur, Interpolator interpolator, Node content) {
         return new BlurTransition(
-                30
-                ,
+                30,
                 toBlur,
                 fromBlur,
                 interpolator,

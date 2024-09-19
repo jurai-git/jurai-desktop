@@ -51,14 +51,15 @@ public class RequerenteRegisterModalController extends AbstractController<Requer
             );
             try {
                 advogadoService.addRequerente(r);
+                pane.clear();
                 pane.dispose();
             } catch (ResponseNotOkException ex) {
                 new Alert(Alert.AlertType.ERROR, "Error: " + ex.getMessage());
                 ex.printStackTrace();
             }
         });
-
     }
+
 
     @Override
     protected void attachNotifiers(RequerenteRegisterModal pane) {

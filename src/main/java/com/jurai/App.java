@@ -39,8 +39,6 @@ public class App extends Application {
 
         // primary stage
         this.primaryStage = stage;
-        stage.setHeight(screenSize.height * 0.8);
-        stage.setWidth(screenSize.width * 0.8);
         stage.centerOnScreen();
         primaryScene = new PrimaryScene();
         primaryScene.getScene().getStylesheets().add(css);
@@ -48,8 +46,6 @@ public class App extends Application {
 
         // secondary stage
         secondaryStage = new Stage();
-        stage.setHeight(screenSize.height * 0.6);
-        stage.setWidth(screenSize.width * 0.3);
         secondaryStage.centerOnScreen();
         SecondaryScene secondaryScene = new SecondaryScene();
         secondaryScene.getScene().getStylesheets().add(css);

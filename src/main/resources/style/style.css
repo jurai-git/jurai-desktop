@@ -9,7 +9,6 @@
 @import url("controls/basic-tabbed-pane.css");
 @import url("menus/quick-query-tab.css");
 @import url("controls/arrow-toggle-button.css");
-
 /*
 @font-face {
     font-family: "Roboto Slab";
@@ -38,7 +37,7 @@
     -fx-font-family: 'Exo 2';
     -fx-font-style: Medium;
     -fx-font-size: 15pt;
-    -fx-base: #333;
+    -fx-base: #202024;
     -fx-text-fill: white;
 }
 
@@ -137,4 +136,12 @@
     -fx-border-width: 2px;
     -fx-border-color: #2b2b2f;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 256, 0.4, 0, 0);
+}
+
+.popup {
+    -fx-background-color: #242429;
+    -fx-border-width: 2px;
+    -fx-border-color: #39393e;
+    -fx-border-radius: 12px;
+    -fx-backgorund-radius: 12px;
 }

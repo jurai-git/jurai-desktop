@@ -79,7 +79,7 @@ public class PrimaryScene {
         sidebar.getView().setCache(true);
         sidebar.getView().setCacheHint(CacheHint.SPEED);
 
-        scene = new Scene(modalRoot, ApplicationData.getScreenSize().width * 0.7, ApplicationData.getScreenSize().height * 0.7, false, SceneAntialiasing.BALANCED);
+        scene = new Scene(modalRoot, ApplicationData.getScreenSize().width, ApplicationData.getScreenSize().height, false, SceneAntialiasing.BALANCED);
     }
 
     private void layFixedControls() {
@@ -109,6 +109,11 @@ public class PrimaryScene {
         ApplicationState.addPropertyChangeListener(e -> {
             if ("activePane".equals(e.getPropertyName())) {
                 activePaneChanged((Pane) e.getNewValue());
+            }
+        });
+        ApplicationState.addPropertyChangeListener(e -> {
+            if ("currentPopup".equals(e.getPropertyName())) {
+
             }
         });
         mainPane.widthProperty().addListener((observableValue, number, t1) -> {

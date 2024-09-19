@@ -51,6 +51,7 @@ public class RequerenteEditingModalController extends AbstractController<Requere
                 r.setBairro(pane.getBairro());
                 r.setCidade(pane.getCidade());
                 requerenteService.update(r);
+                pane.clear();
                 pane.dispose();
             } catch (ResponseNotOkException ex) {
                 new Alert(Alert.AlertType.ERROR, "Error: " + ex.getMessage());

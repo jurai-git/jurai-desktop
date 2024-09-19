@@ -24,6 +24,8 @@ public class RequestHandler {
             URL url = new URL(baseUrl + endpoint);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
+            con.setConnectTimeout(5000);
+            con.setReadTimeout(5000);
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
             con.setDoOutput(true);

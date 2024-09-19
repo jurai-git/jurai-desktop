@@ -1,6 +1,7 @@
 package com.jurai.ui.controller;
 
 import com.jurai.App;
+import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
 import com.jurai.ui.util.StageType;
 
@@ -24,11 +25,13 @@ public class StageController extends AbstractController<App> {
             case MAIN_STAGE -> {
                 app.getPrimaryStage().show();
                 app.getSecondaryStage().hide();
+                ApplicationState.setCurrentStage(app.getPrimaryStage());
                 app.getPrimaryScene().setSidebarMode(true);
             }
             case SECONDARY_STAGE -> {
                 app.getSecondaryStage().show();
                 app.getPrimaryStage().hide();
+                ApplicationState.setCurrentStage(app.getSecondaryStage());
             }
         }
     }

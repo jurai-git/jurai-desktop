@@ -13,7 +13,7 @@ public abstract class Modal<T extends Pane> extends AbstractMenu<T> {
         this.name = name;
         getContent().getStyleClass().add("modal");
         getContent().setCache(true);
-        getContent().setCacheHint(CacheHint.SCALE);
+        getContent().setCacheHint(CacheHint.SPEED);
         getContent().setCacheShape(true);
     }
 
