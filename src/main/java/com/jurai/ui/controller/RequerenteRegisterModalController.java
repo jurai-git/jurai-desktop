@@ -46,7 +46,7 @@ public class RequerenteRegisterModalController extends AbstractController<Requer
                     pane.getNumero(),
                     pane.getComplemento(),
                     pane.getBairro(),
-                    pane.getEmail(),
+                    pane.getEstado(),
                     pane.getCidade()
             );
             try {

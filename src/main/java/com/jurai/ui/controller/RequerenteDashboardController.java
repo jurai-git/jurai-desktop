@@ -21,7 +21,7 @@ public class RequerenteDashboardController extends AbstractController<Requerente
         });
 
         pane.getRequerentesList().addSelectedItemListener((observableValue, oldValue, newValue) -> {
-            ApplicationState.setSelectedRequerente(newValue == null ? null : newValue.getObject());
+            ApplicationState.getInstance().setSelectedRequerente(newValue == null ? null : newValue.getObject());
             if(newValue == null) {
                 pane.getEditDeleteRequerente().setDisable(true);
             } else {
@@ -46,9 +46,9 @@ public class RequerenteDashboardController extends AbstractController<Requerente
 
     @Override
     protected void attachNotifiers(RequerenteDashboardMenu pane) {
-        ApplicationState.addPropertyChangeListener(propertyChangeEvent -> {
+        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
             if("currentUser".equals(propertyChangeEvent.getPropertyName())) {
-                if(ApplicationState.getCurrentUser() != null) {
+                if(ApplicationState.getInstance().getCurrentUser() != null) {
                     bindRequerenteList(pane.getRequerentesList());
                 }
             }
@@ -56,8 +56,8 @@ public class RequerenteDashboardController extends AbstractController<Requerente
     }
 
     private void bindRequerenteList(SimpleList<Requerente> listPane) {
-        Bindings.bindContent(listPane.getListObjects(), ApplicationState.getCurrentUser().getRequerentes());
-        ApplicationState.getCurrentUser().getRequerentes().addListener((ListChangeListener<Requerente>) change -> {
+        Bindings.bindContent(listPane.getListObjects(), ApplicationState.getInstance().getCurrentUser().getRequerentes());
+        ApplicationState.getInstance().getCurrentUser().getRequerentes().addListener((ListChangeListener<Requerente>) change -> {
             listPane.getSearchTextField().clear();
         });
     }

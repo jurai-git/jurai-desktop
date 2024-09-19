@@ -130,8 +130,6 @@ public class SimpleList<T extends Model> extends BorderPane {
         });
         item.setFillHeight(true);
         HBox.setHgrow(item, Priority.ALWAYS);
-        double em = ApplicationData.getEm();
-        VBox.setMargin(item, new Insets(em*0.5, 0, em*0.5, 0));
         listItemsContainer.getChildren().add(item);
         listItemsContainer.setClip(null);
     }

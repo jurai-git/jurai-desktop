@@ -70,7 +70,7 @@ public class PrimaryScene {
 
         mainPane.addConstraints(sidebarToggleButton, sidebarToggleConstraints);
 
-        activePaneChanged(ApplicationState.getActivePane());
+        activePaneChanged(ApplicationState.getInstance().getActivePane());
         sidebarModeUpdated(false);
 
         mainPane.setCache(true);
@@ -106,12 +106,12 @@ public class PrimaryScene {
     }
 
     private void attachNotifiers() {
-        ApplicationState.addPropertyChangeListener(e -> {
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
             if ("activePane".equals(e.getPropertyName())) {
                 activePaneChanged((Pane) e.getNewValue());
             }
         });
-        ApplicationState.addPropertyChangeListener(e -> {
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
             if ("currentPopup".equals(e.getPropertyName())) {
 
             }

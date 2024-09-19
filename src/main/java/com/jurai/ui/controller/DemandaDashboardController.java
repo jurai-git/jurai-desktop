@@ -30,9 +30,9 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
 
     @Override
     protected void attachNotifiers(DemandaDashboardMenu pane) {
-        ApplicationState.addPropertyChangeListener(propertyChangeEvent -> {
+        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
             if("selectedRequerente".equals(propertyChangeEvent.getPropertyName())) {
-                if(ApplicationState.getSelectedRequerente() != null) {
+                if(ApplicationState.getInstance().getSelectedRequerente() != null) {
                     new RequerenteService().reloadDemandas();
                     bindDemandaList(pane.getDemandaList().getListObjects());
                     pane.getAddDemanda().setDisable(false);
@@ -49,6 +49,6 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
     }
 
     private void bindDemandaList(ObservableList<Demanda> paneRequerentes) {
-        Bindings.bindContent(paneRequerentes, ApplicationState.getSelectedRequerente().demandas());
+        Bindings.bindContent(paneRequerentes, ApplicationState.getInstance().getSelectedRequerente().demandas());
     }
 }

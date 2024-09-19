@@ -54,10 +54,9 @@ public class CommandListener implements Runnable {
                             "bairro", "estado", "cidade");
                     System.out.println(r);
                     try {
-                        new AdvogadoService().addRequerente(r);
+                        AdvogadoService.getInstance().addRequerente(r);
                     } catch(Exception e) {
                         e.printStackTrace();
-                        System.out.println("bééééééé");
                     }
                 }
                 break;
@@ -66,7 +65,7 @@ public class CommandListener implements Runnable {
             case "-s":
                 System.out.println("Are you sure? You will not be able to turn debugging again. [N/y]");
                 if(new Scanner(System.in).nextLine().toLowerCase().equals("y"))
-                    ApplicationState.setDebugging(false);
+                    ApplicationState.getInstance().setDebugging(false);
                 else
                     System.out.println("Aborting...");
                 break;

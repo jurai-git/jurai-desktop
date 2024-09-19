@@ -13,11 +13,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 
 public class AccountPaneController extends AbstractController<AccountPane> {
-    AdvogadoService s;
+    private final AdvogadoService advogadoService = AdvogadoService.getInstance();
 
     @Override
     public void initialize(AccountPane pane) {
-        s = new AdvogadoService();
         super.initialize(pane);
     }
 
@@ -33,10 +32,10 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         pane.getLoginMenu().getLogin().setOnAction(e -> {
             try {
                 if(pane.getLoginMenu().getEmail().getText().equals("root")) {
-                    ApplicationState.setCurrentUser(new Advogado(1, "advogado", "advogado@gmail.com", "oab123", "12321321321321"));
+                    ApplicationState.getInstance().setCurrentUser(new Advogado(1, "advogado", "advogado@gmail.com", "oab123", "12321321321321"));
                     return;
                 }
-                s.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
+                advogadoService.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
             } catch (ResponseNotOkException ex) {
                 new Notification("Deu erro aqui!").show();
                 /*
@@ -101,29 +100,29 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
             final String oab = pane.getAdvogadoRegisterMenu().getOab().getText();
             try {
-                s.create(username, email, pwd, oab);
+                advogadoService.create(username, email, pwd, oab);
             } catch(Exception ignored) {
 
             }
 
-            ApplicationState.setAccountMode(AccountMode.LOGGING_IN);
+            ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
         });
 
         // mode switching handling
-        pane.getLoginMenu().getCreateAccount().setOnAction(e -> ApplicationState.setAccountMode(AccountMode.REGISTERING));
-        pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> ApplicationState.setAccountMode(AccountMode.LOGGING_IN));
+        pane.getLoginMenu().getCreateAccount().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.REGISTERING));
+        pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN));
 
     }
 
     @Override
     protected void attachNotifiers(AccountPane pane) {
-        ApplicationState.addPropertyChangeListener(e -> {
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
             if("accountMode".equals(e.getPropertyName())) {
                 modeChanged((AccountMode) e.getNewValue(), pane);
             }
             if("currentUser".equals(e.getPropertyName())) {
-                if(ApplicationState.getCurrentUser() != null)
-                    userChanged(ApplicationState.getCurrentUser(), pane);
+                if(ApplicationState.getInstance().getCurrentUser() != null)
+                    userChanged(ApplicationState.getInstance().getCurrentUser(), pane);
             }
         });
     }

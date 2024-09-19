@@ -5,6 +5,7 @@ import com.jurai.data.ApplicationState;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
 import com.jurai.ui.controller.StageController;
+import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -50,9 +51,7 @@ public class App extends Application {
         SecondaryScene secondaryScene = new SecondaryScene();
         secondaryScene.getScene().getStylesheets().add(css);
         secondaryStage.setScene(secondaryScene.getScene());
-
-        ApplicationState.initialize();
-        ApplicationData.initialize();
+        ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
     }
 
     private void selfAttachControllers() {
@@ -82,5 +81,7 @@ public class App extends Application {
 
     private void initialize() {
         SpacerFactory.initialize();
+        ApplicationState.initialize();
+        ApplicationData.initialize();
     }
 }

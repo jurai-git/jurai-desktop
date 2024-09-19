@@ -10,14 +10,14 @@ import com.jurai.util.UILogger;
 public class SidebarNavController extends AbstractController<SidebarNav> {
     @Override
     protected void attachEvents(SidebarNav pane) {
-        pane.getAccount().setOnAction(e -> ApplicationState.setActivePane(Pane.AccountPane));
-        pane.getQuickQuery().setOnAction(e -> ApplicationState.setActivePane(Pane.QuickQueryPane));
-        pane.getDocuments().setOnAction(e -> ApplicationState.setActivePane(Pane.DocPane));
-        pane.getDashboard().setOnAction(e -> ApplicationState.setActivePane(Pane.DashboardPane));
+        pane.getAccount().setOnAction(e -> ApplicationState.getInstance().setActivePane(Pane.AccountPane));
+        pane.getQuickQuery().setOnAction(e -> ApplicationState.getInstance().setActivePane(Pane.QuickQueryPane));
+        pane.getDocuments().setOnAction(e -> ApplicationState.getInstance().setActivePane(Pane.DocPane));
+        pane.getDashboard().setOnAction(e -> ApplicationState.getInstance().setActivePane(Pane.DashboardPane));
 
         pane.getLogout().setOnAction(e -> {
-            ApplicationState.setCurrentUser(null);
-            ApplicationState.setAccountMode(AccountMode.LOGGING_IN);
+            ApplicationState.getInstance().setCurrentUser(null);
+            ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
         });
     }
 
@@ -30,7 +30,7 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
 
     @Override
     protected void attachNotifiers(SidebarNav pane) {
-        ApplicationState.addPropertyChangeListener(propertyChangeEvent -> {
+        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
             if(!"activePane".equals(propertyChangeEvent.getPropertyName())) {
                 return;
             }
@@ -49,7 +49,7 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
             } else {
                 UILogger.logError("Changed to invalid active pane!");
                 UILogger.logWarning("Falling back to DashboardPane");
-                ApplicationState.setActivePane(Pane.DashboardPane);
+                ApplicationState.getInstance().setActivePane(Pane.DashboardPane);
             }
         });
     }

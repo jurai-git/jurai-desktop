@@ -11,8 +11,8 @@ public abstract class Popup extends Dialog<Void> {
     public Popup() {
         super();
         getDialogPane().getStyleClass().add("popup");
-        setOnShown(e -> ApplicationState.setCurrentPopup(this));
-        setOnHidden(e -> ApplicationState.setCurrentPopup(null));
+        setOnShown(e -> ApplicationState.getInstance().setCurrentPopup(this));
+        setOnHidden(e -> ApplicationState.getInstance().setCurrentPopup(null));
     }
 
     public void setContent(Node content) {

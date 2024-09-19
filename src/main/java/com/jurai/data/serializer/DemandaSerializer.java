@@ -48,7 +48,7 @@ public class DemandaSerializer implements JsonSerializer<Demanda>, JsonDeseriali
         result.addProperty("resumo", demanda.getResumo());
         result.addProperty("status", demanda.getStatusDemanda());
         result.addProperty("identificacao", demanda.getNome());
-        result.addProperty("id_requerente", ApplicationState.getSelectedRequerente().getIdRequerente());
+        result.addProperty("id_requerente", ApplicationState.getInstance().getSelectedRequerente().getIdRequerente());
 
         return result;
     }

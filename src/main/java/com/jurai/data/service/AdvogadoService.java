@@ -24,12 +24,17 @@ import java.util.Map;
 public class AdvogadoService {
     private final RequestHandler requestHandler = new RequestHandler("http://127.0.0.1:5000");
     private final Gson gson;
+    private static final AdvogadoService instance = new AdvogadoService();
 
-    public AdvogadoService() {
+    private AdvogadoService() {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Advogado.class, new AdvogadoSerializer());
         builder.registerTypeAdapter(Requerente.class, new RequerenteSerializer());
         gson = builder.create();
+    }
+
+    public static AdvogadoService getInstance() {
+        return instance;
     }
 
     public void create(
@@ -55,7 +60,7 @@ public class AdvogadoService {
     }
 
     public void deauthenticate() {
-        ApplicationState.setCurrentUser(null);
+        ApplicationState.getInstance().setCurrentUser(null);
     }
 
     public void authenticate(String uname, String password) throws ResponseNotOkException {
@@ -66,7 +71,7 @@ public class AdvogadoService {
         try {
             JsonObject response = requestHandler.post("/advogado/get", body);
             Advogado advogado = gson.fromJson(response.get("advogado"), Advogado.class);
-            ApplicationState.setCurrentUser(advogado);
+            ApplicationState.getInstance().setCurrentUser(advogado);
             reloadRequerentes();
         }catch(ResponseNotOkException e) {
             throw e;
@@ -75,7 +80,7 @@ public class AdvogadoService {
 
     public void reloadRequerentes() throws ResponseNotOkException {
         Map<String, String> body = new HashMap<>();
-        Advogado currentUser = ApplicationState.getCurrentUser();
+        Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
         body.put("access_token", currentUser.getAccessToken());
         String jsonifiedBody = gson.toJson(body);
 
@@ -97,7 +102,7 @@ public class AdvogadoService {
 
     public void addRequerente(Requerente r) throws ResponseNotOkException {
         JsonObject body = JsonUtils.asJson(gson.toJson(r, Requerente.class));
-        body.addProperty("access_token", ApplicationState.getCurrentUser().getAccessToken());
+        body.addProperty("access_token", ApplicationState.getInstance().getCurrentUser().getAccessToken());
         System.out.println(body);
         try {
             JsonObject response = requestHandler.post("/requerente/new", body);
@@ -110,10 +115,10 @@ public class AdvogadoService {
 
 
     public Advogado getCurrent() {
-        return ApplicationState.getCurrentUser();
+        return ApplicationState.getInstance().getCurrentUser();
     }
 
     private void setCurrent(Advogado a) {
-        ApplicationState.setCurrentUser(a);
+        ApplicationState.getInstance().setCurrentUser(a);
     }
 }

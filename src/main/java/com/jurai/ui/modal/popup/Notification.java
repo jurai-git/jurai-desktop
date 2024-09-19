@@ -29,7 +29,7 @@ public class Notification extends Popup {
 
         getDialogPane().setContent(contentPane);
         initStyle(StageStyle.UNDECORATED);
-        getDialogPane().getStylesheets().addAll(ApplicationState.getCurrentStage().getScene().getStylesheets());
+        getDialogPane().getStylesheets().addAll(ApplicationState.getInstance().getCurrentStage().getScene().getStylesheets());
         setContent(contentPane);
         getDialogPane().getButtonTypes().setAll(ButtonType.OK);
         initModality(Modality.APPLICATION_MODAL);

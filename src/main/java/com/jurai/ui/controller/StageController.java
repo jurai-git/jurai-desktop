@@ -13,9 +13,9 @@ public class StageController extends AbstractController<App> {
 
     @Override
     protected void attachNotifiers(App app) {
-        ApplicationState.addPropertyChangeListener(changeEvent -> {
+        ApplicationState.getInstance().addPropertyChangeListener(changeEvent -> {
             if("stageType".equals(changeEvent.getPropertyName())) {
-                switchStage(ApplicationState.getStageType(), app);
+                switchStage(ApplicationState.getInstance().getStageType(), app);
             }
         });
     }
@@ -25,13 +25,13 @@ public class StageController extends AbstractController<App> {
             case MAIN_STAGE -> {
                 app.getPrimaryStage().show();
                 app.getSecondaryStage().hide();
-                ApplicationState.setCurrentStage(app.getPrimaryStage());
+                ApplicationState.getInstance().setCurrentStage(app.getPrimaryStage());
                 app.getPrimaryScene().setSidebarMode(true);
             }
             case SECONDARY_STAGE -> {
                 app.getSecondaryStage().show();
                 app.getPrimaryStage().hide();
-                ApplicationState.setCurrentStage(app.getSecondaryStage());
+                ApplicationState.getInstance().setCurrentStage(app.getSecondaryStage());
             }
         }
     }

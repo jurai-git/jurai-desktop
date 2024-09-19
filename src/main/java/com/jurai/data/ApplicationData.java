@@ -10,14 +10,14 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public final class ApplicationData {
-    private static final PropertyChangeSupport support = new PropertyChangeSupport(new ApplicationData());
+    private static PropertyChangeSupport support;
 
     private static final DoubleProperty defaultIconSize = new SimpleDoubleProperty(0);
     private static final DoubleProperty headerHeight = new SimpleDoubleProperty(0);
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private static final double em = Font.getDefault().getSize();
 
     public static void initialize() {
+        support = new PropertyChangeSupport(new ApplicationData());
         initializeSupportLogging(support);
         StateLogger.log("initialized ApplicationData logging");
 
@@ -34,10 +34,6 @@ public final class ApplicationData {
             String newValueString = (propertyChangeEvent.getNewValue() == null) ? "null" : propertyChangeEvent.getNewValue().toString();
             StateLogger.log((propertyChangeEvent.getPropertyName() + " changed from " + oldValueString + " to " + newValueString));
         });
-    }
-
-    public static double getEm() {
-        return em;
     }
 
     public static double getDefaultIconSize() {

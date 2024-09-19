@@ -32,12 +32,12 @@ public class RequerenteService {
     }
 
     public void update(Requerente r) throws ResponseNotOkException {
-        Advogado currentUser = ApplicationState.getCurrentUser();
+        Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
         JsonObject body = JsonUtils.asJson(gson.toJson(r, Requerente.class));
         body.addProperty("access_token", currentUser.getAccessToken());
         try {
-            JsonObject response = requestHandler.put("/requerente/update", body);
-            new AdvogadoService().reloadRequerentes();
+            requestHandler.put("/requerente/update", body);
+            AdvogadoService.getInstance().reloadRequerentes();
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on RequerenteService::update: error " + e.getCode());
             throw e;
@@ -45,8 +45,8 @@ public class RequerenteService {
     }
 
     public void addDemanda(Demanda d) {
-        Advogado currentUser = ApplicationState.getCurrentUser();
-        Requerente currentRequerente = ApplicationState.getSelectedRequerente();
+        Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+        Requerente currentRequerente = ApplicationState.getInstance().getSelectedRequerente();
         if(currentRequerente == null) {
             EventLogger.logError("Error adding demanda: no requerente selected");
             throw new IllegalStateException("No requerente selected");
@@ -65,8 +65,8 @@ public class RequerenteService {
 
     public void reloadDemandas() {
         JsonObject body = new JsonObject();
-        Requerente selectedRequerente = ApplicationState.getSelectedRequerente();
-        Advogado currentUser = ApplicationState.getCurrentUser();
+        Requerente selectedRequerente = ApplicationState.getInstance().getSelectedRequerente();
+        Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
 
         body.addProperty("access_token", currentUser.getAccessToken());
         body.addProperty("id_requerente", selectedRequerente.getIdRequerente());

@@ -16,7 +16,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public final class ApplicationState {
-    private static final PropertyChangeSupport support = new PropertyChangeSupport(new ApplicationState());
+    private static PropertyChangeSupport support;
+    private static volatile ApplicationState instance;
 
     private static Pane activePane = Pane.DashboardPane;
     private static Advogado currentUser = null;
@@ -28,20 +29,36 @@ public final class ApplicationState {
     private static Stage currentStage = null;
 
     public static void initialize() {
-        ApplicationData.initializeSupportLogging(support);
+        if (instance == null) {
+            synchronized (ApplicationState.class) {
+                if (instance == null) {
+                    instance = new ApplicationState();
+                }
+            }
+        }
+    }
+
+    private ApplicationState() {
+        support = new PropertyChangeSupport(this);
         StateLogger.log("initialized Application state logging");
         support.firePropertyChange("activePane", activePane, activePane);
         support.firePropertyChange("selectedRequerente", selectedRequerente, selectedRequerente);
-        setAccountMode(AccountMode.LOGGING_IN);
     }
 
-    public static void setActivePane(Pane pane) {
+    public static ApplicationState getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("ApplicationState not initialized. Initialize it with initialize() first.");
+        }
+        return instance;
+    }
+
+    public void setActivePane(Pane pane) {
         Pane old = ApplicationState.activePane;
         ApplicationState.activePane = pane;
         support.firePropertyChange("activePane", old, pane);
     }
 
-    public static void setCurrentUser(Advogado newUser) {
+    public void setCurrentUser(Advogado newUser) {
         Advogado old = ApplicationState.currentUser;
         ApplicationState.currentUser = newUser;
         support.firePropertyChange("currentUser", old, newUser);
@@ -53,19 +70,19 @@ public final class ApplicationState {
         }
     }
 
-    public static void setDebugging(boolean debugging) {
+    public void setDebugging(boolean debugging) {
         boolean old = ApplicationState.debugging;
         ApplicationState.debugging = debugging;
         support.firePropertyChange("debugging", old, debugging);
     }
 
-    public static void setSelectedRequerente(Requerente selectedRequerente) {
+    public void setSelectedRequerente(Requerente selectedRequerente) {
         Requerente oldValue = ApplicationState.selectedRequerente;
         ApplicationState.selectedRequerente = selectedRequerente;
         support.firePropertyChange("selectedRequerente", oldValue, selectedRequerente);
     }
 
-    public static void setAccountMode(AccountMode accountMode) {
+    public void setAccountMode(AccountMode accountMode) {
         AccountMode oldValue = ApplicationState.accountMode;
         ApplicationState.accountMode = accountMode;
         support.firePropertyChange("accountMode", oldValue, ApplicationState.accountMode);
@@ -77,23 +94,23 @@ public final class ApplicationState {
         }
     }
 
-    private static void setStageType(StageType stageType) {
+    private void setStageType(StageType stageType) {
         StageType oldValue = ApplicationState.stageType;
         ApplicationState.stageType = stageType;
         support.firePropertyChange("stageType", oldValue, ApplicationState.stageType);
     }
 
-    public static void setCurrentStage(Stage currentStage) {
+    public void setCurrentStage(Stage currentStage) {
         var oldvalue = ApplicationState.currentStage;
         ApplicationState.currentStage = currentStage;
         support.firePropertyChange("currentStage", oldvalue, currentStage);
     }
 
-    public static Popup getCurrentPopup() {
+    public Popup getCurrentPopup() {
         return currentPopup;
     }
 
-    public static void setCurrentPopup(Popup newPopup) {
+    public void setCurrentPopup(Popup newPopup) {
         var oldValue = currentPopup;
         currentPopup = newPopup;
         if(oldValue != null) {
@@ -102,35 +119,35 @@ public final class ApplicationState {
         support.firePropertyChange("currentPopup", oldValue, newPopup);
     }
 
-    public static Requerente getSelectedRequerente() {
+    public Requerente getSelectedRequerente() {
         return selectedRequerente;
     }
 
-    public static Stage getCurrentStage() {
+    public Stage getCurrentStage() {
         return currentStage;
     }
 
-    public static Pane getActivePane() {
+    public Pane getActivePane() {
         return activePane;
     }
 
-    public static Advogado getCurrentUser() {
+    public Advogado getCurrentUser() {
         return currentUser;
     }
 
-    public static boolean isDebugging() {
+    public boolean isDebugging() {
         return debugging;
     }
 
-    public static AccountMode getAccountMode() {
+    public AccountMode getAccountMode() {
         return accountMode;
     }
 
-    public static StageType getStageType() {
+    public StageType getStageType() {
         return stageType;
     }
 
-    public static void addPropertyChangeListener(PropertyChangeListener l) {
+    public void addPropertyChangeListener(PropertyChangeListener l) {
         support.addPropertyChangeListener(l);
     }
 

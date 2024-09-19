@@ -57,6 +57,7 @@
 
 .simple-list .items-container {
     -fx-padding: 0.5em 0.8em;
+    -fx-spacing: 0.5em;
 }
 
 .simple-list .scroll-pane .scroll-bar:vertical .thumb {
