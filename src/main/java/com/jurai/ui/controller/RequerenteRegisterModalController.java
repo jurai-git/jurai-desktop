@@ -8,7 +8,7 @@ import com.jurai.ui.modal.RequerenteRegisterModal;
 import javafx.scene.control.Alert;
 
 public class RequerenteRegisterModalController extends AbstractController<RequerenteRegisterModal> {
-    private final AdvogadoService advogadoService = new AdvogadoService();
+    private final AdvogadoService advogadoService = AdvogadoService.getInstance();
 
     @Override
     protected void attachEvents(RequerenteRegisterModal pane) {
