@@ -14,6 +14,7 @@ import com.jurai.data.serializer.DemandaSerializer;
 import com.jurai.data.serializer.RequerenteSerializer;
 import com.jurai.data.util.JsonUtils;
 import com.jurai.util.EventLogger;
+import javafx.application.Platform;
 
 import java.util.List;
 
@@ -65,8 +66,10 @@ public class DemandaService {
                     response.get("demanda_list").getAsJsonArray().asList().stream().
                             map(element -> gson.fromJson(element, Demanda.class)).toList();
 
-            selectedRequerente.demandas().clear();
-            selectedRequerente.demandas().addAll(demandas);
+            Platform.runLater(() -> {
+                selectedRequerente.demandas().clear();
+                selectedRequerente.demandas().addAll(demandas);
+            });
             EventLogger.log("Loaded requerentes for advogado " + currentUser.getNome());
         } catch(ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService.loadRequerentes(): error " + e.getCode());

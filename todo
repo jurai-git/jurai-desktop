@@ -23,6 +23,7 @@ visual candy related {
 code related {
     - add unit tests
     - make SimpleList's search text field search for themselves, instead of the parent having to do the search
+    - change loading circle form svg hack to actual png with fade
 }
 
 production related {

@@ -13,16 +13,11 @@ import javafx.stage.Stage;
 import java.awt.*;
 
 public class App extends Application {
-    private static Thread ctlThread;
     private static App currentInstance;
     private Stage primaryStage;
     private Stage secondaryStage;
     private PrimaryScene primaryScene;
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private long lastFrameTime = 0;
-    private int frameCount = 0;
-    private double fps = 0;
-    private double elapsedTime = 0;
 
     public static void main(String[] args) {
         System.setProperty("prism.lcdtext", "false");
@@ -79,10 +74,6 @@ public class App extends Application {
 
     public Stage getSecondaryStage() {
         return secondaryStage;
-    }
-
-    public static void setCtlThread(Thread t) {
-        ctlThread = t;
     }
 
     private void initialize() {

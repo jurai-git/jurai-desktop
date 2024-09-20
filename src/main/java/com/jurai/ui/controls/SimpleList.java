@@ -22,8 +22,9 @@ import javafx.scene.shape.SVGPath;
 public class SimpleList<T extends Model> extends BorderPane {
     private String headerText;
 
+    private LoadingCircle loadingCircle;
     private Label headerLabel;
-    private StackPane searchIconContainer;
+    private StackPane searchIconContainer, listItemsWrapper;
     private TextField searchTextField;
     private SVGPath searchIcon;
     private HBox header;
@@ -46,12 +47,11 @@ public class SimpleList<T extends Model> extends BorderPane {
         initData();
         initControls();
         layControls();
-        initAnimations();
     }
 
     // UI managers
     private void initControls() {
-
+        loadingCircle = new LoadingCircle();
         searchIcon = new SVGPath();
         String searchIconString;
         try {
@@ -85,6 +85,7 @@ public class SimpleList<T extends Model> extends BorderPane {
         listItemsContainer = new VBox();
         listItemsContainer.setFillWidth(true);
         listItemsContainer.getStyleClass().add("list-items");
+
     }
 
     private void layControls() {
@@ -99,19 +100,25 @@ public class SimpleList<T extends Model> extends BorderPane {
 
         setTop(header);
         listItemsContainer.setFillWidth(true);
-
         listItemsContainer.getStyleClass().add("items-container");
+
         scrollPane = new ScrollPane(listItemsContainer);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setBackground(Background.EMPTY);
         scrollPane.getStyleClass().add("scroll-pane");
         scrollPane.setFitToWidth(true);
-
-        setCenter(scrollPane);
+        listItemsWrapper = new StackPane(scrollPane);
+        setCenter(listItemsWrapper);
     }
 
-    private void initAnimations() {
-
+    public void setLoading(boolean loading) {
+        if(loading) {
+            listItemsWrapper.getChildren().setAll(scrollPane, loadingCircle);
+            loadingCircle.play();
+        } else {
+            listItemsWrapper.getChildren().setAll(scrollPane);
+            loadingCircle.stop();
+        }
     }
 
     private void initData() {

@@ -7,10 +7,14 @@ import com.jurai.data.service.DemandaService;
 import com.jurai.data.service.RequerenteService;
 import com.jurai.ui.menus.DemandaDashboardMenu;
 import com.jurai.ui.modal.ModalManager;
+import com.jurai.ui.modal.popup.Notification;
 import com.jurai.util.EventLogger;
 import com.jurai.util.UILogger;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.scene.control.Tab;
 
 public class DemandaDashboardController extends AbstractController<DemandaDashboardMenu> {
 
@@ -37,16 +41,11 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
         ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
             if("selectedRequerente".equals(propertyChangeEvent.getPropertyName())) {
                 if(ApplicationState.getInstance().getSelectedRequerente() != null) {
-                    try {
-                        DemandaService.getInstance().reloadDemandas();
-                    } catch (ResponseNotOkException e) {
-                        UILogger.logError("Error loading requerente's demandas: " + e.getMessage());
-                    }
-                    bindDemandaList(pane.getDemandaList().getListObjects());
-                    pane.getAddDemanda().setDisable(false);
+                    loadDemandas(pane);
                 } else {
                     unbindDemandaList(pane.getDemandaList().getListObjects());
                     pane.getAddDemanda().setDisable(true);
+                    pane.getEditDeleteDemanda().setDisable(true);
 		        }
             }
         });
@@ -58,5 +57,39 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
 
     private void bindDemandaList(ObservableList<Demanda> paneRequerentes) {
         Bindings.bindContent(paneRequerentes, ApplicationState.getInstance().getSelectedRequerente().demandas());
+    }
+
+    private void loadDemandas(DemandaDashboardMenu pane) {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                Platform.runLater(() -> pane.getDemandaList().setLoading(true));
+                try {
+                    DemandaService.getInstance().reloadDemandas();
+                } catch (ResponseNotOkException e) {
+                    throw new Exception("Error loading demandas: " + e.getMessage());
+                }
+                Platform.runLater(() -> pane.getDemandaList().setLoading(false));
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                Platform.runLater(() -> {
+                    bindDemandaList(pane.getDemandaList().getListObjects());
+                    pane.getAddDemanda().setDisable(false);
+                });
+            }
+
+            @Override
+            protected void failed() {
+                UILogger.logError(getException().getMessage());
+                new Notification("Erro ao carregar demandas!").show();
+            }
+        };
+
+        var thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 }

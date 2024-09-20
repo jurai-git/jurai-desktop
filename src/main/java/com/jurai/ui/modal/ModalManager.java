@@ -62,9 +62,9 @@ public class ModalManager {
     }
 
     private void initializeTransitions() {
-        scaleOutTransition = createScaleTransition(300, 1, 1, 0, 0, new SmoothEase());
+        scaleOutTransition = createScaleTransition(300, 1, 1, 0, 0, new SmoothEase(1));
         fadeInTransition = createFadeTransition(350, 0, 1, new PowerEase(3.2, true));
-        fadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase());
+        fadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase(1));
         blurTransition = createBlurTransition(new GaussianBlur(0), new GaussianBlur(16), new PowerEase(2, true), this.content);
     }
 
