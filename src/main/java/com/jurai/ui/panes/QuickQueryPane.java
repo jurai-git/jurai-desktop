@@ -23,7 +23,7 @@ public class QuickQueryPane extends AbstractPane {
     @Override
     protected void initControls() {
         view = new BorderPane();
-        view.getStyleClass().addAll("content");
+        view.getStyleClass().addAll("pane");
 
         tabbedPane = new BasicTabbedPane();
         tabbedPane.getStyleClass().addAll("content-box");

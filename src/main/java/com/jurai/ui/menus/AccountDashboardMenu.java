@@ -22,7 +22,7 @@ public class AccountDashboardMenu extends AbstractMenu<BorderPane> {
     @Override
     protected void initControls() {
         content = new BorderPane();
-        content.getStyleClass().addAll("content", "border-box");
+        content.getStyleClass().add("pane");
 
         title = new Label("Bem-vindo(a)!");
         title.getStyleClass().add("header");

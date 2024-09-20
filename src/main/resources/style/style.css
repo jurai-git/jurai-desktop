@@ -45,15 +45,26 @@
     -fx-background-color: #202024;
 }
 
+.pane {
+    -fx-background-color: transparent;
+    -fx-padding: 1em;
+}
+
+.pane > .header {
+    -fx-padding: 0 0 .5em 0;
+}
+
 .content {
     -fx-background-color: transparent;
-    -fx-padding: 24px;
+    -fx-padding: 1.2em;
 }
+
 .header {
-    -fx-padding: 16px 16px 16px 4px !important;
+    -fx-padding: 1em 0;
 }
+
 .subheader {
-    -fx-padding: 8px 16px 16px 4px !important;
+    -fx-padding: 8px 16px 16px 4px;
 }
 .header .text {
     -fx-font-weight: bold;

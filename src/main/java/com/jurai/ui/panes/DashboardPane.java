@@ -26,7 +26,7 @@ public class DashboardPane extends AbstractPane {
     @Override
     protected void initControls() {
         view = new BorderPane();
-        view.getStyleClass().addAll("content", "border-pane", "no-bottom-padding");
+        view.getStyleClass().addAll("pane", "no-bottom-padding");
         requerenteDashboardMenu = new RequerenteDashboardMenu();
         demandaDashboardMenu = new DemandaDashboardMenu();
 

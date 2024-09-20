@@ -12,7 +12,7 @@ public class PlanPane extends AbstractPane {
     @Override
     protected void initControls() {
         view = new BorderPane();
-        view.getStyleClass().add("content");
+        view.getStyleClass().add("pane");
     }
 
     @Override

@@ -33,6 +33,7 @@ public class App extends Application {
 
         // primary stage
         this.primaryStage = stage;
+        stage.setTitle("JurAI");
         stage.setMaxHeight(screenSize.height);
         stage.setMaxWidth(screenSize.width);
         stage.setMinWidth(screenSize.width * 0.3);
@@ -46,6 +47,7 @@ public class App extends Application {
 
         // secondary stage
         secondaryStage = new Stage();
+        secondaryStage.setTitle("JurAI - Login");
         secondaryStage.setWidth(screenSize.width * 0.3);
         secondaryStage.setHeight(screenSize.height * 0.75);
         secondaryStage.centerOnScreen();

@@ -20,7 +20,6 @@ public class AccountPane extends AbstractPane {
     protected void initControls() {
         view  = new StackPane();
         view.getStyleClass().add("account-pane");
-        view.getStyleClass().add("content");
         loginMenu = new LoginMenu();
         advogadoRegisterMenu = new AdvogadoRegisterMenu();
         accountDashboardMenu = new AccountDashboardMenu();
