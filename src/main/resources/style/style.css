@@ -8,6 +8,7 @@
 @import url("util/classes.css");
 @import url("controls/basic-tabbed-pane.css");
 @import url("menus/quick-query-tab.css");
+@import url("controls/circle-graph.css");
 @import url("controls/arrow-toggle-button.css");
 /*
 @font-face {
