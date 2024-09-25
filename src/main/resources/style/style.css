@@ -11,6 +11,7 @@
 @import url("controls/circle-graph.css");
 @import url("controls/arrow-toggle-button.css");
 @import url("scenes/primary-scene.css");
+@import url("var-light.css");
 
 /*
 @font-face {
@@ -40,13 +41,12 @@
     -fx-font-family: 'Exo 2';
     -fx-font-style: Medium;
     -fx-font-size: 15pt;
-    -fx-base: #202024;
-    -fx-text-fill: white;
+    -fx-text-fill: text;
     -fx-min-height: 0;
 }
 
 .root-pane {
-    -fx-background-color: #202024;
+    -fx-background-color: base;
 }
 
 .pane {
@@ -80,20 +80,22 @@
 }
 
 .content-box {
-    -fx-background-color: #1a1a1d;
-    -fx-background-radius: 12px;
+    -fx-background-color: content-base;
+    -fx-background-radius: 14px;
     -fx-border-width: 2px;
-    -fx-border-color: #2b2b2f;
+    -fx-border-color: border;
     -fx-border-radius: 12px;
     -fx-padding: 32px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
 }
 
 .small-content-box {
-    -fx-background-color: #1a1a1d;
+    -fx-background-color: content-base;
     -fx-background-radius: .5em;
-    -fx-border-color: #2b2b2f;
+    -fx-border-color: border;
     -fx-border-width: 2px;
     -fx-border-radius: .5em;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
 }
 
 .no-padding {
@@ -113,31 +115,31 @@
 }
 
 .red-button {
-    -fx-text-fill: #FF6060;
+    -fx-text-fill: button-red;
 }
 
 .red-button .text {
-    -fx-text-fill: #FF6060;
+    -fx-text-fill: button-red;
 }
 
 .button {
-    -fx-background-radius: 0.4em;
+    -fx-background-radius: 0.45em;
     -fx-border-radius: 0.4em;
-    -fx-border-color: #2b2b2f;
+    -fx-border-color: border;
     -fx-padding: 8px 1em;
     -fx-cursor: hand;
     -fx-border-width: 1.5px;
-    -fx-background-color: #1d1d22;
+    -fx-background-color: button-base;
 }
 
 .blue-button {
     -fx-border-color: transparent;
-    -fx-background-color: rgba(83, 156, 212, 0.6);
+    -fx-background-color: button-blue;
 }
 
 .blue-button:pressed {
-    -fx-background-color: rgba(83, 156, 212, 0.2) !important;
-    -fx-border-color: #1d1d22;
+    -fx-background-color: button-blue-pressed !important;
+    -fx-border-color: button-border;
 }
 
 .empty-button {
@@ -151,9 +153,9 @@
 
 .text-area {
     -fx-border-width: 1.5px;
-    -fx-border-color: #2b2b2f;
+    -fx-border-color: border;
     -fx-border-radius: 8px;
-    -fx-background-color: #1a1a1d;
+    -fx-background-color: content-base;
     -fx-background-radius: 8px;
 }
 
@@ -168,18 +170,18 @@
 .modal {
     -fx-padding: 2em;
     -fx-background-radius: 12px;
-    -fx-background-color: rgba(26, 26, 29, 0.8);
+    -fx-background-color: content-base;
     -fx-border-width: 2px;
-    -fx-border-color: #2b2b2f;
+    -fx-border-color: border;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 256, 0.4, 0, 0);
 }
 
 .popup {
-    -fx-background-color: #242429;
+    -fx-background-color: popup-base;
     -fx-border-width: 2px;
-    -fx-border-color: #39393e;
+    -fx-border-color: popup-border;
     -fx-border-radius: 12px;
-    -fx-backgorund-radius: 12px;
+    -fx-backgorund-radius: 14px;
 }
 
 .info-list {
@@ -200,5 +202,5 @@
 }
 
 .hyperlink:hover {
-    -fx-text-fill: #cccfff;
+    -fx-text-fill: hyperlink-fill;
 }

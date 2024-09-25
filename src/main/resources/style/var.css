@@ -1,6 +1,11 @@
-* {
+.root {
+    text: white;
+
     base: #202024;
+    secondary-base: #141417;
     border: #2b2b2f;
+    accent: rgb(83, 156, 212);
+    accent-base: #39393e;
 
     nav-base:  #19191d;
     nav-border: #2b2b2f;
@@ -10,10 +15,15 @@
 
     button-red: #FF6060;
     button-border: #1d1d22;
+    button-base: #1d1d22;
     button-blue: rgba(83, 156, 212, 0.6);
     button-blue-pressed: rgba(83, 156, 212, 0.2);
 
     popup-base: #242429;
     popup-border: #39393e;
 
+    list-accent-base: #26262b;
+    list-item-base: #1d1d21;
+
+    hyperlink-fill: #cccfff;
 }

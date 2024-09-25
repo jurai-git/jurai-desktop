@@ -1,0 +1,29 @@
+.root {
+    text: #3a3a3a;
+
+    base: #e6e3e0;
+    secondary-base: #f0edea;
+    border: #cccccc;
+    accent: rgb(83, 156, 212);
+    accent-base: #39393e;
+
+    nav-base:  #f9f9f9;
+    nav-border: #e0e0e0;
+
+    content-base:  #f7f7f7;
+    content-border: #e0e0e0;
+
+    button-red: #FF6060;
+    button-border: #d0d0d0;
+    button-base: #e6e6e6;
+    button-blue: rgba(83, 156, 212, 0.6);
+    button-blue-pressed: rgba(83, 156, 212, 0.2);
+
+    popup-base: #242429;
+    popup-border: #39393e;
+
+    list-accent-base: #e0e0e0;
+    list-item-base: #cdcdcd;
+
+    hyperlink-fill: #cccfff;
+}

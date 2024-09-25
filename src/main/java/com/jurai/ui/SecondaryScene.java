@@ -32,6 +32,7 @@ public class SecondaryScene {
 
         content.setCenter(accountPane.getView());
         content.setTop(headerLogoWrapper);
+        content.getStyleClass().add("root");
         scene = new Scene(content);
         attachControllers();
     }
