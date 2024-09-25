@@ -1,10 +1,13 @@
 package com.jurai.ui.modal;
 
+import com.jurai.data.ApplicationData;
+import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
 import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.TextFieldSet;
+import com.jurai.ui.util.ControlWrapper;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -100,12 +103,13 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
         assuntoPrincipal.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
 
         tab1Form.getChildren().addAll(
+            SpacerFactory.createVBoxSpacer(ApplicationData.defaultIconSizeProperty().get()),
             identificacao,
             foro,
             status,
             competencia,
             classe,
-            assuntoPrincipal
+            SpacerFactory.createVBoxSpacer(ApplicationData.defaultIconSizeProperty().get())
         );
 
         tab1Cancel.getStyleClass().add("red-button");
@@ -120,28 +124,28 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
         tab1Content.getChildren().addAll(tab1Form, tab1Actions);
 
         // Second page
-        VBox.setVgrow(pedidoLiminar, Priority.ALWAYS);
-        pedidoLiminar.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
-        VBox.setVgrow(segredoJustica, Priority.ALWAYS);
-        segredoJustica.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
+        assuntoPrincipal.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
+        VBox.setVgrow(assuntoPrincipal, Priority.ALWAYS);
         VBox.setVgrow(valorAcao, Priority.ALWAYS);
         valorAcao.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
-        VBox.setVgrow(dispensaLegal, Priority.ALWAYS);
-        dispensaLegal.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
-        VBox.setVgrow(justicaGratiuta, Priority.ALWAYS);
-        justicaGratiuta.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
-        VBox.setVgrow(guiaCustas, Priority.ALWAYS);
-        guiaCustas.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
         VBox.setVgrow(resumo, Priority.ALWAYS);
         resumo.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
 
         tab2Form.getChildren().addAll(
-            pedidoLiminar,
-            segredoJustica,
-            new HGroup().withMargin().withVgrow(Priority.ALWAYS).withChildren(valorAcao, dispensaLegal),
-            justicaGratiuta,
-            guiaCustas,
-            resumo
+            SpacerFactory.createVBoxSpacer(ApplicationData.defaultIconSizeProperty().get() * 0.8),
+            assuntoPrincipal,
+            valorAcao,
+            new HGroup().withMargin().withVgrow(Priority.ALWAYS).withChildren(
+                        pedidoLiminar,
+                        segredoJustica,
+                        dispensaLegal
+            ),
+            new HGroup().withMargin().withVgrow(Priority.ALWAYS).withChildren(
+                    justicaGratiuta,
+                    guiaCustas
+            ),
+            resumo,
+            SpacerFactory.createVBoxSpacer(ApplicationData.defaultIconSizeProperty().get() * 0.8)
         );
 
         tab2Cancel.getStyleClass().add("red-button");

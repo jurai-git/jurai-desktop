@@ -20,10 +20,18 @@ public class RequestHandler {
     }
 
     public JsonObject post(String endpoint, JsonObject body) throws ResponseNotOkException {
+        return send("POST", endpoint, body);
+    }
+    public JsonObject put(String endpoint, JsonObject body) throws ResponseNotOkException {
+        return send("PUT", endpoint, body);
+    }
+
+    private JsonObject send(String method, String endpoint, JsonObject body) throws ResponseNotOkException {
+        HttpURLConnection con = null;
         try {
             URL url = new URL(baseUrl + endpoint);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod(method);
             con.setConnectTimeout(5000);
             con.setReadTimeout(5000);
             con.setRequestProperty("Content-Type", "application/json");
@@ -34,26 +42,14 @@ public class RequestHandler {
             throw e;
         } catch(Exception e) {
             throw new ResponseNotOkException(500);
-        }
-    }
-    public JsonObject put(String endpoint, JsonObject body) throws ResponseNotOkException {
-        try {
-            URL url = new URL(baseUrl + endpoint);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("PUT");
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("Accept", "application/json");
-            con.setDoOutput(true);
-            return makeRequest(con, body);
-        } catch (ResponseNotOkException e) {
-            throw e;
-        } catch(Exception e) {
-            throw new ResponseNotOkException(500);
+        } finally {
+            if (con != null) {
+                con.disconnect();
+            }
         }
     }
 
     private JsonObject makeRequest(HttpURLConnection con, JsonObject body) throws ResponseNotOkException, IOException {
-
         try (OutputStream os = con.getOutputStream()) {
             byte[] input = body.toString().getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
@@ -66,7 +62,7 @@ public class RequestHandler {
         }
         
         JsonObject parsedResponse;
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8), 8192)) {
             StringBuilder response = new StringBuilder();
             String responseLine;
             while ((responseLine = br.readLine()) != null) {

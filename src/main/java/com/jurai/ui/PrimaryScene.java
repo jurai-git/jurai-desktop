@@ -5,6 +5,7 @@ import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.SidebarAnimator;
 import com.jurai.ui.controller.*;
 import com.jurai.ui.controls.ArrowToggleButton;
+import com.jurai.ui.controls.CircleGraph;
 import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.Pane;
 import com.jurai.ui.panes.*;
@@ -158,10 +159,16 @@ public class PrimaryScene {
                 mainPane.getChildren().removeAll(mainPane.getChildren());
                 layFixedControls();
                 mainPane.getChildren().add(planPane.getView());
+                break;
             case QuickQueryPane:
                 mainPane.getChildren().removeAll(mainPane.getChildren());
                 layFixedControls();
                 mainPane.getChildren().add(quickQueryPane.getView());
+                break;
+            case DocPane:
+                mainPane.getChildren().removeAll(mainPane.getChildren());
+                layFixedControls();
+                mainPane.getChildren().add(planPane.getView());
                 break;
             default:
                 UILogger.logError("Tried switching to invalid main pane");

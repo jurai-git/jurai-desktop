@@ -13,7 +13,18 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>jpro - sandec repository</id>
+            <url>https://sandec.jfrog.io/artifactory/repo</url>
+        </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jpro - sandec repository</id>
+            <url>https://sandec.jfrog.io/artifactory/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <properties>
         <native.maven.plugin.version>0.9.12</native.maven.plugin.version>
@@ -68,6 +79,13 @@
             <version>2.11.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.sandec.jpro</groupId>
+            <artifactId>jpro-webapi</artifactId>
+            <version>2024.3.3</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -91,9 +109,6 @@
                     </arguments>
                 </configuration>
             </plugin>
-
-
-
 
             <!-- Plugin to create modularized image -->
             <plugin>
@@ -178,6 +193,15 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>one.jpro</groupId>
+                <artifactId>jpro-maven-plugin</artifactId>
+                <version>2023.1.0</version>
+                <configuration>
+                    <mainClassName>com.jurai.JProApp</mainClassName>
+                </configuration>
             </plugin>
 
             <!-- JPackage -->

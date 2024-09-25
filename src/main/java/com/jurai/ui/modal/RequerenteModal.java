@@ -5,6 +5,7 @@ import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
 import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.TextFieldSet;
+import com.jurai.ui.util.ControlWrapper;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -25,7 +26,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
             cpfCnpj, nome, nomeSocial, genero, rg, orgaoEmissor, estadoCivil,
             nacionalidade, profissao, cep, logradouro, email, numero,
             complemento, bairro, estado, cidade;
-    protected RadioButton isIdoso;
+    protected CheckBox isIdoso;
 
     public RequerenteModal(String name) {
         super(name);
@@ -53,7 +54,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         bairro = new TextFieldSet("Bairro*");
         estado = new TextFieldSet("Estado*");
         cidade = new TextFieldSet("Cidade*");
-        isIdoso = new RadioButton("É idoso*");
+        isIdoso = new CheckBox("É idoso*");
 
         // personalInfo
         personalInfoContent = new VBox();
@@ -95,8 +96,6 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         nomeSocial.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
         VBox.setVgrow(email, Priority.ALWAYS);
         email.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
-        VBox.setVgrow(isIdoso, Priority.ALWAYS);
-        isIdoso.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
         isIdoso.setAlignment(Pos.CENTER_LEFT);
         VBox.setVgrow(genero, Priority.ALWAYS);
         genero.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
@@ -105,7 +104,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
                 nome,
                 nomeSocial,
                 email,
-                isIdoso,
+                new ControlWrapper(isIdoso).withVgrow(Priority.ALWAYS),
                 genero,
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS)
         );
@@ -341,7 +340,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
     }
 
     public boolean isIdoso() {
-        return isIdoso.isArmed();
+        return isIdoso.isSelected();
     }
 
     @Override

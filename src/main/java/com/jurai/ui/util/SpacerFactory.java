@@ -38,13 +38,13 @@ public class SpacerFactory {
         return spacer;
     }
 
-    public static Region createHBoxSpacer(int size)  {
+    public static Region createHBoxSpacer(double size)  {
         Region spacer = new Region();
         HBox.setMargin(spacer, new Insets(0, size, 0, 0));
         return spacer;
     }
 
-    public static Region createVBoxSpacer(int size)  {
+    public static Region createVBoxSpacer(double size)  {
         Region spacer = new Region();
         VBox.setMargin(spacer, new Insets(size, 0, 0, 0));
         return spacer;

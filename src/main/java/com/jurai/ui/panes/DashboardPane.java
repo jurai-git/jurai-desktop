@@ -2,6 +2,7 @@ package com.jurai.ui.panes;
 
 import com.jurai.ui.controller.DemandaDashboardController;
 import com.jurai.ui.controller.RequerenteDashboardController;
+import com.jurai.ui.menus.DemandaAnalysisDashboardMenu;
 import com.jurai.ui.menus.DemandaDashboardMenu;
 import com.jurai.ui.menus.RequerenteDashboardMenu;
 import javafx.scene.layout.BorderPane;
@@ -17,6 +18,7 @@ public class DashboardPane extends AbstractPane {
     private RowConstraints top, bottom;
     private RequerenteDashboardMenu requerenteDashboardMenu;
     private DemandaDashboardMenu demandaDashboardMenu;
+    private DemandaAnalysisDashboardMenu demandaAnalysisDashboardMenu;
 
     public DashboardPane() {
         super();
@@ -29,6 +31,7 @@ public class DashboardPane extends AbstractPane {
         view.getStyleClass().addAll("pane", "no-bottom-padding");
         requerenteDashboardMenu = new RequerenteDashboardMenu();
         demandaDashboardMenu = new DemandaDashboardMenu();
+        demandaAnalysisDashboardMenu = new DemandaAnalysisDashboardMenu();
 
         centerContent = new GridPane();
         left = new ColumnConstraints();
@@ -52,6 +55,7 @@ public class DashboardPane extends AbstractPane {
         centerContent.getRowConstraints().addAll(top, bottom);
         centerContent.add(requerenteDashboardMenu.getContent(), 0, 0, 1, 2);
         centerContent.add(demandaDashboardMenu.getContent(), 1, 0, 1, 1);
+        centerContent.add(demandaAnalysisDashboardMenu.getContent(), 1, 1, 1, 1);
 
         view.setTop(dl);
         view.setCenter(centerContent);

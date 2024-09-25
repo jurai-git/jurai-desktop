@@ -10,6 +10,7 @@ module jurai {
     requires jdk.compiler;
     requires java.management;
     requires org.controlsfx.controls;
+    requires jpro.webapi;
 
 
     exports com.jurai to javafx.graphics;

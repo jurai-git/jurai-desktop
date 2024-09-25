@@ -45,7 +45,6 @@ public class App extends Application {
         primaryScene.getScene().getStylesheets().add(css);
         stage.setScene(primaryScene.getScene());
 
-        // secondary stage
         secondaryStage = new Stage();
         secondaryStage.setTitle("JurAI - Login");
         secondaryStage.setWidth(screenSize.width * 0.3);

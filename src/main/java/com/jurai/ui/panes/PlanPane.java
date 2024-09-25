@@ -1,5 +1,6 @@
 package com.jurai.ui.panes;
 
+import com.jurai.ui.controls.CircleGraph;
 import javafx.scene.layout.BorderPane;
 
 public class PlanPane extends AbstractPane {

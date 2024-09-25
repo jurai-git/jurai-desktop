@@ -30,4 +30,3 @@ production related {
     - migrate to GraalVM native-image (instead of jlink-jpackage)
     - add docker environments for fedora, windows and mac
 }
-
