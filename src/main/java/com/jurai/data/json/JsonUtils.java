@@ -1,4 +1,4 @@
-package com.jurai.data.util;
+package com.jurai.data.json;
 
 import com.google.gson.*;
 import com.jurai.data.model.Model;

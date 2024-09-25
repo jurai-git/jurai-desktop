@@ -9,10 +9,10 @@ import com.jurai.data.model.Demanda;
 import com.jurai.data.model.Requerente;
 import com.jurai.data.request.RequestHandler;
 import com.jurai.data.request.ResponseNotOkException;
-import com.jurai.data.serializer.AdvogadoSerializer;
-import com.jurai.data.serializer.DemandaSerializer;
-import com.jurai.data.serializer.RequerenteSerializer;
-import com.jurai.data.util.JsonUtils;
+import com.jurai.data.model.serializer.AdvogadoSerializer;
+import com.jurai.data.model.serializer.DemandaSerializer;
+import com.jurai.data.model.serializer.RequerenteSerializer;
+import com.jurai.data.json.JsonUtils;
 import com.jurai.util.EventLogger;
 import javafx.application.Platform;
 

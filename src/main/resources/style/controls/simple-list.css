@@ -2,10 +2,10 @@
 
 .simple-list {
     -fx-background-radius: 14px;
-    -fx-background-color: content-base;
+    -fx-background-color: j-content-base;
     -fx-padding: 0 !important;
     -fx-border-width: 2px;
-    -fx-border-color: border;
+    -fx-border-color: j-border;
     -fx-border-radius: 12px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
 }
@@ -27,17 +27,16 @@
 }
 
 .simple-list .search-tf {
-    -fx-text-fill: white;
+    -fx-text-fill: j-text;
     -fx-prompt-text-fill: #AAA;
 }
 
 .simple-list .header-label {
-    -fx-background-color: list-accent-base;
-    -fx-text-fill: text;
+    -fx-background-color: j-list-accent-base;
     -fx-background-radius: 12px 0 12px 0;
     -fx-border-width:  0 2px 2px 0;
     -fx-border-radius: 12px 0 12px 0;
-    -fx-border-color: border;
+    -fx-border-color: j-border;
     -fx-padding: 4px 16px;
     -fx-alignment: center;
 }
@@ -47,11 +46,11 @@
 }
 
 .simple-list .search-area {
-    -fx-background-color: list-accent-base;
+    -fx-background-color: j-list-accent-base;
     -fx-background-radius: 0 12px 0 12px;
     -fx-border-width: 0 0 2px 2px;
     -fx-border-radius: 0 12px 0 12px;
-    -fx-border-color: border;
+    -fx-border-color: j-border;
 }
 
 .simple-list .scroll-pane {
@@ -64,15 +63,15 @@
 }
 
 .simple-list .scroll-pane .scroll-bar:vertical .thumb {
-    -fx-background-color: border;
+    -fx-background-color: j-border;
 }
 
 .list-item {
-    -fx-background-color: list-item-base;
+    -fx-background-color: j-list-item-base;
     -fx-background-radius: 12px;
     -fx-border-width: 2px;
     -fx-border-radius: 12px;
-    -fx-border-color: border;
+    -fx-border-color: j-list-item-border;
     -fx-cursor: hand;
     -fx-padding: 0 0.5em
 }

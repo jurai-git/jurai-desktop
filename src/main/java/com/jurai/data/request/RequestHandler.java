@@ -1,7 +1,7 @@
 package com.jurai.data.request;
 
 import com.google.gson.JsonObject;
-import com.jurai.data.util.JsonUtils;
+import com.jurai.data.json.JsonUtils;
 import com.jurai.util.EventLogger;
 
 import java.io.BufferedReader;

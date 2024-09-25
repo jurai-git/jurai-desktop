@@ -2,21 +2,17 @@ package com.jurai.data.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Requerente;
 import com.jurai.data.request.RequestHandler;
 import com.jurai.data.request.ResponseNotOkException;
-import com.jurai.data.serializer.AdvogadoSerializer;
-import com.jurai.data.serializer.RequerenteSerializer;
-import com.jurai.data.util.JsonUtils;
+import com.jurai.data.model.serializer.AdvogadoSerializer;
+import com.jurai.data.model.serializer.RequerenteSerializer;
+import com.jurai.data.json.JsonUtils;
 import com.jurai.util.EventLogger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

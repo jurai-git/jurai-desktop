@@ -1,4 +1,4 @@
-package com.jurai.data.serializer;
+package com.jurai.data.model.serializer;
 
 import com.google.gson.*;
 import com.jurai.data.model.Requerente;

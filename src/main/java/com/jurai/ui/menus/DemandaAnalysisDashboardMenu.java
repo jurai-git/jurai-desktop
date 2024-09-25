@@ -31,7 +31,7 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<VBox> {
         centerContent = new HBox();
         centerContent.getStyleClass().add("spaced");
         circleGraph = new CircleGraph(0.242, "Chance de provimento");
-        circleGraph.minWidthProperty().bind(circleGraph.heightProperty());
+        //circleGraph.minWidthProperty().bind(circleGraph.heightProperty().multiply(0.6));
         circleGraphLabel = new Label("Chance de provimento");
         circleGraphLabel.setAlignment(Pos.CENTER);
         circleGraphLabel.setTextAlignment(TextAlignment.CENTER);
@@ -48,7 +48,7 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<VBox> {
         assuntoPrincipal.setWrapText(true);
         argumentosLink = new Hyperlink("Visualizar argumentos");
         argumentosLink.setWrapText(true);
-        nome = new Label("Demanda \"Processo 1 textoi muito longo\"");
+        nome = new Label("Demanda \"Processo 1\"");
         nome.setWrapText(true);
         nome.setTextAlignment(TextAlignment.CENTER);
         HoverAnimator.animateHover(argumentosLink, 0.6, 0.6);

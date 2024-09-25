@@ -2,11 +2,11 @@
 
 .navbar {
     /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 24, 0, 0, 0);*/
-    -fx-background-color: nav-base;
+    -fx-background-color: j-nav-base;
     -fx-background-radius: 0 0 12px 12px;
     -fx-padding: 0 24px;
     -fx-border-width: 0 0 2.5px 0;
-    -fx-border-color: nav-border;
+    -fx-border-color: j-nav-border;
 }
 
 .navbar .text {

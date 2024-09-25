@@ -39,14 +39,14 @@
 
 * {
     -fx-font-family: 'Exo 2';
-    -fx-font-style: Medium;
+    -fx-font-family: 'Blender Pro Medium';
     -fx-font-size: 15pt;
-    -fx-text-fill: text;
+    -fx-text-fill: j-text;
     -fx-min-height: 0;
 }
 
 .root-pane {
-    -fx-background-color: base;
+    -fx-background-color: j-base;
 }
 
 .pane {
@@ -80,19 +80,19 @@
 }
 
 .content-box {
-    -fx-background-color: content-base;
+    -fx-background-color: j-content-base;
     -fx-background-radius: 14px;
     -fx-border-width: 2px;
-    -fx-border-color: border;
+    -fx-border-color: j-border;
     -fx-border-radius: 12px;
     -fx-padding: 32px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
 }
 
 .small-content-box {
-    -fx-background-color: content-base;
+    -fx-background-color: j-content-base;
     -fx-background-radius: .5em;
-    -fx-border-color: border;
+    -fx-border-color: j-border;
     -fx-border-width: 2px;
     -fx-border-radius: .5em;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
@@ -115,31 +115,31 @@
 }
 
 .red-button {
-    -fx-text-fill: button-red;
+    -fx-text-fill: j-button-red;
 }
 
 .red-button .text {
-    -fx-text-fill: button-red;
+    -fx-text-fill: j-button-red;
 }
 
 .button {
     -fx-background-radius: 0.45em;
     -fx-border-radius: 0.4em;
-    -fx-border-color: border;
+    -fx-border-color: j-border;
     -fx-padding: 8px 1em;
     -fx-cursor: hand;
     -fx-border-width: 1.5px;
-    -fx-background-color: button-base;
+    -fx-background-color: j-button-base;
 }
 
 .blue-button {
     -fx-border-color: transparent;
-    -fx-background-color: button-blue;
+    -fx-background-color: j-button-blue;
 }
 
 .blue-button:pressed {
-    -fx-background-color: button-blue-pressed !important;
-    -fx-border-color: button-border;
+    -fx-background-color: j-button-blue-pressed !important;
+    -fx-border-color: j-button-border;
 }
 
 .empty-button {
@@ -153,9 +153,9 @@
 
 .text-area {
     -fx-border-width: 1.5px;
-    -fx-border-color: border;
+    -fx-border-color: j-border;
     -fx-border-radius: 8px;
-    -fx-background-color: content-base;
+    -fx-background-color: j-content-base;
     -fx-background-radius: 8px;
 }
 
@@ -169,17 +169,17 @@
 
 .modal {
     -fx-padding: 2em;
-    -fx-background-radius: 12px;
-    -fx-background-color: content-base;
+    -fx-background-radius: 14px;
+    -fx-background-color: j-content-base;
     -fx-border-width: 2px;
-    -fx-border-color: border;
+    -fx-border-color: j-border;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 256, 0.4, 0, 0);
 }
 
 .popup {
-    -fx-background-color: popup-base;
+    -fx-background-color: j-popup-base;
     -fx-border-width: 2px;
-    -fx-border-color: popup-border;
+    -fx-border-color: j-popup-border;
     -fx-border-radius: 12px;
     -fx-backgorund-radius: 14px;
 }
@@ -202,5 +202,5 @@
 }
 
 .hyperlink:hover {
-    -fx-text-fill: hyperlink-fill;
+    -fx-text-fill: j-hyperlink-fill;
 }

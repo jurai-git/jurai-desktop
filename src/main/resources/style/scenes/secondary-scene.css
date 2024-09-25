@@ -1,7 +1,7 @@
-@import url("../var.css");
+@import url("../var-light.css");
 
 .secondary-scene {
-    -fx-background-color: secondar-base;
+    -fx-background-color: j-secondar-base;
 }
 
 .secondary-scene > .account-pane {

@@ -76,8 +76,6 @@ public class PrimaryScene {
 
         mainPane.setCache(true);
         mainPane.setCacheHint(CacheHint.SPEED);
-        mainPane.setCacheShape(true);
-        mainPane.getStyleClass().add("root");
         sidebar.getView().setCache(true);
         sidebar.getView().setCacheHint(CacheHint.SPEED);
 
