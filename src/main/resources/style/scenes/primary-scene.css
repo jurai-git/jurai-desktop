@@ -1,0 +1,4 @@
+.primary-root {
+    -fx-min-width: 200px;
+    -fx-min-height: 200px;
+}

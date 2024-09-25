@@ -10,6 +10,8 @@
 @import url("menus/quick-query-tab.css");
 @import url("controls/circle-graph.css");
 @import url("controls/arrow-toggle-button.css");
+@import url("scenes/primary-scene.css");
+
 /*
 @font-face {
     font-family: "Roboto Slab";
@@ -40,6 +42,7 @@
     -fx-font-size: 15pt;
     -fx-base: #202024;
     -fx-text-fill: white;
+    -fx-min-height: 0;
 }
 
 .root-pane {
@@ -83,6 +86,22 @@
     -fx-border-color: #2b2b2f;
     -fx-border-radius: 12px;
     -fx-padding: 32px;
+}
+
+.small-content-box {
+    -fx-background-color: #1a1a1d;
+    -fx-background-radius: .5em;
+    -fx-border-color: #2b2b2f;
+    -fx-border-width: 2px;
+    -fx-border-radius: .5em;
+}
+
+.no-padding {
+    -fx-padding: 0 !important;
+}
+
+.em-padding {
+    -fx-padding: 1em;
 }
 
 .svg {
@@ -134,7 +153,7 @@
     -fx-border-width: 1.5px;
     -fx-border-color: #2b2b2f;
     -fx-border-radius: 8px;
-    -fx-background-color: #1a1a1d;;
+    -fx-background-color: #1a1a1d;
     -fx-background-radius: 8px;
 }
 
@@ -161,4 +180,25 @@
     -fx-border-color: #39393e;
     -fx-border-radius: 12px;
     -fx-backgorund-radius: 12px;
+}
+
+.info-list {
+    -fx-padding: .5em 1.5em !important;
+}
+
+.info-list > * {
+    -fx-text-alignment: center;
+    -fx-font-size: .7em;
+}
+
+.spaced {
+    -fx-spacing: 16px;
+}
+
+.hyperlink {
+    -fx-underline: true;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #cccfff;
 }

@@ -24,7 +24,6 @@ public class Sidebar extends AbstractPane {
 
     private ScaleTransition separatorTransition;
 
-
     public Sidebar() {
         super();
         attachControllers();

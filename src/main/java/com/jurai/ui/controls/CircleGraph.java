@@ -2,17 +2,22 @@ package com.jurai.ui.controls;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
 public class CircleGraph extends StackPane {
     private double percentage;
+    private final Label title;
+    private final StackPane circleRoot;
 
     private Circle base;
     private Arc percentageArc;
     private final Label percentageLabel;
 
-    public CircleGraph(double percentage) {
+    public CircleGraph(double percentage, String title) {
+        circleRoot = new StackPane();
+        this.title = new Label(title);
         getStyleClass().add("circle-graph");
         this.percentage = percentage;
         percentageLabel = new Label(String.format("%.1f%%", percentage * 100));

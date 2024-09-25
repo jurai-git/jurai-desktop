@@ -1,0 +1,19 @@
+* {
+    base: #202024;
+    border: #2b2b2f;
+
+    nav-base:  #19191d;
+    nav-border: #2b2b2f;
+
+    content-base:  #1a1a1d;
+    content-border: #2b2b2f;
+
+    button-red: #FF6060;
+    button-border: #1d1d22;
+    button-blue: rgba(83, 156, 212, 0.6);
+    button-blue-pressed: rgba(83, 156, 212, 0.2);
+
+    popup-base: #242429;
+    popup-border: #39393e;
+
+}

@@ -44,9 +44,8 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> {
         form = new HBox();
         form.getStyleClass().addAll("buttons-row");
         addRequerente = new Button("Adicionar");
-        HoverAnimator.animateAll(addRequerente, 1, 1);
         editDeleteRequerente = new Button("Visualizar/Editar");
-        HoverAnimator.animateAll(editDeleteRequerente, 1, 1);
+        HoverAnimator.animateAll(1, 1, addRequerente, editDeleteRequerente);
     }
 
     @Override

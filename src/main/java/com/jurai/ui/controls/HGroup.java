@@ -23,6 +23,11 @@ public class HGroup extends HBox {
         return this;
     }
 
+    public HGroup withStyleClass(String styleClass) {
+        getStyleClass().add(styleClass);
+        return this;
+    }
+
     public HGroup withChildren(Node... es) {
         if(!withMargin) getChildren().addAll(es);
         else {

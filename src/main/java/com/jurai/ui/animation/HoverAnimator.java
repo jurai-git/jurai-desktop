@@ -26,6 +26,12 @@ public class HoverAnimator {
         });
     }
 
+    public static void animateHover(double strengthX, double strengthY, Node... es) {
+        for (var btn : es) {
+            animateHover(btn, strengthX, strengthY);
+        }
+    }
+
     public static void animateAll(Node node, double strengthX, double strengthY) {
         animateHover(node, strengthX, strengthY);
 
@@ -45,5 +51,12 @@ public class HoverAnimator {
         node.setOnMouseReleased(e -> {
             activeOut.playFromStart();
         });
+    }
+
+    public static void animateAll(double strengthX, double strengthY, Node... es) {
+        for(var node : es) {
+            animateAll(node, strengthX, strengthY);
+        }
+
     }
 }
