@@ -8,11 +8,8 @@ import javafx.animation.RotateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Duration;
-
-import java.io.IOException;
 
 public class LoadingCircle extends StackPane {
     private final SVGPath svgCircle;
@@ -28,7 +25,7 @@ public class LoadingCircle extends StackPane {
         svgCircle.maxHeight(ApplicationData.getDefaultIconSize() * 3);
         svgCircle.prefHeight(ApplicationData.getDefaultIconSize() * 2);
         try {
-            svgCircle.setContent(FileUtils.getFileContent("/paths/loading.path"));
+            svgCircle.setContent(FileUtils.getResourceContent("/paths/loading.path"));
         } catch (Exception e) {
             UILogger.logWarning("Unable to load loading circle path (paths/loading.path). Proceeding with empty path.");
             svgCircle.setContent("");

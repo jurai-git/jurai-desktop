@@ -31,3 +31,7 @@ production related {
     - migrate to GraalVM native-image (instead of jlink-jpackage)
     - add docker environments for fedora, windows and mac
 }
+
+misc {
+    - encrypt application-data.json access_token info
+}

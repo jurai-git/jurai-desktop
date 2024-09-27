@@ -74,6 +74,20 @@ public class AdvogadoService {
         }
     }
 
+    public void authenticate(String accessToken) throws ResponseNotOkException {
+        JsonObject body = new JsonObject();
+        body.addProperty("access_token", accessToken);
+
+        try {
+            JsonObject response = requestHandler.post("/advogado/get", body);
+            Advogado advogado = gson.fromJson(response.get("advogado"), Advogado.class);
+            ApplicationState.getInstance().setCurrentUser(advogado);
+            reloadRequerentes();
+        } catch (ResponseNotOkException e) {
+            throw e;
+        }
+    }
+
     public void reloadRequerentes() throws ResponseNotOkException {
         Map<String, String> body = new HashMap<>();
         Advogado currentUser = ApplicationState.getInstance().getCurrentUser();

@@ -35,6 +35,9 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                     ApplicationState.getInstance().setCurrentUser(new Advogado(1, "advogado", "advogado@gmail.com", "oab123", "12321321321321"));
                     return;
                 }
+                if (pane.getLoginMenu().getKeepConnected().isSelected()) {
+                    ApplicationState.getInstance().setRemembersUser(true);
+                }
                 advogadoService.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
             } catch (ResponseNotOkException ex) {
                 new Notification("Deu erro aqui!").show();

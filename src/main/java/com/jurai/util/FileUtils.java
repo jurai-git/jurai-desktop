@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 
 public class FileUtils {
 
-    public static String getFileContent(String resourcePath) throws IOException {
+    public static String getResourceContent(String resourcePath) throws IOException {
         InputStream inputStream = FileUtils.class.getResource(resourcePath).openStream();
 
         if (inputStream == null) {

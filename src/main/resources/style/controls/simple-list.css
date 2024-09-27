@@ -1,4 +1,4 @@
-@import url("../var-light.css");
+@import url("../var.css");
 
 .simple-list {
     -fx-background-radius: 14px;
@@ -7,7 +7,7 @@
     -fx-border-width: 2px;
     -fx-border-color: j-border;
     -fx-border-radius: 12px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
 }
 
 
@@ -73,7 +73,8 @@
     -fx-border-radius: 12px;
     -fx-border-color: j-list-item-border;
     -fx-cursor: hand;
-    -fx-padding: 0 0.5em
+    -fx-padding: 0 0.5em;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.12), 48, 0.2, 0, 0);
 }
 
 .list-item * {

@@ -63,19 +63,19 @@ public class SidebarNav extends AbstractMenu<VBox> {
     private void initIcons() {
         try {
             dashboardIcon = new SVGPath();
-            dashboardIcon.setContent(FileUtils.getFileContent("/paths/dashboard.path"));
+            dashboardIcon.setContent(FileUtils.getResourceContent("/paths/dashboard.path"));
 
             quickQueryIcon = new SVGPath();
-            quickQueryIcon.setContent(FileUtils.getFileContent("/paths/quickquery.path"));
+            quickQueryIcon.setContent(FileUtils.getResourceContent("/paths/quickquery.path"));
 
             documentsIcon = new SVGPath();
-            documentsIcon.setContent(FileUtils.getFileContent("/paths/docs.path"));
+            documentsIcon.setContent(FileUtils.getResourceContent("/paths/docs.path"));
 
             accountIcon = new SVGPath();
-            accountIcon.setContent(FileUtils.getFileContent("/paths/account.path"));
+            accountIcon.setContent(FileUtils.getResourceContent("/paths/account.path"));
 
             logoutIcon = new SVGPath();
-            logoutIcon.setContent(FileUtils.getFileContent("/paths/logout.path"));
+            logoutIcon.setContent(FileUtils.getResourceContent("/paths/logout.path"));
         } catch(IOException e) {
             e.printStackTrace();
             UILogger.logError("unable to load sidebar icon paths");

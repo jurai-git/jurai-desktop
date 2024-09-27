@@ -1,0 +1,35 @@
+.large-strong-shadow {
+    -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.6), 256, 0.2, 0, 0);
+}
+
+.medium-strong-shadow {
+    -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.5), 128, 0.2, 0, 0);
+}
+
+.small-strong-shadow {
+    -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.4), 64, 0.2, 0, 0);
+}
+
+.large-medium-shadow {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.15), 72, 0.4, 0, 0);
+}
+
+.medium-medium-shadow {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
+}
+
+.small-medium-shadow {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.15), 18, 0.4, 0, 0);
+}
+
+.large-light-shadow {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 72, 0.2, 0, 0);
+}
+
+.medium-light-shadow {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 36, 0.2, 0, 0);
+}
+
+.small-light-shadow {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 48, 0.2, 0, 0);
+}

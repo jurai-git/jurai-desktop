@@ -22,11 +22,11 @@ public class AdvogadoSerializer implements JsonSerializer<Advogado>, JsonDeseria
     public Advogado deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        int id = jsonObject.get("id").getAsInt();
         String username = jsonObject.get("username").getAsString();
         String email = jsonObject.get("email").getAsString();
         String oab = jsonObject.get("oab").getAsString();
         String token = jsonObject.get("access_token").getAsString();
+        int id = jsonObject.get("id").getAsInt();
 
         return new Advogado(id, username, email, oab, token);
     }

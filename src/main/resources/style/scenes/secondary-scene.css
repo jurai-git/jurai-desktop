@@ -1,4 +1,4 @@
-@import url("../var-light.css");
+@import url("../var.css");
 
 .secondary-scene {
     -fx-background-color: j-secondar-base;

@@ -19,14 +19,17 @@ public final class ApplicationState {
     private static PropertyChangeSupport support;
     private static volatile ApplicationState instance;
 
-    private static Pane activePane = Pane.DashboardPane;
+    // account related stuff
     private static Advogado currentUser = null;
-    private static boolean debugging = false;
+    private static StageType stageType = StageType.SECONDARY_STAGE;
     private static AccountMode accountMode = null;
-    private static StageType stageType = null;
+
+    private static Pane activePane = Pane.DashboardPane;
+    private static boolean debugging = false;
     private static Requerente selectedRequerente = null;
     private static Popup currentPopup = null;
     private static Stage currentStage = null;
+    private static boolean remembersUser = false;
 
     public static void initialize() {
         if (instance == null) {
@@ -41,6 +44,9 @@ public final class ApplicationState {
     private ApplicationState() {
         support = new PropertyChangeSupport(this);
         StateLogger.log("initialized Application state logging");
+        support.addPropertyChangeListener(event -> {
+            StateLogger.log(event.getPropertyName() + " changed from " + event.getOldValue() + " to " + event.getNewValue());
+        });
         support.firePropertyChange("activePane", activePane, activePane);
         support.firePropertyChange("selectedRequerente", selectedRequerente, selectedRequerente);
     }
@@ -117,6 +123,14 @@ public final class ApplicationState {
             oldValue.close();
         }
         support.firePropertyChange("currentPopup", oldValue, newPopup);
+    }
+
+    public void setRemembersUser(boolean remembersUser) {
+        ApplicationState.remembersUser = remembersUser;
+    }
+
+    public boolean remembersUser() {
+        return remembersUser;
     }
 
     public Requerente getSelectedRequerente() {

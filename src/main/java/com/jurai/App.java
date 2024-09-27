@@ -2,15 +2,20 @@ package com.jurai;
 
 import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
+import com.jurai.data.ApplicationStatePersistor;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
 import com.jurai.ui.controller.StageController;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.SpacerFactory;
+import com.jurai.util.EventLogger;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class App extends Application {
     private static App currentInstance;
@@ -18,6 +23,7 @@ public class App extends Application {
     private Stage secondaryStage;
     private PrimaryScene primaryScene;
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static List<Runnable> afterLoadTasks;
 
     public static void main(String[] args) {
         System.setProperty("prism.lcdtext", "false");
@@ -26,10 +32,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        initialize();
         currentInstance = this;
+        afterLoadTasks = new LinkedList<>();
+        initialize();
         var css = getClass().getResource("/style/style.css").toExternalForm();
-        selfAttachControllers();
 
         // primary stage
         this.primaryStage = stage;
@@ -44,6 +50,8 @@ public class App extends Application {
         primaryScene = new PrimaryScene();
         primaryScene.getScene().getStylesheets().add(css);
         stage.setScene(primaryScene.getScene());
+        selfAttachControllers();
+        primaryStage.setOnCloseRequest(e -> onCloseRequest());
 
         secondaryStage = new Stage();
         secondaryStage.setTitle("JurAI - Login");
@@ -53,7 +61,30 @@ public class App extends Application {
         SecondaryScene secondaryScene = new SecondaryScene();
         secondaryScene.getScene().getStylesheets().add(css);
         secondaryStage.setScene(secondaryScene.getScene());
-        ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
+        secondaryStage.setOnCloseRequest(e -> onCloseRequest());
+
+        switch(ApplicationState.getInstance().getStageType()) {
+            case MAIN_STAGE:
+                primaryStage.show();
+                break;
+            case SECONDARY_STAGE:
+                secondaryStage.show();
+                break;
+        }
+
+        afterLoadTasks.forEach(Runnable::run);
+    }
+
+    private void onCloseRequest() {
+        try {
+            ApplicationStatePersistor.getInstance().save();
+        } catch (IOException e) {
+            EventLogger.logError("Unable to save application state to JSON: " + e.getMessage());
+        }
+    }
+
+    public void addAfterLoadTask(Runnable r) {
+        afterLoadTasks.add(r);
     }
 
     private void selfAttachControllers() {
@@ -79,7 +110,12 @@ public class App extends Application {
 
     private void initialize() {
         SpacerFactory.initialize();
-        ApplicationState.initialize();
+        try {
+            ApplicationStatePersistor.initialize();
+            ApplicationStatePersistor.getInstance().load();
+        } catch (IOException e) {
+            EventLogger.logError("Failed to initialize ApplicationStatePersistor: " + e.getMessage());
+        }
         ApplicationData.initialize();
     }
 }

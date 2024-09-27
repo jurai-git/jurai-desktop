@@ -1,6 +1,5 @@
 package com.jurai.ui.controls;
 
-import com.jurai.data.ApplicationData;
 import com.jurai.data.model.Model;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
@@ -11,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -19,7 +17,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 
-public class SimpleList<T extends Model> extends BorderPane {
+public class SimpleList<T extends Model> extends VBox {
     private String headerText;
 
     private LoadingCircle loadingCircle;
@@ -55,7 +53,7 @@ public class SimpleList<T extends Model> extends BorderPane {
         searchIcon = new SVGPath();
         String searchIconString;
         try {
-            searchIconString = FileUtils.getFileContent("/paths/search.path");
+            searchIconString = FileUtils.getResourceContent("/paths/search.path");
         } catch(Exception e) {
             UILogger.logError("Unable to load search icon svg from path");
             UILogger.logWarning("Proceeding without search icon");
@@ -85,7 +83,6 @@ public class SimpleList<T extends Model> extends BorderPane {
         listItemsContainer = new VBox();
         listItemsContainer.setFillWidth(true);
         listItemsContainer.getStyleClass().add("list-items");
-
     }
 
     private void layControls() {
@@ -98,7 +95,7 @@ public class SimpleList<T extends Model> extends BorderPane {
         HBox.setHgrow(searchArea, Priority.ALWAYS);
         header.getChildren().addAll(headerLabel, SpacerFactory.createHBoxSpacer(Priority.ALWAYS), searchArea);
 
-        setTop(header);
+        getChildren().add(header);
         listItemsContainer.setFillWidth(true);
         listItemsContainer.getStyleClass().add("items-container");
 
@@ -108,7 +105,7 @@ public class SimpleList<T extends Model> extends BorderPane {
         scrollPane.getStyleClass().add("scroll-pane");
         scrollPane.setFitToWidth(true);
         listItemsWrapper = new StackPane(scrollPane);
-        setCenter(listItemsWrapper);
+        getChildren().add(listItemsWrapper);
     }
 
     public void setLoading(boolean loading) {

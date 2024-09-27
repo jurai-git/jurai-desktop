@@ -11,8 +11,9 @@ module jurai {
     requires java.management;
     requires org.controlsfx.controls;
     requires jpro.webapi;
+    requires net.harawata.appdirs;
 
-
+    opens com.jurai.data.model to com.google.gson;
     exports com.jurai to javafx.graphics;
-    exports com.jurai.ui.util to javafx.controls;
+    exports com.jurai.ui.util to javafx.controls, com.google.gson;
 }

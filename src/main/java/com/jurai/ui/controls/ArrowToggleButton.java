@@ -9,15 +9,6 @@ import javafx.animation.ScaleTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.event.Event;
-import javafx.event.EventTarget;
-import javafx.event.EventType;
-import javafx.geometry.Point2D;
-import javafx.geometry.Point3D;
-import javafx.scene.input.InputEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.PickResult;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -152,7 +143,7 @@ public class ArrowToggleButton extends StackPane {
     private void initSvg() {
         try {
             arrowPath = new SVGPath();
-            arrowPath.setContent(FileUtils.getFileContent("/paths/arrow.path"));
+            arrowPath.setContent(FileUtils.getResourceContent("/paths/arrow.path"));
             arrowPath.setRotate(90);
             arrowPath.getStyleClass().add("arrow");
         } catch(IOException e) {

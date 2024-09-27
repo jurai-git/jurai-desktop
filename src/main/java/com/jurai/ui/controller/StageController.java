@@ -3,12 +3,18 @@ package com.jurai.ui.controller;
 import com.jurai.App;
 import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
+import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.StageType;
+import javafx.scene.input.KeyCode;
 
 public class StageController extends AbstractController<App> {
     @Override
     protected void attachEvents(App app) {
-
+        app.getPrimaryScene().getScene().setOnKeyTyped(e -> {
+            if(e.getCode() == KeyCode.ESCAPE) {
+                ModalManager.getInstance().exitModal();
+            }
+        });
     }
 
     @Override
