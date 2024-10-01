@@ -1,5 +1,6 @@
 *.log
 
+application-state.json
 target/
 docker-dist/
 
