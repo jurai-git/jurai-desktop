@@ -1,5 +1,6 @@
 package com.jurai.ui.modal;
 
+import com.jurai.data.ApplicationData;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
@@ -7,6 +8,7 @@ import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.TextFieldSet;
 import com.jurai.ui.util.ControlWrapper;
 import com.jurai.ui.util.SpacerFactory;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -17,15 +19,16 @@ import java.util.List;
 public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
     private BasicTabbedPane content;
     BasicTab personalInfo, generalInfo, addressInfo;
-    private VBox personalInfoContent, generalInfoContent, addressInfoContent;
-    private VBox personalInfoForm, generalInfoForm, addressInfoForm;
-    private HBox personalInfoActions, generalInfoActions, addressInfoActions;
+    protected VBox personalInfoContent, generalInfoContent, addressInfoContent;
+    protected VBox personalInfoForm, generalInfoForm, addressInfoForm;
+    protected HBox personalInfoActions, generalInfoActions, addressInfoActions;
     protected Button personalInfoNext, personalCancel, generalCancel, addressCancel, generalInfoNext, generalInfoPrevious, addressInfoPrevious, create;
 
     protected TextFieldSet
-            cpfCnpj, nome, nomeSocial, genero, rg, orgaoEmissor, estadoCivil,
+            cpfCnpj, nome, nomeSocial, rg, orgaoEmissor, estadoCivil,
             nacionalidade, profissao, cep, logradouro, email, numero,
             complemento, bairro, estado, cidade;
+    protected ComboBox<String> genero;
     protected CheckBox isIdoso;
 
     public RequerenteModal(String name) {
@@ -40,7 +43,8 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         cpfCnpj = new TextFieldSet("CPF/CNPJ*");
         nome = new TextFieldSet("Nome*");
         nomeSocial = new TextFieldSet("Nome Social");
-        genero = new TextFieldSet("Genero*");
+        genero = new ComboBox<>();
+        genero.getItems().addAll("Masculino", "Feminino", "Outro");
         rg = new TextFieldSet("RG");
         orgaoEmissor = new TextFieldSet("Orgão Emissor*");
         estadoCivil = new TextFieldSet("Estado Civil*");
@@ -98,14 +102,16 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         email.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
         isIdoso.setAlignment(Pos.CENTER_LEFT);
         VBox.setVgrow(genero, Priority.ALWAYS);
-        genero.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
+        genero.maxWidthProperty().bind(ApplicationData.defaultIconSizeProperty().multiply(10));
         personalInfoForm.getChildren().addAll(
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 nome,
                 nomeSocial,
                 email,
-                new ControlWrapper(isIdoso).withVgrow(Priority.ALWAYS),
-                genero,
+                new HGroup().withVgrow(Priority.ALWAYS).withMargin().withChildren(
+                        new ControlWrapper(isIdoso).withVgrow(Priority.ALWAYS).withHgrow(Priority.ALWAYS),
+                        genero
+                ),
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS)
         );
 
@@ -213,7 +219,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         cpfCnpj.getInput().clear();
         nome.getInput().clear();
         nomeSocial.getInput().clear();
-        genero.getInput().clear();
+        genero.setValue("Masculino");
         rg.getInput().clear();
         orgaoEmissor.getInput().clear();
         estadoCivil.getInput().clear();
@@ -284,7 +290,12 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
     }
 
     public String getGenero() {
-        return genero.getText();
+        String genero = this.genero.getValue();
+        return switch(genero) {
+            case "Masculino" -> "M";
+            case "Feminino" -> "F";
+            default -> "O";
+        };
     }
 
     public String getRg() {

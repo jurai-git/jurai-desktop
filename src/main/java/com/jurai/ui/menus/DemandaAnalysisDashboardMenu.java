@@ -20,7 +20,7 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<VBox> {
     private VBox content, demandaInfo;
     private HBox centerContent;
     private CircleGraph circleGraph;
-    private Label circleGraphLabel, status, assuntoPrincipal, nome;
+    private Label circleGraphLabel, status, assuntoPrincipal, nome, inactiveLabel;
     private Hyperlink argumentosLink;
     private Button moreDetails, redoAnalysis;
 
@@ -42,6 +42,9 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<VBox> {
 
         demandaInfo = new VBox();
         demandaInfo.getStyleClass().addAll("info-list", "content-box");
+        inactiveLabel = new Label("Não há nenhuma demanda selecionada! Selecione uma para ver suas informações.");
+        inactiveLabel.setTextAlignment(TextAlignment.CENTER);
+        inactiveLabel.setWrapText(true);
         status = new Label("Em andamento");
         status.setWrapText(true);
         assuntoPrincipal = new Label("Apelação Cível");
@@ -82,6 +85,20 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<VBox> {
                         redoAnalysis
                 ).withStyleClass("buttons-row")
         );
+    }
+
+    private void layActiveContent() {
+        content.getChildren().setAll(
+                centerContent,
+                new HGroup().withVgrow(Priority.NEVER).withMargin().withChildren(
+                        moreDetails,
+                        redoAnalysis
+                ).withStyleClass("buttons-row")
+        );
+    }
+
+    private void layInactiveContent() {
+        content.getChildren().setAll(inactiveLabel);
     }
 
     @Override

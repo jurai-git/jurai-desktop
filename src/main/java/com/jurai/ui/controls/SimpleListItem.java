@@ -3,21 +3,26 @@ package com.jurai.ui.controls;
 import com.jurai.data.model.Model;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.animation.interpolator.PowerEase;
+import com.jurai.ui.util.SpacerFactory;
+import com.jurai.util.FileUtils;
+import com.jurai.util.UILogger;
 import javafx.animation.FillTransition;
 import javafx.animation.StrokeTransition;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 public class SimpleListItem<T extends Model> extends HBox {
     private Label nameLabel;
     private Rectangle dot;
     private boolean selected;
-    private FillTransition dotColorTransition, backgroundColorTransition, textFillTransition;
-    private StrokeTransition borderColorTransition;
+    private FillTransition dotColorTransition, textFillTransition;
 
     T object;
 
@@ -34,7 +39,6 @@ public class SimpleListItem<T extends Model> extends HBox {
         getStyleClass().add("list-item");
         nameLabel = new Label(object.nomeProperty().get());
         nameLabel.textProperty().bind(object.nomeProperty());
-
         dot = new Rectangle();
         dot.getStyleClass().add("dot");
         dot.setFill(Color.web("#666"));
@@ -68,8 +72,8 @@ public class SimpleListItem<T extends Model> extends HBox {
         HoverAnimator.animateAll(this, 0.3, 0.5);
     }
 
-    //getters & setters
 
+    //getters & setters
     public boolean isSelected() {
         return selected;
     }

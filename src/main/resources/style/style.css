@@ -87,7 +87,7 @@
     -fx-border-color: j-border;
     -fx-border-radius: 12px;
     -fx-padding: 32px;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
+    /*-fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);*/
 }
 
 .small-content-box {
@@ -96,7 +96,7 @@
     -fx-border-color: j-border;
     -fx-border-width: 2px;
     -fx-border-radius: .5em;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);
+    /*-fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.15), 36, 0.4, 0, 0);*/
 }
 
 .no-padding {
@@ -174,7 +174,7 @@
     -fx-background-color: j-content-base;
     -fx-border-width: 2px;
     -fx-border-color: j-border;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 256, 0.4, 0, 0);
+    /*-fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 256, 0.4, 0, 0);*/
 }
 
 .popup {

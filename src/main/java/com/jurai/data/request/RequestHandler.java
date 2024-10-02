@@ -41,6 +41,7 @@ public class RequestHandler {
         } catch (ResponseNotOkException e) {
             throw e;
         } catch(Exception e) {
+            e.printStackTrace();
             throw new ResponseNotOkException(500);
         } finally {
             if (con != null) {

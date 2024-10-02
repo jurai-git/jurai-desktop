@@ -1,11 +1,14 @@
 package com.jurai.ui.modal;
 
 import com.jurai.data.model.Requerente;
+import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Priority;
 
 @LoadingStrategy(LoadingStrategy.Strategy.LAZY)
-public class RequerenteEditingModal extends RequerenteModal {
+public final class RequerenteEditingModal extends RequerenteModal {
     private final Requerente object;
+    private Button delete;
 
     public RequerenteEditingModal(Requerente object) {
         super("requerenteEditingModal");
@@ -17,7 +20,11 @@ public class RequerenteEditingModal extends RequerenteModal {
         cpfCnpj.setText(object.getCpfCnpj());
         nome.setText(object.getNome());
         nomeSocial.setText(object.getNomeSocial());
-        genero.setText(object.getGenero());
+        genero.setValue(switch (object.getGenero()) {
+           case "M" -> "Masculino";
+           case "F" -> "Feminino";
+           default -> "Outro";
+        });
         isIdoso.setSelected(object.isIdoso());
         rg.setText(object.getRg());
         orgaoEmissor.setText(object.getOrgaoEmissor());
@@ -44,6 +51,19 @@ public class RequerenteEditingModal extends RequerenteModal {
         generalInfoPrevious = new Button("Anterior");
         generalInfoNext = new Button("Próximo");
         personalInfoNext = new Button("Próximo");
+        delete = new Button("Deletar Requerente");
+        delete.getStyleClass().add("red-button");
+        personalInfoActions.getChildren().setAll(
+                personalCancel,
+                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                delete,
+                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                personalInfoNext
+        );
+    }
+
+    public Button getDelete() {
+        return delete;
     }
 
     public Requerente getObject() {

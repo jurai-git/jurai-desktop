@@ -2,8 +2,6 @@ functionality related {
     - add `forgot password` functionality
     - implement AI services
     - organize exception handling when connecting to the api
-    - add timeout for requests more than 10 seconds long to the api
-    - add loading modal for requests more than 250ms long to the api
     - implement server data caching - should probably update on the server every 5 mins to avoid desyncing
 
     - add settings menu {

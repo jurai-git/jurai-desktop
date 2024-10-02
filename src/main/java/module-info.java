@@ -10,7 +10,6 @@ module jurai {
     requires jdk.compiler;
     requires java.management;
     requires org.controlsfx.controls;
-    requires jpro.webapi;
     requires net.harawata.appdirs;
 
     opens com.jurai.data.model to com.google.gson;

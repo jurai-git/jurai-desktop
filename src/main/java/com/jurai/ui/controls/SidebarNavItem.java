@@ -62,8 +62,8 @@ public class SidebarNavItem extends HBox {
 
         iconColorTransition = new FillTransition(Duration.millis(500), icon);
         iconColorTransition.setInterpolator(new PowerEase(3, true));
-        iconColorTransition.setFromValue(Color.web("#A4A4A4"));
-        iconColorTransition.setToValue(Color.web("FFFFFF"));
+        iconColorTransition.setFromValue(Color.web("#949494"));
+        iconColorTransition.setToValue(Color.web("#c0c0c0"));
     }
 
     private void layControls() {

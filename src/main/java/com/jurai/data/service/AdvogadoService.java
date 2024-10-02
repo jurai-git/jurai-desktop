@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AdvogadoService {
-    private final RequestHandler requestHandler = new RequestHandler("http://127.0.0.1:5000");
+    private final RequestHandler requestHandler = new RequestHandler("https://jurai-server-production.up.railway.app");
     private final Gson gson;
     private static final AdvogadoService instance = new AdvogadoService();
 
