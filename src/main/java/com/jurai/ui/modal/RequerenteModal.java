@@ -108,6 +108,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
                 nome,
                 nomeSocial,
                 email,
+                cpfCnpj,
                 new HGroup().withVgrow(Priority.ALWAYS).withMargin().withChildren(
                         new ControlWrapper(isIdoso).withVgrow(Priority.ALWAYS).withHgrow(Priority.ALWAYS),
                         genero
@@ -143,10 +144,11 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
 
         generalInfoForm.getChildren().addAll(
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
-                new HGroup().withMargin().withVgrow(Priority.ALWAYS).withChildren(cpfCnpj, rg),
+                rg,
                 orgaoEmissor,
                 profissao,
-                new HGroup().withMargin().withVgrow(Priority.ALWAYS).withChildren(estadoCivil, nacionalidade),
+                estadoCivil,
+                nacionalidade,
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS)
         );
 

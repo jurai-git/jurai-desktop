@@ -51,8 +51,13 @@ public final class RequerenteEditingModal extends RequerenteModal {
         generalInfoPrevious = new Button("Anterior");
         generalInfoNext = new Button("Próximo");
         personalInfoNext = new Button("Próximo");
-        delete = new Button("Deletar Requerente");
+        delete = new Button("Deletar");
         delete.getStyleClass().add("red-button");
+    }
+
+    @Override
+    protected void layControls() {
+        super.layControls();
         personalInfoActions.getChildren().setAll(
                 personalCancel,
                 SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
