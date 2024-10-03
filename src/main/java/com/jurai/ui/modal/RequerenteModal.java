@@ -1,6 +1,7 @@
 package com.jurai.ui.modal;
 
 import com.jurai.data.ApplicationData;
+import com.jurai.ui.LoadingStrategy;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
@@ -8,7 +9,6 @@ import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.TextFieldSet;
 import com.jurai.ui.util.ControlWrapper;
 import com.jurai.ui.util.SpacerFactory;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;

@@ -25,6 +25,9 @@ public class RequestHandler {
     public JsonObject put(String endpoint, JsonObject body) throws ResponseNotOkException {
         return send("PUT", endpoint, body);
     }
+    public JsonObject delete(String endpoint, JsonObject body) throws ResponseNotOkException {
+        return send("DELETE", endpoint, body);
+    }
 
     private JsonObject send(String method, String endpoint, JsonObject body) throws ResponseNotOkException {
         HttpURLConnection con = null;
@@ -76,4 +79,7 @@ public class RequestHandler {
         return parsedResponse;
     }
 
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
 }

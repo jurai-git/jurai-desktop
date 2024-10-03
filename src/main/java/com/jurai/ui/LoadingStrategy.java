@@ -1,4 +1,4 @@
-package com.jurai.ui.modal;
+package com.jurai.ui;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

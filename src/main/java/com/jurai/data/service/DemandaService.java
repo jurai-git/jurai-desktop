@@ -14,13 +14,14 @@ import com.jurai.data.model.serializer.DemandaSerializer;
 import com.jurai.data.model.serializer.RequerenteSerializer;
 import com.jurai.data.json.JsonUtils;
 import com.jurai.util.EventLogger;
+import javafx.application.Application;
 import javafx.application.Platform;
 
 import java.util.List;
 
 public class DemandaService {
     private static final DemandaService instance = new DemandaService();
-    private final RequestHandler requestHandler = new RequestHandler("https://jurai-server-production.up.railway.app");
+    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.getInstance().getApiUrl());
     private final Gson gson;
 
     private DemandaService() {
@@ -29,6 +30,12 @@ public class DemandaService {
         builder.registerTypeAdapter(Requerente.class, new RequerenteSerializer());
         builder.registerTypeAdapter(Demanda.class, new DemandaSerializer());
         gson = builder.create();
+
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+            if("apiUrl".equals(e.getPropertyName())) {
+                requestHandler.setBaseUrl(ApplicationState.getInstance().getApiUrl());
+            }
+        });
     }
 
     public static DemandaService getInstance() {
@@ -50,6 +57,23 @@ public class DemandaService {
             throw e;
         }
 
+    }
+
+    public void delete(Demanda d) throws ResponseNotOkException {
+        Requerente r = ApplicationState.getInstance().getSelectedRequerente();
+        JsonObject body = new JsonObject();
+        body.addProperty("demanda_id", d.getId());
+        body.addProperty("requerente_id", r.getIdRequerente());
+        body.addProperty("access_token", ApplicationState.getInstance().getCurrentUser().getAccessToken());
+
+        try {
+            requestHandler.delete("/demanda/delete", body);
+            r.demandas().remove(d);
+            ApplicationState.getInstance().setSelectedDemanda(null);
+        } catch (ResponseNotOkException e) {
+            EventLogger.logError("Error communicating to API on DemandaService::delete: error " + e.getCode());
+            throw e;
+        }
     }
 
     public void reloadDemandas() throws ResponseNotOkException {
@@ -77,5 +101,4 @@ public class DemandaService {
             throw e;
         }
     }
-
 }

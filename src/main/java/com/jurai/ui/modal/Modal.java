@@ -1,5 +1,6 @@
 package com.jurai.ui.modal;
 
+import com.jurai.ui.LoadingStrategy;
 import com.jurai.ui.menus.AbstractMenu;
 import javafx.scene.CacheHint;
 import javafx.scene.layout.Pane;

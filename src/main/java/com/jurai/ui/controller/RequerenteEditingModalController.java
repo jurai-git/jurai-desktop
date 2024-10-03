@@ -1,5 +1,6 @@
 package com.jurai.ui.controller;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Requerente;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
@@ -28,6 +29,15 @@ public class RequerenteEditingModalController extends AbstractController<Requere
         pane.getCancel().forEach(button -> button.setOnAction(e -> {
             pane.dispose();
         }));
+        pane.getDelete().setOnAction(e -> {
+            try {
+                requerenteService.delete(pane.getObject());
+                ApplicationState.getInstance().setSelectedRequerente(null);
+                pane.dispose();
+            } catch (ResponseNotOkException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         pane.getCreate().setOnAction(e -> {
             try {

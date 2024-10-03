@@ -1,11 +1,15 @@
 package com.jurai.ui.modal;
 
 import com.jurai.data.model.Demanda;
+import com.jurai.ui.LoadingStrategy;
+import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Priority;
 
 @LoadingStrategy(LoadingStrategy.Strategy.LAZY)
 public class DemandaEditingModal extends DemandaModal {
     private final Demanda object;
+    private Button delete;
 
     public DemandaEditingModal(Demanda d) {
         super("demandaEditingModal");
@@ -36,5 +40,23 @@ public class DemandaEditingModal extends DemandaModal {
     @Override
     protected void initButtons() {
         save = new Button("Salvar");
+        delete = new Button("Deletar");
+        delete.getStyleClass().add("red-button");
+    }
+
+    @Override
+    protected void layControls() {
+        super.layControls();
+        tab1Actions.getChildren().setAll(
+                tab1Cancel,
+                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                delete,
+                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                next
+        );
+    }
+
+    public Button getDelete() {
+        return delete;
     }
 }

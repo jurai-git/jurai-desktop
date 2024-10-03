@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AdvogadoService {
-    private final RequestHandler requestHandler = new RequestHandler("https://jurai-server-production.up.railway.app");
+    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.getInstance().getApiUrl());
     private final Gson gson;
     private static final AdvogadoService instance = new AdvogadoService();
 
@@ -27,6 +27,12 @@ public class AdvogadoService {
         builder.registerTypeAdapter(Advogado.class, new AdvogadoSerializer());
         builder.registerTypeAdapter(Requerente.class, new RequerenteSerializer());
         gson = builder.create();
+
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+            if("apiUrl".equals(e.getPropertyName())) {
+                requestHandler.setBaseUrl(ApplicationState.getInstance().getApiUrl());
+            }
+        });
     }
 
     public static AdvogadoService getInstance() {

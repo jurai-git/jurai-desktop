@@ -1,5 +1,6 @@
 package com.jurai.ui.modal;
 
+import com.jurai.ui.LoadingStrategy;
 import javafx.scene.control.Button;
 
 @LoadingStrategy(LoadingStrategy.Strategy.EAGER)

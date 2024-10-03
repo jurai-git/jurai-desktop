@@ -1,6 +1,7 @@
 package com.jurai.ui.modal;
 
 import com.jurai.data.model.Requerente;
+import com.jurai.ui.LoadingStrategy;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;

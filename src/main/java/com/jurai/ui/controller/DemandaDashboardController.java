@@ -26,12 +26,11 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
         pane.getEditDeleteDemanda().setOnAction(e -> {
             ModalManager.getInstance().requestModal("demandaEditingModal");
         });
-
         pane.getDemandaList().addSelectedItemListener((observableValue, demandaSimpleListItem, t1) -> {
-            if(t1 != null) {
-                pane.getEditDeleteDemanda().setDisable(false);
+            if (t1 == null) {
+                ApplicationState.getInstance().setSelectedDemanda(null);
             } else {
-                pane.getEditDeleteDemanda().setDisable(true);
+                ApplicationState.getInstance().setSelectedDemanda(t1.getObject());
             }
         });
     }
@@ -47,6 +46,15 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
                     pane.getAddDemanda().setDisable(true);
                     pane.getEditDeleteDemanda().setDisable(true);
 		        }
+            }
+        });
+        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
+            if("selectedDemanda".equals(propertyChangeEvent.getPropertyName())) {
+                if(propertyChangeEvent.getNewValue() != null) {
+                    pane.getEditDeleteDemanda().setDisable(false);
+                } else {
+                    pane.getEditDeleteDemanda().setDisable(true);
+                }
             }
         });
     }

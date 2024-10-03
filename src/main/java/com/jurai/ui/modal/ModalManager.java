@@ -1,5 +1,6 @@
 package com.jurai.ui.modal;
 
+import com.jurai.ui.LoadingStrategy;
 import com.jurai.ui.animation.*;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.animation.interpolator.SmoothEase;
@@ -8,7 +9,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
-import javafx.scene.effect.Effect;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;

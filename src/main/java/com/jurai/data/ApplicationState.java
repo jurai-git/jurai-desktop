@@ -1,6 +1,7 @@
 package com.jurai.data;
 
 import com.jurai.data.model.Advogado;
+import com.jurai.data.model.Demanda;
 import com.jurai.data.model.Model;
 import com.jurai.data.model.Requerente;
 import com.jurai.ui.modal.Modal;
@@ -30,6 +31,8 @@ public final class ApplicationState {
     private static Popup currentPopup = null;
     private static Stage currentStage = null;
     private static boolean remembersUser = false;
+    private static String apiUrl = "http://127.0.0.1:5000";
+    private static Demanda selectedDemanda = null;
 
     public static void initialize() {
         if (instance == null) {
@@ -127,6 +130,24 @@ public final class ApplicationState {
 
     public void setRemembersUser(boolean remembersUser) {
         ApplicationState.remembersUser = remembersUser;
+    }
+
+    public void setApiUrl(String apiUrl) {
+        support.firePropertyChange("apiUrl", ApplicationState.apiUrl, apiUrl);
+        ApplicationState.apiUrl = apiUrl;
+    }
+
+    public void setSelectedDemanda(Demanda selectedDemanda) {
+        support.firePropertyChange("selectedDemanda", ApplicationState.selectedDemanda, selectedDemanda);
+        ApplicationState.selectedDemanda = selectedDemanda;
+    }
+
+    public Demanda getSelectedDemanda() {
+        return selectedDemanda;
+    }
+
+    public String getApiUrl() {
+        return apiUrl;
     }
 
     public boolean remembersUser() {

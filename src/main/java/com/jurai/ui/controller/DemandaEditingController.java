@@ -22,6 +22,16 @@ public class DemandaEditingController extends AbstractController<DemandaEditingM
             pane.getContent().setActiveTab(pane.getTab1());
         });
 
+        pane.getDelete().setOnAction(e -> {
+            try {
+                demandaService.delete(pane.getObject());
+                pane.dispose();
+            } catch (ResponseNotOkException ex) {
+                ex.printStackTrace();
+                new Notification("Erro ao deletar!").show();
+            }
+        });
+
         pane.getSave().setOnAction(e -> {
             try {
                 Demanda d = pane.getObject();

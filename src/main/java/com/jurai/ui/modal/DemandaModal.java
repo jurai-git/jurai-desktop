@@ -30,7 +30,7 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
     private BasicTab tab1, tab2;
     private VBox tab1Content, tab2Content;
     private VBox tab1Form, tab2Form;
-    private HBox tab1Actions, tab2Actions;
+    protected HBox tab1Actions, tab2Actions;
     protected Button tab1Cancel, tab2Cancel, next, previous, save;
 
     public DemandaModal(String name) {

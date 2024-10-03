@@ -24,7 +24,6 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<VBox> {
     private Hyperlink argumentosLink;
     private Button moreDetails, redoAnalysis;
 
-
     @Override
     protected void initControls() {
         content = new VBox();

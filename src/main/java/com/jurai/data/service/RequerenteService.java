@@ -17,7 +17,7 @@ import com.jurai.util.EventLogger;
 
 public class RequerenteService {
     private static final RequerenteService instance = new RequerenteService();
-    private final RequestHandler requestHandler = new RequestHandler("https://jurai-server-production.up.railway.app");
+    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.getInstance().getApiUrl());
     private final Gson gson;
 
     private RequerenteService() {
@@ -26,6 +26,12 @@ public class RequerenteService {
         builder.registerTypeAdapter(Requerente.class, new RequerenteSerializer());
         builder.registerTypeAdapter(Demanda.class, new DemandaSerializer());
         gson = builder.create();
+
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+            if("apiUrl".equals(e.getPropertyName())) {
+                requestHandler.setBaseUrl(ApplicationState.getInstance().getApiUrl());
+            }
+        });
     }
 
     public static RequerenteService getInstance() {
@@ -41,6 +47,20 @@ public class RequerenteService {
             AdvogadoService.getInstance().reloadRequerentes();
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on RequerenteService::update: error " + e.getCode());
+            throw e;
+        }
+    }
+
+    public void delete(Requerente r) throws ResponseNotOkException {
+        Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+        JsonObject body = new JsonObject();
+        body.addProperty("requerente_id", r.getIdRequerente());
+        body.addProperty("access_token", currentUser.getAccessToken());
+        try {
+            requestHandler.delete("/requerente/remove", body);
+            currentUser.getRequerentes().remove(r);
+        } catch (ResponseNotOkException e) {
+            EventLogger.logError("Error communicating to API on RequerenteService::delete: error: " + e.getCode());
             throw e;
         }
     }
