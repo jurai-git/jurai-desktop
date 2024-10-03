@@ -51,6 +51,7 @@ public class DemandaEditingController extends AbstractController<DemandaEditingM
                 d.setStatusDemanda(pane.getStatus());
                 d.setValorAcao(Double.parseDouble(pane.getValorAcao()));
                 demandaService.update(d);
+                pane.dispose();
             } catch (ResponseNotOkException ex) {
                 new DefaultMessageNotification("Erro ao atualizar!", NotificationType.ERROR).show();
             }

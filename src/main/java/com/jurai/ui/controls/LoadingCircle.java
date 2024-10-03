@@ -36,7 +36,6 @@ public class LoadingCircle extends StackPane {
         rotateAnimation = new RotateTransition(Duration.millis(1000), svgCircle);
         rotateAnimation.setFromAngle(0);
         rotateAnimation.setToAngle(360);
-        rotateAnimation.setInterpolator(new SmoothEase(1.5));
         rotateAnimation.setCycleCount(RotateTransition.INDEFINITE);
     }
 

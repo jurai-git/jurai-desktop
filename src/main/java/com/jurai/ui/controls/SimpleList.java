@@ -10,6 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -50,6 +51,7 @@ public class SimpleList<T extends Model> extends VBox {
     // UI managers
     private void initControls() {
         loadingCircle = new LoadingCircle();
+
         searchIcon = new SVGPath();
         String searchIconString;
         try {
@@ -105,12 +107,13 @@ public class SimpleList<T extends Model> extends VBox {
         scrollPane.getStyleClass().add("scroll-pane");
         scrollPane.setFitToWidth(true);
         listItemsWrapper = new StackPane(scrollPane);
+        VBox.setVgrow(listItemsWrapper, Priority.ALWAYS);
         getChildren().add(listItemsWrapper);
     }
 
     public void setLoading(boolean loading) {
         if(loading) {
-            listItemsWrapper.getChildren().setAll(scrollPane, loadingCircle);
+            listItemsWrapper.getChildren().setAll(loadingCircle);
             loadingCircle.play();
         } else {
             listItemsWrapper.getChildren().setAll(scrollPane);

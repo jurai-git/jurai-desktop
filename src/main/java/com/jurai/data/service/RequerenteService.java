@@ -65,7 +65,7 @@ public class RequerenteService {
         }
     }
 
-    public void addDemanda(Demanda d) {
+    public void addDemanda(Demanda d) throws ResponseNotOkException{
         Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
         Requerente currentRequerente = ApplicationState.getInstance().getSelectedRequerente();
         if(currentRequerente == null) {
@@ -81,6 +81,7 @@ public class RequerenteService {
             DemandaService.getInstance().reloadDemandas();
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on RequerenteService::addDemanda: error " + e.getCode());
+            throw e;
         }
     }
 
