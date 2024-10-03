@@ -2,13 +2,9 @@ package com.jurai.data;
 
 import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Demanda;
-import com.jurai.data.model.Model;
 import com.jurai.data.model.Requerente;
-import com.jurai.ui.modal.Modal;
-import com.jurai.ui.modal.popup.Popup;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.Pane;
-import com.jurai.ui.controls.SimpleListItem;
 import com.jurai.ui.util.StageType;
 import com.jurai.util.StateLogger;
 import javafx.stage.Stage;
@@ -28,7 +24,6 @@ public final class ApplicationState {
     private static Pane activePane = Pane.DashboardPane;
     private static boolean debugging = false;
     private static Requerente selectedRequerente = null;
-    private static Popup currentPopup = null;
     private static Stage currentStage = null;
     private static boolean remembersUser = false;
     private static String apiUrl = "http://127.0.0.1:5000";
@@ -113,19 +108,6 @@ public final class ApplicationState {
         var oldvalue = ApplicationState.currentStage;
         ApplicationState.currentStage = currentStage;
         support.firePropertyChange("currentStage", oldvalue, currentStage);
-    }
-
-    public Popup getCurrentPopup() {
-        return currentPopup;
-    }
-
-    public void setCurrentPopup(Popup newPopup) {
-        var oldValue = currentPopup;
-        currentPopup = newPopup;
-        if(oldValue != null) {
-            oldValue.close();
-        }
-        support.firePropertyChange("currentPopup", oldValue, newPopup);
     }
 
     public void setRemembersUser(boolean remembersUser) {

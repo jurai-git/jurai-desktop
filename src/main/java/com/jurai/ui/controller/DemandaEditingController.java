@@ -5,7 +5,8 @@ import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.DemandaService;
 import com.jurai.data.service.RequerenteService;
 import com.jurai.ui.modal.DemandaEditingModal;
-import com.jurai.ui.modal.popup.Notification;
+import com.jurai.ui.modal.notif.DefaultMessageNotification;
+import com.jurai.ui.modal.notif.NotificationType;
 
 public class DemandaEditingController extends AbstractController<DemandaEditingModal> {
     private final DemandaService demandaService = DemandaService.getInstance();
@@ -28,7 +29,7 @@ public class DemandaEditingController extends AbstractController<DemandaEditingM
                 pane.dispose();
             } catch (ResponseNotOkException ex) {
                 ex.printStackTrace();
-                new Notification("Erro ao deletar!").show();
+                new DefaultMessageNotification("Erro ao deletar!", NotificationType.ERROR).show();
             }
         });
 
@@ -51,7 +52,7 @@ public class DemandaEditingController extends AbstractController<DemandaEditingM
                 d.setValorAcao(Double.parseDouble(pane.getValorAcao()));
                 demandaService.update(d);
             } catch (ResponseNotOkException ex) {
-                new Notification("Erro ao atualizar!").show();
+                new DefaultMessageNotification("Erro ao atualizar!", NotificationType.ERROR).show();
             }
         });
 

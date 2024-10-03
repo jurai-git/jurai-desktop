@@ -7,7 +7,8 @@ import com.jurai.data.service.DemandaService;
 import com.jurai.data.service.RequerenteService;
 import com.jurai.ui.menus.DemandaDashboardMenu;
 import com.jurai.ui.modal.ModalManager;
-import com.jurai.ui.modal.popup.Notification;
+import com.jurai.ui.modal.notif.DefaultMessageNotification;
+import com.jurai.ui.modal.notif.NotificationType;
 import com.jurai.util.EventLogger;
 import com.jurai.util.UILogger;
 import javafx.application.Platform;
@@ -92,7 +93,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
             @Override
             protected void failed() {
                 UILogger.logError(getException().getMessage());
-                new Notification("Erro ao carregar demandas!").show();
+                new DefaultMessageNotification("Erro ao carregar demandas!", NotificationType.ERROR).show();
             }
         };
 
