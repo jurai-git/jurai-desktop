@@ -5,10 +5,13 @@ import com.jurai.ui.animation.*;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.animation.interpolator.SmoothEase;
 import com.jurai.util.Either;
+import com.jurai.util.UILogger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.Effect;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -19,20 +22,24 @@ import java.util.function.Supplier;
 
 public class ModalManager {
     private static volatile ModalManager instance;
-    private final StackPane root;
-    private final Node content;
+    private StackPane root;
+    private Node content;
     private Modal activeModal;
-    private ScaleTransition scaleOutTransition;
-    private FadeTransition fadeInTransition;
-    private FadeTransition fadeOutTransition;
-    private BlurTransition blurTransition;
+    private Modal activeNotification;
+    private ScaleTransition mScaleOutTransition, nScaleOutTransition;
+    private FadeTransition mFadeInTransition, nFadeInTransition;
+    private FadeTransition mFadeOutTransition, nFadeOutTransition;
+    private Effect defaultBlur;
     private final Map<String, Either<Supplier<Modal>, Modal>> modalFactories = new HashMap<>();
 
     private ModalManager(StackPane root, Node content) {
         this.root = root;
         this.content = content;
+        System.out.println("Initialized ModalManager with values: " + root + "; " + content);
         initializeTransitions();
     }
+
+
 
     public static void initialize(StackPane root, Node content) {
         if (instance == null) {
@@ -42,6 +49,12 @@ public class ModalManager {
                 }
             }
         }
+    }
+
+    public void reinitialize(StackPane root, Node content) {
+        this.root = root;
+        this.content = content;
+        UILogger.log("Reinitialized ModalManager");
     }
 
     public static ModalManager getInstance() {
@@ -62,15 +75,19 @@ public class ModalManager {
     }
 
     private void initializeTransitions() {
-        scaleOutTransition = createScaleTransition(300, 1, 1, 0, 0, new SmoothEase(1));
-        fadeInTransition = createFadeTransition(350, 0, 1, new PowerEase(3.2, true));
-        fadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase(1));
-        blurTransition = createBlurTransition(new GaussianBlur(0), new GaussianBlur(16), new PowerEase(2, true), this.content);
+        defaultBlur = new BoxBlur(16, 16, 2);
+
+        mScaleOutTransition = createScaleTransition(new SmoothEase(1));
+        mFadeInTransition = createFadeTransition(350, 0, 1, new PowerEase(3.2, true));
+        mFadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase(1));
+        nScaleOutTransition = createScaleTransition(new SmoothEase(1));
+        nFadeInTransition = createFadeTransition(350, 0, 1, new PowerEase(3.2, true));
+        nFadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase(1));
     }
 
-    private BlurTransition createBlurTransition(GaussianBlur fromBlur, GaussianBlur toBlur, Interpolator interpolator, Node content) {
+    private BlurTransition createBlurTransition(Effect fromBlur, Effect toBlur, Interpolator interpolator, Node content) {
         return new BlurTransition(
-                30,
+                200,
                 toBlur,
                 fromBlur,
                 interpolator,
@@ -78,12 +95,12 @@ public class ModalManager {
         );
     }
 
-    private ScaleTransition createScaleTransition(int duration, double fromX, double fromY, double toX, double toY, Interpolator interpolator) {
-        ScaleTransition transition = new ScaleTransition(Duration.millis(duration));
-        transition.setFromX(fromX);
-        transition.setFromY(fromY);
-        transition.setToX(toX);
-        transition.setToY(toY);
+    private ScaleTransition createScaleTransition(Interpolator interpolator) {
+        ScaleTransition transition = new ScaleTransition(Duration.millis(300));
+        transition.setFromX(1);
+        transition.setFromY(1);
+        transition.setToX(0);
+        transition.setToY(0);
         transition.setInterpolator(interpolator);
         return transition;
     }
@@ -106,25 +123,59 @@ public class ModalManager {
         m.getContent().maxHeightProperty().bind(root.heightProperty().multiply(0.8));
         activeModal = m;
 
-        scaleOutTransition.setNode(m.getContent());
-        fadeInTransition.setNode(m.getContent());
-        fadeOutTransition.setNode(m.getContent());
+        mScaleOutTransition.setNode(m.getContent());
+        mFadeInTransition.setNode(m.getContent());
+        mFadeOutTransition.setNode(m.getContent());
 
-        fadeInTransition.playFromStart();
-        blurTransition.playFromStart();
+        mFadeInTransition.playFromStart();
+        content.setEffect(defaultBlur);
         m.getContent().setScaleX(1);
         m.getContent().setScaleY(1);
     }
 
+    public void requestNotification(Notification notif) {
+        if (activeNotification != null) {
+            activeNotification.dispose();
+        }
+
+        root.getChildren().add(notif.getContent());
+        notif.getContent().maxWidthProperty().bind(root.widthProperty().multiply(0.5));
+        notif.getContent().maxHeightProperty().bind(root.heightProperty().multiply(0.3));
+        activeNotification = notif;
+
+        nScaleOutTransition.setNode(notif.getContent());
+        nFadeInTransition.setNode(notif.getContent());
+        nFadeOutTransition.setNode(notif.getContent());
+
+        nFadeInTransition.playFromStart();
+
+        if (activeModal != null) {
+            activeModal.getContent().setEffect(defaultBlur);
+        }
+    }
+
     public void exitModal() {
         if (activeModal == null) return;
-        scaleOutTransition.setOnFinished(e -> {
+        mScaleOutTransition.setOnFinished(e -> {
             root.getChildren().remove(activeModal.getContent());
             activeModal = null;
         });
-        blurTransition.playFromEnd();
-        scaleOutTransition.playFromStart();
-        fadeOutTransition.playFromStart();
         content.setEffect(null);
+        mScaleOutTransition.playFromStart();
+        mFadeOutTransition.playFromStart();
+        content.setEffect(null);
+    }
+
+    public void exitNotification() {
+        if (activeNotification == null) return;
+
+        if(activeModal != null) {
+            activeModal.getContent().setEffect(null);
+        } else {
+            content.setEffect(null);
+        }
+        nFadeOutTransition.playFromStart();
+        nScaleOutTransition.playFromStart();
+
     }
 }

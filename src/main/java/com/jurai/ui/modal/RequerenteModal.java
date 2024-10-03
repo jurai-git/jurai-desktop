@@ -138,7 +138,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         VBox.setVgrow(profissao, Priority.ALWAYS);
         profissao.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
         VBox.setVgrow(estadoCivil, Priority.ALWAYS);
-        estado.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
+        estadoCivil.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
         VBox.setVgrow(nacionalidade, Priority.ALWAYS);
         nacionalidade.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
 

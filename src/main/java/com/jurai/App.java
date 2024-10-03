@@ -6,6 +6,7 @@ import com.jurai.data.ApplicationStatePersistor;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
 import com.jurai.ui.controller.StageController;
+import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.EventLogger;
@@ -22,6 +23,7 @@ public class App extends Application {
     private Stage primaryStage;
     private Stage secondaryStage;
     private PrimaryScene primaryScene;
+    private SecondaryScene secondaryScene;
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static List<Runnable> afterLoadTasks;
 
@@ -50,7 +52,6 @@ public class App extends Application {
         primaryScene = new PrimaryScene();
         primaryScene.getScene().getStylesheets().add(css);
         stage.setScene(primaryScene.getScene());
-        selfAttachControllers();
         primaryStage.setOnCloseRequest(e -> onCloseRequest());
 
         secondaryStage = new Stage();
@@ -58,21 +59,26 @@ public class App extends Application {
         secondaryStage.setWidth(screenSize.width * 0.3);
         secondaryStage.setHeight(screenSize.height * 0.75);
         secondaryStage.centerOnScreen();
-        SecondaryScene secondaryScene = new SecondaryScene();
+        secondaryScene = new SecondaryScene();
         secondaryScene.getScene().getStylesheets().add(css);
         secondaryStage.setScene(secondaryScene.getScene());
         secondaryStage.setOnCloseRequest(e -> onCloseRequest());
+        selfAttachControllers();
+
+        afterLoadTasks.forEach(Runnable::run);
 
         switch(ApplicationState.getInstance().getStageType()) {
             case MAIN_STAGE:
                 primaryStage.show();
+                System.out.println(primaryScene.getModalRoot());
+                ModalManager.getInstance().reinitialize(primaryScene.getModalRoot(), primaryScene.getContent());
                 break;
             case SECONDARY_STAGE:
                 secondaryStage.show();
+                System.out.println(secondaryScene.getModalRoot());
+                ModalManager.getInstance().reinitialize(secondaryScene.getModalRoot(), secondaryScene.getContent());
                 break;
         }
-
-        afterLoadTasks.forEach(Runnable::run);
     }
 
     private void onCloseRequest() {
@@ -100,6 +106,10 @@ public class App extends Application {
         return primaryScene;
     }
 
+    public SecondaryScene getSecondaryScene() {
+        return secondaryScene;
+    }
+
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -110,12 +120,13 @@ public class App extends Application {
 
     private void initialize() {
         SpacerFactory.initialize();
+        ApplicationData.initialize();
         try {
             ApplicationStatePersistor.initialize();
             ApplicationStatePersistor.getInstance().load();
         } catch (IOException e) {
             EventLogger.logError("Failed to initialize ApplicationStatePersistor: " + e.getMessage());
         }
-        ApplicationData.initialize();
+        ModalManager.initialize(null, null);
     }
 }

@@ -103,7 +103,7 @@ public final class ApplicationState {
         }
     }
 
-    private void setStageType(StageType stageType) {
+    void setStageType(StageType stageType) {
         StageType oldValue = ApplicationState.stageType;
         ApplicationState.stageType = stageType;
         support.firePropertyChange("stageType", oldValue, ApplicationState.stageType);

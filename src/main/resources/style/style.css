@@ -205,3 +205,12 @@
 .hyperlink:hover {
     -fx-text-fill: j-hyperlink-fill;
 }
+
+.notif-title {
+    -fx-padding: 1em 0 1.5em 0;
+    -fx-font-size: 1.5em;
+}
+
+.notif-button {
+    -fx-padding: 8px 1.5em;
+}

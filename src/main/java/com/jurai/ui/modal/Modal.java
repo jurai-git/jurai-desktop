@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 
 @LoadingStrategy
 public abstract class Modal<T extends Pane> extends AbstractMenu<T> {
-    private String name;
+    String name; // package private
 
     public Modal(String name) {
         super();

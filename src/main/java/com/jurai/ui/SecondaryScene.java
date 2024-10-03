@@ -11,12 +11,14 @@ import javafx.scene.layout.StackPane;
 public class SecondaryScene {
     private Scene scene;
     private BorderPane content;
+    private StackPane modalRoot;
     AccountPane accountPane;
     private ImageView headerLogo;
     private StackPane headerLogoWrapper;
 
     public SecondaryScene() {
         content = new BorderPane();
+        modalRoot = new StackPane(content);
         content.getStyleClass().add("secondary-scene");
         content.getStyleClass().add("root-pane");
         accountPane = new AccountPane();
@@ -33,7 +35,7 @@ public class SecondaryScene {
         content.setCenter(accountPane.getView());
         content.setTop(headerLogoWrapper);
         content.getStyleClass().add("root");
-        scene = new Scene(content);
+        scene = new Scene(modalRoot);
         attachControllers();
     }
 
@@ -45,5 +47,13 @@ public class SecondaryScene {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public StackPane getModalRoot() {
+        return modalRoot;
+    }
+
+    public BorderPane getContent() {
+        return content;
     }
 }

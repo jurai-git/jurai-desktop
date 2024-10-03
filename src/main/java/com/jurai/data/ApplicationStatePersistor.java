@@ -8,6 +8,7 @@ import com.jurai.data.model.serializer.AdvogadoSerializer;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
 import com.jurai.ui.util.AccountMode;
+import com.jurai.ui.util.StageType;
 import com.jurai.util.EventLogger;
 import net.harawata.appdirs.AppDirsFactory;
 
@@ -42,6 +43,7 @@ public class ApplicationStatePersistor {
     }
 
     private ApplicationStatePersistor() throws IOException {
+        EventLogger.log("Initialized ApplicationStatePersistor");
         parser = new JsonParser();
         ApplicationState.initialize();
         ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
@@ -61,6 +63,7 @@ public class ApplicationStatePersistor {
     }
 
     public void load() throws IOException {
+        EventLogger.log("loading data with ApplicationStatePersistor");
         ApplicationState.initialize();
         System.out.println(applicationStateFile);
         Map<String, String> savedState = parser.fromFile(applicationStateFile);
@@ -69,14 +72,13 @@ public class ApplicationStatePersistor {
         }
 
         try {
-
             // advogado
             String token = savedState.get("currentUserToken");
             App.getCurrentInstance().addAfterLoadTask(() -> {
                 try {
                     AdvogadoService.getInstance().authenticate(token);
+                    System.out.println("StageType after persistor: " + ApplicationState.getInstance().getStageType());
                 } catch (ResponseNotOkException e) {
-                    e.printStackTrace();
                     EventLogger.logWarning("Failed to authenticate advogado after loading json data. Error code: " + e.getCode());
                 }
             });

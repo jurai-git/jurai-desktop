@@ -4,7 +4,8 @@ import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
-import com.jurai.ui.modal.popup.Notification;
+import com.jurai.ui.modal.notif.DefaultMessageNotification;
+import com.jurai.ui.modal.notif.NotificationType;
 import com.jurai.ui.panes.AccountPane;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.menus.AccountDashboardMenu;
@@ -40,30 +41,32 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 }
                 advogadoService.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
             } catch (ResponseNotOkException ex) {
-                new Notification("Deu erro aqui!").show();
-                /*
                 switch (ex.getCode()) {
                     case 500:
-                        new Alert(
-                                Alert.AlertType.ERROR,
-                                "Ocorreu um erro com a conexão com o servidor. Cheque a sua conexão com a internet"
+                        new DefaultMessageNotification(
+                                "Ocorreu um erro com a conexão com o servidor. Cheque a sua conexão com a internet",
+                                NotificationType.ERROR
                         ).show();
                         break;
                     case 400:
-                        new Alert(
-                                Alert.AlertType.ERROR,
-                                "Parece que você deixou algum campo vazio!"
+                        new DefaultMessageNotification(
+                                "Parece que você deixou algum campo vazio!",
+                                NotificationType.ERROR
                         ).show();
                         break;
                     case 401:
-                        new Alert(
-                                Alert.AlertType.ERROR,
-                                "Suas credenciais estão incorretas! Verifique-as e tente novamente."
+                        new DefaultMessageNotification(
+                                "Usuário ou senha incorretos! Verifique suas credenciais e tente novamente.",
+                                NotificationType.ERROR
                         ).show();
                         break;
                     default:
+                        new DefaultMessageNotification(
+                                "Ocorreu um erro inesperado! Tente novamente mais tarde.",
+                                NotificationType.ERROR
+                        ).show();
                         break;
-                }*/
+                }
             }
         });
 
@@ -80,24 +83,24 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                     pwd.equals(
                     pane.getAdvogadoRegisterMenu().getConfirmPassword().getText()
             )) {
-                new Alert(Alert.AlertType.ERROR, "As duas senhas não coincidem!").show();
+                new DefaultMessageNotification("As duas senhas não coincidem!", NotificationType.ERROR).show();
                 return;
             }
 
             if(pwd.length() < 8) {
-                new Alert(Alert.AlertType.ERROR, "A senha deve ter ao menos 8 caracteres!").show();
+                new DefaultMessageNotification("A senha deve ter ao menos 8 caracteres!", NotificationType.ERROR).show();
                 return;
             }
 
             final String username = pane.getAdvogadoRegisterMenu().getUsername().getText();
             if(username.length() < 3) {
-                new Alert(Alert.AlertType.ERROR, "O nome de usuário deve ter ao menos 3 caracteres!").show();
+                new DefaultMessageNotification("O nome de usuário deve ter ao menos 3 caracteres!", NotificationType.ERROR).show();
                 return;
             }
 
             final String email = pane.getAdvogadoRegisterMenu().getEmail().getText();
             if(!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-                new Alert(Alert.AlertType.ERROR, "O email fornecido é inválido!").show();
+                new DefaultMessageNotification("O email fornecido é inválido!", NotificationType.ERROR).show();
                 return;
             }
 
@@ -105,7 +108,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             try {
                 advogadoService.create(username, email, pwd, oab);
             } catch(Exception ignored) {
-
+                new DefaultMessageNotification("Ocorreu um erro inesperado! Tente novamente mais tarde.", NotificationType.ERROR).show();
             }
 
             ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);

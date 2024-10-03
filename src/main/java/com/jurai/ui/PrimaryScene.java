@@ -42,7 +42,6 @@ public class PrimaryScene {
     private void initControls() {
         mainPane = new ProportionPane();
         modalRoot = new StackPane(mainPane);
-        ModalManager.initialize(modalRoot, mainPane);
         mainPane.getStyleClass().add("root-pane");
         navbar = new Navbar();
         accountPane = new AccountPane();
@@ -174,5 +173,13 @@ public class PrimaryScene {
                 return;
         }
         UILogger.log("active pane changed to " + pane.name());
+    }
+
+    public StackPane getModalRoot() {
+        return modalRoot;
+    }
+
+    public ProportionPane getContent() {
+        return mainPane;
     }
 }
