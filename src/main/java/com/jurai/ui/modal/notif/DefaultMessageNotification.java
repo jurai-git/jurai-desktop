@@ -37,6 +37,7 @@ public class DefaultMessageNotification extends Notification<VBox> {
         content = new VBox();
         content.setStyle("-fx-background-radius: 12px; -fx-border-radius: 12px");
         message = new Label();
+        message.setStyle("-fx-padding: 0 0 .5em 0");
         title = new Label();
         title.setStyle("-fx-padding: .5em 0 .5em 0; -fx-font-size: 1.5em;");
     }

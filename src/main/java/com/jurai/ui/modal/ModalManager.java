@@ -9,10 +9,10 @@ import com.jurai.util.UILogger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.Effect;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -30,12 +30,20 @@ public class ModalManager {
     private FadeTransition mFadeInTransition, nFadeInTransition;
     private FadeTransition mFadeOutTransition, nFadeOutTransition;
     private Effect defaultBlur;
+    private ChangeListener<Number> rootWidthListener, rootHeightListener;
+    Runnable rootDimensionsChangedAction;
     private final Map<String, Either<Supplier<Modal>, Modal>> modalFactories = new HashMap<>();
 
     private ModalManager(StackPane root, Node content) {
         this.root = root;
         this.content = content;
         System.out.println("Initialized ModalManager with values: " + root + "; " + content);
+        rootDimensionsChangedAction = () -> {};
+        rootWidthListener = (a, b, c) -> rootDimensionsChangedAction.run();
+        rootHeightListener = (a, b, c) -> rootDimensionsChangedAction.run();
+        if (root != null) {
+            root.widthProperty().addListener(rootWidthListener);
+        }
         initializeTransitions();
     }
 
@@ -55,6 +63,9 @@ public class ModalManager {
         this.root = root;
         this.content = content;
         UILogger.log("Reinitialized ModalManager");
+        if (root != null) {
+            root.widthProperty().addListener(rootWidthListener);
+        }
     }
 
     public static ModalManager getInstance() {
@@ -138,10 +149,18 @@ public class ModalManager {
             activeNotification.dispose();
         }
 
+        notif.getContent().setOpacity(0);
         root.getChildren().add(notif.getContent());
-        notif.getContent().maxWidthProperty().bind(root.widthProperty().multiply(0.5));
-        notif.getContent().maxHeightProperty().bind(root.heightProperty().multiply(0.3));
+
+        notif.getContent().applyCss();
+        notif.getContent().layout();
+        rootDimensionsChangedAction = () -> {
+            notif.getContent().setMaxWidth(Math.min(notif.getContent().prefWidth(-1), root.getWidth() * 0.7));
+            notif.getContent().setMaxHeight(notif.getContent().prefHeight(notif.getContent().getMaxWidth()));
+        };
+        rootDimensionsChangedAction.run();
         activeNotification = notif;
+        
 
         nScaleOutTransition.setNode(notif.getContent());
         nFadeInTransition.setNode(notif.getContent());
@@ -174,6 +193,7 @@ public class ModalManager {
         } else {
             content.setEffect(null);
         }
+
         nFadeOutTransition.playFromStart();
         nScaleOutTransition.playFromStart();
 

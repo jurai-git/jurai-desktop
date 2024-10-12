@@ -46,17 +46,27 @@ public class AdvogadoService {
             String oab
     ) throws ResponseNotOkException {
         try {
-        JsonObject advogadoJson = new JsonObject();
-        advogadoJson.addProperty("username", username);
-        advogadoJson.addProperty("email", email);
-        advogadoJson.addProperty("password", password);
-        advogadoJson.addProperty("oab", oab);
+            JsonObject advogadoJson = new JsonObject();
+            advogadoJson.addProperty("username", username);
+            advogadoJson.addProperty("email", email);
+            advogadoJson.addProperty("password", password);
+            advogadoJson.addProperty("oab", oab);
 
-        JsonObject response = requestHandler.post("/advogado/new", advogadoJson);
-        EventLogger.log("Response on advogado creation: " +  response.toString());
-
+            JsonObject response = requestHandler.post("/advogado/new", advogadoJson);
         } catch(ResponseNotOkException e) {
-            EventLogger.logError("Error communicating to API on AdvogadoService.create(): error " + e.getCode());
+            EventLogger.logError("Error communicating to API on AdvogadoService::create: error " + e.getCode());
+            throw e;
+        }
+    }
+
+    public void delete() throws ResponseNotOkException {
+        try {
+            JsonObject body = new JsonObject();
+            body.addProperty("access_token", ApplicationState.getInstance().getCurrentUser().getAccessToken());
+            requestHandler.delete("/advogado/delete", body);
+            deauthenticate();
+        } catch (ResponseNotOkException e) {
+            EventLogger.logError("Error communicating to API on AdvogadoService::delete: error " + e.getCode());
             throw e;
         }
     }

@@ -4,6 +4,7 @@ import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
+import com.jurai.data.validator.AdvogadoValidator;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;
 import com.jurai.ui.modal.notif.NotificationType;
 import com.jurai.ui.panes.AccountPane;
@@ -15,6 +16,7 @@ import javafx.scene.input.KeyCode;
 
 public class AccountPaneController extends AbstractController<AccountPane> {
     private final AdvogadoService advogadoService = AdvogadoService.getInstance();
+    private final AdvogadoValidator advogadoValidator = new AdvogadoValidator();
 
     @Override
     public void initialize(AccountPane pane) {
@@ -78,45 +80,46 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         });
 
         pane.getAdvogadoRegisterMenu().getCreateButton().setOnAction(e -> {
-            final String pwd = pane.getAdvogadoRegisterMenu().getPassword().getText();
-            if(!
-                    pwd.equals(
-                    pane.getAdvogadoRegisterMenu().getConfirmPassword().getText()
-            )) {
-                new DefaultMessageNotification("As duas senhas não coincidem!", NotificationType.ERROR).show();
-                return;
-            }
-
-            if(pwd.length() < 8) {
-                new DefaultMessageNotification("A senha deve ter ao menos 8 caracteres!", NotificationType.ERROR).show();
-                return;
-            }
-
-            final String username = pane.getAdvogadoRegisterMenu().getUsername().getText();
-            if(username.length() < 3) {
-                new DefaultMessageNotification("O nome de usuário deve ter ao menos 3 caracteres!", NotificationType.ERROR).show();
-                return;
-            }
-
-            final String email = pane.getAdvogadoRegisterMenu().getEmail().getText();
-            if(!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-                new DefaultMessageNotification("O email fornecido é inválido!", NotificationType.ERROR).show();
-                return;
-            }
-
             final String oab = pane.getAdvogadoRegisterMenu().getOab().getText();
             try {
-                advogadoService.create(username, email, pwd, oab);
-            } catch(Exception ignored) {
-                new DefaultMessageNotification("Ocorreu um erro inesperado! Tente novamente mais tarde.", NotificationType.ERROR).show();
+                if (advogadoValidator.validateJFX(pane.getAdvogadoRegisterMenu())) {
+                    advogadoService.create(
+                            pane.getAdvogadoRegisterMenu().getUsername().getText(),
+                            pane.getAdvogadoRegisterMenu().getEmail().getText(),
+                            pane.getAdvogadoRegisterMenu().getPassword().getText(),
+                            pane.getAdvogadoRegisterMenu().getOab().getText()
+                    );
+                } else {
+                    return;
+                }
+            } catch(ResponseNotOkException ex) {
+                String msg = switch (ex.getCode()) {
+                    case 400 -> "Parece que você deixou algum campo vazio!";
+                    case 409 -> "O nome de usuário ou e-mail já estão em uso!";
+                    case 404 -> "Ocorreu um erro com a conexão com o servidor. Cheque a sua conexão com a internet";
+                    default -> "Ocorreu um erro inesperado! Tente novamente mais tarde.";
+                };
+                new DefaultMessageNotification(msg, NotificationType.ERROR).show();
+                return;
             }
-
             ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
         });
 
         // mode switching handling
         pane.getLoginMenu().getCreateAccount().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.REGISTERING));
         pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN));
+
+        pane.getAccountDashboardMenu().getDeleteAccount().setOnAction(e -> {
+            try {
+                advogadoService.delete();
+            } catch (ResponseNotOkException ex) {
+                String msg = switch (ex.getCode()) {
+                    case 404 -> "Ocorreu um erro com a conexão com o servidor. Cheque a sua conexão com a internet";
+                    default -> "Ocorreu um erro inesperado! Tente novamente mais tarde.";
+                };
+                new DefaultMessageNotification(msg, NotificationType.ERROR).show();
+            }
+        });
 
     }
 

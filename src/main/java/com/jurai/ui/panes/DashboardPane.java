@@ -1,5 +1,6 @@
 package com.jurai.ui.panes;
 
+import com.jurai.ui.controller.DemandaAnalysisController;
 import com.jurai.ui.controller.DemandaDashboardController;
 import com.jurai.ui.controller.RequerenteDashboardController;
 import com.jurai.ui.menus.DemandaAnalysisDashboardMenu;
@@ -67,6 +68,9 @@ public class DashboardPane extends AbstractPane {
 
         DemandaDashboardController demandaDashboardController = new DemandaDashboardController();
         demandaDashboardController.initialize(demandaDashboardMenu);
+
+        DemandaAnalysisController demandaAnalysisController = new DemandaAnalysisController();
+        demandaAnalysisController.initialize(demandaAnalysisDashboardMenu);
     }
 
     @Override

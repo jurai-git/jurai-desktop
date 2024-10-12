@@ -13,24 +13,30 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
-public class DemandaAnalysisDashboardMenu extends AbstractMenu<VBox> {
-    private VBox content, demandaInfo;
+import java.awt.event.ActionEvent;
+
+public class DemandaAnalysisDashboardMenu extends AbstractMenu<StackPane> {
+    private StackPane content, inactiveContent;
+    private VBox activeContent, demandaInfo;
     private HBox centerContent;
     private CircleGraph circleGraph;
     private Label circleGraphLabel, status, assuntoPrincipal, nome, inactiveLabel;
     private Hyperlink argumentosLink;
     private Button moreDetails, redoAnalysis;
+    private boolean isActive = false;
 
     @Override
     protected void initControls() {
-        content = new VBox();
+        content = new StackPane();
+        inactiveContent = new StackPane();
+        activeContent = new VBox();
         centerContent = new HBox();
         centerContent.getStyleClass().add("spaced");
         circleGraph = new CircleGraph(0.242, "Chance de provimento");
-        //circleGraph.minWidthProperty().bind(circleGraph.heightProperty().multiply(0.6));
         circleGraphLabel = new Label("Chance de provimento");
         circleGraphLabel.setAlignment(Pos.CENTER);
         circleGraphLabel.setTextAlignment(TextAlignment.CENTER);
@@ -77,23 +83,32 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<VBox> {
         );
 
         VBox.setVgrow(centerContent, Priority.ALWAYS);
-        content.getChildren().addAll(
+        activeContent.getChildren().addAll(
                 centerContent,
                 new HGroup().withVgrow(Priority.NEVER).withMargin().withChildren(
                         moreDetails,
                         redoAnalysis
                 ).withStyleClass("buttons-row")
         );
+
+        inactiveContent.getChildren().add(inactiveLabel);
+        layInactiveContent();
+    }
+
+
+    public void setActive(boolean active) {
+        if (isActive != active) {
+            isActive = active;
+            if (active) {
+                layActiveContent();
+            } else {
+                layInactiveContent();
+            }
+        }
     }
 
     private void layActiveContent() {
-        content.getChildren().setAll(
-                centerContent,
-                new HGroup().withVgrow(Priority.NEVER).withMargin().withChildren(
-                        moreDetails,
-                        redoAnalysis
-                ).withStyleClass("buttons-row")
-        );
+        content.getChildren().setAll(activeContent);
     }
 
     private void layInactiveContent() {
@@ -101,7 +116,7 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<VBox> {
     }
 
     @Override
-    public VBox getContent() {
+    public StackPane getContent() {
         return content;
     }
 }

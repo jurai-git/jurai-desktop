@@ -26,7 +26,7 @@ public final class ApplicationState {
     private static Requerente selectedRequerente = null;
     private static Stage currentStage = null;
     private static boolean remembersUser = false;
-    private static String apiUrl = "http://127.0.0.1:5000";
+    private static String apiUrl = "https://jurai-server-production.up.railway.app";
     private static Demanda selectedDemanda = null;
 
     public static void initialize() {

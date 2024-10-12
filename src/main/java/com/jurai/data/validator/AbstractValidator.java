@@ -1,5 +1,7 @@
 package com.jurai.data.validator;
 
+import com.jurai.ui.modal.notif.DefaultMessageNotification;
+import com.jurai.ui.modal.notif.NotificationType;
 import javafx.scene.control.Alert;
 
 import java.util.HashMap;
@@ -25,13 +27,14 @@ public abstract class AbstractValidator<T> {
         return "";
     }
 
-    public void validateJFX(T object) {
+    public boolean validateJFX(T object) {
         for(Map.Entry<Filter<T>, String> entry : filters.entrySet()) {
             if(!entry.getKey().accept(object)) {
-                new Alert(Alert.AlertType.ERROR, entry.getValue()).show();
-                return;
+                new DefaultMessageNotification(entry.getValue(), NotificationType.ERROR).show();
+                return false;
             }
         }
+        return true;
     }
 
 }

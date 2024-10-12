@@ -3,10 +3,7 @@ package com.jurai.ui.modal;
 import com.jurai.data.ApplicationData;
 import com.jurai.ui.LoadingStrategy;
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.BasicTab;
-import com.jurai.ui.controls.BasicTabbedPane;
-import com.jurai.ui.controls.HGroup;
-import com.jurai.ui.controls.TextFieldSet;
+import com.jurai.ui.controls.*;
 import com.jurai.ui.util.ControlWrapper;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
@@ -24,9 +21,11 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
     protected HBox personalInfoActions, generalInfoActions, addressInfoActions;
     protected Button personalInfoNext, personalCancel, generalCancel, addressCancel, generalInfoNext, generalInfoPrevious, addressInfoPrevious, create;
 
+
+    protected MaskedTextFieldSet cpfCnpj, rg, cep;
     protected TextFieldSet
-            cpfCnpj, nome, nomeSocial, rg, orgaoEmissor, estadoCivil,
-            nacionalidade, profissao, cep, logradouro, email, numero,
+            nome, nomeSocial, orgaoEmissor, estadoCivil,
+            nacionalidade, profissao, logradouro, email, numero,
             complemento, bairro, estado, cidade;
     protected ComboBox<String> genero;
     protected CheckBox isIdoso;
@@ -40,17 +39,21 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
     protected void initControls() {
         initButtons();
         content = new BasicTabbedPane();
-        cpfCnpj = new TextFieldSet("CPF/CNPJ*");
+        cpfCnpj = new MaskedTextFieldSet("CPF/CNPJ*");
+
         nome = new TextFieldSet("Nome*");
         nomeSocial = new TextFieldSet("Nome Social");
         genero = new ComboBox<>();
         genero.getItems().addAll("Masculino", "Feminino", "Outro");
-        rg = new TextFieldSet("RG");
+        genero.setValue("Masculino");
+        rg = new MaskedTextFieldSet("RG");
+        rg.setMask("##.###.###-#");
         orgaoEmissor = new TextFieldSet("Orgão Emissor*");
         estadoCivil = new TextFieldSet("Estado Civil*");
         nacionalidade = new TextFieldSet("Nacionalidade*");
         profissao = new TextFieldSet("Profissão*");
-        cep = new TextFieldSet("CEP*");
+        cep = new MaskedTextFieldSet("CEP*");
+        cep.setMask("#####-###");
         logradouro = new TextFieldSet("Logradouro*");
         email = new TextFieldSet("E-mail*");
         numero = new TextFieldSet("Número*");
@@ -280,7 +283,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
     }
 
     public String getCpfCnpj() {
-        return cpfCnpj.getText();
+        return cpfCnpj.getText().replaceAll("[-./]", "");
     }
 
     public String getNome() {
@@ -301,7 +304,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
     }
 
     public String getRg() {
-        return rg.getText();
+        return rg.getText().replaceAll("[-.]", "");
     }
 
     public String getOrgaoEmissor() {
