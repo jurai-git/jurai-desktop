@@ -14,6 +14,7 @@ import java.util.List;
 
 @LoadingStrategy(LoadingStrategy.Strategy.EAGER)
 public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
+    protected boolean isCpf;
     private BasicTabbedPane content;
     BasicTab personalInfo, generalInfo, addressInfo;
     protected VBox personalInfoContent, generalInfoContent, addressInfoContent;
@@ -40,7 +41,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         initButtons();
         content = new BasicTabbedPane();
         cpfCnpj = new MaskedTextFieldSet("CPF/CNPJ*");
-
+        cpfCnpj.setMask("###.###.###-##");
         nome = new TextFieldSet("Nome*");
         nomeSocial = new TextFieldSet("Nome Social");
         genero = new ComboBox<>();

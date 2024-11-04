@@ -23,7 +23,6 @@ public class PrimaryScene {
     private ProportionPane mainPane;
     private Navbar navbar;
     private Sidebar sidebar;
-    private ArrowToggleButton sidebarToggleButton;
     private final NodeConstraints mainContentConstraints = new NodeConstraints(0, 0.06f, 0.82f, 0.92f);
     private NodeConstraints sidebarConstraints;
     private AccountPane accountPane;
@@ -49,7 +48,6 @@ public class PrimaryScene {
         planPane = new PlanPane();
         sidebar = new Sidebar();
         quickQueryPane = new QuickQueryPane();
-        sidebarToggleButton = new ArrowToggleButton();
     }
 
     private void layControls() {
@@ -66,10 +64,6 @@ public class PrimaryScene {
         sidebarConstraints = new NodeConstraints(0, 0, 0.2f, 1);
         mainPane.addConstraints(sidebar.getView(), sidebarConstraints);
         NodeConstraints sidebarToggleConstraints = new NodeConstraints(0.16f, 0.01f, 0.04f, 0.04f);
-        sidebarToggleConstraints.exclusiveWProperty.bind(sidebarToggleButton.heightProperty());
-
-        mainPane.addConstraints(sidebarToggleButton, sidebarToggleConstraints);
-
         activePaneChanged(ApplicationState.getInstance().getActivePane());
         sidebarModeUpdated(false);
 
@@ -79,12 +73,12 @@ public class PrimaryScene {
         sidebar.getView().setCacheHint(CacheHint.SPEED);
 
         scene = new Scene(modalRoot, ApplicationData.getScreenSize().width, ApplicationData.getScreenSize().height, false, SceneAntialiasing.BALANCED);
+        ApplicationState.getInstance().setSidebarExtended(ApplicationState.getInstance().isSidebarExtended());
     }
 
     private void layFixedControls() {
         mainPane.getChildren().add(sidebar.getView());
         mainPane.getChildren().add(navbar.getView());
-        mainPane.getChildren().add(sidebarToggleButton);
     }
 
     private void attachControllers() {
@@ -115,17 +109,19 @@ public class PrimaryScene {
 
             }
         });
-        mainPane.widthProperty().addListener((observableValue, number, t1) -> {
-            if (number.doubleValue() < (double) ApplicationData.getScreenSize().width / 2 && sidebarToggleButton.isActive()) {
-                sidebarToggleButton.actuate();
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+            if ("viewportSmall".equals(e.getPropertyName())) {
+                ApplicationState.getInstance().setSidebarExtended(true);
+            }
+        });
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+            if ("sidebarExtended".equals(e.getPropertyName())) {
+                sidebarModeUpdated((Boolean) e.getNewValue());
             }
         });
     }
 
     private void attachEvents() {
-        sidebarToggleButton.addActiveListener((observableValue, aBoolean, t1) -> {
-            sidebarModeUpdated(aBoolean);
-        });
     }
 
     private void sidebarModeUpdated(boolean iconsOnly) {

@@ -18,6 +18,11 @@ public class HGroup extends HBox {
         return this;
     }
 
+    public HGroup withHgrow(Priority p) {
+        HBox.setHgrow(this, p);
+        return this;
+    }
+
     public HGroup withMargin() {
         withMargin = true;
         return this;
@@ -40,6 +45,11 @@ public class HGroup extends HBox {
             }
             getChildren().add(SpacerFactory.createHBoxSpacer(Priority.ALWAYS));
         }
+        return this;
+    }
+
+    public HGroup withStyle(String style) {
+        this.setStyle(style);
         return this;
     }
 

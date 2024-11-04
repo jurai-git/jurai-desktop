@@ -1,6 +1,8 @@
 package com.jurai.ui.panes;
 
 import com.jurai.data.ApplicationData;
+import com.jurai.ui.controls.NavUrl;
+import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,6 +12,7 @@ import javafx.scene.layout.Pane;
 public class Navbar extends AbstractPane {
     private HBox view;
     private ImageView logo;
+    private NavUrl navUrl;
 
     public Navbar() {
         super();
@@ -26,12 +29,17 @@ public class Navbar extends AbstractPane {
         logo.setSmooth(true);
         logo.setPreserveRatio(true);
         logo.fitHeightProperty().bind(view.heightProperty().multiply(0.5));
+
+        navUrl = new NavUrl();
+        navUrl.setUrl("/ dashboard / requerente ");
     }
 
     @Override
     protected void layControls() {
         view.getChildren().addAll(
-                logo
+                logo,
+                SpacerFactory.createHBoxSpacer(12),
+                navUrl
         );
         view.setAlignment(Pos.CENTER_LEFT);
     }

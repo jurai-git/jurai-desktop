@@ -2,7 +2,7 @@ package com.jurai.ui.panes;
 
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
-import com.jurai.ui.menus.QuickQueryTab;
+import com.jurai.ui.menus.EmentaQuickQueryTab;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -12,7 +12,7 @@ public class QuickQueryPane extends AbstractPane {
     private BorderPane view, centerContent;
     private BasicTabbedPane tabbedPane;
     private Label title, subtitle;
-    private QuickQueryTab quickQueryTab;
+    private EmentaQuickQueryTab quickQueryTab;
     private BasicTab pdfTab, ementaTab;
 
 
@@ -28,7 +28,7 @@ public class QuickQueryPane extends AbstractPane {
         tabbedPane = new BasicTabbedPane();
         tabbedPane.getStyleClass().addAll("content-box");
         tabbedPane.setPadding(new Insets(0, 24, 24 ,24));
-        quickQueryTab = new QuickQueryTab();
+        quickQueryTab = new EmentaQuickQueryTab();
 
         pdfTab = new BasicTab("PDF", quickQueryTab.getContent());
         ementaTab = new BasicTab("Ementa", quickQueryTab.getContent());
@@ -36,13 +36,6 @@ public class QuickQueryPane extends AbstractPane {
         tabbedPane.addTab(pdfTab);
         tabbedPane.addTab(ementaTab);
         tabbedPane.setActiveTab(pdfTab);
-        tabbedPane.setOnTabChanged(() -> {
-            if(tabbedPane.getActiveTab().equals(pdfTab)) {
-                quickQueryTab.setMode(QuickQueryTab.Mode.PDF);
-            } else {
-                quickQueryTab.setMode(QuickQueryTab.Mode.EMENTA);
-            }
-        });
 
         title = new Label("Consulta Rápida");
         title.getStyleClass().add("header");

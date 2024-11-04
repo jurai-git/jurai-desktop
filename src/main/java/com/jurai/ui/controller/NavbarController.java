@@ -1,5 +1,6 @@
 package com.jurai.ui.controller;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.ui.panes.Navbar;
 
 
@@ -14,6 +15,5 @@ public class NavbarController extends AbstractController<Navbar> {
 
     @Override
     protected void attachNotifiers(Navbar navbar) {
-
     }
 }

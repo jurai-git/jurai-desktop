@@ -28,6 +28,8 @@ public final class ApplicationState {
     private static boolean remembersUser = false;
     private static String apiUrl = "https://jurai-server-production.up.railway.app";
     private static Demanda selectedDemanda = null;
+    private static boolean sidebarExtended = false;
+    private static boolean viewportSmall = false; // this indicates weather the width of the app is small, for responsiveness
 
     public static void initialize() {
         if (instance == null) {
@@ -122,6 +124,24 @@ public final class ApplicationState {
     public void setSelectedDemanda(Demanda selectedDemanda) {
         support.firePropertyChange("selectedDemanda", ApplicationState.selectedDemanda, selectedDemanda);
         ApplicationState.selectedDemanda = selectedDemanda;
+    }
+
+    public void setSidebarExtended(boolean sidebarExtended) {
+        support.firePropertyChange("sidebarExtended", ApplicationState.sidebarExtended, sidebarExtended);
+        ApplicationState.sidebarExtended = sidebarExtended;
+    }
+
+    public void setViewportSmall(boolean viewportSmall) {
+        support.firePropertyChange("viewportSmall", ApplicationState.viewportSmall, viewportSmall);
+        ApplicationState.viewportSmall = viewportSmall;
+    }
+
+    public boolean isViewportSmall() {
+        return viewportSmall;
+    }
+
+    public boolean isSidebarExtended() {
+        return sidebarExtended;
     }
 
     public Demanda getSelectedDemanda() {

@@ -1,6 +1,7 @@
 package com.jurai.ui.menus;
 
 import com.jurai.data.ApplicationData;
+import com.jurai.ui.controls.ArrowToggleButton;
 import com.jurai.ui.controls.SidebarNavItem;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
@@ -17,6 +18,7 @@ public class SidebarNav extends AbstractMenu<VBox> {
     private VBox content;
     private SidebarNavItem dashboard, quickQuery, documents, account, logout;
     private SVGPath dashboardIcon, quickQueryIcon, documentsIcon, accountIcon, logoutIcon;
+    private ArrowToggleButton sidebarToggleButton;
 
     public SidebarNav() {
         super();
@@ -40,6 +42,8 @@ public class SidebarNav extends AbstractMenu<VBox> {
         account = new SidebarNavItem(accountIcon, "Sua Conta");
         account.dotWidthProperty().set(4);
 
+        sidebarToggleButton = new ArrowToggleButton();
+        sidebarToggleButton.actuate();
 
         ApplicationData.defaultIconSizeProperty().bind(account.getIconContainer().widthProperty());
 
@@ -55,6 +59,8 @@ public class SidebarNav extends AbstractMenu<VBox> {
                 quickQuery,
                 documents,
                 account,
+                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                sidebarToggleButton,
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 logout);
         dashboard.setActive(true);
@@ -115,6 +121,10 @@ public class SidebarNav extends AbstractMenu<VBox> {
 
     public SidebarNavItem getLogout() {
         return logout;
+    }
+
+    public ArrowToggleButton getSidebarToggleButton() {
+        return sidebarToggleButton;
     }
 
     @Override

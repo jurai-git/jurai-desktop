@@ -62,8 +62,7 @@ public class AdvogadoService {
     public void delete() throws ResponseNotOkException {
         try {
             JsonObject body = new JsonObject();
-            body.addProperty("access_token", ApplicationState.getInstance().getCurrentUser().getAccessToken());
-            requestHandler.delete("/advogado/delete", body);
+            requestHandler.delete("/advogado/delete", body, "Bearer: " + ApplicationState.getInstance().getCurrentUser().getAccessToken());
             deauthenticate();
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService::delete: error " + e.getCode());
@@ -92,10 +91,8 @@ public class AdvogadoService {
 
     public void authenticate(String accessToken) throws ResponseNotOkException {
         JsonObject body = new JsonObject();
-        body.addProperty("access_token", accessToken);
-
         try {
-            JsonObject response = requestHandler.post("/advogado/get", body);
+            JsonObject response = requestHandler.post("/advogado/get", body, "Bearer " + accessToken);
             Advogado advogado = gson.fromJson(response.get("advogado"), Advogado.class);
             ApplicationState.getInstance().setCurrentUser(advogado);
             reloadRequerentes();
@@ -105,13 +102,10 @@ public class AdvogadoService {
     }
 
     public void reloadRequerentes() throws ResponseNotOkException {
-        Map<String, String> body = new HashMap<>();
         Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
-        body.put("access_token", currentUser.getAccessToken());
-        String jsonifiedBody = gson.toJson(body);
 
         try {
-            JsonObject response = requestHandler.post("/advogado/requerentes", JsonUtils.asJson(jsonifiedBody));
+            JsonObject response = requestHandler.post("/advogado/requerentes", new JsonObject(), "Bearer " + currentUser.getAccessToken());
             List<Requerente> requerentes =
                 response.get("requerentes_list").getAsJsonArray().asList().stream().
                 map(element -> gson.fromJson(element, Requerente.class)).toList();
@@ -120,7 +114,7 @@ public class AdvogadoService {
                 currentUser.getRequerentes().addAll(requerentes);
             EventLogger.log("Loaded requerentes for advogado " + currentUser.getNome());
         } catch(ResponseNotOkException e) {
-            EventLogger.logError("Error communicating to API on AdvogadoService.loadRequerentes(): error " + e.getCode());
+            EventLogger.logError("Error communicating to API on AdvogadoSezrvice.loadRequerentes(): error " + e.getCode());
             System.out.println(e.getMessage());
             throw e;
         }
@@ -128,10 +122,9 @@ public class AdvogadoService {
 
     public void addRequerente(Requerente r) throws ResponseNotOkException {
         JsonObject body = JsonUtils.asJson(gson.toJson(r, Requerente.class));
-        body.addProperty("access_token", ApplicationState.getInstance().getCurrentUser().getAccessToken());
         System.out.println(body);
         try {
-            JsonObject response = requestHandler.post("/requerente/new", body);
+            JsonObject response = requestHandler.post("/requerente/new", body, "Bearer: " + ApplicationState.getInstance().getCurrentUser().getAccessToken());
             reloadRequerentes();
         } catch(ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService.addRequerente(): error " + e.getCode());

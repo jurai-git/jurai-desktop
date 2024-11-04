@@ -6,6 +6,8 @@ import com.jurai.ui.util.Pane;
 import com.jurai.ui.controls.SidebarNavItem;
 import com.jurai.ui.menus.SidebarNav;
 import com.jurai.util.UILogger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class SidebarNavController extends AbstractController<SidebarNav> {
     @Override
@@ -18,6 +20,10 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
         pane.getLogout().setOnAction(e -> {
             ApplicationState.getInstance().setCurrentUser(null);
             ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
+        });
+
+        pane.getSidebarToggleButton().addActiveListener((observableValue, aBoolean, t1) -> {
+            ApplicationState.getInstance().setSidebarExtended(t1);
         });
     }
 
@@ -51,6 +57,12 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
                 UILogger.logWarning("Falling back to DashboardPane");
                 ApplicationState.getInstance().setActivePane(Pane.DashboardPane);
             }
+
+            ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent1 -> {
+                if ("sidebarExtended".equals(propertyChangeEvent1.getPropertyName())) {
+                    pane.getSidebarToggleButton().actuate();
+                }
+            });
         });
     }
 }

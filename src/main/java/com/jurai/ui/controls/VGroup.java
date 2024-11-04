@@ -18,6 +18,11 @@ public class VGroup extends VBox {
         return this;
     }
 
+    public VGroup withVgrow(Priority p) {
+        VBox.setVgrow(this, p);
+        return this;
+    }
+
     public VGroup withMargin() {
         withMargin = true;
         return this;

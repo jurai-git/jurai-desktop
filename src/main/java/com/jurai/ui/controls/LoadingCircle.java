@@ -4,6 +4,7 @@ import com.jurai.data.ApplicationData;
 import com.jurai.ui.animation.interpolator.SmoothEase;
 import com.jurai.util.FileUtils;
 import com.jurai.util.UILogger;
+import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
@@ -37,6 +38,7 @@ public class LoadingCircle extends StackPane {
         rotateAnimation.setFromAngle(0);
         rotateAnimation.setToAngle(360);
         rotateAnimation.setCycleCount(RotateTransition.INDEFINITE);
+        rotateAnimation.setInterpolator(Interpolator.LINEAR);
     }
 
     public void play() {

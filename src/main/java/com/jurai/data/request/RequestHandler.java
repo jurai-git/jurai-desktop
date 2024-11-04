@@ -19,17 +19,27 @@ public class RequestHandler {
         this.baseUrl = baseUrl;
     }
 
-    public JsonObject post(String endpoint, JsonObject body) throws ResponseNotOkException {
-        return send("POST", endpoint, body);
+    public JsonObject post(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
+        return send("POST", endpoint, body, auth);
     }
-    public JsonObject put(String endpoint, JsonObject body) throws ResponseNotOkException {
-        return send("PUT", endpoint, body);
+    public JsonObject put(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
+        return send("PUT", endpoint, body, auth);
     }
-    public JsonObject delete(String endpoint, JsonObject body) throws ResponseNotOkException {
-        return send("DELETE", endpoint, body);
+    public JsonObject delete(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
+        return send("DELETE", endpoint, body, auth);
     }
 
-    private JsonObject send(String method, String endpoint, JsonObject body) throws ResponseNotOkException {
+    public JsonObject post(String endpoint, JsonObject body) throws ResponseNotOkException {
+        return send("POST", endpoint, body, null);
+    }
+    public JsonObject put(String endpoint, JsonObject body) throws ResponseNotOkException {
+        return send("PUT", endpoint, body, null);
+    }
+    public JsonObject delete(String endpoint, JsonObject body) throws ResponseNotOkException {
+        return send("DELETE", endpoint, body, null);
+    }
+
+    private JsonObject send(String method, String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
         HttpURLConnection con = null;
         try {
             URL url = new URL(baseUrl + endpoint);
@@ -39,6 +49,9 @@ public class RequestHandler {
             con.setReadTimeout(5000);
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
+            if (auth != null) {
+                con.setRequestProperty("Authorization", auth);
+            }
             con.setDoOutput(true);
             return makeRequest(con, body);
         } catch (ResponseNotOkException e) {

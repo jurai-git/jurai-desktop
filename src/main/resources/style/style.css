@@ -1,3 +1,4 @@
+@import url('https://fonts.cdnfonts.com/css/monaco');
 @import url("navbar.css");
 @import url("sidebar.css");
 @import url("controls/simple-list.css");
@@ -5,7 +6,6 @@
 @import url("menus/advogado-register.css");
 @import url("util/forms.css");
 @import url("scenes/secondary-scene.css");
-@import url("util/classes.css");
 @import url("controls/basic-tabbed-pane.css");
 @import url("menus/quick-query-tab.css");
 @import url("controls/circle-graph.css");
@@ -13,6 +13,7 @@
 @import url("scenes/primary-scene.css");
 @import url("var.css");
 @import url("util/shadow.css");
+@import url("controls/misc.css");
 
 /*
 @font-face {
@@ -213,4 +214,47 @@
 
 .notif-button {
     -fx-padding: 8px 1.5em;
+}
+
+
+.nav-url {
+
+}
+#nav-url {
+    -fx-font-family: 'Monaco';
+}
+
+.small-spacing {
+    -fx-spacing: 12px;
+}
+
+.medium-spacing {
+    -fx-spacing: 24px;
+}
+
+.large-spacing {
+    -fx-spacing: 36px;
+}
+
+.small-padding {
+    -fx-padding: .5em;
+}
+
+.medium-padding {
+    -fx-padding: 1.25em;
+}
+
+.large-padding {
+    -fx-padding: 2em;
+}
+
+.red-bg {
+    -fx-background-color: red;
+    -fx-border-color: red;
+    -fx-border-width: 2px
+;
+}
+
+.button-padding {
+    -fx-padding: .5em 1.25em .5em 1.25em;
 }

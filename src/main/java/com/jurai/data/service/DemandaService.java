@@ -46,11 +46,10 @@ public class DemandaService {
         Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
         JsonObject body = JsonUtils.asJson(gson.toJson(d, Demanda.class));
         body.addProperty("id_demanda", d.getId());
-        body.addProperty("access_token", currentUser.getAccessToken());
         body.addProperty("id_requerente", ApplicationState.getInstance().getSelectedRequerente().getIdRequerente());
 
         try {
-            requestHandler.put("/demanda/update", body);
+            requestHandler.put("/demanda/update", body, "Bearer: " + currentUser.getAccessToken());
             reloadDemandas();
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on DemandaService::reloadDemandas: error " + e.getCode());
@@ -64,10 +63,9 @@ public class DemandaService {
         JsonObject body = new JsonObject();
         body.addProperty("demanda_id", d.getId());
         body.addProperty("requerente_id", r.getIdRequerente());
-        body.addProperty("access_token", ApplicationState.getInstance().getCurrentUser().getAccessToken());
 
         try {
-            requestHandler.delete("/demanda/delete", body);
+            requestHandler.delete("/demanda/delete", body, "Bearer: " + ApplicationState.getInstance().getCurrentUser().getAccessToken());
             r.demandas().remove(d);
             ApplicationState.getInstance().setSelectedDemanda(null);
         } catch (ResponseNotOkException e) {
@@ -81,11 +79,10 @@ public class DemandaService {
         Requerente selectedRequerente = ApplicationState.getInstance().getSelectedRequerente();
         Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
 
-        body.addProperty("access_token", currentUser.getAccessToken());
         body.addProperty("id_requerente", selectedRequerente.getIdRequerente());
 
         try {
-            JsonObject response = requestHandler.post("/requerente/demandas", body);
+            JsonObject response = requestHandler.post("/requerente/demandas", body, "Bearer " + currentUser.getAccessToken());
             List<Demanda> demandas =
                     response.get("demanda_list").getAsJsonArray().asList().stream().
                             map(element -> gson.fromJson(element, Demanda.class)).toList();

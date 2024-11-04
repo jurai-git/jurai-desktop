@@ -6,11 +6,15 @@ import com.jurai.data.ApplicationStatePersistor;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
 import com.jurai.ui.controller.StageController;
+import com.jurai.ui.controls.NavUrl;
 import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.EventLogger;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -66,6 +70,10 @@ public class App extends Application {
         selfAttachControllers();
 
         afterLoadTasks.forEach(Runnable::run);
+
+        primaryScene.getScene().widthProperty().addListener((observableValue, number, t1) -> {
+            ApplicationState.getInstance().setViewportSmall(t1.doubleValue() < (double) ApplicationData.getScreenSize().width * 0.65);
+        });
 
         switch(ApplicationState.getInstance().getStageType()) {
             case MAIN_STAGE:

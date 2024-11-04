@@ -27,7 +27,6 @@ public class ArrowToggleButton extends StackPane {
 
     private RotateTransition arrowRotateTransition;
     private ScaleTransition hoverInScaleTransition, hoverOutScaleTransition, clickInScaleTransition, clickOutScaleTransition;
-    private FillTransition hoverInFillTransition, hoverOutFillTransition;
 
     public ArrowToggleButton() {
         initComponents();
@@ -62,19 +61,10 @@ public class ArrowToggleButton extends StackPane {
     private void initTransitions() {
         PowerEase rotateInterpolator = new PowerEase(3, true);
         PowerEase scaleInterpolator = new PowerEase(2.5, true);
-        PowerEase colorInterpolator = new PowerEase(2.2, true);
 
         arrowRotateTransition = new RotateTransition(Duration.millis(350), arrowPath);
         arrowRotateTransition.setInterpolator(rotateInterpolator);
         arrowRotateTransition.setToAngle(270);
-
-        hoverInFillTransition = new FillTransition(Duration.millis(300), base);
-        hoverInFillTransition.setInterpolator(colorInterpolator);
-        hoverInFillTransition.setToValue(Color.web("#3d3d3d"));
-
-        hoverOutFillTransition = new FillTransition(Duration.millis(300), base);
-        hoverOutFillTransition.setInterpolator(colorInterpolator);
-        hoverOutFillTransition.setToValue(Color.web("#444"));
 
         hoverInScaleTransition = new ScaleTransition(Duration.millis(300), this);
         hoverInScaleTransition.setInterpolator(scaleInterpolator);
@@ -114,11 +104,9 @@ public class ArrowToggleButton extends StackPane {
 
         setOnMouseEntered(e -> {
             hoverInScaleTransition.playFromStart();
-            hoverInFillTransition.playFromStart();
         });
         setOnMouseExited(e -> {
             hoverOutScaleTransition.playFromStart();
-            hoverOutFillTransition.playFromStart();
         });
         setOnMousePressed(e -> clickInScaleTransition.playFromStart());
         setOnMouseReleased(e -> clickOutScaleTransition.playFromStart());
