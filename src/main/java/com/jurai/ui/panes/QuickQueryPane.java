@@ -14,7 +14,7 @@ public class QuickQueryPane extends AbstractPane {
     private Label title, subtitle;
     private EmentaQuickQueryTab quickQueryTab;
     private BasicTab pdfTab, ementaTab;
-
+    private Mode mode;
 
     public QuickQueryPane() {
         super();
@@ -60,4 +60,13 @@ public class QuickQueryPane extends AbstractPane {
     public BorderPane getView() {
         return view;
     }
+
+    public BasicTabbedPane getTabbedPane() {
+        return tabbedPane;
+    }
+
+    public enum Mode {
+        PDF,
+        EMENTA
+    };
 }

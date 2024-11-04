@@ -44,6 +44,10 @@ public class Navbar extends AbstractPane {
         view.setAlignment(Pos.CENTER_LEFT);
     }
 
+    public NavUrl getNavUrl() {
+        return navUrl;
+    }
+
     @Override
     public Pane getView() {
         return view;

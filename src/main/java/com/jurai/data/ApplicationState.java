@@ -3,6 +3,7 @@ package com.jurai.data;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Demanda;
 import com.jurai.data.model.Requerente;
+import com.jurai.ui.panes.QuickQueryPane;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.Pane;
 import com.jurai.ui.util.StageType;
@@ -30,6 +31,7 @@ public final class ApplicationState {
     private static Demanda selectedDemanda = null;
     private static boolean sidebarExtended = false;
     private static boolean viewportSmall = false; // this indicates weather the width of the app is small, for responsiveness
+    private static QuickQueryPane.Mode quickQueryMode;
 
     public static void initialize() {
         if (instance == null) {
@@ -122,8 +124,9 @@ public final class ApplicationState {
     }
 
     public void setSelectedDemanda(Demanda selectedDemanda) {
-        support.firePropertyChange("selectedDemanda", ApplicationState.selectedDemanda, selectedDemanda);
+        Demanda oldValue = ApplicationState.selectedDemanda;
         ApplicationState.selectedDemanda = selectedDemanda;
+        support.firePropertyChange("selectedDemanda", oldValue, selectedDemanda);
     }
 
     public void setSidebarExtended(boolean sidebarExtended) {
@@ -136,8 +139,17 @@ public final class ApplicationState {
         ApplicationState.viewportSmall = viewportSmall;
     }
 
+    public void setQuickQueryMode(QuickQueryPane.Mode newmode) {
+        support.firePropertyChange("quickQueryMode", ApplicationState.quickQueryMode, newmode);
+        ApplicationState.quickQueryMode = newmode;
+    }
+
     public boolean isViewportSmall() {
         return viewportSmall;
+    }
+
+    public QuickQueryPane.Mode getQuickQueryMode() {
+        return quickQueryMode;
     }
 
     public boolean isSidebarExtended() {

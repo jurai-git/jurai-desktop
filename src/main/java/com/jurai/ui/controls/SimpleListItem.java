@@ -72,7 +72,6 @@ public class SimpleListItem<T extends Model> extends HBox {
         HoverAnimator.animateAll(this, 0.3, 0.5);
     }
 
-
     //getters & setters
     public boolean isSelected() {
         return selected;
@@ -85,6 +84,7 @@ public class SimpleListItem<T extends Model> extends HBox {
             dotColorTransition.play();
             textFillTransition.setRate(1);
             textFillTransition.play();
+            System.out.println("SimpleListItem of object " + object + "Was selected!");
         } else {
             dotColorTransition.setRate(-2.5);
             dotColorTransition.play();
