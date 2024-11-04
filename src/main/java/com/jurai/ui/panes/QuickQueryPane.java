@@ -1,5 +1,6 @@
 package com.jurai.ui.panes;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
 import com.jurai.ui.menus.EmentaQuickQueryTab;

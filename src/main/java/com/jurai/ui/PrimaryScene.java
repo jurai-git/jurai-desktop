@@ -96,6 +96,9 @@ public class PrimaryScene {
         // sidebar
         SidebarController sidebarController = new SidebarController();
         sidebarController.initialize(sidebar);
+
+        QuickQueryPaneController quickQueryPaneController = new QuickQueryPaneController();
+        quickQueryPaneController.initialize(quickQueryPane);
     }
 
     private void attachNotifiers() {

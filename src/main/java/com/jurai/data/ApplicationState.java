@@ -31,7 +31,7 @@ public final class ApplicationState {
     private static Demanda selectedDemanda = null;
     private static boolean sidebarExtended = false;
     private static boolean viewportSmall = false; // this indicates weather the width of the app is small, for responsiveness
-    private static QuickQueryPane.Mode quickQueryMode;
+    private static QuickQueryPane.Mode quickQueryMode = QuickQueryPane.Mode.PDF;
 
     public static void initialize() {
         if (instance == null) {
@@ -130,6 +130,7 @@ public final class ApplicationState {
     }
 
     public void setSidebarExtended(boolean sidebarExtended) {
+        if (sidebarExtended == ApplicationState.sidebarExtended) return;
         support.firePropertyChange("sidebarExtended", ApplicationState.sidebarExtended, sidebarExtended);
         ApplicationState.sidebarExtended = sidebarExtended;
     }

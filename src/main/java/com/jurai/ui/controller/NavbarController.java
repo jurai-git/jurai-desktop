@@ -35,7 +35,10 @@ public class NavbarController extends AbstractController<Navbar> {
                         break;
                     case QuickQueryPane:
                         newUrl.append("/Consulta Rápida");
-                        if (ApplicationState.getInstance().getQuickQueryMode() == QuickQueryPane.Mode.EMENTA) {
+                        if (ApplicationState.getInstance().getQuickQueryMode() == null) {
+                            break;
+                        }
+                        if (ApplicationState.getInstance().getQuickQueryMode().equals(QuickQueryPane.Mode.EMENTA)) {
                             newUrl.append(" / Ementa");
                         } else {
                             newUrl.append(" / PDF");
