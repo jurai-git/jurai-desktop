@@ -46,7 +46,12 @@ public class EmentaQuickQueryTab extends AbstractMenu<HBox> {
         VBox.setVgrow(form, Priority.NEVER);
 
         analysisResultsMenu = new AnalysisResultsMenu();
-        analysisResultsMenu.layActiveContent("Argumento 1 ...", "Argumento 2 alsjdsaljdasl alksjdlakjd la alsjd", "Argumento 3", 0.62);
+        //analysisResultsMenu.layActiveContent("Argumento 1 ...", "Argumento 2 alsjdsaljdasl alksjdlakjd la alsjd", "Argumento 3", 0.62);
+        //viewArguments.setDisable(false);
+        // exemplo de adicionar analise acima
+        // para tirar analise:
+        analysisResultsMenu.layInactiveContent();
+        viewArguments.setDisable(true);
         VBox.setVgrow(analysisResultsMenu.getContent(), Priority.ALWAYS);
         rightContent = new VBox();
         HBox.setHgrow(rightContent, Priority.ALWAYS);
