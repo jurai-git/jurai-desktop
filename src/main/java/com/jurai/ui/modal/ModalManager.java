@@ -11,9 +11,13 @@ import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.Effect;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.HashMap;
@@ -26,13 +30,14 @@ public class ModalManager {
     private Node content;
     private Modal activeModal;
     private Modal activeNotification;
-    private ScaleTransition mScaleOutTransition, nScaleOutTransition;
-    private FadeTransition mFadeInTransition, nFadeInTransition;
-    private FadeTransition mFadeOutTransition, nFadeOutTransition;
+    private FadeTransition nFadeInTransition, mFadeInTransition;
+    private FadeTransition mFadeOutTransition, nFadeOutTransition, mBlurFadeInTransition, mBlurFadeOutTransition;
     private Effect defaultBlur;
     private ChangeListener<Number> rootWidthListener, rootHeightListener;
     Runnable rootDimensionsChangedAction;
     private final Map<String, Either<Supplier<Modal>, Modal>> modalFactories = new HashMap<>();
+
+    private ImageView blurredBackground;
 
     private ModalManager(StackPane root, Node content) {
         this.root = root;
@@ -46,8 +51,6 @@ public class ModalManager {
         }
         initializeTransitions();
     }
-
-
 
     public static void initialize(StackPane root, Node content) {
         if (instance == null) {
@@ -88,12 +91,14 @@ public class ModalManager {
     private void initializeTransitions() {
         defaultBlur = new BoxBlur(16, 16, 2);
 
-        mScaleOutTransition = createScaleTransition(new SmoothEase(1));
-        mFadeInTransition = createFadeTransition(350, 0, 1, new PowerEase(3.2, true));
         mFadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase(1));
-        nScaleOutTransition = createScaleTransition(new SmoothEase(1));
         nFadeInTransition = createFadeTransition(350, 0, 1, new PowerEase(3.2, true));
         nFadeOutTransition = createFadeTransition(300, 1, 0, new SmoothEase(1));
+
+        mBlurFadeInTransition = createFadeTransition(300, 0, 1, new PowerEase(2, true));
+        mBlurFadeOutTransition = createFadeTransition(300, 1, 0, new PowerEase(2, true));
+
+        mFadeInTransition = createFadeTransition(300, 0, 1, new SmoothEase(1));
     }
 
     private BlurTransition createBlurTransition(Effect fromBlur, Effect toBlur, Interpolator interpolator, Node content) {
@@ -124,24 +129,52 @@ public class ModalManager {
         return transition;
     }
 
+    private Image createBlurredSnapshot(Node content) {
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        Image snapshot = content.snapshot(params, null);
+        ImageView imageView = new ImageView(snapshot);
+        imageView.setEffect(new BoxBlur(16, 16, 2));
+        return imageView.snapshot(params, null);
+    }
+
     public void requestModal(String key) {
         if (activeModal != null) {
             activeModal.dispose();
         }
         Modal m = modalFactories.get(key).ifLPresentOrElse(Supplier::get, modal -> modal);
+
+        Image blurredImage = createBlurredSnapshot(content);
+        blurredBackground = new ImageView(blurredImage);
+        root.getChildren().add(blurredBackground);
+        mBlurFadeInTransition.setNode(blurredBackground);
+        mBlurFadeOutTransition.setNode(blurredBackground);
+
         root.getChildren().add(m.getContent());
         m.getContent().maxWidthProperty().bind(root.widthProperty().multiply(0.7));
         m.getContent().maxHeightProperty().bind(root.heightProperty().multiply(0.8));
         activeModal = m;
 
-        mScaleOutTransition.setNode(m.getContent());
-        mFadeInTransition.setNode(m.getContent());
         mFadeOutTransition.setNode(m.getContent());
+        mFadeInTransition.setNode(m.getContent());
 
         mFadeInTransition.playFromStart();
-        content.setEffect(defaultBlur);
+        mBlurFadeInTransition.playFromStart();
         m.getContent().setScaleX(1);
         m.getContent().setScaleY(1);
+        m.getContent().toFront();
+        m.getContent().setVisible(true);
+    }
+
+    public void exitModal() {
+        if (activeModal == null) return;
+        mFadeOutTransition.setOnFinished(e -> {
+            root.getChildren().remove(activeModal.getContent());
+            root.getChildren().remove(blurredBackground);
+            activeModal = null;
+        });
+        mBlurFadeOutTransition.playFromStart();
+        mFadeOutTransition.playFromStart();
     }
 
     public void requestNotification(Notification notif) {
@@ -160,9 +193,7 @@ public class ModalManager {
         };
         rootDimensionsChangedAction.run();
         activeNotification = notif;
-        
 
-        nScaleOutTransition.setNode(notif.getContent());
         nFadeInTransition.setNode(notif.getContent());
         nFadeOutTransition.setNode(notif.getContent());
 
@@ -171,18 +202,6 @@ public class ModalManager {
         if (activeModal != null) {
             activeModal.getContent().setEffect(defaultBlur);
         }
-    }
-
-    public void exitModal() {
-        if (activeModal == null) return;
-        mScaleOutTransition.setOnFinished(e -> {
-            root.getChildren().remove(activeModal.getContent());
-            activeModal = null;
-        });
-        content.setEffect(null);
-        mScaleOutTransition.playFromStart();
-        mFadeOutTransition.playFromStart();
-        content.setEffect(null);
     }
 
     public void exitNotification() {
@@ -195,7 +214,5 @@ public class ModalManager {
         }
 
         nFadeOutTransition.playFromStart();
-        nScaleOutTransition.playFromStart();
-
     }
 }

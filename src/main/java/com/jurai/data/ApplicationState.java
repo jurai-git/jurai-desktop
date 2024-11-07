@@ -27,7 +27,7 @@ public final class ApplicationState {
     private static Requerente selectedRequerente = null;
     private static Stage currentStage = null;
     private static boolean remembersUser = false;
-    private static String apiUrl = "https://jurai-server-production.up.railway.app";
+    private static String apiUrl = "http://localhost:5000";
     private static Demanda selectedDemanda = null;
     private static boolean sidebarExtended = false;
     private static boolean viewportSmall = false; // this indicates weather the width of the app is small, for responsiveness
@@ -88,6 +88,9 @@ public final class ApplicationState {
         Requerente oldValue = ApplicationState.selectedRequerente;
         ApplicationState.selectedRequerente = selectedRequerente;
         support.firePropertyChange("selectedRequerente", oldValue, selectedRequerente);
+        if (selectedRequerente == null) {
+            setSelectedDemanda(null);
+        }
     }
 
     public void setAccountMode(AccountMode accountMode) {

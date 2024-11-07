@@ -12,7 +12,7 @@ import javafx.scene.layout.*;
 
 import java.util.List;
 
-@LoadingStrategy(LoadingStrategy.Strategy.EAGER)
+@LoadingStrategy(LoadingStrategy.Strategy.LAZY)
 public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
     protected boolean isCpf;
     private BasicTabbedPane content;

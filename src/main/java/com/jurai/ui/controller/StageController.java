@@ -6,6 +6,7 @@ import com.jurai.data.ApplicationState;
 import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.StageType;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.StackPane;
 
 public class StageController extends AbstractController<App> {
     @Override

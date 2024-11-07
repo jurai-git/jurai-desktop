@@ -14,7 +14,7 @@ public class DemandaAnalysisController extends AbstractController<DemandaAnalysi
         ApplicationState.getInstance().addPropertyChangeListener(e -> {
             if ("selectedDemanda".equals(e.getPropertyName())) {
                 System.out.println("Changed selected demanda");
-                pane.setActive(ApplicationState.getInstance().getSelectedDemanda() == null);
+                pane.setActive(ApplicationState.getInstance().getSelectedDemanda() != null);
             }
         });
     }

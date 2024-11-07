@@ -93,6 +93,22 @@ public class EmentaQuickQueryTab extends AbstractMenu<HBox> {
         );
     }
 
+    public Button getSend() {
+        return send;
+    }
+
+    public Button getClear() {
+        return clear;
+    }
+
+    public TextArea getEmenta() {
+        return ementaTextArea;
+    }
+
+    public Button getViewArguments() {
+        return viewArguments;
+    }
+
     public AnalysisResultsMenu getAnalysisResultsMenu() {
         return analysisResultsMenu;
     }

@@ -3,7 +3,7 @@ package com.jurai.ui.modal;
 import com.jurai.ui.LoadingStrategy;
 import javafx.scene.control.Button;
 
-@LoadingStrategy(LoadingStrategy.Strategy.LAZY)
+@LoadingStrategy(LoadingStrategy.Strategy.EAGER)
 public class DemandaRegisterModal extends DemandaModal {
 
     public DemandaRegisterModal() {

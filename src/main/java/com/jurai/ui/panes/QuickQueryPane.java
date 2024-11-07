@@ -1,6 +1,7 @@
 package com.jurai.ui.panes;
 
 import com.jurai.data.ApplicationState;
+import com.jurai.ui.controller.EmentaTabController;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
 import com.jurai.ui.menus.EmentaQuickQueryTab;
@@ -19,6 +20,7 @@ public class QuickQueryPane extends AbstractPane {
 
     public QuickQueryPane() {
         super();
+        attachControllers();
     }
 
     @Override
@@ -55,6 +57,11 @@ public class QuickQueryPane extends AbstractPane {
 
         view.setTop(title);
         view.setCenter(centerContent);
+    }
+
+    private void attachControllers() {
+        var ementaTabController = new EmentaTabController();
+        ementaTabController.initialize(quickQueryTab);
     }
 
     @Override

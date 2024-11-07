@@ -4,9 +4,6 @@ import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.SidebarAnimator;
 import com.jurai.ui.controller.*;
-import com.jurai.ui.controls.ArrowToggleButton;
-import com.jurai.ui.controls.CircleGraph;
-import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.Pane;
 import com.jurai.ui.panes.*;
 import com.jurai.ui.panes.layout.NodeConstraints;
@@ -19,7 +16,7 @@ import javafx.scene.layout.StackPane;
 
 public class PrimaryScene {
     private Scene scene;
-    private StackPane modalRoot;
+    private StackPane modalRoot, effectPane;
     private ProportionPane mainPane;
     private Navbar navbar;
     private Sidebar sidebar;
@@ -40,7 +37,11 @@ public class PrimaryScene {
 
     private void initControls() {
         mainPane = new ProportionPane();
-        modalRoot = new StackPane(mainPane);
+        effectPane = new StackPane();
+        effectPane.setMouseTransparent(true);
+        modalRoot = new StackPane(mainPane, effectPane);
+        effectPane.minHeightProperty().bind(modalRoot.heightProperty());
+        effectPane.minWidthProperty().bind(modalRoot.widthProperty());
         mainPane.getStyleClass().add("root-pane");
         navbar = new Navbar();
         accountPane = new AccountPane();
@@ -172,6 +173,10 @@ public class PrimaryScene {
                 return;
         }
         UILogger.log("active pane changed to " + pane.name());
+    }
+
+    public StackPane getEffectPane() {
+        return effectPane;
     }
 
     public StackPane getModalRoot() {

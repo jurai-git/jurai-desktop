@@ -2,6 +2,7 @@ package com.jurai.ui.menus;
 
 import com.jurai.data.ApplicationData;
 import com.jurai.ui.controls.ArrowToggleButton;
+import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.SidebarNavItem;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
@@ -60,7 +61,10 @@ public class SidebarNav extends AbstractMenu<VBox> {
                 documents,
                 account,
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
-                sidebarToggleButton,
+                new HGroup().withChildren(
+                        SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                        sidebarToggleButton
+                ),
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 logout);
         dashboard.setActive(true);
