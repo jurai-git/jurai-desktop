@@ -88,19 +88,11 @@ public class ArrowToggleButton extends StackPane {
     }
 
     private void deployActions() {
-        setOnMouseClicked(e -> active.set(!active.get()));
-        active.addListener(e -> {
-            if(active.get()) {
-                arrowRotateTransition.setToAngle(270);
-                arrowRotateTransition.playFromStart();
-            } else {
-                arrowRotateTransition.setToAngle(90);
-                arrowRotateTransition.playFromStart();
-            }
-            try {
-                onAction.accept(active.get());
-            } catch (Exception ignored){}
-         });
+        setOnMouseClicked(e -> {
+            active.set(!active.get());
+            updateOrientation();
+            onAction.accept(active.get());
+        });
 
         setOnMouseEntered(e -> {
             hoverInScaleTransition.playFromStart();
@@ -124,8 +116,19 @@ public class ArrowToggleButton extends StackPane {
         return active.get();
     }
 
-    public void actuate() {
-        active.set(!active.get());
+    public void setActive(boolean active) {
+        this.active.set(active);
+        updateOrientation();
+    }
+
+    public void updateOrientation() {
+        if(active.get()) {
+            arrowRotateTransition.setToAngle(270);
+            arrowRotateTransition.playFromStart();
+        } else {
+            arrowRotateTransition.setToAngle(90);
+            arrowRotateTransition.playFromStart();
+        }
     }
 
     private void initSvg() {

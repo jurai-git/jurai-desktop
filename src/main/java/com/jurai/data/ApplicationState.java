@@ -133,7 +133,6 @@ public final class ApplicationState {
     }
 
     public void setSidebarExtended(boolean sidebarExtended) {
-        if (sidebarExtended == ApplicationState.sidebarExtended) return;
         support.firePropertyChange("sidebarExtended", ApplicationState.sidebarExtended, sidebarExtended);
         ApplicationState.sidebarExtended = sidebarExtended;
     }

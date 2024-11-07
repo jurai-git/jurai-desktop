@@ -22,8 +22,8 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
             ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
         });
 
-        pane.getSidebarToggleButton().addActiveListener((observableValue, aBoolean, t1) -> {
-            ApplicationState.getInstance().setSidebarExtended(t1);
+        pane.getSidebarToggleButton().setOnAction(newvalue -> {
+            ApplicationState.getInstance().setSidebarExtended(newvalue);
         });
     }
 
@@ -57,12 +57,12 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
                 UILogger.logWarning("Falling back to DashboardPane");
                 ApplicationState.getInstance().setActivePane(Pane.DashboardPane);
             }
+        });
 
-            ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent1 -> {
-                if ("sidebarExtended".equals(propertyChangeEvent1.getPropertyName())) {
-                    pane.getSidebarToggleButton().actuate();
-                }
-            });
+        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent1 -> {
+            if ("sidebarExtended".equals(propertyChangeEvent1.getPropertyName())) {
+                pane.getSidebarToggleButton().setActive((Boolean) propertyChangeEvent1.getNewValue());
+            }
         });
     }
 }
