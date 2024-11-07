@@ -73,7 +73,7 @@ public class AnalysisResultsMenu extends AbstractMenu<StackPane> {
         VBox.setVgrow(circleGraph, Priority.ALWAYS);
         VBox.setVgrow(demandaInfo, Priority.ALWAYS);
 
-        setVertical();
+        setHorizontal();
         VBox.setVgrow(activeContent, Priority.ALWAYS);
 
         inactiveContent.getChildren().add(inactiveLabel);

@@ -1,6 +1,7 @@
 package com.jurai.ui.controls;
 
 import com.jurai.data.model.Model;
+import com.jurai.data.model.Requerente;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
 import com.jurai.util.UILogger;
@@ -85,6 +86,7 @@ public class SimpleList<T extends Model> extends VBox {
         listItemsContainer = new VBox();
         listItemsContainer.setFillWidth(true);
         listItemsContainer.getStyleClass().add("list-items");
+        enableAutoSearch(); // autoSearch is enabled by default
     }
 
     private void layControls() {
@@ -162,7 +164,22 @@ public class SimpleList<T extends Model> extends VBox {
             selectedItem.set(item);
             item.setSelected(true);
         }
+    }
 
+    public void enableAutoSearch() {
+        searchTextField.setOnKeyTyped(event -> {
+            listItemsContainer.getChildren().forEach(listItem -> {
+                if (listItem instanceof SimpleListItem<?> casted) {
+                    boolean matches = casted.getName().toLowerCase().contains(searchTextField.getText().toLowerCase());
+                    listItem.setVisible(matches);
+                    listItem.setManaged(matches);
+                }
+            });
+        });
+    }
+
+    public void disableAutoSearch() {
+        searchTextField.setOnKeyTyped(null);
     }
 
     public SimpleListItem<T> getSelectedItem() {

@@ -28,20 +28,6 @@ public class RequerenteDashboardController extends AbstractController<Requerente
                 pane.getEditDeleteRequerente().setDisable(false);
             }
         });
-
-        TextField searchTextField = pane.getRequerentesList().getSearchTextField();
-        searchTextField.setOnKeyTyped(event -> {
-            String search = searchTextField.getText().toLowerCase();
-            pane.getRequerentesList().getListItemsContainer().getChildren().forEach(listItem -> {
-                if (listItem instanceof SimpleListItem<?> casted) {
-                    if (casted.getObject() instanceof Requerente castedRequerente) {
-                        boolean matches = castedRequerente.nomeProperty().get().toLowerCase().contains(search);
-                        listItem.setVisible(matches);
-                        listItem.setManaged(matches);
-                    }
-                }
-            });
-        });
     }
 
     @Override

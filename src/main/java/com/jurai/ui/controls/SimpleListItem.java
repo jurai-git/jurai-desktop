@@ -28,7 +28,6 @@ public class SimpleListItem<T extends Model> extends HBox {
 
     public SimpleListItem(T object) {
         this.object = object;
-        this.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2, 2, 2, 2))));
         selected = false;
         initControls();
         layControls();
@@ -91,6 +90,10 @@ public class SimpleListItem<T extends Model> extends HBox {
             textFillTransition.setRate(-2);
             textFillTransition.play();
         }
+    }
+
+    public String getName() {
+        return nameLabel.getText();
     }
 
     public T getObject() {

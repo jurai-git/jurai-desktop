@@ -1,6 +1,5 @@
 functionality related {
     - add `forgot password` functionality
-    - implement AI services
     - organize exception handling when connecting to the api
     - implement server data caching - should probably update on the server every 5 mins to avoid desyncing
 
@@ -11,18 +10,16 @@ functionality related {
         - data caching control
         - lazy/eager loading control
         - data persistence control
+        - search engine control (startsWith, contains, custom algorithms)
     }
 }
 
 visual candy related {
-    - fix some animations
     - add more themes (dark, light, dark high contrast, light high contrast, solarized, etc)
 }
 
 code related {
     - add unit tests
-    - make SimpleList's search text field search for themselves, instead of the parent having to do the search
-    - change loading circle form svg hack to actual png with fade
 }
 
 production related {
