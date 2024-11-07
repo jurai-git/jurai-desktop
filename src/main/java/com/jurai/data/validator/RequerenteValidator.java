@@ -1,8 +1,8 @@
 package com.jurai.data.validator;
 
-import com.jurai.ui.modal.RequerenteModal;
+import com.jurai.data.model.Requerente;
 
-public class RequerenteValidator extends AbstractValidator<RequerenteModal> {
+public class RequerenteValidator extends AbstractValidator<Requerente> {
 
     public RequerenteValidator() {
         ruleFor(r -> !r.getNome().isEmpty(), "O campo Nome é de preenchimento obrigatório!");

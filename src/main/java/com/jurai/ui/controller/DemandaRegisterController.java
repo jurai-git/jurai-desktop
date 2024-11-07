@@ -43,6 +43,11 @@ public class DemandaRegisterController extends AbstractController<DemandaRegiste
                         "Ocorreu um erro com a conexão com o servidor. Cheque a sua conexão com a internet",
                         NotificationType.ERROR
                 ).show();
+            } catch (NumberFormatException ignored) {
+                new DefaultMessageNotification(
+                        "O valor da ação deve ser um número!",
+                        NotificationType.ERROR
+                ).show();
             }
         });
     }

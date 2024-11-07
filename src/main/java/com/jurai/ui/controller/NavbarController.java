@@ -25,7 +25,7 @@ public class NavbarController extends AbstractController<Navbar> {
                 StringBuilder newUrl = new StringBuilder();
                 switch (ApplicationState.getInstance().getActivePane()) {
                     case DashboardPane:
-                        newUrl.append("/dashboard");
+                        newUrl.append(" / Dashboard");
                         if (ApplicationState.getInstance().getSelectedRequerente() != null) {
                             newUrl.append(" / " + ApplicationState.getInstance().getSelectedRequerente().nomeProperty().get());
                             if (ApplicationState.getInstance().getSelectedDemanda() != null) {
@@ -34,7 +34,7 @@ public class NavbarController extends AbstractController<Navbar> {
                         }
                         break;
                     case QuickQueryPane:
-                        newUrl.append("/Consulta Rápida");
+                        newUrl.append(" / Consulta Rápida");
                         if (ApplicationState.getInstance().getQuickQueryMode() == null) {
                             break;
                         }

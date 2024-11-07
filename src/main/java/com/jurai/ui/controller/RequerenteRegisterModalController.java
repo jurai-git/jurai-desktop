@@ -3,6 +3,8 @@ package com.jurai.ui.controller;
 import com.jurai.data.model.Requerente;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
+import com.jurai.data.validator.AdvogadoValidator;
+import com.jurai.data.validator.RequerenteValidator;
 import com.jurai.ui.modal.RequerenteModal;
 import com.jurai.ui.modal.RequerenteRegisterModal;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;

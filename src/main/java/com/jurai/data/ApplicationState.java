@@ -88,9 +88,7 @@ public final class ApplicationState {
         Requerente oldValue = ApplicationState.selectedRequerente;
         ApplicationState.selectedRequerente = selectedRequerente;
         support.firePropertyChange("selectedRequerente", oldValue, selectedRequerente);
-        if (selectedRequerente == null) {
-            setSelectedDemanda(null);
-        }
+        setSelectedDemanda(null);
     }
 
     public void setAccountMode(AccountMode accountMode) {
