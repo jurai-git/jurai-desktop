@@ -1,17 +1,13 @@
 package com.jurai.ui.modal;
 
 import com.jurai.ui.LoadingStrategy;
-import com.jurai.ui.animation.*;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.animation.interpolator.SmoothEase;
 import com.jurai.util.Either;
 import com.jurai.util.UILogger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
-import javafx.animation.ScaleTransition;
 import javafx.beans.value.ChangeListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.effect.BoxBlur;
@@ -26,6 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/*
+ * n stands for notification and m stands for modal in the field names
+ */
+
 public class ModalManager {
     private static volatile ModalManager instance;
     private StackPane root;
@@ -33,13 +33,13 @@ public class ModalManager {
     private Modal activeModal;
     private Modal activeNotification;
     private FadeTransition nFadeInTransition, mFadeInTransition;
-    private FadeTransition mFadeOutTransition, nFadeOutTransition, mBlurFadeInTransition, mBlurFadeOutTransition;
+    private FadeTransition mFadeOutTransition, nFadeOutTransition, mBlurFadeInTransition, mBlurFadeOutTransition, nBlurFadeInTransition, nBlurFadeOutTransition;
     private Effect defaultBlur;
     private ChangeListener<Number> rootWidthListener, rootHeightListener;
-    Runnable rootDimensionsChangedAction;
+    private Runnable rootDimensionsChangedAction;
     private final Map<String, Either<Supplier<Modal>, Modal>> modalFactories = new HashMap<>();
 
-    private ImageView blurredBackground;
+    private ImageView mBlurredBackground, nBlurredBackground;
 
     private ModalManager(StackPane root, Node content) {
         this.root = root;
@@ -99,28 +99,10 @@ public class ModalManager {
 
         mBlurFadeInTransition = createFadeTransition(300, 0, 1, new PowerEase(2, true));
         mBlurFadeOutTransition = createFadeTransition(300, 1, 0, new PowerEase(2, true));
+        nBlurFadeInTransition = createFadeTransition(300, 0, 1, new PowerEase(2, true));
+        nBlurFadeOutTransition = createFadeTransition(300, 1, 0, new PowerEase(2, true));
 
         mFadeInTransition = createFadeTransition(300, 0, 1, new SmoothEase(1));
-    }
-
-    private BlurTransition createBlurTransition(Effect fromBlur, Effect toBlur, Interpolator interpolator, Node content) {
-        return new BlurTransition(
-                200,
-                toBlur,
-                fromBlur,
-                interpolator,
-                content
-        );
-    }
-
-    private ScaleTransition createScaleTransition(Interpolator interpolator) {
-        ScaleTransition transition = new ScaleTransition(Duration.millis(300));
-        transition.setFromX(1);
-        transition.setFromY(1);
-        transition.setToX(0);
-        transition.setToY(0);
-        transition.setInterpolator(interpolator);
-        return transition;
     }
 
     private FadeTransition createFadeTransition(int duration, double fromValue, double toValue, Interpolator interpolator) {
@@ -147,10 +129,10 @@ public class ModalManager {
         Modal m = modalFactories.get(key).ifLPresentOrElse(Supplier::get, modal -> modal);
 
         Image blurredImage = createBlurredSnapshot(content);
-        blurredBackground = new ImageView(blurredImage);
-        root.getChildren().add(blurredBackground);
-        mBlurFadeInTransition.setNode(blurredBackground);
-        mBlurFadeOutTransition.setNode(blurredBackground);
+        mBlurredBackground = new ImageView(blurredImage);
+        root.getChildren().add(mBlurredBackground);
+        mBlurFadeInTransition.setNode(mBlurredBackground);
+        mBlurFadeOutTransition.setNode(mBlurredBackground);
 
         root.getChildren().add(m.getContent());
         m.getContent().maxWidthProperty().bind(root.widthProperty().multiply(0.7));
@@ -172,7 +154,7 @@ public class ModalManager {
         if (activeModal == null) return;
         mFadeOutTransition.setOnFinished(e -> {
             root.getChildren().remove(activeModal.getContent());
-            root.getChildren().remove(blurredBackground);
+            root.getChildren().remove(mBlurredBackground);
             activeModal = null;
         });
         mBlurFadeOutTransition.playFromStart();
@@ -184,8 +166,17 @@ public class ModalManager {
             activeNotification.dispose();
         }
 
+        Image blurredImage = createBlurredSnapshot(root);
+        nBlurredBackground = new ImageView(blurredImage);
+        nBlurredBackground.setOpacity(0);
+        root.getChildren().add(nBlurredBackground);
+        nBlurFadeInTransition.setNode(nBlurredBackground);
+        nBlurFadeOutTransition.setNode(nBlurredBackground);
+
+
         notif.getContent().setOpacity(0);
         root.getChildren().add(notif.getContent());
+
 
         notif.getContent().applyCss();
         notif.getContent().layout();
@@ -199,6 +190,7 @@ public class ModalManager {
         nFadeInTransition.setNode(notif.getContent());
         nFadeOutTransition.setNode(notif.getContent());
 
+        nBlurFadeInTransition.playFromStart();
         nFadeInTransition.playFromStart();
 
         if (activeModal != null) {
@@ -216,8 +208,9 @@ public class ModalManager {
         }
 
         nFadeOutTransition.playFromStart();
+        nBlurFadeOutTransition.playFromStart();
         nFadeOutTransition.setOnFinished(actionEvent -> {
-            root.getChildren().remove(activeNotification.getContent());
+            root.getChildren().removeAll(activeNotification.getContent(), nBlurredBackground);
             activeNotification = null;
         });
     }
