@@ -111,7 +111,7 @@
                     <noHeaderFiles>true</noHeaderFiles>
                     <stripDebug>true</stripDebug>
                     <noManPages>true</noManPages>
-                    <mainClass>com.jurai.Launcher</mainClass>
+                    <mainClass>com.jurai.App</mainClass>
                     <launcher>JurAI</launcher>
                     <jlinkImageName>JurAI</jlinkImageName>
                     <jmodsPath>
