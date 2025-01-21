@@ -10,6 +10,8 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.effect.BoxBlur;
@@ -214,5 +216,9 @@ public class ModalManager {
         }
 
         nFadeOutTransition.playFromStart();
+        nFadeOutTransition.setOnFinished(actionEvent -> {
+            root.getChildren().remove(activeNotification.getContent());
+            activeNotification = null;
+        });
     }
 }
