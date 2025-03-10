@@ -14,6 +14,8 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -173,10 +175,8 @@ public class ModalManager {
         nBlurFadeInTransition.setNode(nBlurredBackground);
         nBlurFadeOutTransition.setNode(nBlurredBackground);
 
-
         notif.getContent().setOpacity(0);
         root.getChildren().add(notif.getContent());
-
 
         notif.getContent().applyCss();
         notif.getContent().layout();

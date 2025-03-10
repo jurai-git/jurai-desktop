@@ -14,6 +14,7 @@
 @import url("var.css");
 @import url("util/shadow.css");
 @import url("controls/misc.css");
+@import url("controls/loading-circle.css");
 
 /*
 @font-face {

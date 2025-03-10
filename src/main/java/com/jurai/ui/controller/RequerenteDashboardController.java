@@ -11,6 +11,7 @@ import javafx.collections.ListChangeListener;
 import javafx.scene.control.TextField;
 
 public class RequerenteDashboardController extends AbstractController<RequerenteDashboardMenu>  {
+
     @Override
     protected void attachEvents(RequerenteDashboardMenu pane) {
         pane.getAddRequerente().setOnAction(e -> {

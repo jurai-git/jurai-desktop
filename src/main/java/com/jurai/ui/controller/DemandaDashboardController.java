@@ -76,6 +76,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
                 try {
                     DemandaService.getInstance().reloadDemandas();
                 } catch (ResponseNotOkException e) {
+                    e.printStackTrace();
                     throw new Exception("Error loading demandas: " + e.getMessage());
                 }
                 Platform.runLater(() -> pane.getDemandaList().setLoading(false));
@@ -87,6 +88,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
                 Platform.runLater(() -> {
                     bindDemandaList(pane.getDemandaList().getListObjects());
                     pane.getAddDemanda().setDisable(false);
+                    Platform.runLater(() -> pane.getDemandaList().setLoading(false));
                 });
             }
 
@@ -94,6 +96,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
             protected void failed() {
                 UILogger.logError(getException().getMessage());
                 new DefaultMessageNotification("Erro ao carregar demandas!", NotificationType.ERROR).show();
+                Platform.runLater(() -> pane.getDemandaList().setLoading(false));
             }
         };
 

@@ -3,9 +3,11 @@ package com.jurai.ui.modal;
 import com.jurai.ui.LoadingStrategy;
 import javafx.scene.layout.Pane;
 
-// notification will always be lazy, as it is fairly simple
+// notification will always be lazy, as they are fairly simple
 @LoadingStrategy(LoadingStrategy.Strategy.LAZY)
 public abstract class Notification<T extends Pane> extends Modal<T> {
+    protected boolean isTransparent = false;
+
     public Notification() {
         super("notification");
     }
@@ -18,5 +20,9 @@ public abstract class Notification<T extends Pane> extends Modal<T> {
     @Override
     public void dispose() {
         ModalManager.getInstance().exitNotification();
+    }
+
+    public boolean isTransparent() {
+        return isTransparent;
     }
 }
