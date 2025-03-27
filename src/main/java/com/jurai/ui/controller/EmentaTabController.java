@@ -1,5 +1,6 @@
 package com.jurai.ui.controller;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.data.model.DemandaAnalysis;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AIService;
@@ -42,15 +43,21 @@ public class EmentaTabController extends AbstractController<EmentaQuickQueryTab>
             }
         });
 
-        pane.getClear().setOnAction(e -> {
-            pane.getViewArguments().setDisable(true);
-            pane.getEmenta().clear();
-            pane.getAnalysisResultsMenu().layInactiveContent();
-        });
+        pane.getClear().setOnAction(e -> clear(pane));
     }
 
     @Override
     protected void attachNotifiers(EmentaQuickQueryTab pane) {
+        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
+            if ("currentUser".equals(propertyChangeEvent.getPropertyName())) {
+                clear(pane);
+            }
+        });
+    }
 
+    private void clear(EmentaQuickQueryTab pane) {
+        pane.getViewArguments().setDisable(true);
+        pane.getEmenta().clear();
+        pane.getAnalysisResultsMenu().layInactiveContent();
     }
 }

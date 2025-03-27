@@ -17,6 +17,5 @@ public class QuickQueryPaneController extends AbstractController<QuickQueryPane>
 
     @Override
     protected void attachNotifiers(QuickQueryPane pane) {
-
     }
 }

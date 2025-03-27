@@ -58,6 +58,12 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
                 }
             }
         });
+
+        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
+            if ("currentAccount".equals(propertyChangeEvent.getPropertyName())) {
+                ApplicationState.getInstance().setSelectedDemanda(null);
+            }
+        });
     }
 
     private void unbindDemandaList(ObservableList<Demanda> paneRequerentes) {

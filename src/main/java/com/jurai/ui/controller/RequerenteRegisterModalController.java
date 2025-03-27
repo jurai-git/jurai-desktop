@@ -61,7 +61,7 @@ public class RequerenteRegisterModalController extends AbstractController<Requer
                 new DefaultMessageNotification("Você deixou algum campo em branco!", NotificationType.ERROR).show();
                 ex.printStackTrace();
             } catch (ResponseNotOkException ex) {
-                new DefaultMessageNotification("Erro ao comunicar com o servidor!", NotificationType.ERROR).show();
+                new DefaultMessageNotification("Erro: " + ex.getMessage(), NotificationType.ERROR).show();
                 ex.printStackTrace();
             }
         });

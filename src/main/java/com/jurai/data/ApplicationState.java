@@ -75,6 +75,8 @@ public final class ApplicationState {
             setAccountMode(AccountMode.LOGGED_IN);
         } else {
             setAccountMode(AccountMode.LOGGING_IN);
+            setSelectedDemanda(null);
+            setSelectedRequerente(null);
         }
     }
 
