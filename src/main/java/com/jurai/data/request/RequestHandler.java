@@ -4,16 +4,19 @@ import com.google.gson.JsonObject;
 import com.jurai.data.json.JsonUtils;
 import com.jurai.util.EventLogger;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 
 public class RequestHandler {
     private String baseUrl;
+    private final HttpClient client = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(5))
+            .build();
 
     public RequestHandler(String baseUrl) {
         this.baseUrl = baseUrl;
@@ -22,9 +25,11 @@ public class RequestHandler {
     public JsonObject post(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
         return send("POST", endpoint, body, auth);
     }
-    public JsonObject put(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
-        return send("PUT", endpoint, body, auth);
+
+    public JsonObject patch(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
+        return send("PATCH", endpoint, body, auth);
     }
+
     public JsonObject delete(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
         return send("DELETE", endpoint, body, auth);
     }
@@ -32,64 +37,59 @@ public class RequestHandler {
     public JsonObject post(String endpoint, JsonObject body) throws ResponseNotOkException {
         return send("POST", endpoint, body, null);
     }
-    public JsonObject put(String endpoint, JsonObject body) throws ResponseNotOkException {
-        return send("PUT", endpoint, body, null);
+
+    public JsonObject patch(String endpoint, JsonObject body) throws ResponseNotOkException {
+        return send("PATCH", endpoint, body, null);
     }
+
     public JsonObject delete(String endpoint, JsonObject body) throws ResponseNotOkException {
         return send("DELETE", endpoint, body, null);
     }
 
-    private JsonObject send(String method, String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
-        HttpURLConnection con = null;
-        try {
-            URL url = new URL(baseUrl + endpoint);
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod(method);
-            con.setConnectTimeout(5000);
-            con.setReadTimeout(5000);
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("Accept", "application/json");
-            if (auth != null) {
-                con.setRequestProperty("Authorization", auth);
-            }
-            con.setDoOutput(true);
-            return makeRequest(con, body);
-        } catch (ResponseNotOkException e) {
-            throw e;
-        } catch(Exception e) {
-            e.printStackTrace();
-            throw new ResponseNotOkException(500);
-        } finally {
-            if (con != null) {
-                con.disconnect();
-            }
-        }
+    public JsonObject get(String endpoint) throws ResponseNotOkException {
+        return send("GET", endpoint, null, null);
     }
 
-    private JsonObject makeRequest(HttpURLConnection con, JsonObject body) throws ResponseNotOkException, IOException {
-        try (OutputStream os = con.getOutputStream()) {
-            byte[] input = body.toString().getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
+    public JsonObject get(String endpoint, String authHeader) throws ResponseNotOkException {
+        return send("GET", endpoint, null, authHeader);
+    }
 
-        int code = con.getResponseCode();
-        EventLogger.log("request code: " + code);
-        if (code/100 != 2) {
-            throw new ResponseNotOkException(code);
-        }
-        
-        JsonObject parsedResponse;
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8), 8192)) {
-            StringBuilder response = new StringBuilder();
-            String responseLine;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
+    private JsonObject send(String method, String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
+        try {
+            HttpRequest.Builder builder = HttpRequest.newBuilder()
+                    .uri(URI.create(baseUrl + endpoint))
+                    .timeout(Duration.ofSeconds(5))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json");
+
+            if (auth != null) {
+                builder.header("Authorization", auth);
             }
-            parsedResponse = JsonUtils.asJson(response.toString());
-        }
 
-        con.disconnect();
-        return parsedResponse;
+            if (body != null) {
+                builder.method(method, HttpRequest.BodyPublishers.ofString(body.toString(), StandardCharsets.UTF_8));
+            } else {
+                builder.method(method, HttpRequest.BodyPublishers.noBody());
+            }
+
+            HttpRequest request = builder.build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+            int code = response.statusCode();
+            EventLogger.log("request code: " + code);
+
+            if (code / 100 != 2) {
+                throw new ResponseNotOkException(code);
+            }
+
+            return JsonUtils.asJson(response.body());
+
+        } catch (ResponseNotOkException e) {
+            throw e;
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            throw new ResponseNotOkException(500);
+        }
     }
 
     public void setBaseUrl(String baseUrl) {

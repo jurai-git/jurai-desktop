@@ -27,7 +27,6 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> {
         headerLabel = new Label("Crie sua conta");
         headerLabel.getStyleClass().add("header");
 
-
         email = new TextField();
         email.maxWidthProperty().bind(content.widthProperty().multiply(0.6));
         email.setPromptText("E-mail");
@@ -77,9 +76,7 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> {
         fields.getChildren().addAll(
                 SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
                 email,
-                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.05)),
                 username,
-                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.05)),
                 oab,
                 SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.05)),
                 password,

@@ -45,8 +45,8 @@ public class VGroup extends VBox {
         return this;
     }
 
-    public VGroup withStyleClass(String styleClass) {
-        getStyleClass().add(styleClass);
+    public VGroup withStyleClass(String ...styleClass) {
+        getStyleClass().addAll(styleClass);
         return this;
     }
 

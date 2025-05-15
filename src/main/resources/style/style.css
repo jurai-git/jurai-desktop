@@ -225,37 +225,99 @@
     -fx-font-family: 'Monaco';
 }
 
-.small-spacing {
-    -fx-spacing: 12px;
+.small-spacing { -fx-spacing: 12px; }
+.medium-spacing { -fx-spacing: 24px; }
+.large-spacing { -fx-spacing: 36px; }
+
+.small-padding {-fx-padding: .5em; }
+.medium-padding { -fx-padding: 1.25em; }
+.large-padding { -fx-padding: 2em; }
+
+.border-radius-sm { -fx-border-radius: 4px; }
+.border-radius-md { -fx-border-radius: 8px; }
+.border-radius-lg { -fx-border-radius: 12px; }
+.border-radius-xl { -fx-border-radius: 16px; }
+.border-radius-2xl { -fx-border-radius: 24px; }
+.border-radius-3xl { -fx-border-radius: 32px; }
+.border-radius-full { -fx-border-radius: 999px; }
+
+.bg-radius-sm { -fx-background-radius: 4px; }
+.bg-radius-md { -fx-background-radius: 8px; }
+.bg-radius-lg { -fx-background-radius: 12px; }
+.bg-radius-xl { -fx-background-radius: 16px; }
+.bg-radius-2xl { -fx-background-radius: 24px; }
+.bg-radius-3xl { -fx-background-radius: 32px; }
+.bg-radius-full { -fx-background-radius: 999px; }
+
+.pref-w-1  { -fx-pref-width: 4px; }
+.pref-w-2  { -fx-pref-width: 8px; }
+.pref-w-4  { -fx-pref-width: 16px; }
+.pref-w-8  { -fx-pref-width: 32px; }
+.pref-w-16 { -fx-pref-width: 64px; }
+.pref-w-32 { -fx-pref-width: 128px; }
+.pref-w-64 { -fx-pref-width: 256px; }
+
+.pref-h-1  { -fx-pref-height: 4px; }
+.pref-h-2  { -fx-pref-height: 8px; }
+.pref-h-4  { -fx-pref-height: 16px; }
+.pref-h-8  { -fx-pref-height: 32px; }
+.pref-h-16 { -fx-pref-height: 64px; }
+.pref-h-32 { -fx-pref-height: 128px; }
+.pref-h-64 { -fx-pref-height: 256px; }
+
+.spacing-0\.5 { -fx-spacing: 2px; }
+.spacing-1 { -fx-spacing: 4px; }
+.spacing-1\.5 { -fx-spacing: 6px; }
+.spacing-2 { -fx-spacing: 8px; }
+.spacing-3 { -fx-spacing: 12px; }
+.spacing-4 { -fx-spacing: 16px; }
+.spacing-8 { -fx-spacing: 32px; }
+
+.p-x16-y8 { -fx-padding: 32px 64px 32px 64px; }
+
+.p-1  { -fx-padding: 4px; }
+.p-2  { -fx-padding: 8px; }
+.p-3  { -fx-padding: 12px; }
+.p-4  { -fx-padding: 16px; }
+.p-5  { -fx-padding: 20px; }
+.p-6  { -fx-padding: 24px; }
+.p-8  { -fx-padding: 32px; }
+.p-10 { -fx-padding: 40px; }
+.p-12 { -fx-padding: 48px; }
+.p-14 { -fx-padding: 56px; }
+.p-16 { -fx-padding: 64px; }
+.p-24 { -fx-padding: 96px; }
+.p-32 { -fx-padding: 128px; }
+
+.pl-1 { -fx-padding: 0 0 0 4px; }
+.pl-0\.5 { -fx-padding: 0 0 0 2px; }
+
+.text-secondary {
+    -fx-text-fill: j-text-secondary;
 }
 
-.medium-spacing {
-    -fx-spacing: 24px;
-}
 
-.large-spacing {
-    -fx-spacing: 36px;
-}
+.text-field-base {
+    -fx-background-radius: 0.45em;
+    -fx-border-radius: 0.4em;
+    -fx-border-color: j-border;
+    -fx-padding: 8px 10px;
+    -fx-border-width: 1.5px;
+    -fx-background-color: j-button-base;
 
-.small-padding {
-    -fx-padding: .5em;
-}
-
-.medium-padding {
-    -fx-padding: 1.25em;
-}
-
-.large-padding {
-    -fx-padding: 2em;
 }
 
 .red-bg {
     -fx-background-color: red;
     -fx-border-color: red;
-    -fx-border-width: 2px
-;
+    -fx-border-width: 2px;
 }
 
 .button-padding {
     -fx-padding: .5em 1.25em .5em 1.25em;
+}
+
+.debug {
+    -fx-border-width: 1px;
+    -fx-border-color: red;
 }

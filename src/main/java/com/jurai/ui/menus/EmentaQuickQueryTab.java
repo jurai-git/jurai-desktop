@@ -20,7 +20,6 @@ public class EmentaQuickQueryTab extends AbstractMenu<HBox> {
     private Label ementaLabel, analysisLabel;
     private AnalysisResultsMenu analysisResultsMenu;
 
-
     @Override
     protected void initControls() {
         send = new Button("Enviar");

@@ -147,9 +147,11 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
     private void userChanged(Advogado newUser, AccountPane pane) {
         AccountDashboardMenu dashboardMenu = pane.getAccountDashboardMenu();
+        /*
         dashboardMenu.getTitle().setText(AccountDashboardMenu.TITLE_TEMPLATE.formatted(newUser.getNome()));
         dashboardMenu.getUsernameInfo().setText(AccountDashboardMenu.USERNAME_TEMPLATE.formatted(newUser.getNome()));
         dashboardMenu.getEmailInfo().setText(AccountDashboardMenu.EMAIL_TEMPLATE.formatted(newUser.getEmail()));
         dashboardMenu.getOabInfo().setText(AccountDashboardMenu.OAB_TEMPLATE.formatted(newUser.getOab()));
+        */
     }
 }

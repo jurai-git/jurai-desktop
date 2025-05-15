@@ -28,8 +28,8 @@ public class HGroup extends HBox {
         return this;
     }
 
-    public HGroup withStyleClass(String styleClass) {
-        getStyleClass().add(styleClass);
+    public HGroup withStyleClass(String ...styleClass) {
+        getStyleClass().addAll(styleClass);
         return this;
     }
 

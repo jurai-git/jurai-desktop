@@ -13,6 +13,7 @@ public class FieldSet<T extends Node> extends VBox {
     public FieldSet(String name, Class<T> classOfT) {
         getStyleClass().add("fieldset");
         this.name = new Label(name);
+        this.name.getStyleClass().addAll("pl-1");
         try {
             input = classOfT.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
@@ -24,6 +25,7 @@ public class FieldSet<T extends Node> extends VBox {
     protected void layControls() {
         VBox.setVgrow(input, Priority.ALWAYS);
         VBox.setVgrow(name, Priority.ALWAYS);
+        getStyleClass().add("spacing-1");
         getChildren().addAll(name, input);
     }
 

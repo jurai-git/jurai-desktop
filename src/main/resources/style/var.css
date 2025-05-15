@@ -1,5 +1,6 @@
 .root {
     j-text: white;
+    j-text-secondary: rgb(180, 180, 180);
 
     j-base: #202024;
     j-secondary-base: #141417;

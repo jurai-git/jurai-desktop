@@ -42,7 +42,7 @@ public class RequerenteService {
         Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
         JsonObject body = JsonUtils.asJson(gson.toJson(r, Requerente.class));
         try {
-            requestHandler.put("/requerente/update", body, "Bearer: " + currentUser.getAccessToken());
+            requestHandler.patch("/requerente/" + (long) r.getIdRequerente(), body, "Bearer: " + currentUser.getAccessToken());
             AdvogadoService.getInstance().reloadRequerentes();
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on RequerenteService::update: error " + e.getCode());
@@ -53,9 +53,9 @@ public class RequerenteService {
     public void delete(Requerente r) throws ResponseNotOkException {
         Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
         JsonObject body = new JsonObject();
-        body.addProperty("requerente_id", r.getIdRequerente());
+
         try {
-            requestHandler.delete("/requerente/remove", body, "Bearer " + currentUser.getAccessToken());
+            requestHandler.delete("/requerente/" + (long) r.getIdRequerente(), body, "Bearer " + currentUser.getAccessToken());
             currentUser.getRequerentes().remove(r);
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on RequerenteService::delete: error: " + e.getCode());
@@ -74,13 +74,11 @@ public class RequerenteService {
         JsonObject body = JsonUtils.asJson(gson.toJson(d, Demanda.class));
 
         try {
-            JsonObject response = requestHandler.post("/demanda/new", body, "Bearer " + currentUser.getAccessToken());
+            JsonObject response = requestHandler.post("/requerente/" + (long) currentRequerente.getIdRequerente() + "/demanda", body, "Bearer " + currentUser.getAccessToken());
             DemandaService.getInstance().reloadDemandas();
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on RequerenteService::addDemanda: error " + e.getCode());
             throw e;
         }
     }
-
-
 }
