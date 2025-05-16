@@ -1,22 +1,16 @@
 package com.jurai.ui.menus;
-import com.jurai.ui.controls.FieldSet;
 import com.jurai.ui.controls.HGroup;
+import com.jurai.ui.controls.PasswordFieldSet;
 import com.jurai.ui.controls.TextFieldSet;
 import com.jurai.ui.controls.VGroup;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.beans.binding.Bindings;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
-
-import java.awt.*;
 
 import static com.jurai.ui.util.ControlWrappers.*;
 
@@ -24,8 +18,9 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     private VBox content;
     private ImageView userImageView;
     private Label usernameLabel, oabLabel;
-    private TextFieldSet username, email, changePassword, confirmPassword, oab;
-    private Button saveChanges, resetChanges, deleteAccount;
+    private TextFieldSet username, email, oab;
+    private PasswordFieldSet changePassword, confirmPassword;
+    private Button saveChanges, resetChanges, deleteAccount, changePasswordBtn;
 
     @Override
     protected void initControls() {
@@ -50,11 +45,11 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
         email.getInput().getStyleClass().add("text-field-base");
         email.getInput().setPromptText("email");
 
-        changePassword = new TextFieldSet("Troque sua senha");
+        changePassword = new PasswordFieldSet("Troque sua senha");
         changePassword.getInput().getStyleClass().add("text-field-base");
         changePassword.getInput().setPromptText("Nova senha");
 
-        confirmPassword = new TextFieldSet("Confirme a senha");
+        confirmPassword = new PasswordFieldSet("Confirme a senha");
         confirmPassword.getInput().getStyleClass().add("text-field-base");
         confirmPassword.getInput().setPromptText("Confirme a senha");
 
@@ -78,6 +73,9 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
 
         deleteAccount = new Button("Deletar conta");
         deleteAccount.getStyleClass().addAll("red-button");
+
+        changePasswordBtn = new Button("Mudar senha");
+        changePasswordBtn.setDisable(true);
     }
 
     @Override
@@ -101,7 +99,11 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
                         wrapStyleClasses(new Label("Troque sua senha"), "subheader"),
                         changePassword,
                         confirmPassword,
-                        SpacerFactory.createVBoxSpacer(Priority.ALWAYS)
+                        SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                        new HGroup().withChildren(
+                                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                                changePasswordBtn
+                        )
                 )),
                 new HGroup().withStyleClass("spacing-4").withChildren(
                         resetChanges,
@@ -116,6 +118,39 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     public Button getDeleteAccount() {
         return deleteAccount;
     }
+
+    public TextFieldSet getUsername() {
+        return username;
+    }
+
+    public TextFieldSet getEmail() {
+        return email;
+    }
+
+    public TextFieldSet getOab() {
+        return oab;
+    }
+
+    public PasswordFieldSet getChangePassword() {
+        return changePassword;
+    }
+
+    public PasswordFieldSet getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public Button getResetChanges() {
+        return resetChanges;
+    }
+
+    public Button getSaveChanges() {
+        return saveChanges;
+    }
+
+    public Button getChangePasswordBtn() {
+        return changePasswordBtn;
+    }
+
 
     @Override
     public VBox getContent() {

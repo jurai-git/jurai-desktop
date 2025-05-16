@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
 import static com.jurai.ui.util.ControlWrappers.wrapVgrow;
@@ -48,6 +49,40 @@ public class AccountDashboardMenu extends AbstractMenu<BorderPane> {
     public Button getDeleteAccount() {
         return accountSettingsMenu.getDeleteAccount();
     }
+
+    public Button getSaveChanges() {
+        return accountSettingsMenu.getSaveChanges();
+    }
+
+    public Button getReset() {
+        return accountSettingsMenu.getResetChanges();
+    }
+
+    public TextField getUsername() {
+        return accountSettingsMenu.getUsername().getInput();
+    }
+
+    public TextField getEmail() {
+        return accountSettingsMenu.getEmail().getInput();
+    }
+
+    public TextField getOab() {
+        return accountSettingsMenu.getOab().getInput();
+    }
+
+    public Button getChangePasswrodBtn() {
+        return accountSettingsMenu.getChangePasswordBtn();
+    }
+
+    public TextField getChangePassword() {
+        return accountSettingsMenu.getChangePassword().getInput();
+    }
+
+    public TextField getConfirmPassword() {
+        return accountSettingsMenu.getConfirmPassword().getInput();
+    }
+
+
 
 
     public Label getTitle() {

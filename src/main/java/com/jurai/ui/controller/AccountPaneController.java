@@ -14,6 +14,8 @@ import com.jurai.ui.menus.AccountDashboardMenu;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 
+import java.util.Objects;
+
 public class AccountPaneController extends AbstractController<AccountPane> {
     private final AdvogadoService advogadoService = AdvogadoService.getInstance();
     private final AdvogadoValidator advogadoValidator = new AdvogadoValidator();
@@ -121,6 +123,27 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             }
         });
 
+        pane.getAccountDashboardMenu().getReset().setOnAction(e -> {
+            userChanged(ApplicationState.getInstance().getCurrentUser(), pane);
+        });
+
+        pane.getAccountDashboardMenu().getUsername().textProperty().addListener(str -> {
+            setChangesMade(hasDifferentUserData(ApplicationState.getInstance().getCurrentUser(), pane), pane);
+        });
+        pane.getAccountDashboardMenu().getEmail().textProperty().addListener(str -> {
+            setChangesMade(hasDifferentUserData(ApplicationState.getInstance().getCurrentUser(), pane), pane);
+        });
+
+        pane.getAccountDashboardMenu().getChangePassword().textProperty().addListener(str -> {
+            pane.getAccountDashboardMenu().getChangePasswrodBtn().setDisable(!isChangingPasswords(pane));
+        });
+
+        pane.getAccountDashboardMenu().getConfirmPassword().textProperty().addListener(str -> {
+            pane.getAccountDashboardMenu().getChangePasswrodBtn().setDisable(!isChangingPasswords(pane));
+        });
+
+
+
     }
 
     @Override
@@ -147,11 +170,33 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
     private void userChanged(Advogado newUser, AccountPane pane) {
         AccountDashboardMenu dashboardMenu = pane.getAccountDashboardMenu();
-        /*
         dashboardMenu.getTitle().setText(AccountDashboardMenu.TITLE_TEMPLATE.formatted(newUser.getNome()));
-        dashboardMenu.getUsernameInfo().setText(AccountDashboardMenu.USERNAME_TEMPLATE.formatted(newUser.getNome()));
-        dashboardMenu.getEmailInfo().setText(AccountDashboardMenu.EMAIL_TEMPLATE.formatted(newUser.getEmail()));
-        dashboardMenu.getOabInfo().setText(AccountDashboardMenu.OAB_TEMPLATE.formatted(newUser.getOab()));
-        */
+        dashboardMenu.getUsername().setText(newUser.getNome());
+        dashboardMenu.getEmail().setText(newUser.getEmail());
+        dashboardMenu.getOab().setText(newUser.getOab());
+    }
+
+    private boolean hasDifferentUserData(Advogado user, AccountPane pane) {
+        AccountDashboardMenu dashboardMenu = pane.getAccountDashboardMenu();
+
+        if (!Objects.equals(dashboardMenu.getEmail().getText(), user.getEmail())) return true;
+        if (!Objects.equals(dashboardMenu.getUsername().getText(), user.getNome())) return true;
+        return false;
+    }
+
+    private boolean isChangingPasswords(AccountPane pane) {
+        AccountDashboardMenu dashboardMenu = pane.getAccountDashboardMenu();
+
+        return (
+                !dashboardMenu.getChangePassword().getText().isEmpty() &&
+                !dashboardMenu.getConfirmPassword().getText().isEmpty()
+        );
+    }
+
+    private void setChangesMade(boolean changesMade, AccountPane pane) {
+        AccountDashboardMenu dashboardMenu = pane.getAccountDashboardMenu();
+
+        dashboardMenu.getReset().setDisable(!changesMade);
+        dashboardMenu.getSaveChanges().setDisable(!changesMade);
     }
 }
