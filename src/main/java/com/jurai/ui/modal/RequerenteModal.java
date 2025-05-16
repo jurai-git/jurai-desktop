@@ -108,7 +108,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         VBox.setVgrow(genero, Priority.ALWAYS);
         genero.maxWidthProperty().bind(ApplicationData.defaultIconSizeProperty().multiply(10));
         personalInfoForm.getChildren().addAll(
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.vSpacer(Priority.ALWAYS),
                 nome,
                 nomeSocial,
                 email,
@@ -117,13 +117,13 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
                         new ControlWrapper(isIdoso).withVgrow(Priority.ALWAYS).withHgrow(Priority.ALWAYS),
                         genero
                 ),
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS)
+                SpacerFactory.vSpacer(Priority.ALWAYS)
         );
 
         personalInfoNext.getStyleClass().add("blue-button");
         personalCancel.getStyleClass().add("red-button");
         personalInfoActions.getChildren().addAll(
-                personalCancel, SpacerFactory.createHBoxSpacer(Priority.ALWAYS), personalInfoNext
+                personalCancel, SpacerFactory.hSpacer(Priority.ALWAYS), personalInfoNext
         );
         HoverAnimator.animateAll(personalCancel, 1, 1);
         HoverAnimator.animateAll(personalInfoNext, 1, 1);
@@ -147,22 +147,22 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         nacionalidade.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
 
         generalInfoForm.getChildren().addAll(
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.vSpacer(Priority.ALWAYS),
                 rg,
                 orgaoEmissor,
                 profissao,
                 estadoCivil,
                 nacionalidade,
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS)
+                SpacerFactory.vSpacer(Priority.ALWAYS)
         );
 
         generalInfoNext.getStyleClass().add("blue-button");
         generalCancel.getStyleClass().add("red-button");
         generalInfoActions.getChildren().addAll(
                 generalCancel,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 generalInfoPrevious,
-                SpacerFactory.createHBoxSpacer(12),
+                SpacerFactory.hSpacer(12),
                 generalInfoNext
         );
         HoverAnimator.animateAll(generalCancel, 1, 1);
@@ -190,23 +190,23 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
         VBox.setVgrow(estado, Priority.ALWAYS);
         estado.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
         addressInfoForm.getChildren().addAll(
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.vSpacer(Priority.ALWAYS),
                 cep,
                 estado,
                 cidade,
                 bairro,
                 new HGroup().withVgrow(Priority.ALWAYS).withMargin().withChildren(logradouro, numero),
                 complemento,
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS)
+                SpacerFactory.vSpacer(Priority.ALWAYS)
         );
 
         create.getStyleClass().add("blue-button");
         addressCancel.getStyleClass().add("red-button");
         addressInfoActions.getChildren().addAll(
                 addressCancel,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 addressInfoPrevious,
-                SpacerFactory.createHBoxSpacer(12),
+                SpacerFactory.hSpacer(12),
                 create
         );
         HoverAnimator.animateAll(create, 1, 1);

@@ -63,14 +63,14 @@ public class LoginMenu extends AbstractMenu<BorderPane> {
         content.getStyleClass().addAll("form");
         fields.setAlignment(Pos.CENTER);
         fields.getChildren().addAll(
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.vSpacer(Priority.ALWAYS),
                 email,
-                SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.07)),
+                SpacerFactory.vSpacer(content.heightProperty().multiply(0.07)),
                 password,
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.vSpacer(Priority.ALWAYS),
                 keepConnected,
                 urls,
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.vSpacer(Priority.ALWAYS),
                 login
         );
 

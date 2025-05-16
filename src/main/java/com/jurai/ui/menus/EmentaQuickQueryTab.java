@@ -6,9 +6,7 @@ import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 
 public class EmentaQuickQueryTab extends AbstractMenu<HBox> {
     private HBox tabContent;
@@ -69,11 +67,11 @@ public class EmentaQuickQueryTab extends AbstractMenu<HBox> {
                 ementaLabel,
                 ementaTextArea,
                 new HGroup().withChildren(
-                        SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                        SpacerFactory.hSpacer(Priority.ALWAYS),
                         clear,
-                        SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                        SpacerFactory.hSpacer(Priority.ALWAYS),
                         send,
-                        SpacerFactory.createHBoxSpacer(Priority.ALWAYS)
+                        SpacerFactory.hSpacer(Priority.ALWAYS)
                 )
         );
 
@@ -81,9 +79,9 @@ public class EmentaQuickQueryTab extends AbstractMenu<HBox> {
                 analysisLabel,
                 analysisResultsMenu.getContent(),
                 new HGroup().withChildren(
-                        SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                        SpacerFactory.hSpacer(Priority.ALWAYS),
                         viewArguments,
-                        SpacerFactory.createHBoxSpacer(Priority.ALWAYS)
+                        SpacerFactory.hSpacer(Priority.ALWAYS)
                 )
         );
 

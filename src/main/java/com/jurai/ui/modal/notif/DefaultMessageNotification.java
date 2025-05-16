@@ -50,8 +50,8 @@ public class DefaultMessageNotification extends Notification<VBox> {
         content.getChildren().addAll(
                 title,
                 message,
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
-                new HGroup().withChildren(SpacerFactory.createHBoxSpacer(Priority.ALWAYS), okButton)
+                SpacerFactory.vSpacer(Priority.ALWAYS),
+                new HGroup().withChildren(SpacerFactory.hSpacer(Priority.ALWAYS), okButton)
         );
     }
 

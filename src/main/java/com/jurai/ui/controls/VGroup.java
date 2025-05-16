@@ -37,11 +37,11 @@ public class VGroup extends VBox {
         for(Node n : es) {
             HBox.setHgrow(n, Priority.ALWAYS);
             getChildren().addAll(
-                    SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                    SpacerFactory.hSpacer(Priority.ALWAYS),
                     n
             );
         }
-        getChildren().add(SpacerFactory.createHBoxSpacer(Priority.ALWAYS));
+        getChildren().add(SpacerFactory.hSpacer(Priority.ALWAYS));
         return this;
     }
 

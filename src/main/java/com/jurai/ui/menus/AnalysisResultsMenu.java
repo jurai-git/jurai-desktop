@@ -58,15 +58,15 @@ public class AnalysisResultsMenu extends AbstractMenu<StackPane> {
         demandaInfo.getStyleClass().add("medium-padding");
         demandaInfo.getStyleClass().add("medium-spacing");
         demandaInfo.getChildren().addAll(
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.vSpacer(Priority.NEVER),
                 nome,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.vSpacer(Priority.NEVER),
                 positive,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.vSpacer(Priority.NEVER),
                 partial,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER),
+                SpacerFactory.vSpacer(Priority.NEVER),
                 negative,
-                SpacerFactory.createVBoxSpacer(Priority.NEVER)
+                SpacerFactory.vSpacer(Priority.NEVER)
         );
 
         HBox.setHgrow(circleGraph, Priority.ALWAYS);

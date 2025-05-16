@@ -54,11 +54,11 @@ public class RequerenteDashboardMenu extends AbstractMenu<VBox> {
         HBox.setHgrow(addRequerente, Priority.ALWAYS);
 
         form.getChildren().addAll(
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 addRequerente,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 editDeleteRequerente,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS)
+                SpacerFactory.hSpacer(Priority.ALWAYS)
         );
 
         VBox.setVgrow(form, Priority.NEVER);

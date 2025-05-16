@@ -1,18 +1,14 @@
 package com.jurai.ui.modal;
 
 import com.jurai.data.ApplicationData;
-import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;
 import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.TextFieldSet;
-import com.jurai.ui.util.ControlWrapper;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -103,19 +99,19 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
         assuntoPrincipal.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
 
         tab1Form.getChildren().addAll(
-            SpacerFactory.createVBoxSpacer(ApplicationData.defaultIconSizeProperty().get()),
+            SpacerFactory.vSpacer(ApplicationData.defaultIconSizeProperty().get()),
             identificacao,
             foro,
             status,
             competencia,
             classe,
-            SpacerFactory.createVBoxSpacer(ApplicationData.defaultIconSizeProperty().get())
+            SpacerFactory.vSpacer(ApplicationData.defaultIconSizeProperty().get())
         );
 
         tab1Cancel.getStyleClass().add("red-button");
         tab1Actions.getChildren().addAll(
             tab1Cancel,
-            SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+            SpacerFactory.hSpacer(Priority.ALWAYS),
             next
         );
 
@@ -132,7 +128,7 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
         resumo.maxWidthProperty().bind(content.widthProperty().multiply(0.8));
 
         tab2Form.getChildren().addAll(
-            SpacerFactory.createVBoxSpacer(ApplicationData.defaultIconSizeProperty().get() * 0.8),
+            SpacerFactory.vSpacer(ApplicationData.defaultIconSizeProperty().get() * 0.8),
             assuntoPrincipal,
             valorAcao,
             new HGroup().withMargin().withVgrow(Priority.ALWAYS).withChildren(
@@ -145,15 +141,15 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
                     guiaCustas
             ),
             resumo,
-            SpacerFactory.createVBoxSpacer(ApplicationData.defaultIconSizeProperty().get() * 0.8)
+            SpacerFactory.vSpacer(ApplicationData.defaultIconSizeProperty().get() * 0.8)
         );
 
         tab2Cancel.getStyleClass().add("red-button");
         tab2Actions.getChildren().addAll(
             tab2Cancel,
-            SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+            SpacerFactory.hSpacer(Priority.ALWAYS),
             previous,
-            SpacerFactory.createHBoxSpacer(12),
+            SpacerFactory.hSpacer(12),
             save
         );
 

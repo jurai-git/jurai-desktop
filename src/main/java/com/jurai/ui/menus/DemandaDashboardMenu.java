@@ -54,11 +54,11 @@ public class DemandaDashboardMenu extends AbstractMenu<VBox> {
         HBox.setHgrow(addDemanda, Priority.ALWAYS);
         HBox.setHgrow(editDeleteDemanda, Priority.ALWAYS);
         form.getChildren().addAll(
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 addDemanda,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 editDeleteDemanda,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS)
+                SpacerFactory.hSpacer(Priority.ALWAYS)
         );
 
         VBox.setVgrow(form, Priority.NEVER);

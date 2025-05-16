@@ -1,7 +1,6 @@
 package com.jurai.ui.controls;
 
 import com.jurai.data.model.Model;
-import com.jurai.data.model.Requerente;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
 import com.jurai.util.UILogger;
@@ -11,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -97,7 +95,7 @@ public class SimpleList<T extends Model> extends VBox {
 
         HBox.setHgrow(headerLabel, Priority.NEVER);
         HBox.setHgrow(searchArea, Priority.ALWAYS);
-        header.getChildren().addAll(headerLabel, SpacerFactory.createHBoxSpacer(Priority.ALWAYS), searchArea);
+        header.getChildren().addAll(headerLabel, SpacerFactory.hSpacer(Priority.ALWAYS), searchArea);
 
         getChildren().add(header);
         listItemsContainer.setFillWidth(true);

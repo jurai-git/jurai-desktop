@@ -49,9 +49,9 @@ public class DemandaEditingModal extends DemandaModal {
         super.layControls();
         tab1Actions.getChildren().setAll(
                 tab1Cancel,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 delete,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 next
         );
     }

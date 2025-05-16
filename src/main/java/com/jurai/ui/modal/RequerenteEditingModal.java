@@ -61,9 +61,9 @@ public final class RequerenteEditingModal extends RequerenteModal {
         super.layControls();
         personalInfoActions.getChildren().setAll(
                 personalCancel,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 delete,
-                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.hSpacer(Priority.ALWAYS),
                 personalInfoNext
         );
     }

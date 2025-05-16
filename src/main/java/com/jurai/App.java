@@ -128,7 +128,6 @@ public class App extends Application {
     }
 
     private void initialize() {
-        SpacerFactory.initialize();
         ApplicationData.initialize();
         try {
             ApplicationStatePersistor.initialize();

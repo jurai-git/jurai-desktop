@@ -11,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
-
 import static com.jurai.ui.util.ControlWrappers.*;
 
 public class AccountSettingsMenu extends AbstractMenu<VBox> {
@@ -85,33 +84,36 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
                         new HGroup().withStyleClass("spacing-3", "pl-4").withChildren(
                                 userImageView,
                                 new VGroup().withChildren(
-                                        SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                                        SpacerFactory.vSpacer(Priority.ALWAYS),
                                         usernameLabel,
                                         oabLabel,
-                                        SpacerFactory.createVBoxSpacer(Priority.ALWAYS)
+                                        SpacerFactory.vSpacer(Priority.ALWAYS)
                                 )
                         ),
-                        SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.04)),
+                        SpacerFactory.vSpacer(content.heightProperty().multiply(0.04)),
                         username,
                         email,
                         oab,
-                        SpacerFactory.createVBoxSpacer(content.heightProperty().multiply(0.03).add(4)),
+                        SpacerFactory.vSpacer(content.heightProperty().multiply(0.03).add(4)),
                         wrapStyleClasses(new Label("Troque sua senha"), "subheader"),
                         changePassword,
                         confirmPassword,
-                        SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                        SpacerFactory.vSpacer(Priority.ALWAYS),
                         new HGroup().withChildren(
-                                SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                                SpacerFactory.hSpacer(Priority.ALWAYS),
                                 changePasswordBtn
                         )
                 )),
-                new HGroup().withStyleClass("spacing-4").withChildren(
+                new HGroup().withChildren(
                         resetChanges,
-                        SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                        SpacerFactory.hSpacer(Priority.ALWAYS),
                         deleteAccount,
+                        SpacerFactory.hSpacer(12),
                         saveChanges
                 )
         );
+        content.setPrefWidth(500);
+        content.setMaxWidth(Double.MAX_VALUE);
         content.getStyleClass().add("spacing-4");
     }
 
@@ -150,7 +152,6 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     public Button getChangePasswordBtn() {
         return changePasswordBtn;
     }
-
 
     @Override
     public VBox getContent() {

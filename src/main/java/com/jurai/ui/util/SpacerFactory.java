@@ -2,17 +2,11 @@ package com.jurai.ui.util;
 
 import javafx.beans.binding.DoubleBinding;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
 public class SpacerFactory {
 
-    public static void initialize() {
-    }
-
-    public static Region createHBoxSpacer(Priority p) {
+    public static Region hSpacer(Priority p) {
         Region spacer = new Region();
 
         if(p != null) {
@@ -24,34 +18,34 @@ public class SpacerFactory {
         return spacer;
     }
 
-    public static Region createHBoxSpacer(DoubleBinding sizeProperty) {
+    public static Region hSpacer(DoubleBinding sizeProperty) {
         Region spacer = new Region();
         spacer.maxHeightProperty().bind(sizeProperty);
         HBox.setHgrow(spacer, Priority.ALWAYS);
         return spacer;
     }
 
-    public static Region createVBoxSpacer(DoubleBinding sizeProperty) {
+    public static Region vSpacer(DoubleBinding sizeProperty) {
         Region spacer = new Region();
         spacer.maxHeightProperty().bind(sizeProperty);
         VBox.setVgrow(spacer, Priority.ALWAYS);
         return spacer;
     }
 
-    public static Region createHBoxSpacer(double size)  {
+    public static Region hSpacer(double size)  {
         Region spacer = new Region();
         HBox.setMargin(spacer, new Insets(0, size, 0, 0));
         return spacer;
     }
 
-    public static Region createVBoxSpacer(double size)  {
+    public static Region vSpacer(double size)  {
         Region spacer = new Region();
         VBox.setMargin(spacer, new Insets(size, 0, 0, 0));
         return spacer;
     }
 
 
-    public static Region createVBoxSpacer(Priority p) {
+    public static Region vSpacer(Priority p) {
         Region spacer = new Region();
 
         if(p != null) {

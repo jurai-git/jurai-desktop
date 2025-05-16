@@ -1,6 +1,5 @@
 package com.jurai.ui.panes;
 
-import com.jurai.data.ApplicationData;
 import com.jurai.ui.controls.NavUrl;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
@@ -38,7 +37,7 @@ public class Navbar extends AbstractPane {
     protected void layControls() {
         view.getChildren().addAll(
                 logo,
-                SpacerFactory.createHBoxSpacer(12),
+                SpacerFactory.hSpacer(12),
                 navUrl
         );
         view.setAlignment(Pos.CENTER_LEFT);

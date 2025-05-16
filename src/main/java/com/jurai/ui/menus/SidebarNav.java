@@ -61,12 +61,12 @@ public class SidebarNav extends AbstractMenu<VBox> {
                 quickQuery,
                 documents,
                 account,
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.vSpacer(Priority.ALWAYS),
                 new HGroup().withChildren(
-                        SpacerFactory.createHBoxSpacer(Priority.ALWAYS),
+                        SpacerFactory.hSpacer(Priority.ALWAYS),
                         sidebarToggleButton
                 ).withStyle("-fx-padding: 0; -fx-gap: 0;"),
-                SpacerFactory.createVBoxSpacer(Priority.ALWAYS),
+                SpacerFactory.vSpacer(Priority.ALWAYS),
                 logout);
         dashboard.setActive(true);
     }
