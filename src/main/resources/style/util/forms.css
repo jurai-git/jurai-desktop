@@ -57,7 +57,7 @@
 
 
 .form .check-box * {
-    -fx-base: #202024;
+    -fx-base: j-base;
     -fx-spacing: 0.5em;
 }
 

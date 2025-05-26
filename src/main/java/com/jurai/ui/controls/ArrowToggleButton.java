@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Duration;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -23,6 +24,7 @@ public class ArrowToggleButton extends StackPane {
     private StackPane arrowContainer;
     private BooleanProperty active = new SimpleBooleanProperty(false);
     private Rectangle base;
+    @Setter
     private Consumer<Boolean> onAction;
 
     private RotateTransition arrowRotateTransition;
@@ -102,10 +104,6 @@ public class ArrowToggleButton extends StackPane {
         });
         setOnMousePressed(e -> clickInScaleTransition.playFromStart());
         setOnMouseReleased(e -> clickOutScaleTransition.playFromStart());
-    }
-
-    public void setOnAction(Consumer<Boolean> onAction) {
-        this.onAction = onAction;
     }
 
     public void addActiveListener(ChangeListener<? super Boolean> e) {

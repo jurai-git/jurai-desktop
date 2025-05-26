@@ -12,12 +12,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
+import lombok.Getter;
 
 public class Sidebar extends AbstractPane {
     private VBox view;
     private Separator separator;
     private Region headerSpacer;
     private SidebarNav nav;
+    @Getter
     private boolean iconsOnly;
     private DoubleProperty finalWidth = new SimpleDoubleProperty();
     private DoubleProperty initialWidth = new SimpleDoubleProperty();
@@ -88,10 +90,6 @@ public class Sidebar extends AbstractPane {
 
     public DoubleProperty initialWidthProperty() {
         return initialWidth;
-    }
-
-    public boolean isIconsOnly() {
-        return iconsOnly;
     }
 
     public void setIconsOnly(boolean iconsOnly) {
