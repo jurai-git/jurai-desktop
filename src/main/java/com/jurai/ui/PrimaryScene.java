@@ -18,7 +18,7 @@ public class PrimaryScene {
     private Scene scene;
     private StackPane modalRoot, effectPane;
     private ProportionPane mainPane;
-    private Navbar navbar;
+    private Header header;
     private Sidebar sidebar;
     private final NodeConstraints mainContentConstraints = new NodeConstraints(0, 0.06f, 0.82f, 0.92f);
     private NodeConstraints sidebarConstraints;
@@ -43,7 +43,7 @@ public class PrimaryScene {
         effectPane.minHeightProperty().bind(modalRoot.heightProperty());
         effectPane.minWidthProperty().bind(modalRoot.widthProperty());
         mainPane.getStyleClass().add("root-pane");
-        navbar = new Navbar();
+        header = new Header();
         accountPane = new AccountPane();
         dashboardPane = new DashboardPane();
         planPane = new PlanPane();
@@ -57,7 +57,7 @@ public class PrimaryScene {
         mainPane.addConstraints(dashboardPane.getView(), mainContentConstraints);
         mainPane.addConstraints(planPane.getView(), mainContentConstraints);
         mainPane.addConstraints(quickQueryPane.getView(), mainContentConstraints);
-        mainPane.addConstraints(navbar.getView(), new NodeConstraints(0, 0, 1, 0.06f));
+        mainPane.addConstraints(header.getView(), new NodeConstraints(0, 0, 1, 0.06f));
 
         mainContentConstraints.exclusiveWProperty.bind(mainPane.widthProperty().subtract(sidebar.getView().widthProperty()));
         mainContentConstraints.anchor = NodeConstraints.Anchor.TOP_RIGHT;
@@ -79,13 +79,13 @@ public class PrimaryScene {
 
     private void layFixedControls() {
         mainPane.getChildren().add(sidebar.getView());
-        mainPane.getChildren().add(navbar.getView());
+        mainPane.getChildren().add(header.getView());
     }
 
     private void attachControllers() {
         // navbar
-        NavbarController navbarController = new NavbarController();
-        navbarController.initialize(navbar);
+        HeaderController headerController = new HeaderController();
+        headerController.initialize(header);
 
         // account pane
         AccountPaneController accountPaneController = new AccountPaneController();

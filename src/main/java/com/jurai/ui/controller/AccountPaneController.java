@@ -12,6 +12,7 @@ import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.menus.AccountDashboardMenu;
 
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 import java.util.Objects;
@@ -19,6 +20,7 @@ import java.util.Objects;
 public class AccountPaneController extends AbstractController<AccountPane> {
     private final AdvogadoService advogadoService = AdvogadoService.getInstance();
     private final AdvogadoValidator advogadoValidator = new AdvogadoValidator();
+
 
     @Override
     public void initialize(AccountPane pane) {
@@ -141,9 +143,6 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         pane.getAccountDashboardMenu().getConfirmPassword().textProperty().addListener(str -> {
             pane.getAccountDashboardMenu().getChangePasswrodBtn().setDisable(!isChangingPasswords(pane));
         });
-
-
-
     }
 
     @Override
@@ -155,6 +154,9 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             if("currentUser".equals(e.getPropertyName())) {
                 if(ApplicationState.getInstance().getCurrentUser() != null)
                     userChanged(ApplicationState.getInstance().getCurrentUser(), pane);
+            }
+            if ("useLightTheme".equals(e.getPropertyName())) {
+
             }
         });
     }

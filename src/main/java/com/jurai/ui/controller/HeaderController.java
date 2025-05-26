@@ -1,22 +1,22 @@
 package com.jurai.ui.controller;
 
 import com.jurai.data.ApplicationState;
-import com.jurai.ui.panes.Navbar;
+import com.jurai.ui.panes.Header;
 import com.jurai.ui.panes.QuickQueryPane;
 
 
-public class NavbarController extends AbstractController<Navbar> {
+public class HeaderController extends AbstractController<Header> {
 
-    public NavbarController() {
+    public HeaderController() {
     }
 
     @Override
-    protected void attachEvents(Navbar navbar) {
+    protected void attachEvents(Header header) {
 
     }
 
     @Override
-    protected void attachNotifiers(Navbar navbar) {
+    protected void attachNotifiers(Header header) {
         ApplicationState.getInstance().addPropertyChangeListener(e -> {
             if ("activePane".equals(e.getPropertyName()) ||
                     "selectedDemanda".equals(e.getPropertyName()) ||
@@ -56,7 +56,10 @@ public class NavbarController extends AbstractController<Navbar> {
                     default:
                         break;
                 }
-                navbar.getNavUrl().setUrl(newUrl.toString());
+                header.getNavUrl().setUrl(newUrl.toString());
+            }
+            else if ("useLightTheme".equals(e.getPropertyName())) {
+                header.themeChanged();
             }
         });
     }

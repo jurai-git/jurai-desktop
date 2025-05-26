@@ -60,7 +60,7 @@ Primeiramente, este projeto seguirá o padrão MVC. Isso significa que existirã
 
 As views deste projeto são divididas em 3 partes principais: panes, menus e controls.
 
-Os panes são os principais "pedaços" que compõem a UI. Exemplos são a navbar, e todas as principais telas do programa (tela de dashboard, tela com os planos, etc).
+Os panes são os principais "pedaços" que compõem a UI. Exemplos são a header, e todas as principais telas do programa (tela de dashboard, tela com os planos, etc).
 Se você for implementar uma tela totalmente nova ao programa, que ocupará um espaço considerável, e terá diveras funções próprias, considere criar um _pane_.
 
 Já os menus são partes menores da UI, e estão dentro dos panes. Em geral, cada elemento principal dentro de um pane é um Menu. Por exemplo: Na tela de dashboard, cada tabela com informações, barras de pesquisa e botões poderá ser um menu.
