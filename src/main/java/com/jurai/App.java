@@ -3,10 +3,12 @@ package com.jurai;
 import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
 import com.jurai.data.ApplicationStatePersistor;
+import com.jurai.data.model.Theme;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
 import com.jurai.ui.controller.StageController;
 import com.jurai.ui.controls.NavUrl;
+import com.jurai.ui.manager.ThemeManager;
 import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.SpacerFactory;
@@ -17,6 +19,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 import java.awt.*;
 import java.io.IOException;
@@ -24,10 +27,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class App extends Application {
+    @Getter
     private static App currentInstance;
+    @Getter
     private Stage primaryStage;
+    @Getter
     private Stage secondaryStage;
+    @Getter
     private PrimaryScene primaryScene;
+    @Getter
     private SecondaryScene secondaryScene;
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static List<Runnable> afterLoadTasks;
@@ -42,7 +50,9 @@ public class App extends Application {
         currentInstance = this;
         afterLoadTasks = new LinkedList<>();
         initialize();
-        var css = getClass().getResource("/style/style.css").toExternalForm();
+
+        String css = getClass().getResource("/style/style.css").toExternalForm();
+        ThemeManager themeManager = new ThemeManager();
 
         // primary stage
         this.primaryStage = stage;
@@ -56,6 +66,7 @@ public class App extends Application {
         stage.centerOnScreen();
         primaryScene = new PrimaryScene();
         primaryScene.getScene().getStylesheets().add(css);
+        themeManager.addScene(primaryScene.getScene());
         stage.setScene(primaryScene.getScene());
         primaryStage.setOnCloseRequest(e -> onCloseRequest());
 
@@ -66,9 +77,11 @@ public class App extends Application {
         secondaryStage.centerOnScreen();
         secondaryScene = new SecondaryScene();
         secondaryScene.getScene().getStylesheets().add(css);
+        themeManager.addScene(secondaryScene.getScene());
         secondaryStage.setScene(secondaryScene.getScene());
         secondaryStage.setOnCloseRequest(e -> onCloseRequest());
         selfAttachControllers();
+
 
         afterLoadTasks.forEach(Runnable::run);
 
@@ -105,26 +118,6 @@ public class App extends Application {
     private void selfAttachControllers() {
         StageController stageController = new StageController();
         stageController.initialize(this);
-    }
-
-    public static App getCurrentInstance() {
-        return currentInstance;
-    }
-
-    public PrimaryScene getPrimaryScene() {
-        return primaryScene;
-    }
-
-    public SecondaryScene getSecondaryScene() {
-        return secondaryScene;
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    public Stage getSecondaryStage() {
-        return secondaryStage;
     }
 
     private void initialize() {
