@@ -1,5 +1,6 @@
 package com.jurai.ui.controls;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Model;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
@@ -10,12 +11,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import lombok.Getter;
 
 public class SimpleList<T extends Model> extends VBox {
     private String headerText;
@@ -23,13 +26,16 @@ public class SimpleList<T extends Model> extends VBox {
     private LoadingCircle loadingCircle;
     private Label headerLabel;
     private StackPane searchIconContainer, listItemsWrapper;
+    @Getter
     private TextField searchTextField;
     private SVGPath searchIcon;
     private HBox header;
     private HBox searchArea;
     private ScrollPane scrollPane;
     private VBox listItemsContainer;
+    @Getter
     private final ObservableList<SimpleListItem<T>> listItems = FXCollections.observableArrayList();
+    @Getter
     private final ObservableList<T> listObjects = FXCollections.observableArrayList();
     private ObjectProperty<SimpleListItem<T>> selectedItem = new SimpleObjectProperty<>();
 
@@ -187,25 +193,5 @@ public class SimpleList<T extends Model> extends VBox {
     public void setHeaderText(String headerText) {
         this.headerText = headerText;
         headerLabel.setText(headerText);
-    }
-
-    public TextField getSearchTextField() {
-        return searchTextField;
-    }
-
-    public String getHeaderText() {
-        return headerText;
-    }
-
-    public Label getHeaderLabel() {
-        return headerLabel;
-    }
-
-    public ObservableList<T> getListObjects() {
-        return listObjects;
-    }
-
-    public VBox getListItemsContainer() {
-        return listItemsContainer;
     }
 }

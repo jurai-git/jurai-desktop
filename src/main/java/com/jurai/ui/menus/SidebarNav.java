@@ -13,13 +13,17 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import lombok.Getter;
 
 import java.io.IOException;
+import java.util.List;
 
 public class SidebarNav extends AbstractMenu<VBox> {
     private VBox content;
+    @Getter
     private SidebarNavItem dashboard, quickQuery, documents, account, logout;
     private SVGPath dashboardIcon, quickQueryIcon, documentsIcon, accountIcon, logoutIcon;
+    @Getter
     private ArrowToggleButton sidebarToggleButton;
 
     public SidebarNav() {
@@ -108,28 +112,8 @@ public class SidebarNav extends AbstractMenu<VBox> {
         }
     }
 
-    public SidebarNavItem getDashboard() {
-        return dashboard;
-    }
-
-    public SidebarNavItem getAccount() {
-        return account;
-    }
-
-    public SidebarNavItem getQuickQuery() {
-        return quickQuery;
-    }
-
-    public SidebarNavItem getDocuments() {
-        return documents;
-    }
-
-    public SidebarNavItem getLogout() {
-        return logout;
-    }
-
-    public ArrowToggleButton getSidebarToggleButton() {
-        return sidebarToggleButton;
+    public List<SidebarNavItem> getItems() {
+        return List.of(dashboard, account, quickQuery, documents);
     }
 
     @Override

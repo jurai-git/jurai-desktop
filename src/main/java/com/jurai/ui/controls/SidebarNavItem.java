@@ -1,5 +1,6 @@
 package com.jurai.ui.controls;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.PropertyBindPair;
 import com.jurai.ui.animation.PropertyBindAnimation;
 import com.jurai.ui.animation.interpolator.PowerEase;
@@ -14,27 +15,40 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Duration;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.function.Consumer;
 
 public class SidebarNavItem extends HBox {
     private boolean active;
     private Rectangle dot;
+    @Getter
     private SVGPath icon;
+    @Getter
     private StackPane iconContainer;
+    @Setter
+    @Getter
     private Label label;
     private PropertyBindAnimation dotWarpTransition;
     private FillTransition dotColorTransition;
+    @Getter
     private FillTransition iconColorTransition;
     private Consumer<Event> onAction;
+    private boolean isIconColorPermanent;
 
     public SidebarNavItem(SVGPath icon, String text) {
         super();
         label = new Label(text);
         this.icon = icon;
+        this.isIconColorPermanent = false;
         iconContainer = new StackPane(icon);
 
-        icon.setFill(Color.rgb(153, 153, 153));
+        if (ApplicationState.getInstance().isUseLightTheme()) {
+            icon.setFill(Color.web("#848484"));
+        } else {
+            icon.setFill(Color.web("#c0c0c0"));
+        }
 
         dot = new Rectangle(8, 8 * 1.5, Color.rgb(153, 153, 153));
         dot.arcHeightProperty().bind(dot.widthProperty());
@@ -57,13 +71,22 @@ public class SidebarNavItem extends HBox {
 
         dotColorTransition = new FillTransition(Duration.millis(500), dot);
         dotColorTransition.setInterpolator(Interpolator.EASE_BOTH);
-        dotColorTransition.setFromValue(Color.web("#999999"));
         dotColorTransition.setToValue(Color.web("#539CD4"));
 
         iconColorTransition = new FillTransition(Duration.millis(500), icon);
         iconColorTransition.setInterpolator(new PowerEase(3, true));
-        iconColorTransition.setFromValue(Color.web("#949494"));
-        iconColorTransition.setToValue(Color.web("#c0c0c0"));
+
+        if (ApplicationState.getInstance().isUseLightTheme()) {
+            iconColorTransition.setFromValue(Color.web("#848484"));
+            iconColorTransition.setToValue(Color.web("#444444"));
+
+            dotColorTransition.setFromValue(Color.web("#555555"));
+        } else {
+            iconColorTransition.setFromValue(Color.web("#949494"));
+            iconColorTransition.setToValue(Color.web("#c0c0c0"));
+
+            dotColorTransition.setFromValue(Color.web("#999999"));
+        }
     }
 
     private void layControls() {
@@ -117,14 +140,6 @@ public class SidebarNavItem extends HBox {
         return dot.widthProperty();
     }
 
-    public StackPane getIconContainer() {
-        return iconContainer;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
     public void setActive(boolean active) {
         if(active != this.active) {
             this.active = active;
@@ -142,6 +157,32 @@ public class SidebarNavItem extends HBox {
         iconColorTransition.setFromValue(c);
         iconColorTransition.setToValue(c);
         iconColorTransition.play();
+        this.isIconColorPermanent = true;
+    }
+
+    public void themeChanged() {
+        if (isIconColorPermanent) return; // we can't change this icon's color if  it is permanent (the user set it)
+        if (!ApplicationState.getInstance().isUseLightTheme()) {
+            iconColorTransition.setFromValue(Color.web("#848484"));
+            iconColorTransition.setToValue(Color.web("#444444"));
+            dotColorTransition.setFromValue(Color.web("#555555"));
+            if (active) {
+                icon.setFill(Color.web("#333333"));
+            } else {
+                icon.setFill(Color.web("#848484"));
+                dot.setFill(Color.web("#555555"));
+            }
+        } else {
+            iconColorTransition.setFromValue(Color.web("#949494"));
+            iconColorTransition.setToValue(Color.web("#c0c0c0"));
+            dotColorTransition.setFromValue(Color.web("#999999"));
+            if (active) {
+                icon.setFill(Color.web("#c0c0c0"));
+            } else {
+                icon.setFill(Color.web("#949494"));
+                dot.setFill(Color.web("#999999"));
+            }
+        }
     }
 
     public void setDotVisible(boolean dotVisible) {
@@ -152,19 +193,4 @@ public class SidebarNavItem extends HBox {
         return dot.isVisible();
     }
 
-    public SVGPath getIcon() {
-        return icon;
-    }
-
-    public void setIcon(SVGPath icon) {
-        this.icon = icon;
-    }
-
-    public Label getLabel() {
-        return label;
-    }
-
-    public void setLabel(Label label) {
-        this.label = label;
-    }
 }

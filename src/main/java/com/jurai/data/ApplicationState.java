@@ -138,10 +138,8 @@ public final class ApplicationState {
     }
 
     public void setUseLightTheme(boolean useLightTheme) {
-        if (useLightTheme != ApplicationState.useLightTheme) {
-            support.firePropertyChange("useLightTheme", ApplicationState.useLightTheme, useLightTheme);
-            ApplicationState.useLightTheme = useLightTheme;
-        }
+        support.firePropertyChange("useLightTheme", ApplicationState.useLightTheme, useLightTheme);
+        ApplicationState.useLightTheme = useLightTheme;
     }
 
     public void setSelectedDemanda(Demanda selectedDemanda) {

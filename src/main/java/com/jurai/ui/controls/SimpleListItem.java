@@ -1,5 +1,6 @@
 package com.jurai.ui.controls;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Model;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.animation.interpolator.PowerEase;
@@ -15,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
+import lombok.Getter;
 
 import java.io.IOException;
 
@@ -24,6 +26,7 @@ public class SimpleListItem<T extends Model> extends HBox {
     private boolean selected;
     private FillTransition dotColorTransition, textFillTransition;
 
+    @Getter
     T object;
 
     public SimpleListItem(T object) {
@@ -32,6 +35,7 @@ public class SimpleListItem<T extends Model> extends HBox {
         initControls();
         layControls();
         initAnimations();
+        attachNotifiers();
     }
 
     private void initControls() {
@@ -65,15 +69,39 @@ public class SimpleListItem<T extends Model> extends HBox {
         nameLabel.textFillProperty().bind(textFillProperty.fillProperty());
         textFillTransition = new FillTransition(Duration.millis(280), textFillProperty);
         textFillTransition.setFromValue(Color.web("#888"));
-        textFillTransition.setToValue(Color.web("#fff"));
         textFillTransition.setInterpolator(interpolator);
+
+        if (ApplicationState.getInstance().isUseLightTheme()) {
+            textFillTransition.setToValue(Color.web("#0f0f0f"));
+        } else {
+            textFillTransition.setToValue(Color.web("#fcfcfc"));
+        }
 
         HoverAnimator.animateAll(this, 0.3, 0.5);
     }
 
-    //getters & setters
-    public boolean isSelected() {
-        return selected;
+    private void attachNotifiers() {
+        ApplicationState.getInstance().addPropertyChangeListener(change -> {
+            if ("useLightTheme".equals(change.getPropertyName())) {
+                themeChanged((boolean) change.getNewValue());
+            }
+        });
+    }
+
+    public void themeChanged(boolean isLight) {
+        if (isLight) {
+            System.out.println("Loading light theme");
+            textFillTransition.setToValue(Color.web("0f0f0f"));
+            if (selected) {
+                textFillTransition.playFromStart();
+            }
+        } else {
+            textFillTransition.setToValue(Color.web("#fcfcfc"));
+            System.out.println("Loading dark theme");
+            if (selected) {
+                textFillTransition.playFromStart();
+            }
+        }
     }
 
     public void setSelected(boolean selected) {
@@ -96,7 +124,4 @@ public class SimpleListItem<T extends Model> extends HBox {
         return nameLabel.getText();
     }
 
-    public T getObject() {
-        return object;
-    }
 }

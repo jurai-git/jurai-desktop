@@ -8,6 +8,7 @@ import com.jurai.ui.menus.SidebarNav;
 import com.jurai.util.UILogger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.paint.Color;
 
 public class SidebarNavController extends AbstractController<SidebarNav> {
     @Override
@@ -64,5 +65,14 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
                 pane.getSidebarToggleButton().setActive((Boolean) propertyChangeEvent1.getNewValue());
             }
         });
+
+        ApplicationState.getInstance().addPropertyChangeListener(change -> {
+            if ("useLightTheme".equals(change.getPropertyName())) {
+                pane.getItems().forEach(SidebarNavItem::themeChanged);
+                pane.getItems().forEach(SidebarNavItem::themeChanged);
+            }
+        });
+
     }
+
 }
