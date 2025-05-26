@@ -1,11 +1,41 @@
 package com.jurai.ui.animation;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class HoverAnimator {
+    private static boolean enabled = true;
+    private static boolean initialized = false;
+
+    public static void disable() {
+        enabled = false;
+    }
+
+    public static void enable() {
+        enabled = true;
+    }
+
+    public static void initialize() {
+        if (initialized) return;
+        initialized = true;
+        ApplicationState.getInstance().addPropertyChangeListener(change -> {
+            if ("useAnimations".equals(change.getPropertyName())) {
+                if ((boolean) change.getNewValue()) enable();
+                else disable();
+            }
+        });
+
+        if (!ApplicationState.getInstance().isUseAnimations()) {
+            disable();
+        }
+    }
 
     public static void animateHover(Node node, double strengthX, double strengthY) {
         ScaleTransition hoverIn = new ScaleTransition(Duration.millis(300), node);
@@ -19,10 +49,10 @@ public class HoverAnimator {
         hoverOut.setToY(1);
 
         node.setOnMouseEntered(e -> {
-            hoverIn.playFromStart();
+            if (enabled) hoverIn.playFromStart();
         });
         node.setOnMouseExited(e -> {
-            hoverOut.playFromStart();
+            if (enabled) hoverOut.playFromStart();
         });
     }
 
@@ -46,17 +76,18 @@ public class HoverAnimator {
         activeOut.setToY(1 + 0.05 * strengthY);
 
         node.setOnMousePressed(e -> {
-            activeIn.playFromStart();
+            if (enabled) activeIn.playFromStart();
         });
         node.setOnMouseReleased(e -> {
-            activeOut.playFromStart();
+            if (enabled) activeOut.playFromStart();
         });
+
+        // animateHover already adds it into the set, so we don't need to do that
     }
 
     public static void animateAll(double strengthX, double strengthY, Node... es) {
         for(var node : es) {
             animateAll(node, strengthX, strengthY);
         }
-
     }
 }

@@ -6,6 +6,7 @@ import com.jurai.data.ApplicationStatePersistor;
 import com.jurai.data.model.Theme;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
+import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controller.StageController;
 import com.jurai.ui.controls.NavUrl;
 import com.jurai.ui.manager.ThemeManager;
@@ -129,5 +130,6 @@ public class App extends Application {
             EventLogger.logError("Failed to initialize ApplicationStatePersistor: " + e.getMessage());
         }
         ModalManager.initialize(null, null);
+        HoverAnimator.initialize();
     }
 }
