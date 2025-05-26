@@ -2,13 +2,9 @@ package com.jurai.data;
 
 import com.jurai.App;
 import com.jurai.data.json.JsonParser;
-import com.jurai.data.json.JsonUtils;
-import com.jurai.data.model.Advogado;
-import com.jurai.data.model.serializer.AdvogadoSerializer;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
 import com.jurai.ui.util.AccountMode;
-import com.jurai.ui.util.StageType;
 import com.jurai.util.EventLogger;
 import net.harawata.appdirs.AppDirsFactory;
 
@@ -86,6 +82,15 @@ public class ApplicationStatePersistor {
             // remembersUser
             ApplicationState.getInstance().setRemembersUser(savedState.get("remembersUser").equals("true"));
 
+            // Theme
+            ApplicationState.getInstance().setUseLightTheme(savedState.get("lightTheme").equals("true"));
+
+            // API Url
+            ApplicationState.getInstance().setApiUrl(savedState.get("apiUrl"));
+
+            // Animations
+            ApplicationState.getInstance().setUseAnimations(savedState.get("useAnimations").equals("true"));
+
         } catch (NullPointerException e) {
             e.printStackTrace();
             EventLogger.logWarning("Failed to laod application state data from file.");
@@ -98,6 +103,15 @@ public class ApplicationStatePersistor {
         if(ApplicationState.getInstance().getCurrentUser() != null && ApplicationState.getInstance().remembersUser()) {
             updatedState.put("currentUserToken", ApplicationState.getInstance().getCurrentUser().getAccessToken());
         }
+
+        // Theme
+        updatedState.put("lightTheme", ApplicationState.getInstance().isUseLightTheme() ? "true" : "false");
+
+        // API Url
+        updatedState.put("apiUrl", ApplicationState.getInstance().getApiUrl());
+
+        // Animations
+        updatedState.put("useAnimations", ApplicationState.getInstance().isUseAnimations() ? "true" : "false");
 
         parser.toFile(updatedState, applicationStateFile);
     }

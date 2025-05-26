@@ -9,10 +9,12 @@ import com.jurai.ui.util.Pane;
 import com.jurai.ui.util.StageType;
 import com.jurai.util.StateLogger;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+@Getter
 public final class ApplicationState {
     private static PropertyChangeSupport support;
     private static volatile ApplicationState instance;
@@ -28,6 +30,8 @@ public final class ApplicationState {
     private static Stage currentStage = null;
     private static boolean remembersUser = false;
     private static String apiUrl = "http://127.0.0.1:5000";
+    private static boolean useAnimations = true;
+    private static boolean useLightTheme = true;
     private static Demanda selectedDemanda = null;
     private static boolean sidebarExtended = false;
     private static boolean viewportSmall = false; // this indicates weather the width of the app is small, for responsiveness
@@ -126,6 +130,20 @@ public final class ApplicationState {
         ApplicationState.apiUrl = apiUrl;
     }
 
+    public void setUseAnimations(boolean useAnimations) {
+        if (useAnimations != ApplicationState.useAnimations) {
+            support.firePropertyChange("useAnimations", ApplicationState.useAnimations, useAnimations);
+            ApplicationState.useAnimations = useAnimations;
+        }
+    }
+
+    public void setUseLightTheme(boolean useLightTheme) {
+        if (useLightTheme != ApplicationState.useLightTheme) {
+            support.firePropertyChange("useAnimations", ApplicationState.useLightTheme, useLightTheme);
+            ApplicationState.useLightTheme = useLightTheme;
+        }
+    }
+
     public void setSelectedDemanda(Demanda selectedDemanda) {
         Demanda oldValue = ApplicationState.selectedDemanda;
         ApplicationState.selectedDemanda = selectedDemanda;
@@ -195,9 +213,18 @@ public final class ApplicationState {
         return accountMode;
     }
 
+    public boolean isUseAnimations() {
+        return useAnimations;
+    }
+
+    public boolean isUseLightTheme() {
+        return useLightTheme;
+    }
+
     public StageType getStageType() {
         return stageType;
     }
+
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
         support.addPropertyChangeListener(l);

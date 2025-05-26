@@ -28,7 +28,7 @@ public class AIService {
 
     public DemandaAnalysis analyzeDemanda(String ementa) throws ResponseNotOkException {
         JsonObject object = new JsonObject();
-        object.addProperty("text", ementa);
+        object.addProperty("text", ementa.toLowerCase());
         requestHandler.post("/ai/probability", object);
         try {
             return gson.fromJson(requestHandler.post("/ai/probability", object), DemandaAnalysis.class);

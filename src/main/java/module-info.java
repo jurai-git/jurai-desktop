@@ -11,6 +11,7 @@ module jurai {
     requires org.controlsfx.controls;
     requires net.harawata.appdirs;
     requires java.net.http;
+    requires static lombok;
 
     opens com.jurai.data.model to com.google.gson;
     exports com.jurai to javafx.graphics;

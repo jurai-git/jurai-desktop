@@ -1,7 +1,5 @@
 package com.jurai.ui.controls;
-
 import javafx.scene.control.PasswordField;
-
 
 public final class PasswordFieldSet extends FieldSet<PasswordField> {
 

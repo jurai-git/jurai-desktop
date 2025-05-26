@@ -1,11 +1,6 @@
 package com.jurai.ui.controls;
 
 import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-
-
 public final class TextFieldSet extends FieldSet<TextField> {
 
     public TextFieldSet(String name) {
