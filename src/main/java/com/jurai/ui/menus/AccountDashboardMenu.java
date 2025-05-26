@@ -1,6 +1,7 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
+import com.jurai.ui.controls.AppSettingsController;
 import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.VGroup;
 import com.jurai.ui.util.SpacerFactory;
@@ -11,14 +12,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import lombok.Getter;
 
 import static com.jurai.ui.util.ControlWrappers.*;
 
 public class AccountDashboardMenu extends AbstractMenu<HBox> {
     private HBox content;
+    @Getter
     private Label title, subtitle;
     private AccountSettingsMenu accountSettingsMenu;
     private AppSettingsMenu appSettingsMenu;
+    private AppSettingsController appSettingsController;
 
     public static final String TITLE_TEMPLATE = "Bem-vindo(a), %s!";
 
@@ -37,6 +41,8 @@ public class AccountDashboardMenu extends AbstractMenu<HBox> {
 
         accountSettingsMenu = new AccountSettingsMenu();
         appSettingsMenu = new AppSettingsMenu();
+        appSettingsController = new AppSettingsController();
+        appSettingsController.initialize(appSettingsMenu);
     }
 
     @Override
@@ -53,7 +59,6 @@ public class AccountDashboardMenu extends AbstractMenu<HBox> {
                 )
         );
     }
-
 
     public Button getDeleteAccount() {
         return accountSettingsMenu.getDeleteAccount();
@@ -89,13 +94,6 @@ public class AccountDashboardMenu extends AbstractMenu<HBox> {
 
     public TextField getConfirmPassword() {
         return accountSettingsMenu.getConfirmPassword().getInput();
-    }
-
-
-
-
-    public Label getTitle() {
-        return title;
     }
 
     @Override

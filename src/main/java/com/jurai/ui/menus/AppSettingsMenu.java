@@ -9,18 +9,29 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
+import lombok.Getter;
 import org.controlsfx.control.ToggleSwitch;
+
+import static com.jurai.ui.util.ControlWrappers.wrapHgrow;
 import static com.jurai.ui.util.ControlWrappers.wrapStyleClasses;
 
 public class AppSettingsMenu extends AbstractMenu<VBox>  {
     private VBox content;
 
-    private SettingsOption<ToggleSwitch> useLightThemeOption, useAnimationsOption;
+    @Getter
     private ToggleSwitch useLightTheme, useAnimations;
-    private SettingsOption<TextField> apiUrlOption;
-    private TextField apiUrl;
+    private SettingsOption<ToggleSwitch> useLightThemeOption, useAnimationsOption;
 
+    @Getter
+    private TextField apiUrl;
+    private SettingsOption<TextField> apiUrlOption;
+
+    @Getter
     private Button saveChanges, importConfigs, exportConfigs;
+
+    @Getter
+    private Label successLabel;
 
     @Override
     protected void initControls() {
@@ -41,15 +52,22 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
 
         importConfigs = new Button("Importar");
         exportConfigs = new Button("Exportar");
+
+        successLabel = new Label("");
+        successLabel.setTextAlignment(TextAlignment.RIGHT);
+        successLabel.setMaxWidth(Double.MAX_VALUE);
+        successLabel.setPrefWidth(Double.MAX_VALUE);
     }
 
     @Override
     protected void layControls() {
         content.getChildren().addAll(
                 new VGroup().withVgrow(Priority.ALWAYS).withStyleClass("form", "spacing-3", "p-6").withChildren(
-                    useLightThemeOption,
-                    useAnimationsOption,
-                    apiUrlOption
+                        useLightThemeOption,
+                        useAnimationsOption,
+                        apiUrlOption,
+                        SpacerFactory.vSpacer(Priority.ALWAYS),
+                        wrapStyleClasses(wrapHgrow(successLabel, Priority.ALWAYS), "text-green")
                 ),
                 new HGroup().withChildren(
                         exportConfigs,

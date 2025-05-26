@@ -448,3 +448,10 @@
     -fx-border-width: 1px;
     -fx-border-color: red;
 }
+
+.text-green {
+    -fx-text-fill: green;
+}
+.text-green .label {
+    -fx-text-fill: green;
+}

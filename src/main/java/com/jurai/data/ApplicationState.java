@@ -31,7 +31,7 @@ public final class ApplicationState {
     private static boolean remembersUser = false;
     private static String apiUrl = "http://127.0.0.1:5000";
     private static boolean useAnimations = true;
-    private static boolean useLightTheme = true;
+    private static boolean useLightTheme = false;
     private static Demanda selectedDemanda = null;
     private static boolean sidebarExtended = false;
     private static boolean viewportSmall = false; // this indicates weather the width of the app is small, for responsiveness
@@ -139,7 +139,7 @@ public final class ApplicationState {
 
     public void setUseLightTheme(boolean useLightTheme) {
         if (useLightTheme != ApplicationState.useLightTheme) {
-            support.firePropertyChange("useAnimations", ApplicationState.useLightTheme, useLightTheme);
+            support.firePropertyChange("useLightTheme", ApplicationState.useLightTheme, useLightTheme);
             ApplicationState.useLightTheme = useLightTheme;
         }
     }
