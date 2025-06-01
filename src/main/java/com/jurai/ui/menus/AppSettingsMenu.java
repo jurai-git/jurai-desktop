@@ -1,5 +1,6 @@
 package com.jurai.ui.menus;
 
+import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.SettingsOption;
 import com.jurai.ui.controls.VGroup;
@@ -57,6 +58,8 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
         successLabel.setTextAlignment(TextAlignment.RIGHT);
         successLabel.setMaxWidth(Double.MAX_VALUE);
         successLabel.setPrefWidth(Double.MAX_VALUE);
+
+        HoverAnimator.animateAll(1.2, 1.2, saveChanges, importConfigs, exportConfigs);
     }
 
     @Override

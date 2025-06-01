@@ -1,4 +1,5 @@
 package com.jurai.ui.menus;
+import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.PasswordFieldSet;
 import com.jurai.ui.controls.TextFieldSet;
@@ -75,6 +76,8 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
 
         changePasswordBtn = new Button("Mudar senha");
         changePasswordBtn.setDisable(true);
+
+        HoverAnimator.animateAll(1.2, 1.2, deleteAccount, changePasswordBtn, resetChanges, saveChanges);
     }
 
     @Override

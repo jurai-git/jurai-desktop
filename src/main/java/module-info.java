@@ -6,7 +6,7 @@ module jurai {
     requires transitive java.logging;
     requires com.google.gson;
     requires java.sql;
-    requires jdk.compiler;
+    // requires jdk.compiler;
     requires java.management;
     requires org.controlsfx.controls;
     requires net.harawata.appdirs;

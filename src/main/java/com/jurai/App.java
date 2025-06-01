@@ -42,7 +42,9 @@ public class App extends Application {
     private static List<Runnable> afterLoadTasks;
 
     public static void main(String[] args) {
+        System.setProperty("prism.allowhidpi", "false");
         System.setProperty("prism.lcdtext", "false");
+        System.setProperty("glass.gtk.uiScale", "4.0");
         launch(args);
     }
 
@@ -82,7 +84,6 @@ public class App extends Application {
         secondaryStage.setScene(secondaryScene.getScene());
         secondaryStage.setOnCloseRequest(e -> onCloseRequest());
         selfAttachControllers();
-
 
         afterLoadTasks.forEach(Runnable::run);
 

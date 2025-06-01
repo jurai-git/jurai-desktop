@@ -1,7 +1,9 @@
 package com.jurai.ui.controls;
 
 import com.jurai.ui.util.SpacerFactory;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -52,6 +54,16 @@ public class VGroup extends VBox {
 
     public VGroup withStyle(String style) {
         setStyle(style);
+        return this;
+    }
+
+    public VGroup withAlignment(Pos pos) {
+        setAlignment(pos);
+        return this;
+    }
+
+    public VGroup withBorderPaneAlignment(Pos pos) {
+        BorderPane.setAlignment(this, pos);
         return this;
     }
 

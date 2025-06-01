@@ -1,9 +1,12 @@
 package com.jurai.ui.util;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 
 public class ControlWrappers {
     public static Node wrapHgrow(Node c, Priority p) {
@@ -25,5 +28,10 @@ public class ControlWrappers {
     public static Node wrapStyleClasses(Node c, String ...classes) {
         c.getStyleClass().addAll(classes);
         return c;
+    }
+
+    public static Label wrapAlignment(Label l, TextAlignment pos) {
+        l.setTextAlignment(pos);
+        return l;
     }
 }

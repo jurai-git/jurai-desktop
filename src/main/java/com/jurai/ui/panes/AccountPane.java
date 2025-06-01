@@ -1,16 +1,16 @@
 package com.jurai.ui.panes;
 
-import com.jurai.ui.menus.AbstractMenu;
-import com.jurai.ui.menus.AccountDashboardMenu;
-import com.jurai.ui.menus.AdvogadoRegisterMenu;
-import com.jurai.ui.menus.LoginMenu;
+import com.jurai.ui.menus.*;
 import javafx.scene.layout.StackPane;
 
 public class AccountPane extends AbstractPane {
     private StackPane view;
+
     private LoginMenu loginMenu;
     private AdvogadoRegisterMenu advogadoRegisterMenu;
     private AccountDashboardMenu accountDashboardMenu;
+    private AccountRecoveryMenu accountRecoveryMenu;
+    private AccountRecoveryDone accountRecoveryDone;
 
     public AccountPane() {
         super();
@@ -23,6 +23,8 @@ public class AccountPane extends AbstractPane {
         loginMenu = new LoginMenu();
         advogadoRegisterMenu = new AdvogadoRegisterMenu();
         accountDashboardMenu = new AccountDashboardMenu();
+        accountRecoveryMenu = new AccountRecoveryMenu();
+        accountRecoveryDone = new AccountRecoveryDone();
     }
 
     @Override
@@ -50,6 +52,14 @@ public class AccountPane extends AbstractPane {
 
     public AccountDashboardMenu getAccountDashboardMenu() {
         return accountDashboardMenu;
+    }
+
+    public AccountRecoveryMenu getAccountRecoveryMenu() {
+        return accountRecoveryMenu;
+    }
+
+    public AccountRecoveryDone getAccountRecoveryDone() {
+        return accountRecoveryDone;
     }
 
     @Override

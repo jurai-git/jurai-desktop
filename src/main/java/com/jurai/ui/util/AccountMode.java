@@ -4,5 +4,6 @@ public enum AccountMode {
     LOGGING_IN,
     REGISTERING,
     FORGOT_PASSWORD,
-    LOGGED_IN
+    LOGGED_IN,
+    EMAIL_SENT
 }

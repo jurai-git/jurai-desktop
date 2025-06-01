@@ -134,6 +134,16 @@ public class AdvogadoService {
         }
     }
 
+    public void requestRecoveryEmail(String email) throws ResponseNotOkException {
+        try {
+            JsonObject response = requestHandler.post("/advogado/request-reset/" + email);
+        } catch(ResponseNotOkException e) {
+            EventLogger.logError("Error communicating to API on AdvogadoService.requestRecoveryEmail(): error " + e.getCode());
+            EventLogger.logError("Error communicating to API on AdvogadoService.requestRecoveryEmail(): error " + e.getMessage());
+            throw e;
+        }
+    }
+
 
     public Advogado getCurrent() {
         return ApplicationState.getInstance().getCurrentUser();

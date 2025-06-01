@@ -109,10 +109,39 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
         });
 
-        // mode switching handling
-        pane.getLoginMenu().getCreateAccount().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.REGISTERING));
-        pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN));
+        // forgot password action
+        pane.getAccountRecoveryMenu().getSendRequest().setOnAction(e -> {
+            String email = pane.getAccountRecoveryMenu().getEmail().getText();
+            System.out.println("Email: " + email);
 
+            if (email.isEmpty()) {
+                new DefaultMessageNotification("O e-mail que você inseriu não parece ser válido.\nVerifique-o e tente novamente.", NotificationType.ERROR).show();
+                return;
+            }
+
+            try {
+                advogadoService.requestRecoveryEmail(email);
+                ApplicationState.getInstance().setAccountMode(AccountMode.EMAIL_SENT);
+            } catch (ResponseNotOkException ex) {
+                String msg = switch (ex.getCode()) {
+                    case 404 -> "Não existe uma conta com esse e-mail.\nVerifique-o e tente novamente.";
+                    case 500 -> "Ocorreu um erro na nossa parte.\nTente novamente mais tarde.";
+                    default -> "Ocorreu um erro desconhecido na nossa parte.\nTente novamente mais tarde.\nCódigo do erro: " + ex.getCode();
+                };
+                new DefaultMessageNotification(msg, NotificationType.ERROR).show();
+            }
+        });
+
+        // mode switching handling
+        pane.getAccountRecoveryMenu().getLogin().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN));
+        pane.getAccountRecoveryMenu().getCreateAccount().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.REGISTERING));
+        pane.getLoginMenu().getCreateAccount().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.REGISTERING));
+        pane.getLoginMenu().getForgotPwd().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.FORGOT_PASSWORD));
+        pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN));
+        pane.getAccountRecoveryDone().getCreateAccount().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.REGISTERING));
+        pane.getAccountRecoveryDone().getReturnToLogin().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN));
+
+        // dashboard menu actions
         pane.getAccountDashboardMenu().getDeleteAccount().setOnAction(e -> {
             try {
                 advogadoService.delete();
@@ -155,9 +184,6 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 if(ApplicationState.getInstance().getCurrentUser() != null)
                     userChanged(ApplicationState.getInstance().getCurrentUser(), pane);
             }
-            if ("useLightTheme".equals(e.getPropertyName())) {
-
-            }
         });
     }
 
@@ -165,8 +191,9 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         pane.setPane(switch(newMode) {
             case LOGGING_IN -> pane.getLoginMenu();
             case REGISTERING -> pane.getAdvogadoRegisterMenu();
-            case FORGOT_PASSWORD -> null;
+            case FORGOT_PASSWORD -> pane.getAccountRecoveryMenu();
             case LOGGED_IN -> pane.getAccountDashboardMenu();
+            case EMAIL_SENT -> pane.getAccountRecoveryDone();
         });
     }
 

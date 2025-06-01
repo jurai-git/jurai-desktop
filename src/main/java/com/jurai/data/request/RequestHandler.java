@@ -26,6 +26,10 @@ public class RequestHandler {
         return send("POST", endpoint, body, auth);
     }
 
+    public JsonObject post(String endpoint) throws ResponseNotOkException {
+        return send("POST", endpoint, null, null);
+    }
+
     public JsonObject patch(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
         return send("PATCH", endpoint, body, auth);
     }
