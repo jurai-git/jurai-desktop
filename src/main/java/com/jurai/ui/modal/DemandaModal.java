@@ -2,31 +2,34 @@ package com.jurai.ui.modal;
 
 import com.jurai.data.ApplicationData;
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.BasicTab;
-import com.jurai.ui.controls.BasicTabbedPane;
-import com.jurai.ui.controls.HGroup;
-import com.jurai.ui.controls.TextFieldSet;
+import com.jurai.ui.controls.*;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import lombok.Getter;
 
 import java.util.List;
 
 public abstract class DemandaModal extends Modal<BasicTabbedPane> {
     protected TextFieldSet identificacao, foro, status, competencia,
             classe, assuntoPrincipal,
-            valorAcao, resumo;
+            valorAcao;
+
+    protected TextAreaSet resumo;
 
     protected CheckBox pedidoLiminar, segredoJustica, dispensaLegal, justicaGratiuta, guiaCustas;
 
     private BasicTabbedPane content;
+    @Getter
     private BasicTab tab1, tab2;
     private VBox tab1Content, tab2Content;
     private VBox tab1Form, tab2Form;
     protected HBox tab1Actions, tab2Actions;
+    @Getter
     protected Button tab1Cancel, tab2Cancel, next, previous, save;
 
     public DemandaModal(String name) {
@@ -51,13 +54,14 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
         competencia = new TextFieldSet("Competência");
         classe = new TextFieldSet("Classe");
         assuntoPrincipal = new TextFieldSet("Assunto Principal");
-        pedidoLiminar = new CheckBox("Pedido Liminar");
+        pedidoLiminar = new CheckBox("Pedido Liminar/Tutela Antecipada");
         segredoJustica = new CheckBox("Segredo de Justiça");
-        valorAcao = new TextFieldSet("Valor da Ação");
-        dispensaLegal = new CheckBox("Dispensa Legal");
-        justicaGratiuta = new CheckBox("Justiça Gratuita");
+        valorAcao = new TextFieldSet("Valor da Ação (em R$)");
+        dispensaLegal = new CheckBox("Não há recolhimento / Dispensa Legal");
+        justicaGratiuta = new CheckBox("Pedido de Justiça Gratuita");
         guiaCustas = new CheckBox("Guia de Custas");
-        resumo = new TextFieldSet("Resumo");
+        resumo = new TextAreaSet("Resumo");
+        resumo.getInput().setWrapText(true);
 
         // tab1
         tab1Content = new VBox();
@@ -160,26 +164,6 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
 
     public List<Button> getCancels() {
         return List.of(tab1Cancel, tab2Cancel);
-    }
-
-    public Button getNext() {
-        return next;
-    }
-
-    public Button getPrevious() {
-        return previous;
-    }
-
-    public Button getSave() {
-        return save;
-    }
-
-    public BasicTab getTab1() {
-        return tab1;
-    }
-
-    public BasicTab getTab2() {
-        return tab2;
     }
 
     public String getResumo() {

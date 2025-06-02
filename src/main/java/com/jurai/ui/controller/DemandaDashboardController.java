@@ -100,8 +100,10 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
 
             @Override
             protected void failed() {
+                ApplicationState.getInstance().setSelectedRequerente(null);
                 UILogger.logError(getException().getMessage());
                 new DefaultMessageNotification("Erro ao carregar demandas!", NotificationType.ERROR).show();
+
                 Platform.runLater(() -> pane.getDemandaList().setLoading(false));
             }
         };
