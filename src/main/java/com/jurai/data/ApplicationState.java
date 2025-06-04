@@ -29,7 +29,7 @@ public final class ApplicationState {
     private static Requerente selectedRequerente = null;
     private static Stage currentStage = null;
     private static boolean remembersUser = false;
-    private static String apiUrl = "https://jurai-server-fp93.onrender.com/";
+    private static String apiUrl = "http://localhost:5000/";
     private static boolean useAnimations = true;
     private static boolean useLightTheme = false;
     private static Demanda selectedDemanda = null;

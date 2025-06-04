@@ -1,13 +1,8 @@
 package com.jurai.ui.menus;
 
-import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.AppSettingsController;
-import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.VGroup;
-import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,9 +13,12 @@ import static com.jurai.ui.util.ControlWrappers.*;
 
 public class AccountDashboardMenu extends AbstractMenu<HBox> {
     private HBox content;
+
     @Getter
     private Label title, subtitle;
+    @Getter
     private AccountSettingsMenu accountSettingsMenu;
+
     private AppSettingsMenu appSettingsMenu;
     private AppSettingsController appSettingsController;
 

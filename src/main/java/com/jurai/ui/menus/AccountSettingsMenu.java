@@ -5,28 +5,38 @@ import com.jurai.ui.controls.PasswordFieldSet;
 import com.jurai.ui.controls.TextFieldSet;
 import com.jurai.ui.controls.VGroup;
 import com.jurai.ui.util.SpacerFactory;
+import com.jurai.util.EventLogger;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import lombok.Getter;
+
 import static com.jurai.ui.util.ControlWrappers.*;
 
 public class AccountSettingsMenu extends AbstractMenu<VBox> {
     private VBox content;
     private ImageView userImageView;
     private Label usernameLabel, oabLabel;
+
+    @Getter
     private TextFieldSet username, email, oab;
+    @Getter
     private PasswordFieldSet changePassword, confirmPassword;
+    @Getter
     private Button saveChanges, resetChanges, deleteAccount, changePasswordBtn;
+
+    private final String fallbackPfpPath = "/img/user-default.jpg";
 
     @Override
     protected void initControls() {
         content = new VBox();
-        final Image img = new Image(getClass().getResource("/img/user-default.jpg").toExternalForm());
-        userImageView = new ImageView(img);
+        userImageView = new ImageView();
+        loadFallback();
         userImageView.setSmooth(true);
         userImageView.setPreserveRatio(true);
         userImageView.getStyleClass().addAll("bg-radius-full", "border-radius-full");
@@ -120,40 +130,27 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
         content.getStyleClass().add("spacing-4");
     }
 
-    public Button getDeleteAccount() {
-        return deleteAccount;
+    public void updatePfp(String url) {
+        if (url == null || url.isEmpty()) {
+            loadFallback();
+            return;
+        }
+        EventLogger.log("Loading profile picture with URL " + url + " on AccountSettingsMenu");
+
+        ChangeListener<Boolean> errorHandler = (obs, oldVal, hasError) -> {
+          if (hasError) {
+              EventLogger.logWarning("No image found for current user, loading default user image");
+              loadFallback();
+          }
+        };
+        Image img = new Image(url, true);
+        img.errorProperty().addListener(errorHandler);
+        userImageView.setImage(img);
     }
 
-    public TextFieldSet getUsername() {
-        return username;
-    }
-
-    public TextFieldSet getEmail() {
-        return email;
-    }
-
-    public TextFieldSet getOab() {
-        return oab;
-    }
-
-    public PasswordFieldSet getChangePassword() {
-        return changePassword;
-    }
-
-    public PasswordFieldSet getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public Button getResetChanges() {
-        return resetChanges;
-    }
-
-    public Button getSaveChanges() {
-        return saveChanges;
-    }
-
-    public Button getChangePasswordBtn() {
-        return changePasswordBtn;
+    public void loadFallback() {
+        Image img = new Image(getClass().getResource(fallbackPfpPath).toExternalForm());
+        userImageView.setImage(img);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.jurai.ui.controller;
 
+import com.jurai.App;
 import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.request.ResponseNotOkException;
@@ -11,6 +12,7 @@ import com.jurai.ui.panes.AccountPane;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.menus.AccountDashboardMenu;
 
+import com.jurai.util.EventLogger;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -172,6 +174,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         pane.getAccountDashboardMenu().getConfirmPassword().textProperty().addListener(str -> {
             pane.getAccountDashboardMenu().getChangePasswrodBtn().setDisable(!isChangingPasswords(pane));
         });
+
     }
 
     @Override
@@ -185,6 +188,24 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                     userChanged(ApplicationState.getInstance().getCurrentUser(), pane);
             }
         });
+
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+            if ("currentUser".equals(e.getPropertyName())) {
+                Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+                if (e.getOldValue() instanceof Advogado oldAdvogado) {
+                    if (oldAdvogado.getId() == currentUser.getId()) {
+                        EventLogger.log("Not changing the profile picture; no change in advogado ID");
+                        return;
+                    }
+                }
+                if (currentUser != null) {
+                    pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(ApplicationState.getInstance().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
+                } else {
+                    pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
+                }
+            }
+        });
+
     }
 
     private void modeChanged(AccountMode newMode, AccountPane pane) {
