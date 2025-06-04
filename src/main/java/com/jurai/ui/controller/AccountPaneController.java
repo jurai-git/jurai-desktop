@@ -192,12 +192,6 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         ApplicationState.getInstance().addPropertyChangeListener(e -> {
             if ("currentUser".equals(e.getPropertyName())) {
                 Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
-                if (e.getOldValue() instanceof Advogado oldAdvogado) {
-                    if (oldAdvogado.getId() == currentUser.getId()) {
-                        EventLogger.log("Not changing the profile picture; no change in advogado ID");
-                        return;
-                    }
-                }
                 if (currentUser != null) {
                     pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(ApplicationState.getInstance().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
                 } else {

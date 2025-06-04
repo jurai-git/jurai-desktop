@@ -37,6 +37,8 @@ public final class ApplicationState {
     private static boolean viewportSmall = false; // this indicates weather the width of the app is small, for responsiveness
     private static QuickQueryPane.Mode quickQueryMode = QuickQueryPane.Mode.PDF;
 
+    private static final String fallbackPfpPath = "/img/user-default.jpg";
+
     public static void initialize() {
         if (instance == null) {
             synchronized (ApplicationState.class) {
@@ -223,6 +225,9 @@ public final class ApplicationState {
         return stageType;
     }
 
+    public String getFallbackPfpPath() {
+        return fallbackPfpPath;
+    }
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
         support.addPropertyChangeListener(l);

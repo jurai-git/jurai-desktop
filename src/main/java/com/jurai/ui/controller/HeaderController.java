@@ -1,8 +1,11 @@
 package com.jurai.ui.controller;
 
 import com.jurai.data.ApplicationState;
+import com.jurai.data.model.Advogado;
 import com.jurai.ui.panes.Header;
 import com.jurai.ui.panes.QuickQueryPane;
+import com.jurai.ui.util.Pane;
+import com.jurai.util.EventLogger;
 
 
 public class HeaderController extends AbstractController<Header> {
@@ -12,7 +15,9 @@ public class HeaderController extends AbstractController<Header> {
 
     @Override
     protected void attachEvents(Header header) {
-
+        header.getPfp().setOnMouseClicked(e -> {
+            ApplicationState.getInstance().setActivePane(Pane.AccountPane);
+        });
     }
 
     @Override
@@ -57,9 +62,22 @@ public class HeaderController extends AbstractController<Header> {
                         break;
                 }
                 header.getNavUrl().setUrl(newUrl.toString());
-            }
-            else if ("useLightTheme".equals(e.getPropertyName())) {
+            } else if ("useLightTheme".equals(e.getPropertyName())) {
                 header.themeChanged();
+            } else if ("currentUser".equals(e.getPropertyName())) {
+                Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+                if (currentUser != null) {
+                    header.updatePfp(ApplicationState.getInstance().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
+                } else {
+                    header.loadFallback();
+                }
+            }
+        });
+
+
+        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+            if ("currentUser".equals(e.getPropertyName())) {
+
             }
         });
     }

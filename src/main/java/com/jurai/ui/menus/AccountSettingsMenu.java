@@ -1,4 +1,5 @@
 package com.jurai.ui.menus;
+import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.PasswordFieldSet;
@@ -29,8 +30,6 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     private PasswordFieldSet changePassword, confirmPassword;
     @Getter
     private Button saveChanges, resetChanges, deleteAccount, changePasswordBtn;
-
-    private final String fallbackPfpPath = "/img/user-default.jpg";
 
     @Override
     protected void initControls() {
@@ -139,7 +138,7 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
 
         ChangeListener<Boolean> errorHandler = (obs, oldVal, hasError) -> {
           if (hasError) {
-              EventLogger.logWarning("No image found for current user, loading default user image");
+              EventLogger.logWarning("No image found for current user, loading default user image on AccountSettingsMenu");
               loadFallback();
           }
         };
@@ -149,7 +148,7 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     }
 
     public void loadFallback() {
-        Image img = new Image(getClass().getResource(fallbackPfpPath).toExternalForm());
+        Image img = new Image(getClass().getResource(ApplicationState.getInstance().getFallbackPfpPath()).toExternalForm());
         userImageView.setImage(img);
     }
 
