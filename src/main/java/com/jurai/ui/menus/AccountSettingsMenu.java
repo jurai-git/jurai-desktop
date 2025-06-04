@@ -1,10 +1,7 @@
 package com.jurai.ui.menus;
 import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.HGroup;
-import com.jurai.ui.controls.PasswordFieldSet;
-import com.jurai.ui.controls.TextFieldSet;
-import com.jurai.ui.controls.VGroup;
+import com.jurai.ui.controls.*;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.EventLogger;
 import javafx.beans.binding.Bindings;
@@ -21,7 +18,7 @@ import static com.jurai.ui.util.ControlWrappers.*;
 
 public class AccountSettingsMenu extends AbstractMenu<VBox> {
     private VBox content;
-    private ImageView userImageView;
+    private ProfilePicture profilePicture;
     private Label usernameLabel, oabLabel;
 
     @Getter
@@ -34,14 +31,14 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     @Override
     protected void initControls() {
         content = new VBox();
-        userImageView = new ImageView();
+        profilePicture = new ProfilePicture();
         loadFallback();
-        userImageView.setSmooth(true);
-        userImageView.setPreserveRatio(true);
-        userImageView.getStyleClass().addAll("bg-radius-full", "border-radius-full");
-        userImageView.setFitWidth(128);
-        userImageView.setFitHeight(128);
-        userImageView.setClip(new Circle(64, 64, 64));
+        profilePicture.setSmooth(true);
+        profilePicture.setPreserveRatio(true);
+        profilePicture.getImageView().getStyleClass().addAll("bg-radius-full", "border-radius-full");
+        profilePicture.setFitWidth(128);
+        profilePicture.setFitHeight(128);
+        profilePicture.setClip(new Circle(64, 64, 64));
 
         username = new TextFieldSet("Nome de usuário");
         username.getInput().getStyleClass().add("text-field-base");
@@ -94,7 +91,7 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
         content.getChildren().addAll(
                 wrapVgrow(new VGroup().withStyleClass("spacing-3", "small-content-box", "p-6").withChildren(
                         new HGroup().withStyleClass("spacing-3", "pl-4").withChildren(
-                                userImageView,
+                                profilePicture,
                                 new VGroup().withChildren(
                                         SpacerFactory.vSpacer(Priority.ALWAYS),
                                         usernameLabel,
@@ -144,12 +141,12 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
         };
         Image img = new Image(url, true);
         img.errorProperty().addListener(errorHandler);
-        userImageView.setImage(img);
+        profilePicture.setImage(img);
     }
 
     public void loadFallback() {
         Image img = new Image(getClass().getResource(ApplicationState.getInstance().getFallbackPfpPath()).toExternalForm());
-        userImageView.setImage(img);
+        profilePicture.setImage(img);
     }
 
     @Override
