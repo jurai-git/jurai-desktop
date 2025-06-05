@@ -1,6 +1,7 @@
 package com.jurai.ui.controller;
 
 import com.jurai.data.ApplicationState;
+import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.Advogado;
 import com.jurai.ui.panes.Header;
 import com.jurai.ui.panes.QuickQueryPane;
@@ -74,11 +75,14 @@ public class HeaderController extends AbstractController<Header> {
             }
         });
 
-
-        ApplicationState.getInstance().addPropertyChangeListener(e -> {
-            if ("currentUser".equals(e.getPropertyName())) {
-
+        GlobalEvents.get().onPfpChanged(e -> {
+            Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+            if (currentUser != null) {
+                header.updatePfp(ApplicationState.getInstance().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
+            } else {
+                header.loadFallback();
             }
         });
+
     }
 }

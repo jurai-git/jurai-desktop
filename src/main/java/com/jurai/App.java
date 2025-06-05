@@ -3,6 +3,7 @@ package com.jurai;
 import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
 import com.jurai.data.ApplicationStatePersistor;
+import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.Theme;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
@@ -17,6 +18,7 @@ import com.jurai.util.EventLogger;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -124,6 +126,7 @@ public class App extends Application {
 
     private void initialize() {
         ApplicationData.initialize();
+        GlobalEvents.initialize();
         try {
             ApplicationStatePersistor.initialize();
             ApplicationStatePersistor.getInstance().load();

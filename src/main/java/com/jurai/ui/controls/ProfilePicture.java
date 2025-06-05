@@ -2,6 +2,7 @@ package com.jurai.ui.controls;
 
 import com.jurai.data.ApplicationState;
 import com.jurai.ui.util.ImageUtils;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -14,6 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+
+import javax.swing.*;
 
 public class ProfilePicture extends StackPane {
     private ImageView iv;
@@ -130,4 +133,12 @@ public class ProfilePicture extends StackPane {
         return iv;
     }
 
+    public void setOnPictureChange(EventHandler<ActionEvent> handler) {
+        changePicture.setOnAction(handler);
+        addPicture.setOnAction(handler);
+    }
+
+    public void setOnPictureRemoval(EventHandler<ActionEvent> handler) {
+        removePicture.setOnAction(handler);
+    }
 }

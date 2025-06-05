@@ -14,6 +14,7 @@ import com.jurai.data.json.JsonUtils;
 import com.jurai.util.EventLogger;
 import javafx.application.Platform;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,6 +141,15 @@ public class AdvogadoService {
         } catch(ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService.requestRecoveryEmail(): error " + e.getCode());
             EventLogger.logError("Error communicating to API on AdvogadoService.requestRecoveryEmail(): error " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public void changePicture(File newPicture) throws ResponseNotOkException {
+        try {
+            requestHandler.postFile("/advogado/pfp", newPicture, "picture", "Bearer " + ApplicationState.getInstance().getCurrentUser().getAccessToken());
+        } catch (ResponseNotOkException e) {
+            EventLogger.logError("Error communicating to API on AdvogadoService.changePicture(): error " + e.getCode());
             throw e;
         }
     }

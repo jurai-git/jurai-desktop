@@ -2,6 +2,7 @@ package com.jurai.ui.controller;
 
 import com.jurai.App;
 import com.jurai.data.ApplicationState;
+import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
@@ -19,7 +20,9 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.util.Objects;
 
 public class AccountPaneController extends AbstractController<AccountPane> {
@@ -181,7 +184,33 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
         // profile picture changing and handling
 
+        pane.getAccountDashboardMenu().getAccountSettingsMenu().getProfilePicture().setOnPictureChange(e -> {
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Escolha uma foto de perfil");
+            chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("jpg", "png", "jpeg"));
+            File chosenFile = chooser.showOpenDialog(ApplicationState.getInstance().getCurrentStage());
 
+            if (!chosenFile.canRead()) {
+                new DefaultMessageNotification("Você não parece ter permissão para ler este arquivo. Selecione outro.", NotificationType.ERROR).show();
+                return;
+            }
+
+            if (chosenFile.length() > 1024L * 1024L * 1024L * 2L) {
+                new DefaultMessageNotification("Esse arquivo excede o limite de 2MB. Selecione um arquivo menor.", NotificationType.ERROR).show();
+            }
+
+            try {
+                advogadoService.changePicture(chosenFile);
+                GlobalEvents.get().firePfpChanged();
+            } catch (ResponseNotOkException ex) {
+                String errorMsg = switch (ex.getCode()) {
+                    case 401 -> "Ocorreu um erro ao realizar sua autenticação. Se o erro persistir, você pode tentar sair e entrar novamente com sua conta.";
+                    case 503 -> "Nossos servidores estão sobrecarregados. Tente novamente mais tarde.";
+                    default -> "Ocorreu um erro desconhecido. Código do erro: " + ex.getCode();
+                };
+                new DefaultMessageNotification(errorMsg, NotificationType.ERROR).show();
+            }
+        });
     }
 
     @Override
@@ -204,6 +233,15 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 } else {
                     pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
                 }
+            }
+        });
+
+        GlobalEvents.get().onPfpChanged(e -> {
+            Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+            if (currentUser != null) {
+                pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(ApplicationState.getInstance().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
+            } else {
+                pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
             }
         });
 
