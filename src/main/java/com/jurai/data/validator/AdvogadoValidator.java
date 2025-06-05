@@ -11,9 +11,16 @@ public class AdvogadoValidator extends AbstractValidator<AdvogadoRegisterMenu> {
 
     public AdvogadoValidator() {
         super();
-        ruleFor(a -> a.getEmail().getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"), invalidEmailMessage);
-        ruleFor(a -> a.getPassword().getText().length() >= 8, invalidPasswordMessage);
-        ruleFor(a -> a.getUsername().getText().length() >= 3, invalidUsernameMessage);
-        ruleFor(a -> a.getPassword().getText().equals(a.getConfirmPassword().getText()), passwordMatchMessage);
+        ruleFor(a -> !a.getEmail().getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"), invalidEmailMessage);
+        ruleFor(a -> {
+            System.out.println(a.getPassword().getText().length());
+            return a.getPassword().getText().length() < 8;
+        }, invalidPasswordMessage);
+        ruleFor(a -> a.getUsername().getText().length() < 3, invalidUsernameMessage);
+        ruleFor(a ->{
+            System.out.println(a.getPassword().getText());
+            System.out.println(a.getConfirmPassword().getText());
+            return !a.getPassword().getText().equals(a.getConfirmPassword().getText());
+        }, passwordMatchMessage);
     }
 }

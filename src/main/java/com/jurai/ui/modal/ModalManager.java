@@ -3,6 +3,7 @@ package com.jurai.ui.modal;
 import com.jurai.ui.LoadingStrategy;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import com.jurai.ui.animation.interpolator.SmoothEase;
+import com.jurai.ui.panes.layout.ProportionPane;
 import com.jurai.util.Either;
 import com.jurai.util.UILogger;
 import javafx.animation.FadeTransition;
@@ -19,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -31,13 +33,15 @@ public class ModalManager {
     private StackPane root;
     private Node content;
     private Modal activeModal;
-    private Modal activeNotification;
+    private Notification activeNotification;
     private FadeTransition nFadeInTransition, mFadeInTransition;
     private FadeTransition mFadeOutTransition, nFadeOutTransition, mBlurFadeInTransition, mBlurFadeOutTransition, nBlurFadeInTransition, nBlurFadeOutTransition;
     private Effect defaultBlur;
     private ChangeListener<Number> rootWidthListener, rootHeightListener;
     private Runnable rootDimensionsChangedAction;
     private final Map<String, Either<Supplier<Modal>, Modal>> modalFactories = new HashMap<>();
+    private boolean isExitingNotification = false;
+    private boolean isExitingModal = false;
 
     private ImageView mBlurredBackground, nBlurredBackground;
 
@@ -124,8 +128,19 @@ public class ModalManager {
 
     public void requestModal(String key) {
         if (activeModal != null) {
-            activeModal.dispose();
+            System.out.println("Tried to request modal on top of another; exiting first");
+
+            // stop transitions to avoid overlaps
+            mFadeOutTransition.stop();
+            mBlurFadeOutTransition.stop();
+
+            // here we will exit instantly to avoid errors due to transition timing
+            removeAllExceptRoot();
+            activeNotification = null;
+            isExitingNotification = false;
         }
+
+
         Modal m = modalFactories.get(key).ifLPresentOrElse(Supplier::get, modal -> modal);
 
         Image blurredImage = createBlurredSnapshot(content);
@@ -152,23 +167,48 @@ public class ModalManager {
 
     public void exitModal() {
         if (activeModal == null) return;
-        mFadeOutTransition.setOnFinished(e -> {
-            root.getChildren().remove(activeModal.getContent());
-            root.getChildren().remove(mBlurredBackground);
-            activeModal = null;
-        });
+        if (isExitingModal) return;
+        isExitingModal = true;
+
         mBlurFadeOutTransition.playFromStart();
         mFadeOutTransition.playFromStart();
+        mFadeOutTransition.setOnFinished(e -> {
+            if (isExitingModal) {
+                removeAllExceptRoot();
+                isExitingModal = false;
+                activeModal = null;
+            }
+        });
     }
 
     public void requestNotification(Notification notif) {
         if (activeNotification != null) {
-            activeNotification.dispose();
+            System.out.println("Tried to request notification on top of another; exiting first");
+
+            // stop transitions to avoid overlaps
+            nFadeOutTransition.stop();
+            nFadeInTransition.stop();
+            nBlurFadeOutTransition.stop();
+            nBlurFadeInTransition.stop();
+
+            // here we will exit instantly to avoid errors due to transition timing
+            if (!isExitingNotification) {
+                if(activeModal != null) {
+                    activeModal.getContent().setEffect(null);
+                } else {
+                    content.setEffect(null);
+                }
+            }
+
+            removeAllExceptRoot();
+            activeNotification = null;
+            isExitingNotification = false;
         }
 
         Image blurredImage = createBlurredSnapshot(root);
         nBlurredBackground = new ImageView(blurredImage);
         nBlurredBackground.setOpacity(0);
+        nBlurredBackground.setOnMouseClicked(e -> exitNotification());
         root.getChildren().add(nBlurredBackground);
         nBlurFadeInTransition.setNode(nBlurredBackground);
         nBlurFadeOutTransition.setNode(nBlurredBackground);
@@ -199,6 +239,10 @@ public class ModalManager {
     public void exitNotification() {
         if (activeNotification == null) return;
 
+        if (isExitingNotification) return;
+        isExitingNotification = true;
+        System.out.println("Exiting notification " + activeNotification + "; DOM is " + root.getChildren());
+
         if(activeModal != null) {
             activeModal.getContent().setEffect(null);
         } else {
@@ -208,8 +252,16 @@ public class ModalManager {
         nFadeOutTransition.playFromStart();
         nBlurFadeOutTransition.playFromStart();
         nFadeOutTransition.setOnFinished(actionEvent -> {
-            root.getChildren().removeAll(activeNotification.getContent(), nBlurredBackground);
-            activeNotification = null;
+            if (isExitingNotification) {
+                // we will only remove the notification if no one removed it while the transition was playing, to avoid concurrent modifications
+                removeAllExceptRoot();
+                isExitingNotification = false;
+                activeNotification = null;
+            }
         });
+    }
+
+    private void removeAllExceptRoot() {
+        root.getChildren().removeIf(node -> !(node instanceof ProportionPane));
     }
 }

@@ -18,7 +18,9 @@ public abstract class AbstractValidator<T> {
     }
 
     public String validate(T object) {
+        System.out.println("Requested regular validation");
         for(Map.Entry<Filter<T>, String> entry : filters.entrySet()) {
+            System.out.println("Validating entry with " + entry.getValue());
             if(entry.getKey().accept(object)) {
                 return entry.getValue();
             }
@@ -27,7 +29,9 @@ public abstract class AbstractValidator<T> {
     }
 
     public boolean validateJFX(T object) {
+        System.out.println("Requested JFX validation");
         for(Map.Entry<Filter<T>, String> entry : filters.entrySet()) {
+            System.out.println("Validating entry with " + entry.getValue());
             if(entry.getKey().accept(object)) {
                 new DefaultMessageNotification(entry.getValue(), NotificationType.ERROR).show();
                 return false;

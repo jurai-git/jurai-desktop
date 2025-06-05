@@ -146,15 +146,21 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
         // dashboard menu actions
         pane.getAccountDashboardMenu().getDeleteAccount().setOnAction(e -> {
-            try {
-                advogadoService.delete();
-            } catch (ResponseNotOkException ex) {
-                String msg = switch (ex.getCode()) {
-                    case 404 -> "Ocorreu um erro com a conexão com o servidor. Cheque a sua conexão com a internet";
-                    default -> "Ocorreu um erro inesperado! Tente novamente mais tarde.";
-                };
-                new DefaultMessageNotification(msg, NotificationType.ERROR).show();
-            }
+            new ConfirmationNotification<String>("Você tem certeza que deseja deletar sua conta?", NotificationType.CONFIRMATION)
+                .setOnYes(ev -> {
+                    try {
+                        advogadoService.delete();
+                    } catch (ResponseNotOkException ex) {
+                        return switch (ex.getCode()) {
+                            case 401 -> "Ocorreu um erro ao realizar sua autenticação. Tente sair e logar novamente.";
+                            case 404 -> "Ocorreu um erro com a conexão com o servidor. Cheque a sua conexão com a internet";
+                            default -> "Ocorreu um erro inesperado! Tente novamente mais tarde. Código do erro: " + ex.getCode();
+                        };
+                    }
+                    return null;
+                })
+                .setAfterDispose(msg -> new DefaultMessageNotification(msg, NotificationType.ERROR).show())
+                .show();
         });
 
         pane.getAccountDashboardMenu().getReset().setOnAction(e -> {
@@ -201,6 +207,8 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 String errorMsg = switch (ex.getCode()) {
                     case 401 -> "Ocorreu um erro ao realizar sua autenticação. Se o erro persistir, você pode tentar sair e entrar novamente com sua conta.";
                     case 503 -> "Nossos servidores estão sobrecarregados. Tente novamente mais tarde.";
+                    case 413 -> "O arquivo que você enviou ultrapassa o limite de 2MB. Envie um arquivo menor.";
+                    case 400 -> "O arquivo que você enviou não parece ser uma imagem. Envie uma imagem JPG ou PNG.";
                     default -> "Ocorreu um erro desconhecido. Código do erro: " + ex.getCode();
                 };
                 new DefaultMessageNotification(errorMsg, NotificationType.ERROR).show();
@@ -216,10 +224,8 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                         return null;
                     } catch (ResponseNotOkException ex) {
                         return switch(ex.getCode()) {
-                            case 400 -> "O arquivo que você enviou não parece ser uma imagem. Envie uma imagem JPG ou PNG.";
                             case 401 -> "Ocorreu um erro ao realizar sua autenticação. Se o erro persistir, você pode tentar sair e entrar novamente com sua conta.";
                             case 503 -> "Nossos servidores estão sobrecarregados. Tente novamente mais tarde.";
-                            case 413 -> "O arquivo que você enviou ultrapassa o limite de 2MB. Envie um arquivo menor.";
                             case InternalErrorCodes.NETWORK_ERROR -> "Ocorreu um erro de conexão. Verifique sua conexão com a internet e tente novamente.";
                             default -> "Ocorreu um erro desconhecido. Código do erro: " + ex.getCode();
                         };
