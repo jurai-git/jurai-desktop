@@ -1,24 +1,19 @@
 package com.jurai.ui.controller;
 
-import com.jurai.App;
 import com.jurai.data.ApplicationState;
 import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.Advogado;
+import com.jurai.data.request.InternalErrorCodes;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
 import com.jurai.data.validator.AdvogadoValidator;
+import com.jurai.ui.modal.notif.ConfirmationNotification;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;
 import com.jurai.ui.modal.notif.NotificationType;
 import com.jurai.ui.panes.AccountPane;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.menus.AccountDashboardMenu;
 
-import com.jurai.util.EventLogger;
-import javafx.geometry.Side;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 
@@ -47,11 +42,11 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         pane.getLoginMenu().getLogin().setOnAction(e -> {
             try {
                 if(pane.getLoginMenu().getEmail().getText().equals("root")) {
-                    ApplicationState.getInstance().setCurrentUser(new Advogado(1, "advogado", "advogado@gmail.com", "oab123", "12321321321321"));
+                    ApplicationState.get().setCurrentUser(new Advogado(1, "advogado", "advogado@gmail.com", "oab123", "12321321321321"));
                     return;
                 }
                 if (pane.getLoginMenu().getKeepConnected().isSelected()) {
-                    ApplicationState.getInstance().setRemembersUser(true);
+                    ApplicationState.get().setRemembersUser(true);
                 }
                 advogadoService.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
             } catch (ResponseNotOkException ex) {
@@ -114,7 +109,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 new DefaultMessageNotification(msg, NotificationType.ERROR).show();
                 return;
             }
-            ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
+            ApplicationState.get().setAccountMode(AccountMode.LOGGING_IN);
         });
 
         // forgot password action
@@ -129,7 +124,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
             try {
                 advogadoService.requestRecoveryEmail(email);
-                ApplicationState.getInstance().setAccountMode(AccountMode.EMAIL_SENT);
+                ApplicationState.get().setAccountMode(AccountMode.EMAIL_SENT);
             } catch (ResponseNotOkException ex) {
                 String msg = switch (ex.getCode()) {
                     case 404 -> "Não existe uma conta com esse e-mail.\nVerifique-o e tente novamente.";
@@ -141,13 +136,13 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         });
 
         // mode switching handling
-        pane.getAccountRecoveryMenu().getLogin().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN));
-        pane.getAccountRecoveryMenu().getCreateAccount().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.REGISTERING));
-        pane.getLoginMenu().getCreateAccount().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.REGISTERING));
-        pane.getLoginMenu().getForgotPwd().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.FORGOT_PASSWORD));
-        pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN));
-        pane.getAccountRecoveryDone().getCreateAccount().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.REGISTERING));
-        pane.getAccountRecoveryDone().getReturnToLogin().setOnAction(e -> ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN));
+        pane.getAccountRecoveryMenu().getLogin().setOnAction(e -> ApplicationState.get().setAccountMode(AccountMode.LOGGING_IN));
+        pane.getAccountRecoveryMenu().getCreateAccount().setOnAction(e -> ApplicationState.get().setAccountMode(AccountMode.REGISTERING));
+        pane.getLoginMenu().getCreateAccount().setOnAction(e -> ApplicationState.get().setAccountMode(AccountMode.REGISTERING));
+        pane.getLoginMenu().getForgotPwd().setOnAction(e -> ApplicationState.get().setAccountMode(AccountMode.FORGOT_PASSWORD));
+        pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> ApplicationState.get().setAccountMode(AccountMode.LOGGING_IN));
+        pane.getAccountRecoveryDone().getCreateAccount().setOnAction(e -> ApplicationState.get().setAccountMode(AccountMode.REGISTERING));
+        pane.getAccountRecoveryDone().getReturnToLogin().setOnAction(e -> ApplicationState.get().setAccountMode(AccountMode.LOGGING_IN));
 
         // dashboard menu actions
         pane.getAccountDashboardMenu().getDeleteAccount().setOnAction(e -> {
@@ -163,14 +158,14 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         });
 
         pane.getAccountDashboardMenu().getReset().setOnAction(e -> {
-            userChanged(ApplicationState.getInstance().getCurrentUser(), pane);
+            userChanged(ApplicationState.get().getCurrentUser(), pane);
         });
 
         pane.getAccountDashboardMenu().getUsername().textProperty().addListener(str -> {
-            setChangesMade(hasDifferentUserData(ApplicationState.getInstance().getCurrentUser(), pane), pane);
+            setChangesMade(hasDifferentUserData(ApplicationState.get().getCurrentUser(), pane), pane);
         });
         pane.getAccountDashboardMenu().getEmail().textProperty().addListener(str -> {
-            setChangesMade(hasDifferentUserData(ApplicationState.getInstance().getCurrentUser(), pane), pane);
+            setChangesMade(hasDifferentUserData(ApplicationState.get().getCurrentUser(), pane), pane);
         });
 
         pane.getAccountDashboardMenu().getChangePassword().textProperty().addListener(str -> {
@@ -188,7 +183,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             FileChooser chooser = new FileChooser();
             chooser.setTitle("Escolha uma foto de perfil");
             chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("jpg", "png", "jpeg"));
-            File chosenFile = chooser.showOpenDialog(ApplicationState.getInstance().getCurrentStage());
+            File chosenFile = chooser.showOpenDialog(ApplicationState.get().getCurrentStage());
 
             if (!chosenFile.canRead()) {
                 new DefaultMessageNotification("Você não parece ter permissão para ler este arquivo. Selecione outro.", NotificationType.ERROR).show();
@@ -211,25 +206,50 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 new DefaultMessageNotification(errorMsg, NotificationType.ERROR).show();
             }
         });
+
+        pane.getAccountDashboardMenu().getAccountSettingsMenu().getProfilePicture().setOnPictureRemoval(e -> {
+            new ConfirmationNotification<String>("Você realmente deseja remover sua foto de perfil?", NotificationType.CONFIRMATION)
+                .setOnYes(yes -> {
+                    try {
+                        advogadoService.deletePicture();
+                        GlobalEvents.get().firePfpChanged();
+                        return null;
+                    } catch (ResponseNotOkException ex) {
+                        return switch(ex.getCode()) {
+                            case 400 -> "O arquivo que você enviou não parece ser uma imagem. Envie uma imagem JPG ou PNG.";
+                            case 401 -> "Ocorreu um erro ao realizar sua autenticação. Se o erro persistir, você pode tentar sair e entrar novamente com sua conta.";
+                            case 503 -> "Nossos servidores estão sobrecarregados. Tente novamente mais tarde.";
+                            case 413 -> "O arquivo que você enviou ultrapassa o limite de 2MB. Envie um arquivo menor.";
+                            case InternalErrorCodes.NETWORK_ERROR -> "Ocorreu um erro de conexão. Verifique sua conexão com a internet e tente novamente.";
+                            default -> "Ocorreu um erro desconhecido. Código do erro: " + ex.getCode();
+                        };
+                    }
+                })
+                .setAfterDispose(msg -> {
+                   if (msg == null) return;
+                   new DefaultMessageNotification(msg, NotificationType.ERROR).show();
+                })
+                .show();
+        });
     }
 
     @Override
     protected void attachNotifiers(AccountPane pane) {
-        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+        ApplicationState.get().addPropertyChangeListener(e -> {
             if("accountMode".equals(e.getPropertyName())) {
                 modeChanged((AccountMode) e.getNewValue(), pane);
             }
             if("currentUser".equals(e.getPropertyName())) {
-                if(ApplicationState.getInstance().getCurrentUser() != null)
-                    userChanged(ApplicationState.getInstance().getCurrentUser(), pane);
+                if(ApplicationState.get().getCurrentUser() != null)
+                    userChanged(ApplicationState.get().getCurrentUser(), pane);
             }
         });
 
-        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+        ApplicationState.get().addPropertyChangeListener(e -> {
             if ("currentUser".equals(e.getPropertyName())) {
-                Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+                Advogado currentUser = ApplicationState.get().getCurrentUser();
                 if (currentUser != null) {
-                    pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(ApplicationState.getInstance().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
+                    pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(ApplicationState.get().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
                 } else {
                     pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
                 }
@@ -237,9 +257,9 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         });
 
         GlobalEvents.get().onPfpChanged(e -> {
-            Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+            Advogado currentUser = ApplicationState.get().getCurrentUser();
             if (currentUser != null) {
-                pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(ApplicationState.getInstance().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
+                pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(ApplicationState.get().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
             } else {
                 pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
             }

@@ -17,7 +17,7 @@ import com.jurai.util.EventLogger;
 
 public class RequerenteService {
     private static final RequerenteService instance = new RequerenteService();
-    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.getInstance().getApiUrl());
+    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.get().getApiUrl());
     private final Gson gson;
 
     private RequerenteService() {
@@ -27,9 +27,9 @@ public class RequerenteService {
         builder.registerTypeAdapter(Demanda.class, new DemandaSerializer());
         gson = builder.create();
 
-        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+        ApplicationState.get().addPropertyChangeListener(e -> {
             if("apiUrl".equals(e.getPropertyName())) {
-                requestHandler.setBaseUrl(ApplicationState.getInstance().getApiUrl());
+                requestHandler.setBaseUrl(ApplicationState.get().getApiUrl());
             }
         });
     }
@@ -39,7 +39,7 @@ public class RequerenteService {
     }
 
     public void update(Requerente r) throws ResponseNotOkException {
-        Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+        Advogado currentUser = ApplicationState.get().getCurrentUser();
         JsonObject body = JsonUtils.asJson(gson.toJson(r, Requerente.class));
         try {
             requestHandler.patch("/requerente/" + (long) r.getIdRequerente(), body, "Bearer: " + currentUser.getAccessToken());
@@ -51,7 +51,7 @@ public class RequerenteService {
     }
 
     public void delete(Requerente r) throws ResponseNotOkException {
-        Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
+        Advogado currentUser = ApplicationState.get().getCurrentUser();
         JsonObject body = new JsonObject();
 
         try {
@@ -64,8 +64,8 @@ public class RequerenteService {
     }
 
     public void addDemanda(Demanda d) throws ResponseNotOkException{
-        Advogado currentUser = ApplicationState.getInstance().getCurrentUser();
-        Requerente currentRequerente = ApplicationState.getInstance().getSelectedRequerente();
+        Advogado currentUser = ApplicationState.get().getCurrentUser();
+        Requerente currentRequerente = ApplicationState.get().getSelectedRequerente();
         if(currentRequerente == null) {
             EventLogger.logError("Error adding demanda: no requerente selected");
             throw new IllegalStateException("No requerente selected");

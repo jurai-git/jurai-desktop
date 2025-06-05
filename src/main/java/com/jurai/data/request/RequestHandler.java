@@ -3,6 +3,7 @@ package com.jurai.data.request;
 import com.google.gson.JsonObject;
 import com.jurai.data.json.JsonUtils;
 import com.jurai.util.EventLogger;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.time.Duration;
 import java.util.UUID;
 
 public class RequestHandler {
+    @Setter
     private String baseUrl;
     private final HttpClient client = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(5))
@@ -26,39 +28,39 @@ public class RequestHandler {
     }
 
     public JsonObject post(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
-        return send("POST", endpoint, body, auth);
+        return send("POST", endpoint, body, auth, false);
     }
 
     public JsonObject post(String endpoint) throws ResponseNotOkException {
-        return send("POST", endpoint, null, null);
+        return send("POST", endpoint, null, null, false);
     }
 
     public JsonObject patch(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
-        return send("PATCH", endpoint, body, auth);
+        return send("PATCH", endpoint, body, auth, false);
     }
 
     public JsonObject delete(String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
-        return send("DELETE", endpoint, body, auth);
+        return send("DELETE", endpoint, body, auth, false);
     }
 
     public JsonObject post(String endpoint, JsonObject body) throws ResponseNotOkException {
-        return send("POST", endpoint, body, null);
+        return send("POST", endpoint, body, null, false);
     }
 
     public JsonObject patch(String endpoint, JsonObject body) throws ResponseNotOkException {
-        return send("PATCH", endpoint, body, null);
+        return send("PATCH", endpoint, body, null, false);
     }
 
     public JsonObject delete(String endpoint, JsonObject body) throws ResponseNotOkException {
-        return send("DELETE", endpoint, body, null);
+        return send("DELETE", endpoint, body, null, false);
     }
 
     public JsonObject get(String endpoint) throws ResponseNotOkException {
-        return send("GET", endpoint, null, null);
+        return send("GET", endpoint, null, null, false);
     }
 
     public JsonObject get(String endpoint, String authHeader) throws ResponseNotOkException {
-        return send("GET", endpoint, null, authHeader);
+        return send("GET", endpoint, null, authHeader, false);
     }
 
     public JsonObject postFile(String endpoint, File file, String fieldName, String auth) throws ResponseNotOkException {
@@ -113,7 +115,7 @@ public class RequestHandler {
     }
 
 
-    private JsonObject send(String method, String endpoint, JsonObject body, String auth) throws ResponseNotOkException {
+    private JsonObject send(String method, String endpoint, JsonObject body, String auth, boolean retrying) throws ResponseNotOkException {
         try {
             HttpRequest.Builder builder = HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl + endpoint))
@@ -146,12 +148,14 @@ public class RequestHandler {
         } catch (ResponseNotOkException e) {
             throw e;
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            throw new ResponseNotOkException(500);
+            if (!retrying) {
+                EventLogger.logWarning("Network error on RequestHandler; silently retrying. Error: " + e.getMessage());
+                return send(method, endpoint, body, auth, true);
+            } else {
+                EventLogger.logWarning("Retry failed. Error: " + e.getMessage());
+                e.printStackTrace();
+                throw new ResponseNotOkException(InternalErrorCodes.NETWORK_ERROR);
+            }
         }
-    }
-
-    public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
     }
 }

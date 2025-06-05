@@ -35,7 +35,7 @@ public class RequerenteEditingModalController extends AbstractController<Requere
         pane.getDelete().setOnAction(e -> {
             try {
                 requerenteService.delete(pane.getObject());
-                ApplicationState.getInstance().setSelectedRequerente(null);
+                ApplicationState.get().setSelectedRequerente(null);
                 pane.dispose();
             } catch (ResponseNotOkException ex) {
                 ex.printStackTrace();

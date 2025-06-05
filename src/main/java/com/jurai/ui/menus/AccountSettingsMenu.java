@@ -7,10 +7,8 @@ import com.jurai.util.EventLogger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import lombok.Getter;
@@ -149,7 +147,7 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     }
 
     public void loadFallback() {
-        Image img = new Image(getClass().getResource(ApplicationState.getInstance().getFallbackPfpPath()).toExternalForm());
+        Image img = new Image(getClass().getResource(ApplicationState.get().getFallbackPfpPath()).toExternalForm());
         profilePicture.setImage(img);
         profilePicture.setHasCustomImage(false);
     }

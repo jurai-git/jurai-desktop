@@ -3,7 +3,6 @@ package com.jurai.data.model.serializer;
 import com.google.gson.*;
 import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Demanda;
-import com.jurai.data.model.Requerente;
 
 import java.lang.reflect.Type;
 
@@ -48,7 +47,7 @@ public class DemandaSerializer implements JsonSerializer<Demanda>, JsonDeseriali
         result.addProperty("resumo", demanda.getResumo());
         result.addProperty("status", demanda.getStatusDemanda());
         result.addProperty("identificacao", demanda.getNome());
-        result.addProperty("id_requerente", ApplicationState.getInstance().getSelectedRequerente().getIdRequerente());
+        result.addProperty("id_requerente", ApplicationState.get().getSelectedRequerente().getIdRequerente());
 
         return result;
     }

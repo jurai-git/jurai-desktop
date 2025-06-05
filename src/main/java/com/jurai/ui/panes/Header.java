@@ -96,7 +96,7 @@ public class Header extends AbstractPane {
     }
 
     public void loadFallback() {
-        Image img = new Image(getClass().getResource(ApplicationState.getInstance().getFallbackPfpPath()).toExternalForm());
+        Image img = new Image(getClass().getResource(ApplicationState.get().getFallbackPfpPath()).toExternalForm());
         pfp.setImage(img);
     }
 
@@ -106,7 +106,7 @@ public class Header extends AbstractPane {
     }
 
     public void themeChanged() {
-        if (ApplicationState.getInstance().isUseLightTheme()) {
+        if (ApplicationState.get().isUseLightTheme()) {
             logo.setImage(darkLogo);
         } else {
             logo.setImage(lightLogo);

@@ -36,7 +36,7 @@ public class SecondaryScene {
         darkImg = new Image(getClass().getResource("/img/jurai-text-white-antialias.png").toExternalForm());
         lightImg = new Image(getClass().getResource("/img/jurai-text-dark-antialias.png").toExternalForm());
 
-        if (ApplicationState.getInstance().isUseLightTheme()) {
+        if (ApplicationState.get().isUseLightTheme()) {
             headerLogo.setImage(lightImg);
         } else {
             headerLogo.setImage(darkImg);
@@ -58,7 +58,7 @@ public class SecondaryScene {
     }
 
     private void attachNotifiers() {
-        ApplicationState.getInstance().addPropertyChangeListener(l -> {
+        ApplicationState.get().addPropertyChangeListener(l -> {
             if ("useLightTheme".equals(l.getPropertyName())) {
                 if ((boolean) l.getNewValue()) {
                     headerLogo.setImage(lightImg);

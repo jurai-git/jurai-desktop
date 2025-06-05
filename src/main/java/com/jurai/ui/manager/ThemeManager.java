@@ -1,10 +1,7 @@
 package com.jurai.ui.manager;
 
 import com.jurai.data.ApplicationState;
-import com.jurai.ui.PrimaryScene;
-import com.jurai.ui.SecondaryScene;
 import com.jurai.util.EventLogger;
-import com.jurai.util.StateLogger;
 import javafx.scene.Scene;
 
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ public class ThemeManager {
     public ThemeManager(Scene... scenes) {
         Collections.addAll(this.scenes, scenes);
 
-        ApplicationState.getInstance().addPropertyChangeListener(change -> {
+        ApplicationState.get().addPropertyChangeListener(change -> {
             if ("useLightTheme".equals(change.getPropertyName())) {
                 boolean light = (boolean) change.getNewValue();
                 updateTheme(light);
@@ -42,7 +39,7 @@ public class ThemeManager {
 
     public void addScene(Scene scene) {
         scenes.add(scene);
-        boolean isLight = ApplicationState.getInstance().isUseLightTheme();
+        boolean isLight = ApplicationState.get().isUseLightTheme();
         updateTheme(isLight);
     }
 }

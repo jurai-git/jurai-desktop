@@ -44,7 +44,7 @@ public class SidebarNavItem extends HBox {
         this.isIconColorPermanent = false;
         iconContainer = new StackPane(icon);
 
-        if (ApplicationState.getInstance().isUseLightTheme()) {
+        if (ApplicationState.get().isUseLightTheme()) {
             icon.setFill(Color.web("#848484"));
         } else {
             icon.setFill(Color.web("#c0c0c0"));
@@ -76,7 +76,7 @@ public class SidebarNavItem extends HBox {
         iconColorTransition = new FillTransition(Duration.millis(500), icon);
         iconColorTransition.setInterpolator(new PowerEase(3, true));
 
-        if (ApplicationState.getInstance().isUseLightTheme()) {
+        if (ApplicationState.get().isUseLightTheme()) {
             iconColorTransition.setFromValue(Color.web("#848484"));
             iconColorTransition.setToValue(Color.web("#444444"));
 
@@ -162,7 +162,7 @@ public class SidebarNavItem extends HBox {
 
     public void themeChanged() {
         if (isIconColorPermanent) return; // we can't change this icon's color if  it is permanent (the user set it)
-        if (!ApplicationState.getInstance().isUseLightTheme()) {
+        if (!ApplicationState.get().isUseLightTheme()) {
             iconColorTransition.setFromValue(Color.web("#848484"));
             iconColorTransition.setToValue(Color.web("#444444"));
             dotColorTransition.setFromValue(Color.web("#555555"));

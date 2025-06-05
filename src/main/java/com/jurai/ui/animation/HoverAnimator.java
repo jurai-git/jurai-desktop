@@ -6,10 +6,6 @@ import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 public class HoverAnimator {
     private static boolean enabled = true;
     private static boolean initialized = false;
@@ -25,14 +21,14 @@ public class HoverAnimator {
     public static void initialize() {
         if (initialized) return;
         initialized = true;
-        ApplicationState.getInstance().addPropertyChangeListener(change -> {
+        ApplicationState.get().addPropertyChangeListener(change -> {
             if ("useAnimations".equals(change.getPropertyName())) {
                 if ((boolean) change.getNewValue()) enable();
                 else disable();
             }
         });
 
-        if (!ApplicationState.getInstance().isUseAnimations()) {
+        if (!ApplicationState.get().isUseAnimations()) {
             disable();
         }
     }

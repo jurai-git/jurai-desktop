@@ -7,7 +7,7 @@ public class QuickQueryPaneController extends AbstractController<QuickQueryPane>
     @Override
     protected void attachEvents(QuickQueryPane pane) {
         pane.getTabbedPane().setOnTabChanged(() -> {
-            ApplicationState.getInstance().setQuickQueryMode(
+            ApplicationState.get().setQuickQueryMode(
                     pane.getTabbedPane().getActiveTab().getName().equals("PDF") ?
                     QuickQueryPane.Mode.PDF :
                     QuickQueryPane.Mode.EMENTA

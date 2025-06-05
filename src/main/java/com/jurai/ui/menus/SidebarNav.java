@@ -49,7 +49,7 @@ public class SidebarNav extends AbstractMenu<VBox> {
         account.dotWidthProperty().set(4);
 
         sidebarToggleButton = new ArrowToggleButton();
-        sidebarToggleButton.setActive(ApplicationState.getInstance().isSidebarExtended());
+        sidebarToggleButton.setActive(ApplicationState.get().isSidebarExtended());
 
         ApplicationData.defaultIconSizeProperty().bind(account.getIconContainer().widthProperty());
 

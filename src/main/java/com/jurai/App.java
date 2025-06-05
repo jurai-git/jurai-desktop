@@ -4,23 +4,14 @@ import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
 import com.jurai.data.ApplicationStatePersistor;
 import com.jurai.data.GlobalEvents;
-import com.jurai.data.model.Theme;
 import com.jurai.ui.PrimaryScene;
 import com.jurai.ui.SecondaryScene;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controller.StageController;
-import com.jurai.ui.controls.NavUrl;
 import com.jurai.ui.manager.ThemeManager;
 import com.jurai.ui.modal.ModalManager;
-import com.jurai.ui.util.AccountMode;
-import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.EventLogger;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.skin.TableHeaderRow;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.Getter;
 
@@ -90,10 +81,10 @@ public class App extends Application {
         afterLoadTasks.forEach(Runnable::run);
 
         primaryScene.getScene().widthProperty().addListener((observableValue, number, t1) -> {
-            ApplicationState.getInstance().setViewportSmall(t1.doubleValue() < (double) ApplicationData.getScreenSize().width * 0.65);
+            ApplicationState.get().setViewportSmall(t1.doubleValue() < (double) ApplicationData.getScreenSize().width * 0.65);
         });
 
-        switch(ApplicationState.getInstance().getStageType()) {
+        switch(ApplicationState.get().getStageType()) {
             case MAIN_STAGE:
                 primaryStage.show();
                 System.out.println(primaryScene.getModalRoot());

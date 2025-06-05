@@ -11,7 +11,7 @@ import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.util.EventLogger;
 
 public class AIService {
-    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.getInstance().getApiUrl());
+    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.get().getApiUrl());
     private final Gson gson;
 
     public AIService() {
@@ -19,9 +19,9 @@ public class AIService {
         builder.registerTypeAdapter(DemandaAnalysis.class, new DemandaAnalysisSerializer());
         gson = builder.create();
 
-        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+        ApplicationState.get().addPropertyChangeListener(e -> {
             if("apiUrl".equals(e.getPropertyName())) {
-                requestHandler.setBaseUrl(ApplicationState.getInstance().getApiUrl());
+                requestHandler.setBaseUrl(ApplicationState.get().getApiUrl());
             }
         });
     }

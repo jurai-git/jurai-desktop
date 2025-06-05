@@ -42,7 +42,7 @@ public class ApplicationStatePersistor {
         EventLogger.log("Initialized ApplicationStatePersistor");
         parser = new JsonParser();
         ApplicationState.initialize();
-        ApplicationState.getInstance().setAccountMode(AccountMode.LOGGING_IN);
+        ApplicationState.get().setAccountMode(AccountMode.LOGGING_IN);
 
         this.storagePath = Path.of(AppDirsFactory.getInstance().getUserDataDir("JurAI", null, null));
         if(!storagePath.toFile().exists()) {
@@ -73,23 +73,23 @@ public class ApplicationStatePersistor {
             App.getCurrentInstance().addAfterLoadTask(() -> {
                 try {
                     AdvogadoService.getInstance().authenticate(token);
-                    System.out.println("StageType after persistor: " + ApplicationState.getInstance().getStageType());
+                    System.out.println("StageType after persistor: " + ApplicationState.get().getStageType());
                 } catch (ResponseNotOkException e) {
                     EventLogger.logWarning("Failed to authenticate advogado after loading json data. Error code: " + e.getCode());
                 }
             });
 
             // remembersUser
-            ApplicationState.getInstance().setRemembersUser(savedState.get("remembersUser").equals("true"));
+            ApplicationState.get().setRemembersUser(savedState.get("remembersUser").equals("true"));
 
             // Theme
-            ApplicationState.getInstance().setUseLightTheme(savedState.get("lightTheme").equals("true"));
+            ApplicationState.get().setUseLightTheme(savedState.get("lightTheme").equals("true"));
 
             // API Url
-            ApplicationState.getInstance().setApiUrl(savedState.get("apiUrl"));
+            ApplicationState.get().setApiUrl(savedState.get("apiUrl"));
 
             // Animations
-            ApplicationState.getInstance().setUseAnimations(savedState.get("useAnimations").equals("true"));
+            ApplicationState.get().setUseAnimations(savedState.get("useAnimations").equals("true"));
 
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -99,19 +99,19 @@ public class ApplicationStatePersistor {
 
     public void save() throws IOException {
         Map<String, String> updatedState = new HashMap<>();
-        updatedState.put("remembersUser", ApplicationState.getInstance().remembersUser() ? "true" : "false");
-        if(ApplicationState.getInstance().getCurrentUser() != null && ApplicationState.getInstance().remembersUser()) {
-            updatedState.put("currentUserToken", ApplicationState.getInstance().getCurrentUser().getAccessToken());
+        updatedState.put("remembersUser", ApplicationState.get().remembersUser() ? "true" : "false");
+        if(ApplicationState.get().getCurrentUser() != null && ApplicationState.get().remembersUser()) {
+            updatedState.put("currentUserToken", ApplicationState.get().getCurrentUser().getAccessToken());
         }
 
         // Theme
-        updatedState.put("lightTheme", ApplicationState.getInstance().isUseLightTheme() ? "true" : "false");
+        updatedState.put("lightTheme", ApplicationState.get().isUseLightTheme() ? "true" : "false");
 
         // API Url
-        updatedState.put("apiUrl", ApplicationState.getInstance().getApiUrl());
+        updatedState.put("apiUrl", ApplicationState.get().getApiUrl());
 
         // Animations
-        updatedState.put("useAnimations", ApplicationState.getInstance().isUseAnimations() ? "true" : "false");
+        updatedState.put("useAnimations", ApplicationState.get().isUseAnimations() ? "true" : "false");
 
         parser.toFile(updatedState, applicationStateFile);
     }

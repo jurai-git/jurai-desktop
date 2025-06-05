@@ -7,16 +7,12 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
-import javax.swing.*;
 
 public class ProfilePicture extends StackPane {
     private ImageView iv;
@@ -39,7 +35,7 @@ public class ProfilePicture extends StackPane {
         imagePlus = new ImageView();
         imagePlusImgLight = new Image(getClass().getResource("/img/image-plus-light.png").toExternalForm());
         imagePlusImgDark = new Image(getClass().getResource("/img/image-plus-dark.png").toExternalForm());
-        imagePlus.setImage(ApplicationState.getInstance().isUseLightTheme() ? imagePlusImgLight : imagePlusImgDark); // default to theme while the user doesn't choose an image
+        imagePlus.setImage(ApplicationState.get().isUseLightTheme() ? imagePlusImgLight : imagePlusImgDark); // default to theme while the user doesn't choose an image
 
         imagePlus.fitWidthProperty().bind(iv.fitWidthProperty().multiply(0.25));
         imagePlus.setPreserveRatio(true);
@@ -52,7 +48,7 @@ public class ProfilePicture extends StackPane {
         imageCircle.radiusProperty().bind(imagePlus.fitWidthProperty().multiply(1.2));
         imageCircleBgDark = Color.rgb(255, 255, 255, 0.3);
         imageCircleBgLight = Color.rgb(0, 0, 0, 0.3);
-        imageCircle.setFill(ApplicationState.getInstance().isUseLightTheme() ? imageCircleBgLight : imageCircleBgDark);
+        imageCircle.setFill(ApplicationState.get().isUseLightTheme() ? imageCircleBgLight : imageCircleBgDark);
         imageCircle.setCursor(Cursor.HAND);
 
         changePicture = new MenuItem("Trocar imagem");

@@ -15,9 +15,9 @@ public class AppSettingsController extends AbstractController<AppSettingsMenu> {
     @Override
     protected void attachEvents(AppSettingsMenu pane) {
         pane.getSaveChanges().setOnAction(e -> {
-            ApplicationState.getInstance().setUseAnimations(pane.getUseAnimations().isSelected());
-            ApplicationState.getInstance().setUseLightTheme(pane.getUseLightTheme().isSelected());
-            ApplicationState.getInstance().setApiUrl(pane.getApiUrl().getText());
+            ApplicationState.get().setUseAnimations(pane.getUseAnimations().isSelected());
+            ApplicationState.get().setUseLightTheme(pane.getUseLightTheme().isSelected());
+            ApplicationState.get().setApiUrl(pane.getApiUrl().getText());
 
             pane.getSaveChanges().setDisable(true);
 
@@ -39,12 +39,12 @@ public class AppSettingsController extends AbstractController<AppSettingsMenu> {
 
     @Override
     protected void attachNotifiers(AppSettingsMenu pane) {
-        System.out.println("Is use lighttheme: " + ApplicationState.getInstance().isUseLightTheme());
-        pane.getApiUrl().setText(ApplicationState.getInstance().getApiUrl());
-        pane.getUseLightTheme().setSelected(ApplicationState.getInstance().isUseLightTheme());
-        pane.getUseAnimations().setSelected(ApplicationState.getInstance().isUseAnimations());
+        System.out.println("Is use lighttheme: " + ApplicationState.get().isUseLightTheme());
+        pane.getApiUrl().setText(ApplicationState.get().getApiUrl());
+        pane.getUseLightTheme().setSelected(ApplicationState.get().isUseLightTheme());
+        pane.getUseAnimations().setSelected(ApplicationState.get().isUseAnimations());
 
-        ApplicationState.getInstance().addPropertyChangeListener(l -> {
+        ApplicationState.get().addPropertyChangeListener(l -> {
             if ("apiUrl".equals(l.getPropertyName())) {
                 pane.getApiUrl().setText((String) l.getNewValue());
             } else if ("useLightTheme".equals(l.getPropertyName())) {
@@ -56,9 +56,9 @@ public class AppSettingsController extends AbstractController<AppSettingsMenu> {
     }
 
     private boolean checkForChanges(AppSettingsMenu pane) {
-        return ApplicationState.getInstance().isUseLightTheme() == pane.getUseLightTheme().isSelected() &&
-                ApplicationState.getInstance().isUseAnimations() == pane.getUseAnimations().isSelected() &&
-                Objects.equals(ApplicationState.getInstance().getApiUrl(), pane.getApiUrl().getText());
+        return ApplicationState.get().isUseLightTheme() == pane.getUseLightTheme().isSelected() &&
+                ApplicationState.get().isUseAnimations() == pane.getUseAnimations().isSelected() &&
+                Objects.equals(ApplicationState.get().getApiUrl(), pane.getApiUrl().getText());
     }
 
     private void showTemporarySuccessMessage(Label successLabel, String message, double durationMillis) {

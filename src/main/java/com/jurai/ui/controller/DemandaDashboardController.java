@@ -4,18 +4,15 @@ import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Demanda;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.DemandaService;
-import com.jurai.data.service.RequerenteService;
 import com.jurai.ui.menus.DemandaDashboardMenu;
 import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;
 import com.jurai.ui.modal.notif.NotificationType;
-import com.jurai.util.EventLogger;
 import com.jurai.util.UILogger;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.scene.control.Tab;
 
 public class DemandaDashboardController extends AbstractController<DemandaDashboardMenu> {
 
@@ -29,18 +26,18 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
         });
         pane.getDemandaList().addSelectedItemListener((observableValue, demandaSimpleListItem, t1) -> {
             if (t1 == null) {
-                ApplicationState.getInstance().setSelectedDemanda(null);
+                ApplicationState.get().setSelectedDemanda(null);
             } else {
-                ApplicationState.getInstance().setSelectedDemanda(t1.getObject());
+                ApplicationState.get().setSelectedDemanda(t1.getObject());
             }
         });
     }
 
     @Override
     protected void attachNotifiers(DemandaDashboardMenu pane) {
-        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
+        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
             if("selectedRequerente".equals(propertyChangeEvent.getPropertyName())) {
-                if(ApplicationState.getInstance().getSelectedRequerente() != null) {
+                if(ApplicationState.get().getSelectedRequerente() != null) {
                     loadDemandas(pane);
                 } else {
                     unbindDemandaList(pane.getDemandaList().getListObjects());
@@ -49,7 +46,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
 		        }
             }
         });
-        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
+        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
             if("selectedDemanda".equals(propertyChangeEvent.getPropertyName())) {
                 if(propertyChangeEvent.getNewValue() != null) {
                     pane.getEditDeleteDemanda().setDisable(false);
@@ -59,9 +56,9 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
             }
         });
 
-        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
+        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
             if ("currentAccount".equals(propertyChangeEvent.getPropertyName())) {
-                ApplicationState.getInstance().setSelectedDemanda(null);
+                ApplicationState.get().setSelectedDemanda(null);
             }
         });
     }
@@ -71,7 +68,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
     }
 
     private void bindDemandaList(ObservableList<Demanda> paneRequerentes) {
-        Bindings.bindContent(paneRequerentes, ApplicationState.getInstance().getSelectedRequerente().demandas());
+        Bindings.bindContent(paneRequerentes, ApplicationState.get().getSelectedRequerente().demandas());
     }
 
     private void loadDemandas(DemandaDashboardMenu pane) {
@@ -100,7 +97,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
 
             @Override
             protected void failed() {
-                ApplicationState.getInstance().setSelectedRequerente(null);
+                ApplicationState.get().setSelectedRequerente(null);
                 UILogger.logError(getException().getMessage());
                 new DefaultMessageNotification("Erro ao carregar demandas!", NotificationType.ERROR).show();
 

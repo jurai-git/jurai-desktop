@@ -65,7 +65,7 @@ public class PrimaryScene {
         sidebarConstraints = new NodeConstraints(0, 0, 0.2f, 1);
         mainPane.addConstraints(sidebar.getView(), sidebarConstraints);
         NodeConstraints sidebarToggleConstraints = new NodeConstraints(0.16f, 0.01f, 0.04f, 0.04f);
-        activePaneChanged(ApplicationState.getInstance().getActivePane());
+        activePaneChanged(ApplicationState.get().getActivePane());
         sidebarModeUpdated(false);
 
         mainPane.setCache(true);
@@ -74,7 +74,7 @@ public class PrimaryScene {
         sidebar.getView().setCacheHint(CacheHint.SPEED);
 
         scene = new Scene(modalRoot, ApplicationData.getScreenSize().width, ApplicationData.getScreenSize().height, false, SceneAntialiasing.BALANCED);
-        ApplicationState.getInstance().setSidebarExtended(ApplicationState.getInstance().isSidebarExtended());
+        ApplicationState.get().setSidebarExtended(ApplicationState.get().isSidebarExtended());
     }
 
     private void layFixedControls() {
@@ -103,22 +103,22 @@ public class PrimaryScene {
     }
 
     private void attachNotifiers() {
-        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+        ApplicationState.get().addPropertyChangeListener(e -> {
             if ("activePane".equals(e.getPropertyName())) {
                 activePaneChanged((Pane) e.getNewValue());
             }
         });
-        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+        ApplicationState.get().addPropertyChangeListener(e -> {
             if ("currentPopup".equals(e.getPropertyName())) {
 
             }
         });
-        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+        ApplicationState.get().addPropertyChangeListener(e -> {
             if ("viewportSmall".equals(e.getPropertyName())) {
-                ApplicationState.getInstance().setSidebarExtended(true);
+                ApplicationState.get().setSidebarExtended(true);
             }
         });
-        ApplicationState.getInstance().addPropertyChangeListener(e -> {
+        ApplicationState.get().addPropertyChangeListener(e -> {
             if ("sidebarExtended".equals(e.getPropertyName())) {
                 sidebarModeUpdated((Boolean) e.getNewValue());
             }

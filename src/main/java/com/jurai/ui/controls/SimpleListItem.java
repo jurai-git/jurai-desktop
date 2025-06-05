@@ -4,21 +4,14 @@ import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Model;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.animation.interpolator.PowerEase;
-import com.jurai.ui.util.SpacerFactory;
-import com.jurai.util.FileUtils;
-import com.jurai.util.UILogger;
 import javafx.animation.FillTransition;
-import javafx.animation.StrokeTransition;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import lombok.Getter;
-
-import java.io.IOException;
 
 public class SimpleListItem<T extends Model> extends HBox {
     private Label nameLabel;
@@ -71,7 +64,7 @@ public class SimpleListItem<T extends Model> extends HBox {
         textFillTransition.setFromValue(Color.web("#888"));
         textFillTransition.setInterpolator(interpolator);
 
-        if (ApplicationState.getInstance().isUseLightTheme()) {
+        if (ApplicationState.get().isUseLightTheme()) {
             textFillTransition.setToValue(Color.web("#0f0f0f"));
         } else {
             textFillTransition.setToValue(Color.web("#fcfcfc"));
@@ -81,7 +74,7 @@ public class SimpleListItem<T extends Model> extends HBox {
     }
 
     private void attachNotifiers() {
-        ApplicationState.getInstance().addPropertyChangeListener(change -> {
+        ApplicationState.get().addPropertyChangeListener(change -> {
             if ("useLightTheme".equals(change.getPropertyName())) {
                 themeChanged((boolean) change.getNewValue());
             }

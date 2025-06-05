@@ -1,12 +1,9 @@
 package com.jurai.ui.controller;
 
 import com.jurai.App;
-import com.jurai.data.ApplicationData;
 import com.jurai.data.ApplicationState;
 import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.util.StageType;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
 
 public class StageController extends AbstractController<App> {
     @Override
@@ -20,9 +17,9 @@ public class StageController extends AbstractController<App> {
 
     @Override
     protected void attachNotifiers(App app) {
-        ApplicationState.getInstance().addPropertyChangeListener(changeEvent -> {
+        ApplicationState.get().addPropertyChangeListener(changeEvent -> {
             if("stageType".equals(changeEvent.getPropertyName())) {
-                switchStage(ApplicationState.getInstance().getStageType(), app);
+                switchStage(ApplicationState.get().getStageType(), app);
             }
         });
     }
@@ -34,14 +31,14 @@ public class StageController extends AbstractController<App> {
                 app.getPrimaryStage().show();
                 app.getSecondaryStage().hide();
                 ModalManager.getInstance().reinitialize(app.getPrimaryScene().getModalRoot(), app.getPrimaryScene().getContent());
-                ApplicationState.getInstance().setCurrentStage(app.getPrimaryStage());
+                ApplicationState.get().setCurrentStage(app.getPrimaryStage());
                 app.getPrimaryScene().setSidebarMode(true);
             }
             case SECONDARY_STAGE -> {
                 app.getSecondaryStage().show();
                 app.getPrimaryStage().hide();
                 ModalManager.getInstance().reinitialize(app.getSecondaryScene().getModalRoot(), app.getSecondaryScene().getContent());
-                ApplicationState.getInstance().setCurrentStage(app.getSecondaryStage());
+                ApplicationState.get().setCurrentStage(app.getSecondaryStage());
             }
         }
     }

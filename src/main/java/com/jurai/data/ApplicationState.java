@@ -17,6 +17,8 @@ import java.beans.PropertyChangeSupport;
 @Getter
 public final class ApplicationState {
     private static PropertyChangeSupport support;
+
+    @Getter
     private static volatile ApplicationState instance;
 
     // account related stuff
@@ -59,7 +61,7 @@ public final class ApplicationState {
         support.firePropertyChange("selectedRequerente", selectedRequerente, selectedRequerente);
     }
 
-    public static ApplicationState getInstance() {
+    public static ApplicationState get() {
         if (instance == null) {
             throw new IllegalStateException("ApplicationState not initialized. Initialize it with initialize() first.");
         }

@@ -48,7 +48,7 @@ public class EmentaTabController extends AbstractController<EmentaQuickQueryTab>
 
     @Override
     protected void attachNotifiers(EmentaQuickQueryTab pane) {
-        ApplicationState.getInstance().addPropertyChangeListener(propertyChangeEvent -> {
+        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
             if ("currentUser".equals(propertyChangeEvent.getPropertyName())) {
                 clear(pane);
             }
