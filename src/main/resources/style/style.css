@@ -403,6 +403,10 @@
     -fx-text-fill: j-text-secondary;
 }
 
+.text-red {
+    -fx-text-fill: j-button-red;
+}
+
 
 .text-field-base {
     -fx-background-radius: 0.45em;

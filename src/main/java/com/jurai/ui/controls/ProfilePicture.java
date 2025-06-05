@@ -5,6 +5,9 @@ import com.jurai.ui.util.ImageUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -18,6 +21,12 @@ public class ProfilePicture extends StackPane {
     private final ImageView imagePlus;
     private final Circle imageCircle;
     private final Color imageCircleBgLight, imageCircleBgDark;
+    private final ContextMenu contextMenu;
+    private final MenuItem changePicture;
+    private final MenuItem removePicture;
+    private final MenuItem addPicture;
+
+    private boolean hasCustomImage = true;
 
     public ProfilePicture() {
         super();
@@ -42,6 +51,21 @@ public class ProfilePicture extends StackPane {
         imageCircleBgLight = Color.rgb(0, 0, 0, 0.3);
         imageCircle.setFill(ApplicationState.getInstance().isUseLightTheme() ? imageCircleBgLight : imageCircleBgDark);
         imageCircle.setCursor(Cursor.HAND);
+
+        changePicture = new MenuItem("Trocar imagem");
+        addPicture = new MenuItem("Adicionar imagem");
+        removePicture = new MenuItem("Remover imagem");
+        removePicture.getStyleClass().add("text-red");
+
+        contextMenu = new ContextMenu();
+        contextMenu.getItems().addAll(
+                changePicture,
+                removePicture
+        );
+
+        setOnMouseClicked(e -> {
+            contextMenu.show(this, e.getScreenX(), e.getScreenY());
+        });
 
         // TODO: add nice enter and exit animation
         setOnMouseEntered(e -> getChildren().addAll(imageCircle, imagePlus));
@@ -77,6 +101,19 @@ public class ProfilePicture extends StackPane {
         iv.setImage(img);
     }
 
+    public void setHasCustomImage(boolean hasCustomImage) {
+        this.hasCustomImage = hasCustomImage;
+        contextMenu.getItems().clear();
+        if (hasCustomImage) {
+            contextMenu.getItems().addAll(
+                    changePicture,
+                    removePicture
+            );
+        } else {
+            contextMenu.getItems().add(addPicture);
+        }
+    }
+
     public void setImageViewClip(Node n) {
         iv.setClip(n);
     }
@@ -93,7 +130,4 @@ public class ProfilePicture extends StackPane {
         return iv;
     }
 
-    public void setOnAction(EventHandler<? super MouseEvent> event) {
-        setOnMouseClicked(event);
-    }
 }

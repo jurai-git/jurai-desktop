@@ -13,7 +13,10 @@ import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.menus.AccountDashboardMenu;
 
 import com.jurai.util.EventLogger;
+import javafx.geometry.Side;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
@@ -174,6 +177,10 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         pane.getAccountDashboardMenu().getConfirmPassword().textProperty().addListener(str -> {
             pane.getAccountDashboardMenu().getChangePasswrodBtn().setDisable(!isChangingPasswords(pane));
         });
+
+
+        // profile picture changing and handling
+
 
     }
 

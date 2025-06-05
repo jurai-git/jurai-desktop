@@ -7,6 +7,7 @@ import com.jurai.util.EventLogger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,8 @@ import static com.jurai.ui.util.ControlWrappers.*;
 
 public class AccountSettingsMenu extends AbstractMenu<VBox> {
     private VBox content;
+
+    @Getter
     private ProfilePicture profilePicture;
     private Label usernameLabel, oabLabel;
 
@@ -142,11 +145,13 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
         Image img = new Image(url, true);
         img.errorProperty().addListener(errorHandler);
         profilePicture.setImage(img);
+        profilePicture.setHasCustomImage(true);
     }
 
     public void loadFallback() {
         Image img = new Image(getClass().getResource(ApplicationState.getInstance().getFallbackPfpPath()).toExternalForm());
         profilePicture.setImage(img);
+        profilePicture.setHasCustomImage(false);
     }
 
     @Override
