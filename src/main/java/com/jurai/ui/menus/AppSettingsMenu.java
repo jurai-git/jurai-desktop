@@ -68,7 +68,7 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
                         new VGroup().withVgrow(Priority.ALWAYS).withChildren(
 
                                 wrapStyle(wrapStyleClasses(new Label("Configurações gerais"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
-                                new VGroup().withVgrow(Priority.SOMETIMES).withStyleClass("form", "spacing-3", "p-6").withChildren(
+                                new VGroup().withVgrow(Priority.SOMETIMES).withStyleClass("small-content-box", "spacing-3", "p-6").withChildren(
                                         wrapHgrow(useLightThemeOption, Priority.ALWAYS),
                                         wrapHgrow(useAnimationsOption, Priority.ALWAYS),
                                         wrapHgrow(apiUrlOption, Priority.ALWAYS)
@@ -76,7 +76,7 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
                                 SpacerFactory.vSpacer(24),
 
                                 wrapStyle(wrapStyleClasses(new Label("Privacidade e Segurança"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
-                                new VGroup().withStyleClass("form", "spacing-3", "p-6").withChildren(
+                                new VGroup().withStyleClass("small-content-box", "spacing-3", "p-6").withChildren(
                                         new HGroup().withHgrow(Priority.ALWAYS).withAlignment(Pos.CENTER).withChildren(
                                                 new Label("Termos e condições"),
                                                 SpacerFactory.hSpacer(Priority.ALWAYS),
@@ -86,7 +86,7 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
                                 SpacerFactory.vSpacer(24),
 
                                 wrapStyle(wrapStyleClasses(new Label("Contato e suporte"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
-                                new VGroup().withStyleClass("form", "spacing-3", "p-6").withChildren(
+                                new VGroup().withStyleClass("small-content-box", "spacing-3", "p-6").withChildren(
                                         new HGroup().withHgrow(Priority.ALWAYS).withAlignment(Pos.CENTER).withChildren(
                                                 new Label("Nosso e-mail"),
                                                 SpacerFactory.hSpacer(Priority.ALWAYS),

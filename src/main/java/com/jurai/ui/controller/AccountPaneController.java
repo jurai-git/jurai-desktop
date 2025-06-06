@@ -50,32 +50,13 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 }
                 advogadoService.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
             } catch (ResponseNotOkException ex) {
-                switch (ex.getCode()) {
-                    case 500:
-                        new DefaultMessageNotification(
-                                "Ocorreu um erro com a conexão com o servidor. Cheque a sua conexão com a internet",
-                                NotificationType.ERROR
-                        ).show();
-                        break;
-                    case 400:
-                        new DefaultMessageNotification(
-                                "Parece que você deixou algum campo vazio!",
-                                NotificationType.ERROR
-                        ).show();
-                        break;
-                    case 401:
-                        new DefaultMessageNotification(
-                                "Usuário ou senha incorretos! Verifique suas credenciais e tente novamente.",
-                                NotificationType.ERROR
-                        ).show();
-                        break;
-                    default:
-                        new DefaultMessageNotification(
-                                "Ocorreu um erro inesperado! Tente novamente mais tarde.",
-                                NotificationType.ERROR
-                        ).show();
-                        break;
-                }
+                new DefaultMessageNotification(switch(ex.getCode()) {
+                    case 500 -> "Ocorreu um erro interno ao fazer login. Tente nomvamente mais tarde";
+                    case 400 -> "Parece que você deixou algum campo vazio!";
+                    case 401 -> "Usuário ou senha incorretos! Verifique suas credenciais e tente novamente";
+                    case InternalErrorCodes.NETWORK_ERROR -> "Ocorreu um erro de conexão! Verifique sua conexão com a internet";
+                    default -> "Ocorreu um erro inesperado! Tente novamente mais tarde. Código do erro: " + ex.getCode();
+                }, NotificationType.ERROR).show();
             }
         });
 
@@ -159,7 +140,10 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                     }
                     return null;
                 })
-                .setAfterDispose(msg -> new DefaultMessageNotification(msg, NotificationType.ERROR).show())
+                .setAfterDispose(msg -> {
+                    if (msg == null) return;
+                    new DefaultMessageNotification(msg, NotificationType.ERROR).show();
+                })
                 .show();
         });
 

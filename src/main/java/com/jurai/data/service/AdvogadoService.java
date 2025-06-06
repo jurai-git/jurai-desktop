@@ -11,6 +11,7 @@ import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.model.serializer.AdvogadoSerializer;
 import com.jurai.data.model.serializer.RequerenteSerializer;
 import com.jurai.data.json.JsonUtils;
+import com.jurai.ui.util.AccountMode;
 import com.jurai.util.EventLogger;
 import javafx.application.Platform;
 
@@ -72,6 +73,7 @@ public class AdvogadoService {
 
     public void deauthenticate() {
         ApplicationState.get().setCurrentUser(null);
+        ApplicationState.get().setAccountMode(AccountMode.LOGGING_IN);
     }
 
     public void authenticate(String uname, String password) throws ResponseNotOkException {
