@@ -128,14 +128,13 @@ public class ModalManager {
 
     public void requestModal(String key) {
         if (activeModal != null) {
-            System.out.println("Tried to request modal on top of another; exiting first");
 
             // stop transitions to avoid overlaps
             mFadeOutTransition.stop();
             mBlurFadeOutTransition.stop();
 
             // here we will exit instantly to avoid errors due to transition timing
-            removeAllExceptRoot();
+            removeModalNodes();
             activeNotification = null;
             isExitingNotification = false;
         }
@@ -174,7 +173,7 @@ public class ModalManager {
         mFadeOutTransition.playFromStart();
         mFadeOutTransition.setOnFinished(e -> {
             if (isExitingModal) {
-                removeAllExceptRoot();
+                removeModalNodes();
                 isExitingModal = false;
                 activeModal = null;
             }
@@ -183,7 +182,6 @@ public class ModalManager {
 
     public void requestNotification(Notification notif) {
         if (activeNotification != null) {
-            System.out.println("Tried to request notification on top of another; exiting first");
 
             // stop transitions to avoid overlaps
             nFadeOutTransition.stop();
@@ -200,7 +198,7 @@ public class ModalManager {
                 }
             }
 
-            removeAllExceptRoot();
+            removeNotificationNodes();
             activeNotification = null;
             isExitingNotification = false;
         }
@@ -241,7 +239,6 @@ public class ModalManager {
 
         if (isExitingNotification) return;
         isExitingNotification = true;
-        System.out.println("Exiting notification " + activeNotification + "; DOM is " + root.getChildren());
 
         if(activeModal != null) {
             activeModal.getContent().setEffect(null);
@@ -254,14 +251,18 @@ public class ModalManager {
         nFadeOutTransition.setOnFinished(actionEvent -> {
             if (isExitingNotification) {
                 // we will only remove the notification if no one removed it while the transition was playing, to avoid concurrent modifications
-                removeAllExceptRoot();
+                removeNotificationNodes();
                 isExitingNotification = false;
                 activeNotification = null;
             }
         });
     }
 
-    private void removeAllExceptRoot() {
-        root.getChildren().removeIf(node -> !(node instanceof ProportionPane));
+    private void removeNotificationNodes() {
+        root.getChildren().removeAll(nBlurredBackground, activeNotification != null ? activeNotification.getContent() : null);
+    }
+
+    private void removeModalNodes() {
+        root.getChildren().removeAll(mBlurredBackground, activeModal != null ? activeModal.getContent() : null);
     }
 }

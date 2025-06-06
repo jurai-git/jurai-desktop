@@ -2,9 +2,11 @@ package com.jurai.ui.controller;
 
 import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Requerente;
+import com.jurai.data.request.InternalErrorCodes;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.RequerenteService;
 import com.jurai.ui.modal.RequerenteEditingModal;
+import com.jurai.ui.modal.notif.ConfirmationNotification;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;
 import com.jurai.ui.modal.notif.LoadingModal;
 import com.jurai.ui.modal.notif.NotificationType;
@@ -33,13 +35,28 @@ public class RequerenteEditingModalController extends AbstractController<Requere
             pane.dispose();
         }));
         pane.getDelete().setOnAction(e -> {
-            try {
-                requerenteService.delete(pane.getObject());
-                ApplicationState.get().setSelectedRequerente(null);
-                pane.dispose();
-            } catch (ResponseNotOkException ex) {
-                ex.printStackTrace();
-            }
+            new ConfirmationNotification<String>("Você tem certeza que deseja deletar este requerente?", NotificationType.CONFIRMATION)
+                .setOnYes(ev -> {
+                    try {
+                        requerenteService.delete(pane.getObject());
+                        ApplicationState.get().setSelectedRequerente(null);
+                        pane.dispose();
+                        return null;
+                    } catch (ResponseNotOkException ex) {
+                        return switch(ex.getCode()) {
+                            case 401 -> "Ocorreu um erro ao realizar sua autenticação. Tente sair e entrar novamente";
+                            case 500 -> "Ocorreu um erro na nossa parte ao remover o requerente. Tente novamente mais tarde";
+                            case InternalErrorCodes.NETWORK_ERROR -> "Ocorreu um erro de conexão. Verifique sua conexão com a internet e tente novamente";
+                            default -> "Ocorreu um erro desconhecido. Código: " + ex.getCode();
+                        };
+                    }
+                })
+                .setAfterDispose(msg -> {
+                    if (msg != null) {
+                        new DefaultMessageNotification(msg, NotificationType.ERROR).show();
+                    }
+                })
+                .show();
         });
 
         pane.getCreate().setOnAction(e -> {
