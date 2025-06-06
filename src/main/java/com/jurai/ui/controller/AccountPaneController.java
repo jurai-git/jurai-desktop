@@ -49,6 +49,8 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                     ApplicationState.get().setRemembersUser(true);
                 }
                 advogadoService.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
+                pane.getLoginMenu().getEmail().setText("");
+                pane.getLoginMenu().getPassword().setText("");
             } catch (ResponseNotOkException ex) {
                 new DefaultMessageNotification(switch(ex.getCode()) {
                     case 500 -> "Ocorreu um erro interno ao fazer login. Tente nomvamente mais tarde";
@@ -77,6 +79,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                             pane.getAdvogadoRegisterMenu().getPassword().getText(),
                             pane.getAdvogadoRegisterMenu().getOab().getText()
                     );
+                    pane.getAdvogadoRegisterMenu().clearAll();
                 } else {
                     return;
                 }

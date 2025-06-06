@@ -100,6 +100,15 @@ public class AdvogadoRegisterMenu extends AbstractMenu<BorderPane> {
         content.setCenter(fields);
     }
 
+    public void clearAll() {
+        password.clear();
+        confirmPassword.clear();
+        email.clear();
+        oab.clear();
+        username.clear();
+        keepConnected.setSelected(false);
+    }
+
     @Override
     public BorderPane getContent() {
         return content;
