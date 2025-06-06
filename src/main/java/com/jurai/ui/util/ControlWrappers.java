@@ -30,6 +30,11 @@ public class ControlWrappers {
         return c;
     }
 
+    public static Node wrapStyle(Node c, String style) {
+        c.setStyle(c.getStyle().concat(style));
+        return c;
+    }
+
     public static Label wrapAlignment(Label l, TextAlignment pos) {
         l.setTextAlignment(pos);
         return l;

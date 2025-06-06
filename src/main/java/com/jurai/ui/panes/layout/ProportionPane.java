@@ -30,7 +30,6 @@ public class ProportionPane extends Pane {
 
     @Override
     protected void layoutChildren() {
-
         for(Node child : getChildren()) {
             if(!child.isManaged()) {
                 continue;
@@ -48,6 +47,7 @@ public class ProportionPane extends Pane {
 
                 x = getWidth() - widthPropertyValue + getWidth() * constraints.xProperty.get();
             }
+
             double width = getWidth() * constraints.wProperty.get();
             double height = getHeight() * constraints.hProperty.get();
 

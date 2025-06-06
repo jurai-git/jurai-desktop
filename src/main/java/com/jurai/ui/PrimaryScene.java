@@ -66,7 +66,7 @@ public class PrimaryScene {
         mainPane.addConstraints(sidebar.getView(), sidebarConstraints);
         NodeConstraints sidebarToggleConstraints = new NodeConstraints(0.16f, 0.01f, 0.04f, 0.04f);
         activePaneChanged(ApplicationState.get().getActivePane());
-        sidebarModeUpdated(false);
+        sidebarModeUpdated(ApplicationState.get().isSidebarExtended());
 
         mainPane.setCache(true);
         mainPane.setCacheHint(CacheHint.SPEED);
@@ -74,7 +74,6 @@ public class PrimaryScene {
         sidebar.getView().setCacheHint(CacheHint.SPEED);
 
         scene = new Scene(modalRoot, ApplicationData.getScreenSize().width, ApplicationData.getScreenSize().height, false, SceneAntialiasing.BALANCED);
-        ApplicationState.get().setSidebarExtended(ApplicationState.get().isSidebarExtended());
     }
 
     private void layFixedControls() {
@@ -130,6 +129,10 @@ public class PrimaryScene {
 
     private void sidebarModeUpdated(boolean iconsOnly) {
         sidebar.setIconsOnly(iconsOnly);
+
+        double targetWidth = iconsOnly ? sidebar.finalWidthProperty().get() : sidebar.initialWidthProperty().get();
+        sidebar.getView().setPrefWidth(targetWidth);
+
         SidebarAnimator.getSidebarAnimation(sidebar, sidebarConstraints, mainPane).playFromStart();
     }
 

@@ -3,26 +3,24 @@ package com.jurai.ui.controls;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class VGroup extends VBox {
+public class VGroup extends VBox implements FXFluent<VGroup> {
+
+    @Override
+    public Parent getSelf() {
+        return this;
+    }
+
+
     private boolean withMargin = false;
 
     public VGroup() {
         getStyleClass().add("vgroup");
-    }
-
-    public VGroup withHgrow(Priority p) {
-        HBox.setHgrow(this, p);
-        return this;
-    }
-
-    public VGroup withVgrow(Priority p) {
-        VBox.setVgrow(this, p);
-        return this;
     }
 
     public VGroup withMargin() {
@@ -30,6 +28,7 @@ public class VGroup extends VBox {
         return this;
     }
 
+    @Override
     public VGroup withChildren(Node... es) {
         if(!withMargin) {
             getChildren().addAll(es);
@@ -47,23 +46,8 @@ public class VGroup extends VBox {
         return this;
     }
 
-    public VGroup withStyleClass(String ...styleClass) {
-        getStyleClass().addAll(styleClass);
-        return this;
-    }
-
-    public VGroup withStyle(String style) {
-        setStyle(style);
-        return this;
-    }
-
     public VGroup withAlignment(Pos pos) {
         setAlignment(pos);
-        return this;
-    }
-
-    public VGroup withBorderPaneAlignment(Pos pos) {
-        BorderPane.setAlignment(this, pos);
         return this;
     }
 

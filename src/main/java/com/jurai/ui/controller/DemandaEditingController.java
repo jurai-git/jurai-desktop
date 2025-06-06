@@ -1,11 +1,14 @@
 package com.jurai.ui.controller;
 
+import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Demanda;
+import com.jurai.data.model.Requerente;
 import com.jurai.data.request.InternalErrorCodes;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.DemandaService;
 import com.jurai.data.service.RequerenteService;
 import com.jurai.ui.modal.DemandaEditingModal;
+import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.modal.notif.ConfirmationNotification;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;
 import com.jurai.ui.modal.notif.NotificationType;
@@ -41,7 +44,16 @@ public class DemandaEditingController extends AbstractController<DemandaEditingM
                     }
                 })
                 .setAfterDispose(msg -> {
-                    new DefaultMessageNotification(msg, NotificationType.ERROR).show();
+                    if (msg != null) {
+                        new DefaultMessageNotification(msg, NotificationType.ERROR).show();
+                        return;
+                    }
+
+                    ModalManager.getInstance().exitModal();
+                    Requerente req = ApplicationState.get().getSelectedRequerente();
+                    if (req != null) {
+                        req.demandas().remove(pane.getObject());
+                    }
                 })
                 .show();
         });

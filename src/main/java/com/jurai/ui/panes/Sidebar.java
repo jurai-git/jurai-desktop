@@ -50,7 +50,6 @@ public class Sidebar extends AbstractPane {
 
         separatorTransition = new ScaleTransition(Duration.millis(300), separator);
         separatorTransition.setInterpolator(new PowerEase(2, true));
-
     }
 
     private void attachControllers() {
@@ -69,7 +68,7 @@ public class Sidebar extends AbstractPane {
     private void recalculateWidthProperty() {
         finalWidth.unbind();
         initialWidth.unbind();
-        if(iconsOnly) {
+        if (iconsOnly) {
             initialWidth.bind(ApplicationData.defaultIconSizeProperty().multiply(10));
             finalWidth.bind(ApplicationData.defaultIconSizeProperty().multiply(3));
             separatorTransition.setToX(0);

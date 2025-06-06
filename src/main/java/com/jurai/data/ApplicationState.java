@@ -35,7 +35,7 @@ public final class ApplicationState {
     private static boolean useAnimations = true;
     private static boolean useLightTheme = false;
     private static Demanda selectedDemanda = null;
-    private static boolean sidebarExtended = false;
+    private static boolean sidebarExtended = false ;
     private static boolean viewportSmall = false; // this indicates weather the width of the app is small, for responsiveness
     private static QuickQueryPane.Mode quickQueryMode = QuickQueryPane.Mode.PDF;
 

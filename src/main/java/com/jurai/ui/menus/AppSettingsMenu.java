@@ -2,20 +2,19 @@ package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.HGroup;
+import com.jurai.ui.controls.ScrollableGroup;
 import com.jurai.ui.controls.SettingsOption;
 import com.jurai.ui.controls.VGroup;
 import com.jurai.ui.util.SpacerFactory;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import lombok.Getter;
 import org.controlsfx.control.ToggleSwitch;
 
-import static com.jurai.ui.util.ControlWrappers.wrapHgrow;
-import static com.jurai.ui.util.ControlWrappers.wrapStyleClasses;
+import static com.jurai.ui.util.ControlWrappers.*;
 
 public class AppSettingsMenu extends AbstractMenu<VBox>  {
     private VBox content;
@@ -65,12 +64,41 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
     @Override
     protected void layControls() {
         content.getChildren().addAll(
-                new VGroup().withVgrow(Priority.ALWAYS).withStyleClass("form", "spacing-3", "p-6").withChildren(
-                        useLightThemeOption,
-                        useAnimationsOption,
-                        apiUrlOption,
-                        SpacerFactory.vSpacer(Priority.ALWAYS),
-                        wrapStyleClasses(wrapHgrow(successLabel, Priority.ALWAYS), "text-green")
+                new ScrollableGroup().withVgrow(Priority.ALWAYS).withStyleClass("spacing-3").vbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).hbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).withFixedWitdh().withContent(
+                        new VGroup().withVgrow(Priority.ALWAYS).withChildren(
+
+                                wrapStyle(wrapStyleClasses(new Label("Configurações gerais"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                                new VGroup().withVgrow(Priority.SOMETIMES).withStyleClass("form", "spacing-3", "p-6").withChildren(
+                                        wrapHgrow(useLightThemeOption, Priority.ALWAYS),
+                                        wrapHgrow(useAnimationsOption, Priority.ALWAYS),
+                                        wrapHgrow(apiUrlOption, Priority.ALWAYS)
+                                ),
+                                SpacerFactory.vSpacer(24),
+
+                                wrapStyle(wrapStyleClasses(new Label("Privacidade e Segurança"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                                new VGroup().withStyleClass("form", "spacing-3", "p-6").withChildren(
+                                        new HGroup().withHgrow(Priority.ALWAYS).withAlignment(Pos.CENTER).withChildren(
+                                                new Label("Termos e condições"),
+                                                SpacerFactory.hSpacer(Priority.ALWAYS),
+                                                new Hyperlink("Clique aqui para ver")
+                                        )
+                                ),
+                                SpacerFactory.vSpacer(24),
+
+                                wrapStyle(wrapStyleClasses(new Label("Contato e suporte"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                                new VGroup().withStyleClass("form", "spacing-3", "p-6").withChildren(
+                                        new HGroup().withHgrow(Priority.ALWAYS).withAlignment(Pos.CENTER).withChildren(
+                                                new Label("Nosso e-mail"),
+                                                SpacerFactory.hSpacer(Priority.ALWAYS),
+                                                new Label("contas.jurai@gmail.com")
+                                        ),
+                                        new HGroup().withHgrow(Priority.ALWAYS).withAlignment(Pos.CENTER).withChildren(
+                                                new Label("Formulário para contato"),
+                                                SpacerFactory.hSpacer(Priority.ALWAYS),
+                                                new Hyperlink("Clique aqui para acessar")
+                                        )
+                                )
+                        )
                 ),
                 new HGroup().withChildren(
                         exportConfigs,
@@ -78,7 +106,7 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
                         importConfigs,
                         SpacerFactory.hSpacer(Priority.ALWAYS),
                         saveChanges
-                )
+                ) // bottom buttons
         );
         content.setPrefWidth(600);
         content.getStyleClass().add("spacing-4");

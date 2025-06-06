@@ -32,7 +32,8 @@ public class AccountDashboardMenu extends AbstractMenu<HBox> {
         title = new Label("Bem-vindo(a)!");
         title.getStyleClass().addAll("header", "pb-4-i");
         subtitle = new Label("Configurações do aplicativo");
-        subtitle.getStyleClass().addAll("subheader");
+        subtitle.getStyleClass().addAll("header");
+        subtitle.setStyle(subtitle.getStyle().concat("-fx-padding: 0 0 12px 6px;"));
         subtitle.setPadding(Insets.EMPTY);
         subtitle.minHeightProperty().bind(title.heightProperty());
         subtitle.prefHeightProperty().bind(title.heightProperty());
