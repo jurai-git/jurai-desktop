@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.jurai.data.AppState;
+import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Demanda;
 import com.jurai.data.model.Requerente;
@@ -63,6 +64,7 @@ public class DemandaService {
         try {
             requestHandler.delete("/demanda/" + (long) d.getId(), body, "Bearer: " + AppState.get().getCurrentUser().getAccessToken());
             r.demandas().remove(d);
+            GlobalEvents.get().fireGlobalDemandasChanged();
             AppState.get().setSelectedDemanda(null);
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on DemandaService::delete: error " + e.getCode());
@@ -84,6 +86,7 @@ public class DemandaService {
             Platform.runLater(() -> {
                 selectedRequerente.demandas().clear();
                 selectedRequerente.demandas().addAll(demandas);
+                GlobalEvents.get().fireGlobalDemandasChanged();
             });
             EventLogger.log("Loaded requerentes for advogado " + currentUser.getNome());
         } catch(ResponseNotOkException e) {

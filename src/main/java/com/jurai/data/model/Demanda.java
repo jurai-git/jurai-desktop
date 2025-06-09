@@ -2,8 +2,13 @@ package com.jurai.data.model;
 
 import javafx.beans.property.*;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class Demanda implements Model {
-    private DoubleProperty id = new SimpleDoubleProperty();
+    private static final Map<Long, Demanda> registry = new ConcurrentHashMap<>();
+
+    private LongProperty id = new SimpleLongProperty();
 
     private final StringProperty foro = new SimpleStringProperty();
     private final StringProperty competencia = new SimpleStringProperty();
@@ -51,8 +56,8 @@ public class Demanda implements Model {
         this.identificacao.set(identificacao);
     }
 
-    public Demanda(
-            int id,
+    private Demanda(
+            long id,
             String foro,
             String competencia,
             String classe,
@@ -73,11 +78,52 @@ public class Demanda implements Model {
         this.dono.set(dono);
     }
 
-    public double getId() {
+    public static Demanda getOrCreate(long id,
+                                      String foro,
+                                      String competencia,
+                                      String classe,
+                                      String assuntoPrincipal,
+                                      boolean pedidoLiminar,
+                                      boolean segJustica,
+                                      Double valorAcao,
+                                      boolean dispensaLegal,
+                                      boolean justicaGratuita,
+                                      boolean guiaCustas,
+                                      String resumo,
+                                      String statusDemanda,
+                                      String identificacao,
+                                      String dono) {
+        return getOrCreate(new Demanda(id, foro, competencia, classe, assuntoPrincipal, pedidoLiminar, segJustica, valorAcao, dispensaLegal, justicaGratuita, guiaCustas, resumo, statusDemanda, identificacao, dono));
+    }
+
+    public static Demanda getOrCreate(Demanda d) {
+        return registry.compute(d.getId(), (id, existing) -> {
+            if (existing == null) return d;
+
+            existing.setNome(d.getNome());
+            existing.setClasse(d.getClasse());
+            existing.setCompetencia(d.getCompetencia());
+            existing.setForo(d.getForo());
+            existing.setAssuntoPrincipal(d.getAssuntoPrincipal());
+            existing.setPedidoLiminar(d.isPedidoLiminar());
+            existing.setSegJustica(d.isSegJustica());
+            existing.setValorAcao(d.getValorAcao());
+            existing.setDispensaLegal(d.isDispensaLegal());
+            existing.setJusticaGratuita(d.isJusticaGratuita());
+            existing.setGuiaCustas(d.isGuiaCustas());
+            existing.setResumo(d.getResumo());
+            existing.setStatusDemanda(d.getStatusDemanda());
+
+            return existing;
+        });
+    }
+
+
+    public long getId() {
         return id.get();
     }
 
-    public void setId(double id) {
+    public void setId(long id) {
         this.id.set(id);
     }
 

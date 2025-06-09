@@ -150,6 +150,12 @@ public class SimpleList<T extends Model> extends VBox {
         listItemsContainer.setClip(null);
     }
 
+    public void clear() {
+        setSelectedItem(null);
+        listItemsContainer.getChildren().clear();
+        listItems.clear();
+    }
+
     //getters & setters
 
     public void addSelectedItemListener(ChangeListener<SimpleListItem<T>> listener) {
@@ -157,6 +163,14 @@ public class SimpleList<T extends Model> extends VBox {
     }
 
     public void setSelectedItem(SimpleListItem<T> item) {
+        if (item == null) {
+            if (selectedItem.get() != null) {
+                selectedItem.get().setSelected(false);
+                selectedItem.set(null);
+            }
+            return;
+        }
+
         if(selectedItem.get() == null) {
             selectedItem.set(item);
             item.setSelected(true);

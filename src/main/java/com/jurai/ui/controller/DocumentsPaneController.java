@@ -46,10 +46,11 @@ public class DocumentsPaneController extends AbstractController<DocumentsPane> {
         });
 
         GlobalEvents.get().onGlobalDemandasEdited(() -> {
-            docChooser.updateContent(AppState.get().getGlobalSelectedDemanda());
+                docChooser.updateContent(AppState.get().getGlobalSelectedDemanda());
         });
 
         GlobalEvents.get().onGlobalDemandasChanged(() -> {
+
             fetchDemandas(pane);
         });
 
@@ -113,6 +114,7 @@ public class DocumentsPaneController extends AbstractController<DocumentsPane> {
         }
 
         // no errors
+        docChooser.getDocList().clear();
         for (Demanda demanda : allDemandas.getData()) {
             docChooser.getDocList().createListItem(demanda);
         }

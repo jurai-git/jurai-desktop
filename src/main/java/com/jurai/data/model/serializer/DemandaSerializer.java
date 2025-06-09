@@ -28,7 +28,7 @@ public class DemandaSerializer implements JsonSerializer<Demanda>, JsonDeseriali
         String identificacao = jsonObject.get("identificacao").getAsString();
         String dono = jsonObject.get("dono").getAsString();
 
-        return new Demanda(id, foro, competencia, classe, assuntoPrincipal, pedidoLiminar, segJustica, valorAcao, dispensaLegal, justicaGratuita, guiaCustas, resumo, statusDemanda, identificacao, dono);
+        return Demanda.getOrCreate(id, foro, competencia, classe, assuntoPrincipal, pedidoLiminar, segJustica, valorAcao, dispensaLegal, justicaGratuita, guiaCustas, resumo, statusDemanda, identificacao, dono);
     }
 
     @Override
