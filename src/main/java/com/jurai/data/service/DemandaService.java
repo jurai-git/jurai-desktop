@@ -3,10 +3,11 @@ package com.jurai.data.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Demanda;
 import com.jurai.data.model.Requerente;
+import com.jurai.data.model.internal_state.AsyncState;
 import com.jurai.data.request.RequestHandler;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.model.serializer.AdvogadoSerializer;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class DemandaService {
     private static final DemandaService instance = new DemandaService();
-    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.get().getApiUrl());
+    private final RequestHandler requestHandler = new RequestHandler(AppState.get().getApiUrl());
     private final Gson gson;
 
     private DemandaService() {
@@ -30,9 +31,9 @@ public class DemandaService {
         builder.registerTypeAdapter(Demanda.class, new DemandaSerializer());
         gson = builder.create();
 
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if("apiUrl".equals(e.getPropertyName())) {
-                requestHandler.setBaseUrl(ApplicationState.get().getApiUrl());
+                requestHandler.setBaseUrl(AppState.get().getApiUrl());
             }
         });
     }
@@ -42,7 +43,7 @@ public class DemandaService {
     }
 
     public void update(Demanda d) throws ResponseNotOkException {
-        Advogado currentUser = ApplicationState.get().getCurrentUser();
+        Advogado currentUser = AppState.get().getCurrentUser();
         JsonObject body = JsonUtils.asJson(gson.toJson(d, Demanda.class));
 
         try {
@@ -56,13 +57,13 @@ public class DemandaService {
     }
 
     public void delete(Demanda d) throws ResponseNotOkException {
-        Requerente r = ApplicationState.get().getSelectedRequerente();
+        Requerente r = AppState.get().getSelectedRequerente();
         JsonObject body = new JsonObject();
 
         try {
-            requestHandler.delete("/demanda/" + (long) d.getId(), body, "Bearer: " + ApplicationState.get().getCurrentUser().getAccessToken());
+            requestHandler.delete("/demanda/" + (long) d.getId(), body, "Bearer: " + AppState.get().getCurrentUser().getAccessToken());
             r.demandas().remove(d);
-            ApplicationState.get().setSelectedDemanda(null);
+            AppState.get().setSelectedDemanda(null);
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on DemandaService::delete: error " + e.getCode());
             throw e;
@@ -71,8 +72,8 @@ public class DemandaService {
 
     public void reloadDemandas() throws ResponseNotOkException {
         JsonObject body = new JsonObject();
-        Requerente selectedRequerente = ApplicationState.get().getSelectedRequerente();
-        Advogado currentUser = ApplicationState.get().getCurrentUser();
+        Requerente selectedRequerente = AppState.get().getSelectedRequerente();
+        Advogado currentUser = AppState.get().getCurrentUser();
 
         try {
             JsonObject response = requestHandler.get("/advogado/requerente/" + (long) selectedRequerente.getIdRequerente() + "/demandas", "Bearer " + currentUser.getAccessToken());
@@ -86,8 +87,22 @@ public class DemandaService {
             });
             EventLogger.log("Loaded requerentes for advogado " + currentUser.getNome());
         } catch(ResponseNotOkException e) {
-            EventLogger.logError("Error communicating to API on AdvogadoService.loadRequerentes(): error " + e.getCode());
+            EventLogger.logError("Error communicating to API on AdvogadoService.reloadDemandas(): error " + e.getCode());
             System.out.println(e.getMessage());
+            throw e;
+        }
+    }
+
+    public List<Demanda> loadSystemWideDemandas() throws ResponseNotOkException {
+        try {
+            JsonObject response = requestHandler.get("/advogado/demandas", "Bearer " + AppState.get().getCurrentUser().getAccessToken());
+            List<Demanda> demandas = response.get("demandas").getAsJsonArray().asList().stream()
+                    .map(element -> gson.fromJson(element, Demanda.class)).toList();
+
+            EventLogger.log("Loaded all demandas for advogado " + AppState.get().getCurrentUser().getNome());
+            return demandas;
+        } catch (ResponseNotOkException e) {
+            EventLogger.logError("Error communicating to API on AdvogadoService.loadSystemWideDemandas(): error " + e.getCode());
             throw e;
         }
     }

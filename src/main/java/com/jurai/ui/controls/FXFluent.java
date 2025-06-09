@@ -1,5 +1,6 @@
 package com.jurai.ui.controls;
 
+import javafx.beans.binding.DoubleBinding;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;

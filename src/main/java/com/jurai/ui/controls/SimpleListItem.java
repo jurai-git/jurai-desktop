@@ -1,6 +1,6 @@
 package com.jurai.ui.controls;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.Model;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.animation.interpolator.PowerEase;
@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import lombok.Getter;
+import com.jurai.util.EventLogger;
 
 public class SimpleListItem<T extends Model> extends HBox {
     private Label nameLabel;
@@ -64,7 +65,7 @@ public class SimpleListItem<T extends Model> extends HBox {
         textFillTransition.setFromValue(Color.web("#888"));
         textFillTransition.setInterpolator(interpolator);
 
-        if (ApplicationState.get().isUseLightTheme()) {
+        if (AppState.get().isUseLightTheme()) {
             textFillTransition.setToValue(Color.web("#0f0f0f"));
         } else {
             textFillTransition.setToValue(Color.web("#fcfcfc"));
@@ -74,7 +75,7 @@ public class SimpleListItem<T extends Model> extends HBox {
     }
 
     private void attachNotifiers() {
-        ApplicationState.get().addPropertyChangeListener(change -> {
+        AppState.get().listen(change -> {
             if ("useLightTheme".equals(change.getPropertyName())) {
                 themeChanged((boolean) change.getNewValue());
             }
@@ -83,14 +84,12 @@ public class SimpleListItem<T extends Model> extends HBox {
 
     public void themeChanged(boolean isLight) {
         if (isLight) {
-            System.out.println("Loading light theme");
             textFillTransition.setToValue(Color.web("0f0f0f"));
             if (selected) {
                 textFillTransition.playFromStart();
             }
         } else {
             textFillTransition.setToValue(Color.web("#fcfcfc"));
-            System.out.println("Loading dark theme");
             if (selected) {
                 textFillTransition.playFromStart();
             }

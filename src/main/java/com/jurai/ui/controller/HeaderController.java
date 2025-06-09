@@ -1,6 +1,6 @@
 package com.jurai.ui.controller;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.Advogado;
 import com.jurai.ui.panes.Header;
@@ -16,34 +16,34 @@ public class HeaderController extends AbstractController<Header> {
     @Override
     protected void attachEvents(Header header) {
         header.getPfp().setOnMouseClicked(e -> {
-            ApplicationState.get().setActivePane(Pane.AccountPane);
+            AppState.get().setActivePane(Pane.AccountPane);
         });
     }
 
     @Override
     protected void attachNotifiers(Header header) {
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if ("activePane".equals(e.getPropertyName()) ||
                     "selectedDemanda".equals(e.getPropertyName()) ||
                     "selectedRequerente".equals(e.getPropertyName()) ||
                     "quickQueryMode".equals(e.getPropertyName())) {
                 StringBuilder newUrl = new StringBuilder();
-                switch (ApplicationState.get().getActivePane()) {
+                switch (AppState.get().getActivePane()) {
                     case DashboardPane:
                         newUrl.append(" / Dashboard");
-                        if (ApplicationState.get().getSelectedRequerente() != null) {
-                            newUrl.append(" / " + ApplicationState.get().getSelectedRequerente().nomeProperty().get());
-                            if (ApplicationState.get().getSelectedDemanda() != null) {
-                                newUrl.append(" / " + ApplicationState.get().getSelectedDemanda().nomeProperty().get());
+                        if (AppState.get().getSelectedRequerente() != null) {
+                            newUrl.append(" / " + AppState.get().getSelectedRequerente().nomeProperty().get());
+                            if (AppState.get().getSelectedDemanda() != null) {
+                                newUrl.append(" / " + AppState.get().getSelectedDemanda().nomeProperty().get());
                             }
                         }
                         break;
                     case QuickQueryPane:
                         newUrl.append(" / Consulta Rápida");
-                        if (ApplicationState.get().getQuickQueryMode() == null) {
+                        if (AppState.get().getQuickQueryMode() == null) {
                             break;
                         }
-                        if (ApplicationState.get().getQuickQueryMode().equals(QuickQueryPane.Mode.EMENTA)) {
+                        if (AppState.get().getQuickQueryMode().equals(QuickQueryPane.Mode.EMENTA)) {
                             newUrl.append(" / Ementa");
                         } else {
                             newUrl.append(" / PDF");
@@ -51,8 +51,8 @@ public class HeaderController extends AbstractController<Header> {
                         break;
                     case AccountPane:
                         newUrl.append(" / Conta");
-                        if (ApplicationState.get().getCurrentUser() != null) {
-                            newUrl.append(" / " + ApplicationState.get().getCurrentUser().nomeProperty().get());
+                        if (AppState.get().getCurrentUser() != null) {
+                            newUrl.append(" / " + AppState.get().getCurrentUser().nomeProperty().get());
                         }
                         break;
                     case DocPane:
@@ -65,9 +65,9 @@ public class HeaderController extends AbstractController<Header> {
             } else if ("useLightTheme".equals(e.getPropertyName())) {
                 header.themeChanged();
             } else if ("currentUser".equals(e.getPropertyName())) {
-                Advogado currentUser = ApplicationState.get().getCurrentUser();
+                Advogado currentUser = AppState.get().getCurrentUser();
                 if (currentUser != null) {
-                    header.updatePfp(ApplicationState.get().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
+                    header.updatePfp(AppState.get().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
                 } else {
                     header.loadFallback();
                 }
@@ -75,9 +75,9 @@ public class HeaderController extends AbstractController<Header> {
         });
 
         GlobalEvents.get().onPfpChanged(e -> {
-            Advogado currentUser = ApplicationState.get().getCurrentUser();
+            Advogado currentUser = AppState.get().getCurrentUser();
             if (currentUser != null) {
-                header.updatePfp(ApplicationState.get().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
+                header.updatePfp(AppState.get().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
             } else {
                 header.loadFallback();
             }

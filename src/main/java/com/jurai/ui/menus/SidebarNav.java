@@ -1,7 +1,7 @@
 package com.jurai.ui.menus;
 
 import com.jurai.data.ApplicationData;
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.ui.controls.ArrowToggleButton;
 import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.SidebarNavItem;
@@ -49,7 +49,7 @@ public class SidebarNav extends AbstractMenu<VBox> {
         account.dotWidthProperty().set(4);
 
         sidebarToggleButton = new ArrowToggleButton();
-        sidebarToggleButton.setActive(ApplicationState.get().isSidebarExtended());
+        sidebarToggleButton.setActive(AppState.get().isSidebarExtended());
 
         ApplicationData.defaultIconSizeProperty().bind(account.getIconContainer().widthProperty());
 

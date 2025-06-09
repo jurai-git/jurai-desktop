@@ -1,6 +1,6 @@
 package com.jurai.ui.controller;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.Requerente;
 import com.jurai.data.request.InternalErrorCodes;
 import com.jurai.data.request.ResponseNotOkException;
@@ -39,7 +39,7 @@ public class RequerenteEditingModalController extends AbstractController<Requere
                 .setOnYes(ev -> {
                     try {
                         requerenteService.delete(pane.getObject());
-                        ApplicationState.get().setSelectedRequerente(null);
+                        AppState.get().setSelectedRequerente(null);
                         pane.dispose();
                         return null;
                     } catch (ResponseNotOkException ex) {

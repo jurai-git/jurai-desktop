@@ -1,6 +1,6 @@
 package com.jurai.ui.controller;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.Demanda;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.DemandaService;
@@ -26,18 +26,18 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
         });
         pane.getDemandaList().addSelectedItemListener((observableValue, demandaSimpleListItem, t1) -> {
             if (t1 == null) {
-                ApplicationState.get().setSelectedDemanda(null);
+                AppState.get().setSelectedDemanda(null);
             } else {
-                ApplicationState.get().setSelectedDemanda(t1.getObject());
+                AppState.get().setSelectedDemanda(t1.getObject());
             }
         });
     }
 
     @Override
     protected void attachNotifiers(DemandaDashboardMenu pane) {
-        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
+        AppState.get().listen(propertyChangeEvent -> {
             if("selectedRequerente".equals(propertyChangeEvent.getPropertyName())) {
-                if(ApplicationState.get().getSelectedRequerente() != null) {
+                if(AppState.get().getSelectedRequerente() != null) {
                     loadDemandas(pane);
                 } else {
                     unbindDemandaList(pane.getDemandaList().getListObjects());
@@ -46,7 +46,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
 		        }
             }
         });
-        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
+        AppState.get().listen(propertyChangeEvent -> {
             if("selectedDemanda".equals(propertyChangeEvent.getPropertyName())) {
                 if(propertyChangeEvent.getNewValue() != null) {
                     pane.getEditDeleteDemanda().setDisable(false);
@@ -56,9 +56,9 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
             }
         });
 
-        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
+        AppState.get().listen(propertyChangeEvent -> {
             if ("currentAccount".equals(propertyChangeEvent.getPropertyName())) {
-                ApplicationState.get().setSelectedDemanda(null);
+                AppState.get().setSelectedDemanda(null);
             }
         });
     }
@@ -68,7 +68,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
     }
 
     private void bindDemandaList(ObservableList<Demanda> paneRequerentes) {
-        Bindings.bindContent(paneRequerentes, ApplicationState.get().getSelectedRequerente().demandas());
+        Bindings.bindContent(paneRequerentes, AppState.get().getSelectedRequerente().demandas());
     }
 
     private void loadDemandas(DemandaDashboardMenu pane) {
@@ -97,7 +97,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
 
             @Override
             protected void failed() {
-                ApplicationState.get().setSelectedRequerente(null);
+                AppState.get().setSelectedRequerente(null);
                 UILogger.logError(getException().getMessage());
                 new DefaultMessageNotification("Erro ao carregar demandas!", NotificationType.ERROR).show();
 

@@ -1,6 +1,6 @@
 package com.jurai.ui.menus;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.DemandaAnalysis;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.CircleGraph;
@@ -78,7 +78,7 @@ public class AnalysisResultsMenu extends AbstractMenu<StackPane> {
 
         inactiveContent.getChildren().add(inactiveLabel);
         layInactiveContent();
-        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
+        AppState.get().listen(propertyChangeEvent -> {
             if ("viewportSmall".equals(propertyChangeEvent.getPropertyName())) {
                 if ((boolean) propertyChangeEvent.getNewValue()) {
                     setVertical();

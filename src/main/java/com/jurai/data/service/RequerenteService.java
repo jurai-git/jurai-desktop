@@ -3,7 +3,7 @@ package com.jurai.data.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Demanda;
 import com.jurai.data.model.Requerente;
@@ -17,7 +17,7 @@ import com.jurai.util.EventLogger;
 
 public class RequerenteService {
     private static final RequerenteService instance = new RequerenteService();
-    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.get().getApiUrl());
+    private final RequestHandler requestHandler = new RequestHandler(AppState.get().getApiUrl());
     private final Gson gson;
 
     private RequerenteService() {
@@ -27,9 +27,9 @@ public class RequerenteService {
         builder.registerTypeAdapter(Demanda.class, new DemandaSerializer());
         gson = builder.create();
 
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if("apiUrl".equals(e.getPropertyName())) {
-                requestHandler.setBaseUrl(ApplicationState.get().getApiUrl());
+                requestHandler.setBaseUrl(AppState.get().getApiUrl());
             }
         });
     }
@@ -39,7 +39,7 @@ public class RequerenteService {
     }
 
     public void update(Requerente r) throws ResponseNotOkException {
-        Advogado currentUser = ApplicationState.get().getCurrentUser();
+        Advogado currentUser = AppState.get().getCurrentUser();
         JsonObject body = JsonUtils.asJson(gson.toJson(r, Requerente.class));
         try {
             requestHandler.patch("/requerente/" + (long) r.getIdRequerente(), body, "Bearer: " + currentUser.getAccessToken());
@@ -51,7 +51,7 @@ public class RequerenteService {
     }
 
     public void delete(Requerente r) throws ResponseNotOkException {
-        Advogado currentUser = ApplicationState.get().getCurrentUser();
+        Advogado currentUser = AppState.get().getCurrentUser();
         JsonObject body = new JsonObject();
 
         try {
@@ -64,8 +64,8 @@ public class RequerenteService {
     }
 
     public void addDemanda(Demanda d) throws ResponseNotOkException{
-        Advogado currentUser = ApplicationState.get().getCurrentUser();
-        Requerente currentRequerente = ApplicationState.get().getSelectedRequerente();
+        Advogado currentUser = AppState.get().getCurrentUser();
+        Requerente currentRequerente = AppState.get().getSelectedRequerente();
         if(currentRequerente == null) {
             EventLogger.logError("Error adding demanda: no requerente selected");
             throw new IllegalStateException("No requerente selected");

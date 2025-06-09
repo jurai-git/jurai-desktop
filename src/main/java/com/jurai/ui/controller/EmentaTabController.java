@@ -1,6 +1,6 @@
 package com.jurai.ui.controller;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.DemandaAnalysis;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AIService;
@@ -48,7 +48,7 @@ public class EmentaTabController extends AbstractController<EmentaQuickQueryTab>
 
     @Override
     protected void attachNotifiers(EmentaQuickQueryTab pane) {
-        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
+        AppState.get().listen(propertyChangeEvent -> {
             if ("currentUser".equals(propertyChangeEvent.getPropertyName())) {
                 clear(pane);
             }

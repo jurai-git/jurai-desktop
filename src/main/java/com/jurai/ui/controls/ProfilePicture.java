@@ -1,6 +1,6 @@
 package com.jurai.ui.controls;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.ui.util.ImageUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,7 +35,7 @@ public class ProfilePicture extends StackPane {
         imagePlus = new ImageView();
         imagePlusImgLight = new Image(getClass().getResource("/img/image-plus-light.png").toExternalForm());
         imagePlusImgDark = new Image(getClass().getResource("/img/image-plus-dark.png").toExternalForm());
-        imagePlus.setImage(ApplicationState.get().isUseLightTheme() ? imagePlusImgLight : imagePlusImgDark); // default to theme while the user doesn't choose an image
+        imagePlus.setImage(AppState.get().isUseLightTheme() ? imagePlusImgLight : imagePlusImgDark); // default to theme while the user doesn't choose an image
 
         imagePlus.fitWidthProperty().bind(iv.fitWidthProperty().multiply(0.25));
         imagePlus.setPreserveRatio(true);
@@ -48,7 +48,7 @@ public class ProfilePicture extends StackPane {
         imageCircle.radiusProperty().bind(imagePlus.fitWidthProperty().multiply(1.2));
         imageCircleBgDark = Color.rgb(255, 255, 255, 0.3);
         imageCircleBgLight = Color.rgb(0, 0, 0, 0.3);
-        imageCircle.setFill(ApplicationState.get().isUseLightTheme() ? imageCircleBgLight : imageCircleBgDark);
+        imageCircle.setFill(AppState.get().isUseLightTheme() ? imageCircleBgLight : imageCircleBgDark);
         imageCircle.setCursor(Cursor.HAND);
 
         changePicture = new MenuItem("Trocar imagem");

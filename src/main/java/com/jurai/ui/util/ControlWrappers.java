@@ -9,28 +9,28 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
 public class ControlWrappers {
-    public static Node wrapHgrow(Node c, Priority p) {
+    public static <T extends Node> T wrapHgrow(T c, Priority p) {
         HBox.setHgrow(c, p);
         return c;
     }
-    public static Node wrapHgrow(Node c) {
+    public static <T extends Node> T wrapHgrow(T c) {
         return wrapHgrow(c, Priority.ALWAYS);
     }
 
-    public static Node wrapVgrow(Node c, Priority p) {
+    public static <T extends Node> T wrapVgrow(T c, Priority p) {
         VBox.setVgrow(c, p);
         return c;
     }
-    public static Node wrapVgrow(Node c) {
+    public static <T extends Node> T wrapVgrow(T c) {
         return wrapVgrow(c, Priority.ALWAYS);
     }
 
-    public static Node wrapStyleClasses(Node c, String ...classes) {
+    public static <T extends Node> T wrapStyleClasses(T c, String ...classes) {
         c.getStyleClass().addAll(classes);
         return c;
     }
 
-    public static Node wrapStyle(Node c, String style) {
+    public static <T extends Node> T wrapStyle(T c, String style) {
         c.setStyle(c.getStyle().concat(style));
         return c;
     }

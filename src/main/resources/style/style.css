@@ -72,6 +72,11 @@
 .subheader {
     -fx-padding: 4px 0;
 }
+
+.subsubheader {
+    -fx-padding: 2px 0;
+}
+
 .header .text {
     -fx-font-weight: bold;
     -fx-font-size: 1.8em;
@@ -80,6 +85,12 @@
     -fx-font-weight: bold;
     -fx-font-size: 1.3em;
 }
+.subsubheader .text {
+    -fx-font-weight: semibold;
+    -fx-font-size: 1.125em;
+}
+
+
 
 .content-box {
     -fx-background-color: j-content-base;

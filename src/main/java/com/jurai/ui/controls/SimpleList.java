@@ -1,6 +1,5 @@
 package com.jurai.ui.controls;
 
-import com.jurai.data.ApplicationState;
 import com.jurai.data.model.Model;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
@@ -11,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -48,9 +46,9 @@ public class SimpleList<T extends Model> extends VBox {
         super();
         getStyleClass().add("simple-list");
         this.headerText = headerText;
-        initData();
         initControls();
         layControls();
+        initData();
     }
 
     // UI managers
@@ -125,6 +123,11 @@ public class SimpleList<T extends Model> extends VBox {
             listItemsWrapper.getChildren().setAll(scrollPane);
             loadingCircle.stop();
         }
+    }
+
+    public void setError(Label errorMsg) {
+        loadingCircle.stop();
+        listItemsWrapper.getChildren().setAll(errorMsg);
     }
 
     private void initData() {

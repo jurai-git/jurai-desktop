@@ -1,6 +1,6 @@
 package com.jurai.ui.animation;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.ui.animation.interpolator.PowerEase;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
@@ -21,14 +21,14 @@ public class HoverAnimator {
     public static void initialize() {
         if (initialized) return;
         initialized = true;
-        ApplicationState.get().addPropertyChangeListener(change -> {
+        AppState.get().listen(change -> {
             if ("useAnimations".equals(change.getPropertyName())) {
                 if ((boolean) change.getNewValue()) enable();
                 else disable();
             }
         });
 
-        if (!ApplicationState.get().isUseAnimations()) {
+        if (!AppState.get().isUseAnimations()) {
             disable();
         }
     }

@@ -3,7 +3,7 @@ package com.jurai.data.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.Advogado;
 import com.jurai.data.model.Requerente;
 import com.jurai.data.request.RequestHandler;
@@ -19,7 +19,7 @@ import java.io.File;
 import java.util.List;
 
 public class AdvogadoService {
-    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.get().getApiUrl());
+    private final RequestHandler requestHandler = new RequestHandler(AppState.get().getApiUrl());
     private final Gson gson;
     private static final AdvogadoService instance = new AdvogadoService();
 
@@ -29,9 +29,9 @@ public class AdvogadoService {
         builder.registerTypeAdapter(Requerente.class, new RequerenteSerializer());
         gson = builder.create();
 
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if("apiUrl".equals(e.getPropertyName())) {
-                requestHandler.setBaseUrl(ApplicationState.get().getApiUrl());
+                requestHandler.setBaseUrl(AppState.get().getApiUrl());
             }
         });
     }
@@ -63,7 +63,7 @@ public class AdvogadoService {
     public void delete() throws ResponseNotOkException {
         try {
             JsonObject body = new JsonObject();
-            requestHandler.delete("/advogado", body, "Bearer: " + ApplicationState.get().getCurrentUser().getAccessToken());
+            requestHandler.delete("/advogado", body, "Bearer: " + AppState.get().getCurrentUser().getAccessToken());
             deauthenticate();
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService::delete: error " + e.getCode());
@@ -72,8 +72,8 @@ public class AdvogadoService {
     }
 
     public void deauthenticate() {
-        ApplicationState.get().setCurrentUser(null);
-        ApplicationState.get().setAccountMode(AccountMode.LOGGING_IN);
+        AppState.get().setCurrentUser(null);
+        AppState.get().setAccountMode(AccountMode.LOGGING_IN);
     }
 
     public void authenticate(String uname, String password) throws ResponseNotOkException {
@@ -84,7 +84,7 @@ public class AdvogadoService {
         try {
             JsonObject response = requestHandler.post("/advogado/auth", body);
             Advogado advogado = gson.fromJson(response.get("advogado"), Advogado.class);
-            ApplicationState.get().setCurrentUser(advogado);
+            AppState.get().setCurrentUser(advogado);
             reloadRequerentes();
         }catch(ResponseNotOkException e) {
             throw e;
@@ -95,7 +95,7 @@ public class AdvogadoService {
         try {
             JsonObject response = requestHandler.get("/advogado/auth", "Bearer " + accessToken);
             Advogado advogado = gson.fromJson(response.get("advogado"), Advogado.class);
-            ApplicationState.get().setCurrentUser(advogado);
+            AppState.get().setCurrentUser(advogado);
             reloadRequerentes();
         } catch (ResponseNotOkException e) {
             throw e;
@@ -103,7 +103,7 @@ public class AdvogadoService {
     }
 
     public void reloadRequerentes() throws ResponseNotOkException {
-        Advogado currentUser = ApplicationState.get().getCurrentUser();
+        Advogado currentUser = AppState.get().getCurrentUser();
 
         try {
             JsonObject response = requestHandler.get("/advogado/requerentes", "Bearer " + currentUser.getAccessToken());
@@ -127,7 +127,7 @@ public class AdvogadoService {
         JsonObject body = JsonUtils.asJson(gson.toJson(r, Requerente.class));
         System.out.println(body);
         try {
-            JsonObject response = requestHandler.post("/requerente", body, "Bearer: " + ApplicationState.get().getCurrentUser().getAccessToken());
+            JsonObject response = requestHandler.post("/requerente", body, "Bearer: " + AppState.get().getCurrentUser().getAccessToken());
             reloadRequerentes();
         } catch(ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService.addRequerente(): error " + e.getCode());
@@ -147,7 +147,7 @@ public class AdvogadoService {
 
     public void changePicture(File newPicture) throws ResponseNotOkException {
         try {
-            requestHandler.postFile("/advogado/pfp", newPicture, "picture", "Bearer " + ApplicationState.get().getCurrentUser().getAccessToken());
+            requestHandler.postFile("/advogado/pfp", newPicture, "picture", "Bearer " + AppState.get().getCurrentUser().getAccessToken());
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService.changePicture(): error " + e.getCode());
             throw e;
@@ -156,7 +156,7 @@ public class AdvogadoService {
 
     public void deletePicture() throws ResponseNotOkException {
         try {
-            requestHandler.delete("/advogado/pfp", null, "Bearer " + ApplicationState.get().getCurrentUser().getAccessToken());
+            requestHandler.delete("/advogado/pfp", null, "Bearer " + AppState.get().getCurrentUser().getAccessToken());
         } catch (ResponseNotOkException e) {
             EventLogger.logError("Error communicating to API on AdvogadoService.deletePicture: error " + e.getMessage());
             throw e;
@@ -164,10 +164,10 @@ public class AdvogadoService {
     }
 
     public Advogado getCurrent() {
-        return ApplicationState.get().getCurrentUser();
+        return AppState.get().getCurrentUser();
     }
 
     private void setCurrent(Advogado a) {
-        ApplicationState.get().setCurrentUser(a);
+        AppState.get().setCurrentUser(a);
     }
 }

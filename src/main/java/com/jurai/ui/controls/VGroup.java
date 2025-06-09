@@ -1,6 +1,8 @@
 package com.jurai.ui.controls;
 
 import com.jurai.ui.util.SpacerFactory;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -8,6 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import com.jurai.util.Ref;
+
+import java.lang.ref.Reference;
 
 public class VGroup extends VBox implements FXFluent<VGroup> {
 
@@ -48,6 +53,21 @@ public class VGroup extends VBox implements FXFluent<VGroup> {
 
     public VGroup withAlignment(Pos pos) {
         setAlignment(pos);
+        return this;
+    }
+
+    public VGroup bindMaxHeightProperty(ReadOnlyDoubleProperty binding) {
+        maxHeightProperty().bind(binding);
+        return this;
+    }
+
+    public VGroup bindPrefHeightProperty(ReadOnlyDoubleProperty binding) {
+        prefHeightProperty().bind(binding);
+        return this;
+    }
+
+    public VGroup getHeightProperty(Ref<ReadOnlyDoubleProperty> bindingRef) {
+        bindingRef.value = heightProperty();
         return this;
     }
 

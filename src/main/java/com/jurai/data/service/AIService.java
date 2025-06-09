@@ -3,7 +3,7 @@ package com.jurai.data.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.DemandaAnalysis;
 import com.jurai.data.model.serializer.DemandaAnalysisSerializer;
 import com.jurai.data.request.RequestHandler;
@@ -11,7 +11,7 @@ import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.util.EventLogger;
 
 public class AIService {
-    private final RequestHandler requestHandler = new RequestHandler(ApplicationState.get().getApiUrl());
+    private final RequestHandler requestHandler = new RequestHandler(AppState.get().getApiUrl());
     private final Gson gson;
 
     public AIService() {
@@ -19,9 +19,9 @@ public class AIService {
         builder.registerTypeAdapter(DemandaAnalysis.class, new DemandaAnalysisSerializer());
         gson = builder.create();
 
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if("apiUrl".equals(e.getPropertyName())) {
-                requestHandler.setBaseUrl(ApplicationState.get().getApiUrl());
+                requestHandler.setBaseUrl(AppState.get().getApiUrl());
             }
         });
     }

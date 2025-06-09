@@ -1,6 +1,6 @@
 package com.jurai.ui.controller;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.data.model.Requerente;
 import com.jurai.ui.controls.SimpleList;
 import com.jurai.ui.menus.RequerenteDashboardMenu;
@@ -20,7 +20,7 @@ public class RequerenteDashboardController extends AbstractController<Requerente
         });
 
         pane.getRequerentesList().addSelectedItemListener((observableValue, oldValue, newValue) -> {
-            ApplicationState.get().setSelectedRequerente(newValue == null ? null : newValue.getObject());
+            AppState.get().setSelectedRequerente(newValue == null ? null : newValue.getObject());
             if(newValue == null) {
                 pane.getEditDeleteRequerente().setDisable(true);
             } else {
@@ -31,9 +31,9 @@ public class RequerenteDashboardController extends AbstractController<Requerente
 
     @Override
     protected void attachNotifiers(RequerenteDashboardMenu pane) {
-        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
+        AppState.get().listen(propertyChangeEvent -> {
             if("currentUser".equals(propertyChangeEvent.getPropertyName())) {
-                if(ApplicationState.get().getCurrentUser() != null) {
+                if(AppState.get().getCurrentUser() != null) {
                     bindRequerenteList(pane.getRequerentesList());
                 }
             }
@@ -41,8 +41,8 @@ public class RequerenteDashboardController extends AbstractController<Requerente
     }
 
     private void bindRequerenteList(SimpleList<Requerente> listPane) {
-        Bindings.bindContent(listPane.getListObjects(), ApplicationState.get().getCurrentUser().getRequerentes());
-        ApplicationState.get().getCurrentUser().getRequerentes().addListener((ListChangeListener<Requerente>) change -> {
+        Bindings.bindContent(listPane.getListObjects(), AppState.get().getCurrentUser().getRequerentes());
+        AppState.get().getCurrentUser().getRequerentes().addListener((ListChangeListener<Requerente>) change -> {
             listPane.getSearchTextField().clear();
         });
     }

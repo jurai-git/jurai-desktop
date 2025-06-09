@@ -1,6 +1,6 @@
 package com.jurai.ui.controller;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.Pane;
 import com.jurai.ui.controls.SidebarNavItem;
@@ -10,18 +10,18 @@ import com.jurai.util.UILogger;
 public class SidebarNavController extends AbstractController<SidebarNav> {
     @Override
     protected void attachEvents(SidebarNav pane) {
-        pane.getAccount().setOnAction(e -> ApplicationState.get().setActivePane(Pane.AccountPane));
-        pane.getQuickQuery().setOnAction(e -> ApplicationState.get().setActivePane(Pane.QuickQueryPane));
-        pane.getDocuments().setOnAction(e -> ApplicationState.get().setActivePane(Pane.DocPane));
-        pane.getDashboard().setOnAction(e -> ApplicationState.get().setActivePane(Pane.DashboardPane));
+        pane.getAccount().setOnAction(e -> AppState.get().setActivePane(Pane.AccountPane));
+        pane.getQuickQuery().setOnAction(e -> AppState.get().setActivePane(Pane.QuickQueryPane));
+        pane.getDocuments().setOnAction(e -> AppState.get().setActivePane(Pane.DocPane));
+        pane.getDashboard().setOnAction(e -> AppState.get().setActivePane(Pane.DashboardPane));
 
         pane.getLogout().setOnAction(e -> {
-            ApplicationState.get().setCurrentUser(null);
-            ApplicationState.get().setAccountMode(AccountMode.LOGGING_IN);
+            AppState.get().setCurrentUser(null);
+            AppState.get().setAccountMode(AccountMode.LOGGING_IN);
         });
 
         pane.getSidebarToggleButton().setOnAction(newvalue -> {
-            ApplicationState.get().setSidebarExtended(newvalue);
+            AppState.get().setSidebarExtended(newvalue);
         });
     }
 
@@ -34,7 +34,7 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
 
     @Override
     protected void attachNotifiers(SidebarNav pane) {
-        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent -> {
+        AppState.get().listen(propertyChangeEvent -> {
             if(!"activePane".equals(propertyChangeEvent.getPropertyName())) {
                 return;
             }
@@ -53,17 +53,17 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
             } else {
                 UILogger.logError("Changed to invalid active pane!");
                 UILogger.logWarning("Falling back to DashboardPane");
-                ApplicationState.get().setActivePane(Pane.DashboardPane);
+                AppState.get().setActivePane(Pane.DashboardPane);
             }
         });
 
-        ApplicationState.get().addPropertyChangeListener(propertyChangeEvent1 -> {
+        AppState.get().listen(propertyChangeEvent1 -> {
             if ("sidebarExtended".equals(propertyChangeEvent1.getPropertyName())) {
                 pane.getSidebarToggleButton().setActive((Boolean) propertyChangeEvent1.getNewValue());
             }
         });
 
-        ApplicationState.get().addPropertyChangeListener(change -> {
+        AppState.get().listen(change -> {
             if ("useLightTheme".equals(change.getPropertyName())) {
                 pane.getItems().forEach(SidebarNavItem::themeChanged);
                 pane.getItems().forEach(SidebarNavItem::themeChanged);

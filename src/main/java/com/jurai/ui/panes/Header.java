@@ -1,6 +1,6 @@
 package com.jurai.ui.panes;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.ui.controls.NavUrl;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.EventLogger;
@@ -96,7 +96,7 @@ public class Header extends AbstractPane {
     }
 
     public void loadFallback() {
-        Image img = new Image(getClass().getResource(ApplicationState.get().getFallbackPfpPath()).toExternalForm());
+        Image img = new Image(getClass().getResource(AppState.get().getFallbackPfpPath()).toExternalForm());
         pfp.setImage(img);
     }
 
@@ -106,10 +106,10 @@ public class Header extends AbstractPane {
     }
 
     public void themeChanged() {
-        if (ApplicationState.get().isUseLightTheme()) {
-            logo.setImage(darkLogo);
-        } else {
+        if (AppState.get().isUseLightTheme()) {
             logo.setImage(lightLogo);
+        } else {
+            logo.setImage(darkLogo);
         }
     }
 }

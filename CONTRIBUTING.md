@@ -79,7 +79,7 @@ A injeção será feita por Method Injection, ou seja, as views serão passadas 
 Aqui está um modelo básico de um controller:
 
 ```java
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -104,7 +104,7 @@ public class MeuController {
     }
 
     private void attachNotifiers(MeuPane pane) {
-        ApplicationState.addPropertyChangeListener(new PropertyChangeListener() {
+        AppState.listen(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 //fazer algo quando alguma propriedade do aplicativo mudar

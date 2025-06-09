@@ -41,8 +41,8 @@ public class ApplicationStatePersistor {
     private ApplicationStatePersistor() throws IOException {
         EventLogger.log("Initialized ApplicationStatePersistor");
         parser = new JsonParser();
-        ApplicationState.initialize();
-        ApplicationState.get().setAccountMode(AccountMode.LOGGING_IN);
+        AppState.initialize();
+        AppState.get().setAccountMode(AccountMode.LOGGING_IN);
 
         this.storagePath = Path.of(AppDirsFactory.getInstance().getUserDataDir("JurAI", null, null));
         if(!storagePath.toFile().exists()) {
@@ -60,7 +60,7 @@ public class ApplicationStatePersistor {
 
     public void load() throws IOException {
         EventLogger.log("loading data with ApplicationStatePersistor");
-        ApplicationState.initialize();
+        AppState.initialize();
         System.out.println(applicationStateFile);
         Map<String, String> savedState = parser.fromFile(applicationStateFile);
         if (savedState == null) {
@@ -73,23 +73,23 @@ public class ApplicationStatePersistor {
             App.getCurrentInstance().addAfterLoadTask(() -> {
                 try {
                     AdvogadoService.getInstance().authenticate(token);
-                    System.out.println("StageType after persistor: " + ApplicationState.get().getStageType());
+                    System.out.println("StageType after persistor: " + AppState.get().getStageType());
                 } catch (ResponseNotOkException e) {
                     EventLogger.logWarning("Failed to authenticate advogado after loading json data. Error code: " + e.getCode());
                 }
             });
 
             // remembersUser
-            ApplicationState.get().setRemembersUser(savedState.get("remembersUser").equals("true"));
+            AppState.get().setRemembersUser(savedState.get("remembersUser").equals("true"));
 
             // Theme
-            ApplicationState.get().setUseLightTheme(savedState.get("lightTheme").equals("true"));
+            AppState.get().setUseLightTheme(savedState.get("lightTheme").equals("true"));
 
             // API Url
-            ApplicationState.get().setApiUrl(savedState.get("apiUrl"));
+            AppState.get().setApiUrl(savedState.get("apiUrl"));
 
             // Animations
-            ApplicationState.get().setUseAnimations(savedState.get("useAnimations").equals("true"));
+            AppState.get().setUseAnimations(savedState.get("useAnimations").equals("true"));
 
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -99,19 +99,19 @@ public class ApplicationStatePersistor {
 
     public void save() throws IOException {
         Map<String, String> updatedState = new HashMap<>();
-        updatedState.put("remembersUser", ApplicationState.get().remembersUser() ? "true" : "false");
-        if(ApplicationState.get().getCurrentUser() != null && ApplicationState.get().remembersUser()) {
-            updatedState.put("currentUserToken", ApplicationState.get().getCurrentUser().getAccessToken());
+        updatedState.put("remembersUser", AppState.get().remembersUser() ? "true" : "false");
+        if(AppState.get().getCurrentUser() != null && AppState.get().remembersUser()) {
+            updatedState.put("currentUserToken", AppState.get().getCurrentUser().getAccessToken());
         }
 
         // Theme
-        updatedState.put("lightTheme", ApplicationState.get().isUseLightTheme() ? "true" : "false");
+        updatedState.put("lightTheme", AppState.get().isUseLightTheme() ? "true" : "false");
 
         // API Url
-        updatedState.put("apiUrl", ApplicationState.get().getApiUrl());
+        updatedState.put("apiUrl", AppState.get().getApiUrl());
 
         // Animations
-        updatedState.put("useAnimations", ApplicationState.get().isUseAnimations() ? "true" : "false");
+        updatedState.put("useAnimations", AppState.get().isUseAnimations() ? "true" : "false");
 
         parser.toFile(updatedState, applicationStateFile);
     }

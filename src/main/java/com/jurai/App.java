@@ -1,7 +1,7 @@
 package com.jurai;
 
+import com.jurai.data.AppState;
 import com.jurai.data.ApplicationData;
-import com.jurai.data.ApplicationState;
 import com.jurai.data.ApplicationStatePersistor;
 import com.jurai.data.GlobalEvents;
 import com.jurai.ui.PrimaryScene;
@@ -81,10 +81,10 @@ public class App extends Application {
         afterLoadTasks.forEach(Runnable::run);
 
         primaryScene.getScene().widthProperty().addListener((observableValue, number, t1) -> {
-            ApplicationState.get().setViewportSmall(t1.doubleValue() < (double) ApplicationData.getScreenSize().width * 0.65);
+            AppState.get().setViewportSmall(t1.doubleValue() < (double) ApplicationData.getScreenSize().width * 0.65);
         });
 
-        switch(ApplicationState.get().getStageType()) {
+        switch(AppState.get().getStageType()) {
             case MAIN_STAGE:
                 primaryStage.show();
                 System.out.println(primaryScene.getModalRoot());

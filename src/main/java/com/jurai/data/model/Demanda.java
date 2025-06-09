@@ -1,12 +1,6 @@
 package com.jurai.data.model;
 
-import com.jurai.data.ApplicationState;
-import com.jurai.util.EventLogger;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
 import javafx.beans.property.*;
-
-import java.util.Map;
 
 public class Demanda implements Model {
     private DoubleProperty id = new SimpleDoubleProperty();

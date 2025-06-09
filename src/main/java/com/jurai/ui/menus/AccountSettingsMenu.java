@@ -1,5 +1,5 @@
 package com.jurai.ui.menus;
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
 import com.jurai.ui.util.SpacerFactory;
@@ -147,7 +147,7 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     }
 
     public void loadFallback() {
-        Image img = new Image(getClass().getResource(ApplicationState.get().getFallbackPfpPath()).toExternalForm());
+        Image img = new Image(getClass().getResource(AppState.get().getFallbackPfpPath()).toExternalForm());
         profilePicture.setImage(img);
         profilePicture.setHasCustomImage(false);
     }

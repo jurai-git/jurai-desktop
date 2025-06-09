@@ -1,6 +1,6 @@
 package com.jurai.ui.controller;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.ui.menus.DemandaAnalysisDashboardMenu;
 
 public class DemandaAnalysisController extends AbstractController<DemandaAnalysisDashboardMenu> {
@@ -11,10 +11,10 @@ public class DemandaAnalysisController extends AbstractController<DemandaAnalysi
 
     @Override
     protected void attachNotifiers(DemandaAnalysisDashboardMenu pane) {
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if ("selectedDemanda".equals(e.getPropertyName())) {
                 System.out.println("Changed selected demanda");
-                pane.setActive(ApplicationState.get().getSelectedDemanda() != null);
+                pane.setActive(AppState.get().getSelectedDemanda() != null);
             }
         });
     }

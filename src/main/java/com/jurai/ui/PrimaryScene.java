@@ -1,7 +1,7 @@
 package com.jurai.ui;
 
+import com.jurai.data.AppState;
 import com.jurai.data.ApplicationData;
-import com.jurai.data.ApplicationState;
 import com.jurai.ui.animation.SidebarAnimator;
 import com.jurai.ui.controller.*;
 import com.jurai.ui.util.Pane;
@@ -26,6 +26,7 @@ public class PrimaryScene {
     private DashboardPane dashboardPane;
     private PlanPane planPane;
     private QuickQueryPane quickQueryPane;
+    private DocumentsPane docsPane;
 
     public PrimaryScene() {
         initControls();
@@ -49,6 +50,7 @@ public class PrimaryScene {
         planPane = new PlanPane();
         sidebar = new Sidebar();
         quickQueryPane = new QuickQueryPane();
+        docsPane = new DocumentsPane();
     }
 
     private void layControls() {
@@ -57,6 +59,7 @@ public class PrimaryScene {
         mainPane.addConstraints(dashboardPane.getView(), mainContentConstraints);
         mainPane.addConstraints(planPane.getView(), mainContentConstraints);
         mainPane.addConstraints(quickQueryPane.getView(), mainContentConstraints);
+        mainPane.addConstraints(docsPane.getView(), mainContentConstraints);
         mainPane.addConstraints(header.getView(), new NodeConstraints(0, 0, 1, 0.06f));
 
         mainContentConstraints.exclusiveWProperty.bind(mainPane.widthProperty().subtract(sidebar.getView().widthProperty()));
@@ -64,9 +67,8 @@ public class PrimaryScene {
 
         sidebarConstraints = new NodeConstraints(0, 0, 0.2f, 1);
         mainPane.addConstraints(sidebar.getView(), sidebarConstraints);
-        NodeConstraints sidebarToggleConstraints = new NodeConstraints(0.16f, 0.01f, 0.04f, 0.04f);
-        activePaneChanged(ApplicationState.get().getActivePane());
-        sidebarModeUpdated(ApplicationState.get().isSidebarExtended());
+        activePaneChanged(AppState.get().getActivePane());
+        sidebarModeUpdated(AppState.get().isSidebarExtended());
 
         mainPane.setCache(true);
         mainPane.setCacheHint(CacheHint.SPEED);
@@ -99,25 +101,28 @@ public class PrimaryScene {
 
         QuickQueryPaneController quickQueryPaneController = new QuickQueryPaneController();
         quickQueryPaneController.initialize(quickQueryPane);
+
+        DocumentsPaneController documentsPaneController = new DocumentsPaneController();
+        documentsPaneController.initialize(docsPane);
     }
 
     private void attachNotifiers() {
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if ("activePane".equals(e.getPropertyName())) {
                 activePaneChanged((Pane) e.getNewValue());
             }
         });
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if ("currentPopup".equals(e.getPropertyName())) {
 
             }
         });
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if ("viewportSmall".equals(e.getPropertyName())) {
-                ApplicationState.get().setSidebarExtended(true);
+                AppState.get().setSidebarExtended(true);
             }
         });
-        ApplicationState.get().addPropertyChangeListener(e -> {
+        AppState.get().listen(e -> {
             if ("sidebarExtended".equals(e.getPropertyName())) {
                 sidebarModeUpdated((Boolean) e.getNewValue());
             }
@@ -169,7 +174,7 @@ public class PrimaryScene {
             case DocPane:
                 mainPane.getChildren().removeAll(mainPane.getChildren());
                 layFixedControls();
-                mainPane.getChildren().add(planPane.getView());
+                mainPane.getChildren().add(docsPane.getView());
                 break;
             default:
                 UILogger.logError("Tried switching to invalid main pane");

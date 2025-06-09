@@ -1,6 +1,5 @@
 package com.jurai.ui.panes;
 
-import com.jurai.data.ApplicationState;
 import com.jurai.ui.controller.EmentaTabController;
 import com.jurai.ui.controls.BasicTab;
 import com.jurai.ui.controls.BasicTabbedPane;

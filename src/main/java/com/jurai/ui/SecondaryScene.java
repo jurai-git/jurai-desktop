@@ -1,6 +1,6 @@
 package com.jurai.ui;
 
-import com.jurai.data.ApplicationState;
+import com.jurai.data.AppState;
 import com.jurai.ui.controller.AccountPaneController;
 import com.jurai.ui.panes.AccountPane;
 import javafx.scene.Scene;
@@ -36,7 +36,7 @@ public class SecondaryScene {
         darkImg = new Image(getClass().getResource("/img/jurai-text-white-antialias.png").toExternalForm());
         lightImg = new Image(getClass().getResource("/img/jurai-text-dark-antialias.png").toExternalForm());
 
-        if (ApplicationState.get().isUseLightTheme()) {
+        if (AppState.get().isUseLightTheme()) {
             headerLogo.setImage(lightImg);
         } else {
             headerLogo.setImage(darkImg);
@@ -58,7 +58,7 @@ public class SecondaryScene {
     }
 
     private void attachNotifiers() {
-        ApplicationState.get().addPropertyChangeListener(l -> {
+        AppState.get().listen(l -> {
             if ("useLightTheme".equals(l.getPropertyName())) {
                 if ((boolean) l.getNewValue()) {
                     headerLogo.setImage(lightImg);
