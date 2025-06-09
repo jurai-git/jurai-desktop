@@ -75,10 +75,8 @@ public class SimpleListItem<T extends Model> extends HBox {
     }
 
     private void attachNotifiers() {
-        AppState.get().listen(change -> {
-            if ("useLightTheme".equals(change.getPropertyName())) {
-                themeChanged((boolean) change.getNewValue());
-            }
+        AppState.get().useLightThemeProperty().addListener((obs, o, n) -> {
+            themeChanged(n);
         });
     }
 
@@ -103,7 +101,6 @@ public class SimpleListItem<T extends Model> extends HBox {
             dotColorTransition.play();
             textFillTransition.setRate(1);
             textFillTransition.play();
-            System.out.println("SimpleListItem of object " + object + "Was selected!");
         } else {
             dotColorTransition.setRate(-2.5);
             dotColorTransition.play();

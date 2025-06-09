@@ -34,11 +34,8 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
 
     @Override
     protected void attachNotifiers(SidebarNav pane) {
-        AppState.get().listen(propertyChangeEvent -> {
-            if(!"activePane".equals(propertyChangeEvent.getPropertyName())) {
-                return;
-            }
-            SidebarNavItem item = switch((Pane) propertyChangeEvent.getNewValue()) {
+        AppState.get().activePaneProperty().addListener((obs, o, n) -> {
+            SidebarNavItem item = switch(n) {
                 case AccountPane -> pane.getAccount();
                 case DashboardPane -> pane.getDashboard();
                 case QuickQueryPane -> pane.getQuickQuery();
@@ -57,19 +54,14 @@ public class SidebarNavController extends AbstractController<SidebarNav> {
             }
         });
 
-        AppState.get().listen(propertyChangeEvent1 -> {
-            if ("sidebarExtended".equals(propertyChangeEvent1.getPropertyName())) {
-                pane.getSidebarToggleButton().setActive((Boolean) propertyChangeEvent1.getNewValue());
-            }
+        AppState.get().sidebarExtendedProperty().addListener((obs, o, n) -> {
+            pane.getSidebarToggleButton().setActive(n);
         });
 
-        AppState.get().listen(change -> {
-            if ("useLightTheme".equals(change.getPropertyName())) {
-                pane.getItems().forEach(SidebarNavItem::themeChanged);
-                pane.getItems().forEach(SidebarNavItem::themeChanged);
-            }
+        AppState.get().useLightThemeProperty().addListener((obs, o, n) -> {
+            pane.getItems().forEach(SidebarNavItem::themeChanged);
+            pane.getItems().forEach(SidebarNavItem::themeChanged);
         });
-
     }
 
 }

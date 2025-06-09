@@ -35,32 +35,25 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
 
     @Override
     protected void attachNotifiers(DemandaDashboardMenu pane) {
-        AppState.get().listen(propertyChangeEvent -> {
-            if("selectedRequerente".equals(propertyChangeEvent.getPropertyName())) {
-                if(AppState.get().getSelectedRequerente() != null) {
-                    loadDemandas(pane);
-                } else {
-                    unbindDemandaList(pane.getDemandaList().getListObjects());
-                    pane.getAddDemanda().setDisable(true);
-                    pane.getEditDeleteDemanda().setDisable(true);
-		        }
-            }
-        });
-        AppState.get().listen(propertyChangeEvent -> {
-            if("selectedDemanda".equals(propertyChangeEvent.getPropertyName())) {
-                if(propertyChangeEvent.getNewValue() != null) {
-                    pane.getEditDeleteDemanda().setDisable(false);
-                } else {
-                    pane.getEditDeleteDemanda().setDisable(true);
-                }
+        AppState.get().selectedRequerenteProperty().addListener((obs, o, n) -> {
+            if(AppState.get().getSelectedRequerente() != null) {
+                loadDemandas(pane);
+            } else {
+                unbindDemandaList(pane.getDemandaList().getListObjects());
+                pane.getAddDemanda().setDisable(true);
+                pane.getEditDeleteDemanda().setDisable(true);
             }
         });
 
-        AppState.get().listen(propertyChangeEvent -> {
-            if ("currentAccount".equals(propertyChangeEvent.getPropertyName())) {
-                AppState.get().setSelectedDemanda(null);
+        AppState.get().selectedDemandaProperty().addListener((obs, o, n) -> {
+            if(n != null) {
+                pane.getEditDeleteDemanda().setDisable(false);
+            } else {
+                pane.getEditDeleteDemanda().setDisable(true);
             }
         });
+
+        AppState.get().currentUserProperty().addListener((obs, o, n) -> AppState.get().setSelectedDemanda(null));
     }
 
     private void unbindDemandaList(ObservableList<Demanda> paneRequerentes) {

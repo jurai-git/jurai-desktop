@@ -31,12 +31,8 @@ public class RequerenteDashboardController extends AbstractController<Requerente
 
     @Override
     protected void attachNotifiers(RequerenteDashboardMenu pane) {
-        AppState.get().listen(propertyChangeEvent -> {
-            if("currentUser".equals(propertyChangeEvent.getPropertyName())) {
-                if(AppState.get().getCurrentUser() != null) {
-                    bindRequerenteList(pane.getRequerentesList());
-                }
-            }
+        AppState.get().currentUserProperty().addListener((obs, o, n) -> {
+            if (n != null) bindRequerenteList(pane.getRequerentesList());
         });
     }
 

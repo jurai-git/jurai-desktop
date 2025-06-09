@@ -1,5 +1,6 @@
 package com.jurai.ui.controls;
 
+import com.jurai.App;
 import com.jurai.data.AppState;
 import com.jurai.ui.controller.AbstractController;
 import com.jurai.ui.menus.AppSettingsMenu;
@@ -44,15 +45,9 @@ public class AppSettingsController extends AbstractController<AppSettingsMenu> {
         pane.getUseLightTheme().setSelected(AppState.get().isUseLightTheme());
         pane.getUseAnimations().setSelected(AppState.get().isUseAnimations());
 
-        AppState.get().listen(l -> {
-            if ("apiUrl".equals(l.getPropertyName())) {
-                pane.getApiUrl().setText((String) l.getNewValue());
-            } else if ("useLightTheme".equals(l.getPropertyName())) {
-                pane.getUseLightTheme().setSelected((boolean) l.getNewValue());
-            } else if ("useAnimations".equals(l.getPropertyName())) {
-                pane.getUseAnimations().setSelected((boolean) l.getNewValue());
-            }
-        });
+        AppState.get().apiUrlProperty().addListener((obs, o, n) -> pane.getApiUrl().setText(n));
+        AppState.get().useLightThemeProperty().addListener((obs, o, n) -> pane.getUseLightTheme().setSelected(n));
+        AppState.get().useAnimationsProperty().addListener((obs, o, n) -> pane.getUseAnimations().setSelected(n));
     }
 
     private boolean checkForChanges(AppSettingsMenu pane) {

@@ -16,12 +16,12 @@ public class ThemeManager {
     public ThemeManager(Scene... scenes) {
         Collections.addAll(this.scenes, scenes);
 
-        AppState.get().listen(change -> {
-            if ("useLightTheme".equals(change.getPropertyName())) {
-                boolean light = (boolean) change.getNewValue();
-                updateTheme(light);
-            }
+
+        AppState.get().useLightThemeProperty().addListener((obs, o, n) -> {
+            updateTheme(n);
         });
+
+
     }
 
     private void updateTheme(boolean light) {

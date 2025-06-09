@@ -229,26 +229,15 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
     @Override
     protected void attachNotifiers(AccountPane pane) {
-        AppState.get().listen(e -> {
-            if("accountMode".equals(e.getPropertyName())) {
-                modeChanged((AccountMode) e.getNewValue(), pane);
-            }
-            if("currentUser".equals(e.getPropertyName())) {
-                if(AppState.get().getCurrentUser() != null)
-                    userChanged(AppState.get().getCurrentUser(), pane);
-            }
+
+        AppState.get().accountModeProperty().addListener((obs, o, n) -> {
+            modeChanged(n, pane);
+        });
+        AppState.get().currentUserProperty().addListener((obs, o, n) -> {
+                userChanged(n, pane);
+
         });
 
-        AppState.get().listen(e -> {
-            if ("currentUser".equals(e.getPropertyName())) {
-                Advogado currentUser = AppState.get().getCurrentUser();
-                if (currentUser != null) {
-                    pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(AppState.get().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
-                } else {
-                    pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
-                }
-            }
-        });
 
         GlobalEvents.get().onPfpChanged(() -> {
             Advogado currentUser = AppState.get().getCurrentUser();
@@ -271,6 +260,9 @@ public class AccountPaneController extends AbstractController<AccountPane> {
     }
 
     private void userChanged(Advogado newUser, AccountPane pane) {
+        if (newUser == null) pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
+
+        pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(AppState.get().getApiUrl() + "advogado/" + newUser.getId() + "/pfp");
         AccountDashboardMenu dashboardMenu = pane.getAccountDashboardMenu();
         dashboardMenu.getTitle().setText(AccountDashboardMenu.TITLE_TEMPLATE.formatted(newUser.getNome()));
         dashboardMenu.getUsername().setText(newUser.getNome());

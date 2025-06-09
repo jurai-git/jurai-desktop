@@ -132,7 +132,6 @@ public class SimpleList<T extends Model> extends VBox {
 
     private void initData() {
         listObjects.addListener((ListChangeListener<T>) change -> {
-            System.out.println("listObjects changed");
             listItemsContainer.getChildren().clear();
             listObjects.forEach(this::createListItem);
             listItemsContainer.setClip(null);

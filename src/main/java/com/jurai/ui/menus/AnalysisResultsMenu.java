@@ -78,14 +78,13 @@ public class AnalysisResultsMenu extends AbstractMenu<StackPane> {
 
         inactiveContent.getChildren().add(inactiveLabel);
         layInactiveContent();
-        AppState.get().listen(propertyChangeEvent -> {
-            if ("viewportSmall".equals(propertyChangeEvent.getPropertyName())) {
-                if ((boolean) propertyChangeEvent.getNewValue()) {
+
+        AppState.get().viewportSmallProperty().addListener((obs, oldVal, newVal) -> {
+                if ((boolean) newVal) {
                     setVertical();
                 } else {
                     setHorizontal();
                 }
-            }
         });
     }
 

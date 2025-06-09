@@ -19,10 +19,8 @@ public class AIService {
         builder.registerTypeAdapter(DemandaAnalysis.class, new DemandaAnalysisSerializer());
         gson = builder.create();
 
-        AppState.get().listen(e -> {
-            if("apiUrl".equals(e.getPropertyName())) {
-                requestHandler.setBaseUrl(AppState.get().getApiUrl());
-            }
+        AppState.get().apiUrlProperty().addListener((obs, o, n) -> {
+            requestHandler.setBaseUrl(AppState.get().getApiUrl());
         });
     }
 

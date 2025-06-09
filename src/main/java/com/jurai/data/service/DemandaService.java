@@ -32,10 +32,8 @@ public class DemandaService {
         builder.registerTypeAdapter(Demanda.class, new DemandaSerializer());
         gson = builder.create();
 
-        AppState.get().listen(e -> {
-            if("apiUrl".equals(e.getPropertyName())) {
-                requestHandler.setBaseUrl(AppState.get().getApiUrl());
-            }
+        AppState.get().apiUrlProperty().addListener((obs, o, n) -> {
+            requestHandler.setBaseUrl(n);
         });
     }
 

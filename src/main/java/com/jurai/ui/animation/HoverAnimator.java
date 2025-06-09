@@ -21,11 +21,8 @@ public class HoverAnimator {
     public static void initialize() {
         if (initialized) return;
         initialized = true;
-        AppState.get().listen(change -> {
-            if ("useAnimations".equals(change.getPropertyName())) {
-                if ((boolean) change.getNewValue()) enable();
-                else disable();
-            }
+        AppState.get().useAnimationsProperty().addListener((obs, o, n) -> {
+            if (n) enable(); else disable();
         });
 
         if (!AppState.get().isUseAnimations()) {

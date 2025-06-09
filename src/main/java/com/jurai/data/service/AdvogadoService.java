@@ -29,10 +29,8 @@ public class AdvogadoService {
         builder.registerTypeAdapter(Requerente.class, new RequerenteSerializer());
         gson = builder.create();
 
-        AppState.get().listen(e -> {
-            if("apiUrl".equals(e.getPropertyName())) {
-                requestHandler.setBaseUrl(AppState.get().getApiUrl());
-            }
+        AppState.get().apiUrlProperty().addListener((obs, o, n) -> {
+            requestHandler.setBaseUrl(n);
         });
     }
 

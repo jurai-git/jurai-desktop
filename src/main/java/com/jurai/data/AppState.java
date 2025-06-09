@@ -10,42 +10,39 @@ import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.util.Pane;
 import com.jurai.ui.util.StageType;
 import com.jurai.util.StateLogger;
-import javafx.collections.FXCollections;
+import javafx.beans.property.*;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.stage.Stage;
 import lombok.Getter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.stream.Stream;
 
-@Getter
 public final class AppState {
     private static PropertyChangeSupport support;
 
     @Getter
     private static volatile AppState instance;
 
-    // account related stuff
-    private static Advogado currentUser = null;
-    private static StageType stageType = StageType.SECONDARY_STAGE;
-    private static AccountMode accountMode = null;
-
-    private static Pane activePane = Pane.DashboardPane;
-    private static boolean debugging = false;
-    private static Requerente selectedRequerente = null;
-    private static Stage currentStage = null;
-    private static boolean remembersUser = false;
-    private static String apiUrl = "http://localhost:5000/";
-    private static boolean useAnimations = true;
-    private static boolean useLightTheme = false;
-    private static Demanda selectedDemanda = null;
-    private static boolean sidebarExtended = false ;
-    private static boolean viewportSmall = false; // this indicates weather the width of the app is small, for responsiveness
-    private static QuickQueryPane.Mode quickQueryMode = QuickQueryPane.Mode.PDF;
-    private static DocumentsPane.Mode docPaneMode = DocumentsPane.Mode.CHOOSER;
-    private static AsyncState<ObservableList<Demanda>> allDemandas = new AsyncState<>(null, true, null);
-    private static Demanda globalSelectedDemanda = null;
+    private ObjectProperty<Advogado> currentUser = new SimpleObjectProperty<>(null);
+    private static ObjectProperty<StageType> stageType = new SimpleObjectProperty<>(StageType.SECONDARY_STAGE);
+    private static ObjectProperty<AccountMode> accountMode = new SimpleObjectProperty<>(null);
+    private static ObjectProperty<Pane> activePane = new SimpleObjectProperty<>(Pane.DashboardPane);
+    private static BooleanProperty debugging = new SimpleBooleanProperty(false);
+    private static ObjectProperty<Requerente> selectedRequerente = new SimpleObjectProperty<>(null);
+    private static ObjectProperty<Stage> currentStage = new SimpleObjectProperty<>(null);
+    private static BooleanProperty remembersUser = new SimpleBooleanProperty(false);
+    private static StringProperty apiUrl = new SimpleStringProperty("http://localhost:5000/");
+    private static BooleanProperty useAnimations = new SimpleBooleanProperty(true);
+    private static BooleanProperty useLightTheme = new SimpleBooleanProperty(false);
+    private static ObjectProperty<Demanda> selectedDemanda = new SimpleObjectProperty<>(null);
+    private static BooleanProperty sidebarExtended = new SimpleBooleanProperty(false);
+    private static BooleanProperty viewportSmall = new SimpleBooleanProperty(false);
+    private static ObjectProperty<QuickQueryPane.Mode> quickQueryMode = new SimpleObjectProperty<>(QuickQueryPane.Mode.PDF);
+    private static ObjectProperty<DocumentsPane.Mode> docPaneMode = new SimpleObjectProperty<>(DocumentsPane.Mode.CHOOSER);
+    private static ObjectProperty<AsyncState<ObservableList<Demanda>>> allDemandas = new SimpleObjectProperty<>(new AsyncState<>(null, true, null));
+    private static ObjectProperty<Demanda> globalSelectedDemanda = new SimpleObjectProperty<>(null);
 
     private static final String fallbackPfpPath = "/img/user-default.jpg";
 
@@ -60,14 +57,65 @@ public final class AppState {
     }
 
     private AppState() {
-        support = new PropertyChangeSupport(this);
+        registerAllListeners();
         StateLogger.log("initialized Application state logging");
-        support.addPropertyChangeListener(event -> {
-            StateLogger.log(event.getPropertyName() + " changed from " + event.getOldValue() + " to " + event.getNewValue());
-        });
-        support.firePropertyChange("activePane", activePane, activePane);
-        support.firePropertyChange("selectedRequerente", selectedRequerente, selectedRequerente);
     }
+
+    private void registerAllListeners() {
+        accountMode.addListener((obs, newVal, oldVal) -> {
+            if(accountMode.get() == AccountMode.LOGGED_IN) {
+                setStageType(StageType.MAIN_STAGE);
+            } else {
+                setStageType(StageType.SECONDARY_STAGE);
+            }
+        });
+
+        currentUser.addListener((obs, oldVal, newVal) -> {
+            if(newVal != null) {
+                setAccountMode(AccountMode.LOGGED_IN);
+            } else {
+                setAccountMode(AccountMode.LOGGING_IN);
+                setSelectedDemanda(null);
+                setSelectedRequerente(null);
+            }
+        });
+
+        Stream.of(
+                currentUser, stageType, accountMode, activePane, debugging,
+                selectedRequerente, currentStage, remembersUser, apiUrl,
+                useAnimations, useLightTheme, selectedDemanda, sidebarExtended,
+                viewportSmall, quickQueryMode, docPaneMode, allDemandas, globalSelectedDemanda
+        ).forEach(prop -> {
+            prop.addListener((obs, oldVal, newVal) -> {
+                String name = getPropertyName(prop);
+                StateLogger.log(name + " changed from " + oldVal + " to " + newVal);
+            });
+        });
+
+    }
+
+    private String getPropertyName(Property<?> prop) {
+        if (prop == currentUser) return "currentUser";
+        if (prop == stageType) return "stageType";
+        if (prop == accountMode) return "accountMode";
+        if (prop == activePane) return "activePane";
+        if (prop == debugging) return "debugging";
+        if (prop == selectedRequerente) return "selectedRequerente";
+        if (prop == currentStage) return "currentStage";
+        if (prop == remembersUser) return "remembersUser";
+        if (prop == apiUrl) return "apiUrl";
+        if (prop == useAnimations) return "useAnimations";
+        if (prop == useLightTheme) return "useLightTheme";
+        if (prop == selectedDemanda) return "selectedDemanda";
+        if (prop == sidebarExtended) return "sidebarExtended";
+        if (prop == viewportSmall) return "viewportSmall";
+        if (prop == quickQueryMode) return "quickQueryMode";
+        if (prop == docPaneMode) return "docPaneMode";
+        if (prop == allDemandas) return "allDemandas";
+        if (prop == globalSelectedDemanda) return "globalSelectedDemanda";
+        return "unknown";
+    }
+
 
     public static AppState get() {
         if (instance == null) {
@@ -76,207 +124,205 @@ public final class AppState {
         return instance;
     }
 
-    public void setActivePane(Pane pane) {
-        Pane old = AppState.activePane;
-        AppState.activePane = pane;
-        support.firePropertyChange("activePane", old, pane);
-    }
-
-    public void setCurrentUser(Advogado newUser) {
-        Advogado old = AppState.currentUser;
-        AppState.currentUser = newUser;
-        support.firePropertyChange("currentUser", old, newUser);
-
-        if(newUser != null) {
-            setAccountMode(AccountMode.LOGGED_IN);
-        } else {
-            setAccountMode(AccountMode.LOGGING_IN);
-            setSelectedDemanda(null);
-            setSelectedRequerente(null);
-        }
-    }
-
-    public void setDebugging(boolean debugging) {
-        boolean old = AppState.debugging;
-        AppState.debugging = debugging;
-        support.firePropertyChange("debugging", old, debugging);
-    }
-
-    public void setSelectedRequerente(Requerente selectedRequerente) {
-        Requerente oldValue = AppState.selectedRequerente;
-        AppState.selectedRequerente = selectedRequerente;
-        support.firePropertyChange("selectedRequerente", oldValue, selectedRequerente);
-        setSelectedDemanda(null);
-    }
-
-    public void setAccountMode(AccountMode accountMode) {
-        AccountMode oldValue = AppState.accountMode;
-        AppState.accountMode = accountMode;
-        support.firePropertyChange("accountMode", oldValue, AppState.accountMode);
-
-        if(accountMode == AccountMode.LOGGED_IN) {
-            setStageType(StageType.MAIN_STAGE);
-        } else {
-            setStageType(StageType.SECONDARY_STAGE);
-        }
-    }
-
-    void setStageType(StageType stageType) {
-        StageType oldValue = AppState.stageType;
-        AppState.stageType = stageType;
-        support.firePropertyChange("stageType", oldValue, AppState.stageType);
-    }
-
-    public void setCurrentStage(Stage currentStage) {
-        var oldvalue = AppState.currentStage;
-        AppState.currentStage = currentStage;
-        support.firePropertyChange("currentStage", oldvalue, currentStage);
-    }
-
-    public void setRemembersUser(boolean remembersUser) {
-        AppState.remembersUser = remembersUser;
-    }
-
-    public void setApiUrl(String apiUrl) {
-        String oldApiUrl = AppState.apiUrl;
-        AppState.apiUrl = apiUrl;
-        support.firePropertyChange("apiUrl", oldApiUrl, apiUrl);
-    }
-
-    public void setUseAnimations(boolean useAnimations) {
-        if (useAnimations != AppState.useAnimations) {
-            boolean oldUseAnimatios = AppState.useAnimations;
-            AppState.useAnimations = useAnimations;
-            support.firePropertyChange("useAnimations", oldUseAnimatios, useAnimations);
-        }
-    }
-
-    public void setUseLightTheme(boolean useLightTheme) {
-        boolean oldVal = AppState.useLightTheme;
-        AppState.useLightTheme = useLightTheme;
-        support.firePropertyChange("useLightTheme", oldVal, useLightTheme);
-    }
-
-    public void setSelectedDemanda(Demanda selectedDemanda) {
-        Demanda oldValue = AppState.selectedDemanda;
-        AppState.selectedDemanda = selectedDemanda;
-        support.firePropertyChange("selectedDemanda", oldValue, selectedDemanda);
-    }
-
-    public void setSidebarExtended(boolean sidebarExtended) {
-        boolean oldVal = AppState.sidebarExtended;
-        AppState.sidebarExtended = sidebarExtended;
-        support.firePropertyChange("sidebarExtended", oldVal, sidebarExtended);
-    }
-
-    public void setViewportSmall(boolean viewportSmall) {
-        boolean oldVal = AppState.viewportSmall;
-        AppState.viewportSmall = viewportSmall;
-        support.firePropertyChange("viewportSmall", oldVal, viewportSmall);
-    }
-
-    public void setQuickQueryMode(QuickQueryPane.Mode newmode) {
-        QuickQueryPane.Mode oldMode = AppState.quickQueryMode;
-        AppState.quickQueryMode = newmode;
-        support.firePropertyChange("quickQueryMode", oldMode, newmode);
-
-    }
-
-    public void setDocPaneMode(DocumentsPane.Mode newMode) {
-        DocumentsPane.Mode oldMode = AppState.docPaneMode;
-        AppState.docPaneMode = newMode;
-        support.firePropertyChange("docPaneMode", oldMode, newMode);
-    }
-
-    public void setGlobalSelectedDemanda(Demanda newD) {
-        Demanda old = AppState.globalSelectedDemanda;
-        AppState.globalSelectedDemanda = newD;
-        support.firePropertyChange("globalSelectedDemanda", old, newD);
-    }
-
-    public AsyncState<ObservableList<Demanda>> getAllDemandas() {
-        return allDemandas;
-    }
-
-    public void setAllDemandas(AsyncState<ObservableList<Demanda>> allDemandas) {
-        AsyncState<ObservableList<Demanda>> old = AppState.allDemandas;
-        AppState.allDemandas = allDemandas;
-        support.firePropertyChange("allDemandas", old, allDemandas);
-    }
-
-    public Demanda getGlobalSelectedDemanda() {
-        return globalSelectedDemanda;
-    }
-
-    public DocumentsPane.Mode getDocPaneMode() {
-        return docPaneMode;
-    }
-
-    public boolean isViewportSmall() {
-        return viewportSmall;
-    }
-
-    public QuickQueryPane.Mode getQuickQueryMode() {
-        return quickQueryMode;
-    }
-
-    public boolean isSidebarExtended() {
-        return sidebarExtended;
-    }
-
-    public Demanda getSelectedDemanda() {
-        return selectedDemanda;
-    }
-
-    public String getApiUrl() {
-        return apiUrl;
-    }
-
-    public boolean remembersUser() {
-        return remembersUser;
-    }
-
-    public Requerente getSelectedRequerente() {
-        return selectedRequerente;
-    }
-
-    public Stage getCurrentStage() {
-        return currentStage;
-    }
-
-    public Pane getActivePane() {
-        return activePane;
-    }
-
+    // currentUser
     public Advogado getCurrentUser() {
+        return currentUser.get();
+    }
+    public void setCurrentUser(Advogado user) {
+        currentUser.set(user);
+    }
+    public ObjectProperty<Advogado> currentUserProperty() {
         return currentUser;
     }
 
-    public boolean isDebugging() {
-        return debugging;
+    // stageType
+    public StageType getStageType() {
+        return stageType.get();
+    }
+    public void setStageType(StageType stage) {
+        stageType.set(stage);
+    }
+    public ObjectProperty<StageType> stageTypeProperty() {
+        return stageType;
     }
 
+    // accountMode
     public AccountMode getAccountMode() {
+        return accountMode.get();
+    }
+    public void setAccountMode(AccountMode mode) {
+        accountMode.set(mode);
+    }
+    public ObjectProperty<AccountMode> accountModeProperty() {
         return accountMode;
     }
 
+    // activePane
+    public Pane getActivePane() {
+        return activePane.get();
+    }
+    public void setActivePane(Pane pane) {
+        activePane.set(pane);
+    }
+    public ObjectProperty<Pane> activePaneProperty() {
+        return activePane;
+    }
+
+    // debugging
+    public boolean isDebugging() {
+        return debugging.get();
+    }
+    public void setDebugging(boolean debug) {
+        debugging.set(debug);
+    }
+    public BooleanProperty debuggingProperty() {
+        return debugging;
+    }
+
+    // selectedRequerente
+    public Requerente getSelectedRequerente() {
+        return selectedRequerente.get();
+    }
+    public void setSelectedRequerente(Requerente requerente) {
+        selectedRequerente.set(requerente);
+    }
+    public ObjectProperty<Requerente> selectedRequerenteProperty() {
+        return selectedRequerente;
+    }
+
+    // currentStage
+    public Stage getCurrentStage() {
+        return currentStage.get();
+    }
+    public void setCurrentStage(Stage stage) {
+        currentStage.set(stage);
+    }
+    public ObjectProperty<Stage> currentStageProperty() {
+        return currentStage;
+    }
+
+    // remembersUser
+    public boolean isRemembersUser() {
+        return remembersUser.get();
+    }
+    public void setRemembersUser(boolean remembers) {
+        remembersUser.set(remembers);
+    }
+    public BooleanProperty remembersUserProperty() {
+        return remembersUser;
+    }
+
+    // apiUrl
+    public String getApiUrl() {
+        return apiUrl.get();
+    }
+    public void setApiUrl(String url) {
+        apiUrl.set(url);
+    }
+    public StringProperty apiUrlProperty() {
+        return apiUrl;
+    }
+
+    // useAnimations
     public boolean isUseAnimations() {
+        return useAnimations.get();
+    }
+    public void setUseAnimations(boolean use) {
+        useAnimations.set(use);
+    }
+    public BooleanProperty useAnimationsProperty() {
         return useAnimations;
     }
 
+    // useLightTheme
     public boolean isUseLightTheme() {
+        return useLightTheme.get();
+    }
+    public void setUseLightTheme(boolean use) {
+        useLightTheme.set(use);
+    }
+    public BooleanProperty useLightThemeProperty() {
         return useLightTheme;
     }
 
-    public StageType getStageType() {
-        return stageType;
+    // selectedDemanda
+    public Demanda getSelectedDemanda() {
+        return selectedDemanda.get();
+    }
+    public void setSelectedDemanda(Demanda demanda) {
+        selectedDemanda.set(demanda);
+    }
+    public ObjectProperty<Demanda> selectedDemandaProperty() {
+        return selectedDemanda;
+    }
+
+    // sidebarExtended
+    public boolean isSidebarExtended() {
+        return sidebarExtended.get();
+    }
+    public void setSidebarExtended(boolean extended) {
+        sidebarExtended.set(extended);
+    }
+    public BooleanProperty sidebarExtendedProperty() {
+        return sidebarExtended;
+    }
+
+    // viewportSmall
+    public boolean isViewportSmall() {
+        return viewportSmall.get();
+    }
+    public void setViewportSmall(boolean small) {
+        viewportSmall.set(small);
+    }
+    public BooleanProperty viewportSmallProperty() {
+        return viewportSmall;
+    }
+
+    // quickQueryMode
+    public QuickQueryPane.Mode getQuickQueryMode() {
+        return quickQueryMode.get();
+    }
+    public void setQuickQueryMode(QuickQueryPane.Mode mode) {
+        quickQueryMode.set(mode);
+    }
+    public ObjectProperty<QuickQueryPane.Mode> quickQueryModeProperty() {
+        return quickQueryMode;
+    }
+
+    // docPaneMode
+    public DocumentsPane.Mode getDocPaneMode() {
+        return docPaneMode.get();
+    }
+    public void setDocPaneMode(DocumentsPane.Mode mode) {
+        docPaneMode.set(mode);
+    }
+    public ObjectProperty<DocumentsPane.Mode> docPaneModeProperty() {
+        return docPaneMode;
+    }
+
+    // allDemandas
+    public AsyncState<ObservableList<Demanda>> getAllDemandas() {
+        return allDemandas.get();
+    }
+    public void setAllDemandas(AsyncState<ObservableList<Demanda>> demandas) {
+        allDemandas.set(demandas);
+    }
+    public ObjectProperty<AsyncState<ObservableList<Demanda>>> allDemandasProperty() {
+        return allDemandas;
+    }
+
+    // globalSelectedDemanda
+    public Demanda getGlobalSelectedDemanda() {
+        return globalSelectedDemanda.get();
+    }
+    public void setGlobalSelectedDemanda(Demanda demanda) {
+        globalSelectedDemanda.set(demanda);
+    }
+    public ObjectProperty<Demanda> globalSelectedDemandaProperty() {
+        return globalSelectedDemanda;
     }
 
     public String getFallbackPfpPath() {
         return fallbackPfpPath;
-    }
-
-    public void listen(PropertyChangeListener l) {
-        support.addPropertyChangeListener(l);
     }
 }

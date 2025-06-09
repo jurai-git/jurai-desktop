@@ -58,14 +58,8 @@ public class SecondaryScene {
     }
 
     private void attachNotifiers() {
-        AppState.get().listen(l -> {
-            if ("useLightTheme".equals(l.getPropertyName())) {
-                if ((boolean) l.getNewValue()) {
-                    headerLogo.setImage(lightImg);
-                } else {
-                    headerLogo.setImage(darkImg);
-                }
-            }
+        AppState.get().useLightThemeProperty().addListener((obs, o, n) -> {
+            headerLogo.setImage(n ? lightImg : darkImg);
         });
     }
 

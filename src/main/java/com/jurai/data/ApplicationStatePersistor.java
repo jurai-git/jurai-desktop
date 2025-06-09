@@ -99,8 +99,8 @@ public class ApplicationStatePersistor {
 
     public void save() throws IOException {
         Map<String, String> updatedState = new HashMap<>();
-        updatedState.put("remembersUser", AppState.get().remembersUser() ? "true" : "false");
-        if(AppState.get().getCurrentUser() != null && AppState.get().remembersUser()) {
+        updatedState.put("remembersUser", AppState.get().isRemembersUser() ? "true" : "false");
+        if(AppState.get().getCurrentUser() != null && AppState.get().isRemembersUser()) {
             updatedState.put("currentUserToken", AppState.get().getCurrentUser().getAccessToken());
         }
 

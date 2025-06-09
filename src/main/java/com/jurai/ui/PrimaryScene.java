@@ -107,25 +107,15 @@ public class PrimaryScene {
     }
 
     private void attachNotifiers() {
-        AppState.get().listen(e -> {
-            if ("activePane".equals(e.getPropertyName())) {
-                activePaneChanged((Pane) e.getNewValue());
-            }
-        });
-        AppState.get().listen(e -> {
-            if ("currentPopup".equals(e.getPropertyName())) {
 
-            }
+        AppState.get().activePaneProperty().addListener((obs, o, n) -> {
+            activePaneChanged(n);
         });
-        AppState.get().listen(e -> {
-            if ("viewportSmall".equals(e.getPropertyName())) {
-                AppState.get().setSidebarExtended(true);
-            }
+        AppState.get().viewportSmallProperty().addListener((obs, o, n) -> {
+            AppState.get().setSidebarExtended(true);
         });
-        AppState.get().listen(e -> {
-            if ("sidebarExtended".equals(e.getPropertyName())) {
-                sidebarModeUpdated((Boolean) e.getNewValue());
-            }
+        AppState.get().sidebarExtendedProperty().addListener((obs, o, n) -> {
+            sidebarModeUpdated(n);
         });
     }
 

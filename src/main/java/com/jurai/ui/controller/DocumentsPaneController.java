@@ -36,21 +36,17 @@ public class DocumentsPaneController extends AbstractController<DocumentsPane> {
     protected void attachNotifiers(DocumentsPane pane) {
         DocumentChooser docChooser = pane.getDocumentChooser();
 
-        AppState.get().listen(change -> {
-            switch(change.getPropertyName()) {
-                case "docPaneMode" -> paneSwitched(pane);
-                case "currentUser" -> fetchDemandas(pane);
-                case "allDemandas" -> allDemandasChanged(pane, docChooser);
-                case "globalSelectedDemanda" -> docChooser.updateContent(AppState.get().getGlobalSelectedDemanda());
-            }
-        });
+        AppState.get().docPaneModeProperty().addListener((obs, o, n) -> paneSwitched(pane));
+        AppState.get().currentUserProperty().addListener((obs, o, n) -> fetchDemandas(pane));
+        AppState.get().allDemandasProperty().addListener((obs, o, n) -> allDemandasChanged(pane, docChooser));
+        AppState.get().globalSelectedDemandaProperty().addListener((obs, o, n) -> docChooser.updateContent(n));
+
 
         GlobalEvents.get().onGlobalDemandasEdited(() -> {
-                docChooser.updateContent(AppState.get().getGlobalSelectedDemanda());
+            docChooser.updateContent(AppState.get().getGlobalSelectedDemanda());
         });
 
         GlobalEvents.get().onGlobalDemandasChanged(() -> {
-
             fetchDemandas(pane);
         });
 

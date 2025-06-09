@@ -17,10 +17,8 @@ public class StageController extends AbstractController<App> {
 
     @Override
     protected void attachNotifiers(App app) {
-        AppState.get().listen(changeEvent -> {
-            if("stageType".equals(changeEvent.getPropertyName())) {
-                switchStage(AppState.get().getStageType(), app);
-            }
+        AppState.get().stageTypeProperty().addListener((obs, o, n) -> {
+            switchStage(AppState.get().getStageType(), app);
         });
     }
 
