@@ -250,7 +250,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
             }
         });
 
-        GlobalEvents.get().onPfpChanged(e -> {
+        GlobalEvents.get().onPfpChanged(() -> {
             Advogado currentUser = AppState.get().getCurrentUser();
             if (currentUser != null) {
                 pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(AppState.get().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
@@ -258,7 +258,6 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                 pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
             }
         });
-
     }
 
     private void modeChanged(AccountMode newMode, AccountPane pane) {

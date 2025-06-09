@@ -2,14 +2,14 @@ package com.jurai.ui.menus;
 
 import com.jurai.data.model.Demanda;
 import com.jurai.ui.controls.SimpleList;
+import com.jurai.ui.controls.StackGroup;
 import com.jurai.ui.controls.VGroup;
 import com.jurai.ui.util.SpacerFactory;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 
@@ -17,6 +17,7 @@ import static com.jurai.ui.util.ControlWrappers.*;
 
 public class DocumentChooser extends AbstractMenu<HBox> {
     private HBox content;
+    private VBox currentDocumentContent;
 
     @Getter
     private SimpleList<Demanda> docList;
@@ -25,6 +26,7 @@ public class DocumentChooser extends AbstractMenu<HBox> {
     protected void initControls() {
         content = new HBox();
         docList = new SimpleList<>("Seus documentos");
+        currentDocumentContent = new VBox();
     }
 
     @Override
@@ -42,11 +44,26 @@ public class DocumentChooser extends AbstractMenu<HBox> {
                 new VGroup().withHgrow(Priority.ALWAYS).withChildren(
                         wrapStyleClasses(new Label("Documento selecionado"), "subheader"),
                         SpacerFactory.vSpacer(Priority.ALWAYS),
-                        new VGroup().withStyleClass("small-content-box", "p-5").withVgrow(Priority.ALWAYS).withChildren(
-                                new Label("Você não tem nenhuma demanda selecionada!")
+                        new StackGroup().withStyleClass("small-content-box", "p-5").withVgrow(Priority.ALWAYS).withChildren(
+                                currentDocumentContent
                         ).bindMaxHeightProperty(listHeightBinding).bindPrefHeightProperty(listHeightBinding)
                 )
         );
+        updateContent(null);
+    }
+
+    public void updateContent(Demanda selectedDemanda) {
+        if (selectedDemanda == null) {
+            currentDocumentContent.getChildren().setAll(
+                    new Label("Você não tem nenhuma demanda selecionada!")
+            );
+        } else {
+            currentDocumentContent.getChildren().setAll(
+                    wrapStyleClasses(new Label(selectedDemanda.getNome()), "subheader"),
+                    wrapStyleClasses(new Label("Dono: " + selectedDemanda.getDono()), "subsubheader"),
+                    SpacerFactory.vSpacer(12)
+            );
+        }
     }
 
     @Override

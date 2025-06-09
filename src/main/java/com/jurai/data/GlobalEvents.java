@@ -11,7 +11,9 @@ public class GlobalEvents {
     @Getter
     private static volatile GlobalEvents instance;
 
-    private final List<Consumer<Void>> pfpChangedListeners = new CopyOnWriteArrayList<>();
+    private final List<Runnable> globalDemandasEditedListeners = new CopyOnWriteArrayList<>();
+    private final List<Runnable> globalDemandasChangedListeners = new CopyOnWriteArrayList<>();
+    private final List<Runnable> pfpChangedListeners = new CopyOnWriteArrayList<>();
 
     public static void initialize() {
         if (instance == null) {
@@ -30,13 +32,27 @@ public class GlobalEvents {
         return instance;
     }
 
-    public void onPfpChanged(Consumer<Void> listener) {
+    public void onGlobalDemandasChanged(Runnable listener) {
+        globalDemandasChangedListeners.add(listener);
+    }
+
+    public void fireGlobalDemandasChanged() {
+        globalDemandasChangedListeners.forEach(Runnable::run);
+    }
+
+    public void onGlobalDemandasEdited(Runnable listener) {
+        globalDemandasEditedListeners.add(listener);
+    }
+
+    public void fireGlobalDemandasEdited() {
+        globalDemandasEditedListeners.forEach(Runnable::run);
+    }
+
+    public void onPfpChanged(Runnable listener) {
         pfpChangedListeners.add(listener);
     }
 
     public void firePfpChanged() {
-        for (Consumer<Void> listener : pfpChangedListeners) {
-            listener.accept(null);
-        }
+        pfpChangedListeners.forEach(Runnable::run);
     }
 }

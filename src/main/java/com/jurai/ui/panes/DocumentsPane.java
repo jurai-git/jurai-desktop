@@ -37,8 +37,6 @@ public class DocumentsPane extends AbstractPane {
         view.getChildren().add(pane.getContent());
     }
 
-
-
     @Override
     public StackPane getView() {
         return view;

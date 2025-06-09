@@ -18,22 +18,23 @@ public class Demanda implements Model {
     private final StringProperty resumo = new SimpleStringProperty(); // TODO: texto médio/longo
     private final StringProperty statusDemanda = new SimpleStringProperty();
     private final StringProperty identificacao = new SimpleStringProperty("");
+    private final StringProperty dono = new SimpleStringProperty("");
 
     public Demanda(
                     String foro,
-                   String competencia,
-                   String classe,
-                   String assuntoPrincipal,
-                   boolean pedidoLiminar,
-                   boolean segJustica,
-                   Double valorAcao,
-                   boolean dispensaLegal,
-                   boolean justicaGratuita,
-                   boolean guiaCustas,
-                   String resumo,
-                   String statusDemanda,
-                   String identificacao
-                    ) {
+                    String competencia,
+                    String classe,
+                    String assuntoPrincipal,
+                    boolean pedidoLiminar,
+                    boolean segJustica,
+                    Double valorAcao,
+                    boolean dispensaLegal,
+                    boolean justicaGratuita,
+                    boolean guiaCustas,
+                    String resumo,
+                    String statusDemanda,
+                    String identificacao
+    ) {
 
         this.foro.set(foro);
         this.competencia.set(competencia);
@@ -64,10 +65,12 @@ public class Demanda implements Model {
             boolean guiaCustas,
             String resumo,
             String statusDemanda,
-            String identificacao
+            String identificacao,
+            String dono
     ) {
         this(foro, competencia, classe, assuntoPrincipal, pedidoLiminar, segJustica, valorAcao, dispensaLegal, justicaGratuita, guiaCustas, resumo, statusDemanda, identificacao);
         this.id.set(id);
+        this.dono.set(dono);
     }
 
     public double getId() {
@@ -224,6 +227,18 @@ public class Demanda implements Model {
 
     public String getNome() {
         return identificacao.get();
+    }
+
+    public String getDono() {
+        return dono.get();
+    }
+
+    public void setDono(String dono) {
+        this.dono.set(dono);
+    }
+
+    public StringProperty donoProperty() {
+        return dono;
     }
 
     @Override
