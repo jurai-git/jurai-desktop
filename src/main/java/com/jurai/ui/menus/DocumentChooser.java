@@ -5,7 +5,9 @@ import com.jurai.ui.controls.SimpleList;
 import com.jurai.ui.controls.StackGroup;
 import com.jurai.ui.controls.VGroup;
 import com.jurai.ui.util.SpacerFactory;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -19,12 +21,18 @@ public class DocumentChooser extends AbstractMenu<HBox> {
     private HBox content;
     private VBox currentDocumentContent;
 
+    ReadOnlyDoubleProperty contentWidthProperty;
+    DoubleBinding listWidthProperty;
+
     @Getter
     private SimpleList<Demanda> docList;
 
     @Override
     protected void initControls() {
         content = new HBox();
+        contentWidthProperty = content.widthProperty();
+        listWidthProperty = contentWidthProperty.multiply(0.55);
+
         docList = new SimpleList<>("Seus documentos");
         currentDocumentContent = new VBox();
     }
@@ -40,7 +48,7 @@ public class DocumentChooser extends AbstractMenu<HBox> {
                         wrapStyleClasses(new Label("Seus documentos"), "header", "pb-2-i"),
                         wrapStyleClasses(new Label("Selecione um documento para fazer sua análise, accessar o chat e mais"), "subsubheader", "pb-4-i"),
                         wrapVgrow(docList)
-                ),
+                ).bindMaxWidthProperty(listWidthProperty).bindPrefWidthProperty(listWidthProperty),
                 new VGroup().withHgrow(Priority.ALWAYS).withChildren(
                         wrapStyleClasses(new Label("Documento selecionado"), "subheader"),
                         SpacerFactory.vSpacer(Priority.ALWAYS),

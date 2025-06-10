@@ -1,6 +1,7 @@
 package com.jurai.ui.controls;
 
 import com.jurai.ui.util.SpacerFactory;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.geometry.Pos;
@@ -68,6 +69,16 @@ public class VGroup extends VBox implements FXFluent<VGroup> {
 
     public VGroup getHeightProperty(Ref<ReadOnlyDoubleProperty> bindingRef) {
         bindingRef.value = heightProperty();
+        return this;
+    }
+
+    public VGroup bindMaxWidthProperty(DoubleBinding binding) {
+        maxWidthProperty().bind(binding);
+        return this;
+    }
+
+    public VGroup bindPrefWidthProperty(DoubleBinding binding) {
+        prefWidthProperty().bind(binding);
         return this;
     }
 
