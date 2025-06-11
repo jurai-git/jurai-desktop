@@ -1,13 +1,14 @@
-package com.jurai.ui.controls;
+package com.jurai.ui.controls.fluent;
 
 import com.jurai.util.Ref;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class StackGroup extends StackPane implements FXFluent<StackGroup> {
+public class StackGroup extends StackPane implements FluentGroup<StackGroup> {
     @Override
-    public Parent getSelf() {
+    public Pane getSelf() {
         return this;
     }
 

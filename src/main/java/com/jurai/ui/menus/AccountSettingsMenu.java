@@ -2,6 +2,8 @@ package com.jurai.ui.menus;
 import com.jurai.data.AppState;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
+import com.jurai.ui.controls.fluent.HGroup;
+import com.jurai.ui.controls.fluent.VGroup;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.EventLogger;
 import javafx.beans.binding.Bindings;

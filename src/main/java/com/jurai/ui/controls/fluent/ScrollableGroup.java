@@ -1,13 +1,15 @@
-package com.jurai.ui.controls;
+package com.jurai.ui.controls.fluent;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Control;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 
-public class ScrollableGroup extends ScrollPane implements FXFluent<ScrollableGroup> {
+public class ScrollableGroup extends ScrollPane implements FluentControl<ScrollableGroup> {
 
     @Override
-    public Parent getSelf() {
+    public Control getSelf() {
         return this;
     }
 

@@ -1,7 +1,7 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.HGroup;
+import com.jurai.ui.controls.fluent.HGroup;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;

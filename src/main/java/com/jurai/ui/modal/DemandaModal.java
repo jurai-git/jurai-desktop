@@ -3,13 +3,13 @@ package com.jurai.ui.modal;
 import com.jurai.data.ApplicationData;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
+import com.jurai.ui.controls.fluent.HGroup;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import lombok.Getter;
 
 import java.util.List;

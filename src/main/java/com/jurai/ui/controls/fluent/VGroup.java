@@ -1,27 +1,23 @@
-package com.jurai.ui.controls;
+package com.jurai.ui.controls.fluent;
 
 import com.jurai.ui.util.SpacerFactory;
 import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import com.jurai.util.Ref;
 
-import java.lang.ref.Reference;
-
-public class VGroup extends VBox implements FXFluent<VGroup> {
+public class VGroup extends VBox implements FluentGroup<VGroup> {
 
     @Override
-    public Parent getSelf() {
+    public Pane getSelf() {
         return this;
     }
-
 
     private boolean withMargin = false;
 
@@ -34,7 +30,6 @@ public class VGroup extends VBox implements FXFluent<VGroup> {
         return this;
     }
 
-    @Override
     public VGroup withChildren(Node... es) {
         if(!withMargin) {
             getChildren().addAll(es);
@@ -72,6 +67,11 @@ public class VGroup extends VBox implements FXFluent<VGroup> {
         return this;
     }
 
+    public VGroup getWidthProperty(Ref<ReadOnlyDoubleProperty> bindingRef) {
+        bindingRef.value = widthProperty();
+        return this;
+    }
+
     public VGroup bindMaxWidthProperty(DoubleBinding binding) {
         maxWidthProperty().bind(binding);
         return this;
@@ -79,6 +79,11 @@ public class VGroup extends VBox implements FXFluent<VGroup> {
 
     public VGroup bindPrefWidthProperty(DoubleBinding binding) {
         prefWidthProperty().bind(binding);
+        return this;
+    }
+
+    public VGroup bindMinWidthProperty(DoubleBinding binding) {
+        minWidthProperty().bind(binding);
         return this;
     }
 

@@ -1,7 +1,7 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.controls.AppSettingsController;
-import com.jurai.ui.controls.VGroup;
+import com.jurai.ui.controls.fluent.VGroup;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

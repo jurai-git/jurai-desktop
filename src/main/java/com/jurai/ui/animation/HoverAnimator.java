@@ -83,4 +83,12 @@ public class HoverAnimator {
             animateAll(node, strengthX, strengthY);
         }
     }
+
+    public static void animateAll(Node n) {
+        animateAll(n, 1, 1);
+    }
+
+    public static void animateAllStronger(Node n) {
+        animateAll(n, 1.2, 1.2);
+    }
 }

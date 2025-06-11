@@ -90,6 +90,15 @@
     -fx-font-size: 1.125em;
 }
 
+.split-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+.split-pane .split-pane-divider {
+    -fx-background-color: transparent;
+}
+
 
 
 .content-box {
@@ -153,6 +162,21 @@
 .blue-button:pressed {
     -fx-background-color: j-button-blue-pressed !important;
     -fx-border-color: j-button-border;
+}
+
+.small-integrated-button-left {
+    -fx-border-color: j-border;
+    -fx-border-width: 2px 0px 0px 2px;
+    -fx-border-radius: 0 .5em 0 .5em;
+    -fx-background-radius: 0 .5em 0 .4em;
+}
+
+.small-integrated-button-right {
+    -fx-border-color: j-border;
+    -fx-border-width: 2px 0px 0px 2px;
+    -fx-border-radius: .5em 0 .5em 0;
+    -fx-background-radius: .5em 0 .4em 0;
+
 }
 
 .empty-button {
@@ -408,6 +432,22 @@
 .pl-1 { -fx-padding: 0 0 0 4px; }
 .pl-0\.5 { -fx-padding: 0 0 0 2px; }
 
+.text-base { -fx-font-size: 1em; }
+.text-1\.1 { -fx-font-size: 1.1em; }
+.text-1\.2 { -fx-font-size: 1.2em; }
+.text-1\.4 { -fx-font-size: 1.4em; }
+.text-1\.6 { -fx-font-size: 1.6em; }
+.text-1\.8 { -fx-font-size: 1.8em; }
+.text-2 { -fx-font-size: 2em; }
+
+.text-base .text { -fx-font-size: 1em; }
+.text-1 .text { -fx-font-size: 1.1em; }
+.text-2 .text { -fx-font-size: 1.2em; }
+.text-4 .text { -fx-font-size: 1.4em; }
+.text-6 .text { -fx-font-size: 1.6em; }
+.text-8 .text { -fx-font-size: 1.8em; }
+.text-10 .text { -fx-font-size: 2em; }
+
 .cursor-hand { -fx-cursor: hand; }
 
 .text-secondary {
@@ -417,7 +457,6 @@
 .text-red {
     -fx-text-fill: j-button-red;
 }
-
 
 .text-field-base {
     -fx-background-radius: 0.45em;

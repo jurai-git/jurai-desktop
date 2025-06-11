@@ -2,11 +2,9 @@ package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.CircleGraph;
-import com.jurai.ui.controls.HGroup;
-import com.jurai.ui.controls.VGroup;
+import com.jurai.ui.controls.fluent.HGroup;
+import com.jurai.ui.controls.fluent.VGroup;
 import com.jurai.ui.util.ControlWrapper;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -16,8 +14,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-
-import java.awt.event.ActionEvent;
 
 public class DemandaAnalysisDashboardMenu extends AbstractMenu<StackPane> {
     private StackPane content, inactiveContent;

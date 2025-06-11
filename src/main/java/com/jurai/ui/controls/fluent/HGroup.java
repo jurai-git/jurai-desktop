@@ -1,17 +1,17 @@
-package com.jurai.ui.controls;
+package com.jurai.ui.controls.fluent;
 
+import com.jurai.ui.util.Pane;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 
-public class HGroup extends HBox implements FXFluent<HGroup> {
+public class HGroup extends HBox implements FluentGroup<HGroup> {
 
     @Override
-    public Parent getSelf() {
+    public HGroup getSelf() {
         return this;
     }
 
@@ -26,6 +26,7 @@ public class HGroup extends HBox implements FXFluent<HGroup> {
         return this;
     }
 
+    @Override
     public HGroup withChildren(Node... es) {
         if(!withMargin) getChildren().addAll(es);
         else {

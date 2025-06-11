@@ -69,7 +69,7 @@ public class DocumentsPaneController extends AbstractController<DocumentsPane> {
                     return null;
                 }
             };
-            new Thread(task).run();
+            new Thread(task).start();
         } else {
             AppState.get().setAllDemandas(new AsyncState<>(FXCollections.emptyObservableList(), false, null));
         }

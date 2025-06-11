@@ -1,7 +1,7 @@
 package com.jurai.ui.modal.notif;
 
 import com.jurai.ui.LoadingStrategy;
-import com.jurai.ui.controls.HGroup;
+import com.jurai.ui.controls.fluent.HGroup;
 import com.jurai.ui.modal.Notification;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.scene.CacheHint;

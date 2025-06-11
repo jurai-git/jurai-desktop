@@ -3,7 +3,7 @@ package com.jurai.ui.menus;
 import com.jurai.data.ApplicationData;
 import com.jurai.data.AppState;
 import com.jurai.ui.controls.ArrowToggleButton;
-import com.jurai.ui.controls.HGroup;
+import com.jurai.ui.controls.fluent.HGroup;
 import com.jurai.ui.controls.SidebarNavItem;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;

@@ -1,6 +1,7 @@
 package com.jurai.data.request;
 
 import com.google.gson.JsonObject;
+import com.jurai.data.AppState;
 import com.jurai.data.json.JsonUtils;
 import com.jurai.util.EventLogger;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class RequestHandler {
     @Setter
     private String baseUrl;
     private final HttpClient client = HttpClient.newBuilder()
-            .connectTimeout(Duration.ofSeconds(5))
+            .connectTimeout(Duration.ofSeconds(AppState.get().getHttpTimeout()))
             .build();
 
     public RequestHandler(String baseUrl) {
@@ -89,7 +90,7 @@ public class RequestHandler {
 
             HttpRequest.Builder builder = HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl + endpoint))
-                    .timeout(Duration.ofSeconds(10))
+                    .timeout(Duration.ofSeconds(AppState.get().getHttpTimeout()))
                     .header("Content-Type", "multipart/form-data; boundary=" + boundary)
                     .header("Accept", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofByteArray(multipartData));
@@ -119,7 +120,7 @@ public class RequestHandler {
         try {
             HttpRequest.Builder builder = HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl + endpoint))
-                    .timeout(Duration.ofSeconds(5))
+                    .timeout(Duration.ofSeconds(AppState.get().getHttpTimeout()))
                     .header("Content-Type", "application/json")
                     .header("Accept", "application/json");
 

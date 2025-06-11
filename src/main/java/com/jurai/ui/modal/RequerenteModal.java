@@ -4,6 +4,7 @@ import com.jurai.data.ApplicationData;
 import com.jurai.ui.LoadingStrategy;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
+import com.jurai.ui.controls.fluent.HGroup;
 import com.jurai.ui.util.ControlWrapper;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;

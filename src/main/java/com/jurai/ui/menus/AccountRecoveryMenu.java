@@ -1,10 +1,8 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.FieldSet;
-import com.jurai.ui.controls.HGroup;
 import com.jurai.ui.controls.TextFieldSet;
-import com.jurai.ui.controls.VGroup;
+import com.jurai.ui.controls.fluent.VGroup;
 import com.jurai.ui.util.ControlWrappers;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;

@@ -1,10 +1,10 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.HGroup;
-import com.jurai.ui.controls.ScrollableGroup;
+import com.jurai.ui.controls.fluent.HGroup;
+import com.jurai.ui.controls.fluent.ScrollableGroup;
 import com.jurai.ui.controls.SettingsOption;
-import com.jurai.ui.controls.VGroup;
+import com.jurai.ui.controls.fluent.VGroup;
 import com.jurai.ui.util.SpacerFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;

@@ -35,6 +35,13 @@
     </properties>
 
     <dependencies>
+        <!-- pretty textfields -->
+        <dependency>
+            <groupId>org.fxmisc.richtext</groupId>
+            <artifactId>richtextfx</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+
         <!-- javafx base -->
         <dependency>
             <groupId>org.openjfx</groupId>
