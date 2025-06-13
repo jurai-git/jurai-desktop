@@ -2,10 +2,10 @@ package com.jurai.ui.menus;
 import com.jurai.data.AppState;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
-import com.jurai.ui.controls.fluent.HGroup;
-import com.jurai.ui.controls.fluent.VGroup;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.EventLogger;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
+import dev.mgcvale.fluidfx.components.groups.VGroup;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
@@ -15,7 +15,8 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import lombok.Getter;
 
-import static com.jurai.ui.util.ControlWrappers.*;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClasses;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 
 public class AccountSettingsMenu extends AbstractMenu<VBox> {
     private VBox content;
@@ -92,10 +93,10 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     @Override
     protected void layControls() {
         content.getChildren().addAll(
-                wrapVgrow(new VGroup().withStyleClass("spacing-3", "small-content-box", "p-6").withChildren(
-                        new HGroup().withStyleClass("spacing-3", "pl-4").withChildren(
+                wVgrow(new VGroup().wStyleClass("spacing-3", "small-content-box", "p-6").wChildren(
+                        new HGroup().wStyleClass("spacing-3", "pl-4").wChildren(
                                 profilePicture,
-                                new VGroup().withChildren(
+                                new VGroup().wChildren(
                                         SpacerFactory.vSpacer(Priority.ALWAYS),
                                         usernameLabel,
                                         oabLabel,
@@ -107,16 +108,16 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
                         email,
                         oab,
                         SpacerFactory.vSpacer(content.heightProperty().multiply(0.03).add(4)),
-                        wrapStyleClasses(new Label("Troque sua senha"), "subheader"),
+                        wStyleClasses(new Label("Troque sua senha"), "subheader"),
                         changePassword,
                         confirmPassword,
                         SpacerFactory.vSpacer(Priority.ALWAYS),
-                        new HGroup().withChildren(
+                        new HGroup().wChildren(
                                 SpacerFactory.hSpacer(Priority.ALWAYS),
                                 changePasswordBtn
                         )
                 )),
-                new HGroup().withChildren(
+                new HGroup().wChildren(
                         resetChanges,
                         SpacerFactory.hSpacer(Priority.ALWAYS),
                         deleteAccount,
@@ -134,7 +135,7 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
             loadFallback();
             return;
         }
-        EventLogger.log("Loading profile picture with URL " + url + " on AccountSettingsMenu");
+        EventLogger.log("Loading profile picture w URL " + url + " on AccountSettingsMenu");
 
         ChangeListener<Boolean> errorHandler = (obs, oldVal, hasError) -> {
           if (hasError) {

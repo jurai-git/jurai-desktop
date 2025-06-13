@@ -3,11 +3,11 @@ package com.jurai.ui.menus;
 import com.jurai.data.ApplicationData;
 import com.jurai.data.AppState;
 import com.jurai.ui.controls.ArrowToggleButton;
-import com.jurai.ui.controls.fluent.HGroup;
 import com.jurai.ui.controls.SidebarNavItem;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.FileUtils;
 import com.jurai.util.UILogger;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
 import javafx.css.PseudoClass;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -66,10 +66,10 @@ public class SidebarNav extends AbstractMenu<VBox> {
                 documents,
                 account,
                 SpacerFactory.vSpacer(Priority.ALWAYS),
-                new HGroup().withChildren(
+                new HGroup().wChildren(
                         SpacerFactory.hSpacer(Priority.ALWAYS),
                         sidebarToggleButton
-                ).withStyle("-fx-padding: 0; -fx-gap: 0;"),
+                ).wStyle("-fx-padding: 0; -fx-gap: 0;"),
                 SpacerFactory.vSpacer(Priority.ALWAYS),
                 logout);
         dashboard.setActive(true);

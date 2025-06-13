@@ -1,14 +1,15 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.fluent.VGroup;
-import com.jurai.ui.util.ControlWrappers;
 import com.jurai.ui.util.SpacerFactory;
+import dev.mgcvale.fluidfx.components.groups.VGroup;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import lombok.Getter;
+
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wAlignment;
 
 public class AccountRecoveryDone extends AbstractMenu<BorderPane> {
     private BorderPane content;
@@ -63,10 +64,10 @@ public class AccountRecoveryDone extends AbstractMenu<BorderPane> {
         BorderPane.setAlignment(title, Pos.CENTER);
         title.getStyleClass().add("border-pane-region");
         content.setTop(
-                new VGroup().withStyleClass("border-pane-region", "p-8").withBorderPaneAlignment(Pos.CENTER).withChildren(
+                new VGroup().wStyleClass("border-pane-region", "p-8").wBorderPaneAlignment(Pos.CENTER).wChildren(
                         title,
-                        new VGroup().withAlignment(Pos.CENTER).withChildren(
-                                ControlWrappers.wrapAlignment(new Label("O e-mail de recuperação foi enviado com sucesso.\nCheque sua inbox e caixa de spam.\nCaso o email não chegue em 5 minutos, você poderá fazer uma nova requisição."), TextAlignment.CENTER),
+                        new VGroup().wAlignment(Pos.CENTER).wChildren(
+                                wAlignment(new Label("O e-mail de recuperação foi enviado com sucesso.\nCheque sua inbox e caixa de spam.\nCaso o email não chegue em 5 minutos, você poderá fazer uma nova requisição."), TextAlignment.CENTER),
                                 makeNewRequest
                         )
                 )

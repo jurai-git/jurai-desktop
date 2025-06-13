@@ -84,10 +84,18 @@
             <artifactId>appdirs</artifactId>
             <version>1.2.2</version>
         </dependency>
+
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.36</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.mgcvale</groupId>
+            <artifactId>fluidfx</artifactId>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
 

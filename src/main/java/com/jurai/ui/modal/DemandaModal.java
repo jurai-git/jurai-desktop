@@ -3,8 +3,8 @@ package com.jurai.ui.modal;
 import com.jurai.data.ApplicationData;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
-import com.jurai.ui.controls.fluent.HGroup;
 import com.jurai.ui.util.SpacerFactory;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
@@ -135,12 +135,12 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
             SpacerFactory.vSpacer(ApplicationData.defaultIconSizeProperty().get() * 0.8),
             assuntoPrincipal,
             valorAcao,
-            new HGroup().withMargin().withVgrow(Priority.ALWAYS).withChildren(
+            new HGroup().spaceAround().wVgrow(Priority.ALWAYS).wChildren(
                         pedidoLiminar,
                         segredoJustica,
                         dispensaLegal
             ),
-            new HGroup().withMargin().withVgrow(Priority.ALWAYS).withChildren(
+            new HGroup().spaceBetween().wVgrow(Priority.ALWAYS).wChildren(
                     justicaGratiuta,
                     guiaCustas
             ),

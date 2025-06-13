@@ -1,9 +1,10 @@
 package com.jurai.ui.controls;
 
+import dev.mgcvale.fluidfx.components.controls.FLabel;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.scene.control.Label;
 
-public class BooleanReactiveLabel extends Label {
+public class BooleanReactiveLabel extends FLabel {
     String prefix;
 
     public BooleanReactiveLabel(String prefix, ReadOnlyBooleanProperty watchedValue) {

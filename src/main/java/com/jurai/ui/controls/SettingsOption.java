@@ -7,8 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-import static com.jurai.ui.util.ControlWrappers.wrapHgrow;
-import static com.jurai.ui.util.ControlWrappers.wrapStyleClasses;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wHgrow;
+
 
 public class SettingsOption<T extends Control> extends HBox {
     T control;
@@ -18,7 +18,7 @@ public class SettingsOption<T extends Control> extends HBox {
         this.control = control;
         setAlignment(Pos.CENTER);
         getChildren().addAll(
-                wrapHgrow(new Label(name)),
+                wHgrow(new Label(name)),
                 SpacerFactory.hSpacer(Priority.ALWAYS),
                 control
         );

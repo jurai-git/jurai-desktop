@@ -1,8 +1,5 @@
 module jurai {
-    requires transitive javafx.controls;
-    requires transitive javafx.graphics;
     requires transitive java.naming;
-    requires transitive java.desktop;
     requires transitive java.logging;
     requires com.google.gson;
     requires java.sql;
@@ -13,6 +10,8 @@ module jurai {
     requires java.net.http;
     requires static lombok;
     requires org.fxmisc.richtext;
+    requires fluidfx;
+    requires java.desktop;
 
     opens com.jurai.data.model to com.google.gson;
     exports com.jurai to javafx.graphics;

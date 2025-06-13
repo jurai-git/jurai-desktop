@@ -1,11 +1,11 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.fluent.HGroup;
-import com.jurai.ui.controls.fluent.ScrollableGroup;
 import com.jurai.ui.controls.SettingsOption;
-import com.jurai.ui.controls.fluent.VGroup;
 import com.jurai.ui.util.SpacerFactory;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
+import dev.mgcvale.fluidfx.components.groups.ScrollGroup;
+import dev.mgcvale.fluidfx.components.groups.VGroup;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
@@ -14,7 +14,8 @@ import javafx.scene.text.TextAlignment;
 import lombok.Getter;
 import org.controlsfx.control.ToggleSwitch;
 
-import static com.jurai.ui.util.ControlWrappers.*;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.*;
+
 
 public class AppSettingsMenu extends AbstractMenu<VBox>  {
     private VBox content;
@@ -64,20 +65,20 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
     @Override
     protected void layControls() {
         content.getChildren().addAll(
-                new ScrollableGroup().withVgrow(Priority.ALWAYS).withStyleClass("spacing-3").vbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).hbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).withFixedWitdh().withContent(
-                        new VGroup().withVgrow(Priority.ALWAYS).withChildren(
+                new ScrollGroup().wVgrow(Priority.ALWAYS).wStyleClass("spacing-3").wVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).wHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).wFixedWitdh().wContent(
+                        new VGroup().wVgrow(Priority.ALWAYS).wChildren(
 
-                                wrapStyle(wrapStyleClasses(new Label("Configurações gerais"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
-                                new VGroup().withVgrow(Priority.SOMETIMES).withStyleClass("small-content-box", "spacing-3", "p-6").withChildren(
-                                        wrapHgrow(useLightThemeOption, Priority.ALWAYS),
-                                        wrapHgrow(useAnimationsOption, Priority.ALWAYS),
-                                        wrapHgrow(apiUrlOption, Priority.ALWAYS)
+                                wStyle(wStyleClasses(new Label("Configurações gerais"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                                new VGroup().wVgrow(Priority.SOMETIMES).wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
+                                        wHgrow(useLightThemeOption, Priority.ALWAYS),
+                                        wHgrow(useAnimationsOption, Priority.ALWAYS),
+                                        wHgrow(apiUrlOption, Priority.ALWAYS)
                                 ),
                                 SpacerFactory.vSpacer(24),
 
-                                wrapStyle(wrapStyleClasses(new Label("Privacidade e Segurança"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
-                                new VGroup().withStyleClass("small-content-box", "spacing-3", "p-6").withChildren(
-                                        new HGroup().withHgrow(Priority.ALWAYS).withAlignment(Pos.CENTER).withChildren(
+                                wStyle(wStyleClasses(new Label("Privacidade e Segurança"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                                new VGroup().wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
+                                        new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
                                                 new Label("Termos e condições"),
                                                 SpacerFactory.hSpacer(Priority.ALWAYS),
                                                 new Hyperlink("Clique aqui para ver")
@@ -85,14 +86,14 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
                                 ),
                                 SpacerFactory.vSpacer(24),
 
-                                wrapStyle(wrapStyleClasses(new Label("Contato e suporte"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
-                                new VGroup().withStyleClass("small-content-box", "spacing-3", "p-6").withChildren(
-                                        new HGroup().withHgrow(Priority.ALWAYS).withAlignment(Pos.CENTER).withChildren(
+                                wStyle(wStyleClasses(new Label("Contato e suporte"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                                new VGroup().wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
+                                        new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
                                                 new Label("Nosso e-mail"),
                                                 SpacerFactory.hSpacer(Priority.ALWAYS),
                                                 new Label("contas.jurai@gmail.com")
                                         ),
-                                        new HGroup().withHgrow(Priority.ALWAYS).withAlignment(Pos.CENTER).withChildren(
+                                        new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
                                                 new Label("Formulário para contato"),
                                                 SpacerFactory.hSpacer(Priority.ALWAYS),
                                                 new Hyperlink("Clique aqui para acessar")
@@ -100,7 +101,7 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
                                 )
                         )
                 ),
-                new HGroup().withChildren(
+                new HGroup().wChildren(
                         exportConfigs,
                         SpacerFactory.hSpacer(12),
                         importConfigs,

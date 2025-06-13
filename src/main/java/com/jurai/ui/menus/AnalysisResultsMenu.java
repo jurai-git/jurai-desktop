@@ -4,9 +4,9 @@ import com.jurai.data.AppState;
 import com.jurai.data.model.DemandaAnalysis;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.CircleGraph;
-import com.jurai.ui.controls.fluent.HGroup;
-import com.jurai.ui.controls.fluent.VGroup;
 import com.jurai.ui.util.SpacerFactory;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
+import dev.mgcvale.fluidfx.components.groups.VGroup;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -112,25 +112,25 @@ public class AnalysisResultsMenu extends AbstractMenu<StackPane> {
 
     private void setHorizontal() {
         activeContent.getChildren().setAll(
-                new HGroup().withChildren(
-                        new VGroup().withHgrow(Priority.ALWAYS).withVgrow(Priority.ALWAYS).withChildren(
+                new HGroup().wChildren(
+                        new VGroup().wHgrow(Priority.ALWAYS).wVgrow(Priority.ALWAYS).wChildren(
                                 circleGraphLabel,
                                 circleGraph
-                        ).withStyleClass("small-content-box").withStyle("-fx-padding: .5em 0 0 0"),
+                        ).wStyleClass("small-content-box").wStyle("-fx-padding: .5em 0 0 0"),
                         demandaInfo
-                ).withHgrow(Priority.ALWAYS).withVgrow(Priority.ALWAYS).withStyleClass("spaced")
+                ).wHgrow(Priority.ALWAYS).wVgrow(Priority.ALWAYS).wStyleClass("spaced")
         );
     }
 
     private void setVertical() {
         activeContent.getChildren().setAll(
-                new VGroup().withChildren(
-                        new VGroup().withHgrow(Priority.ALWAYS).withVgrow(Priority.ALWAYS).withChildren(
+                new VGroup().wChildren(
+                        new VGroup().wHgrow(Priority.ALWAYS).wVgrow(Priority.ALWAYS).wChildren(
                                 circleGraphLabel,
                                 circleGraph
-                        ).withStyleClass("small-content-box").withStyle("-fx-padding: .5em 0 0 0"),
+                        ).wStyleClass("small-content-box").wStyle("-fx-padding: .5em 0 0 0"),
                         demandaInfo
-                ).withHgrow(Priority.ALWAYS).withVgrow(Priority.ALWAYS).withStyleClass("spaced")
+                ).wHgrow(Priority.ALWAYS).wVgrow(Priority.ALWAYS).wStyleClass("spaced")
         );
     }
 

@@ -1,8 +1,7 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.fluent.HGroup;
-import com.jurai.ui.util.SpacerFactory;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -66,22 +65,17 @@ public class EmentaQuickQueryTab extends AbstractMenu<HBox> {
         leftContent.getChildren().addAll(
                 ementaLabel,
                 ementaTextArea,
-                new HGroup().withChildren(
-                        SpacerFactory.hSpacer(Priority.ALWAYS),
+                new HGroup().spaceAround().wChildren(
                         clear,
-                        SpacerFactory.hSpacer(Priority.ALWAYS),
-                        send,
-                        SpacerFactory.hSpacer(Priority.ALWAYS)
+                        send
                 )
         );
 
         rightContent.getChildren().addAll(
                 analysisLabel,
                 analysisResultsMenu.getContent(),
-                new HGroup().withChildren(
-                        SpacerFactory.hSpacer(Priority.ALWAYS),
-                        viewArguments,
-                        SpacerFactory.hSpacer(Priority.ALWAYS)
+                new HGroup().spaceAround().wChildren(
+                        viewArguments
                 )
         );
 

@@ -1,19 +1,18 @@
 package com.jurai.ui.controls.fluent;
 
 import com.jurai.util.UILogger;
+import dev.mgcvale.fluidfx.components.core.FluidControl;
 import javafx.application.Platform;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Control;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SplitGroup extends SplitPane implements FluentControl<SplitGroup> {
+public class SplitGroup extends SplitPane implements FluidControl<SplitGroup> {
     Map<Integer, Pair<Double, Double>> positionConstraints;
 
     @Override
@@ -26,7 +25,7 @@ public class SplitGroup extends SplitPane implements FluentControl<SplitGroup> {
         positionConstraints = new HashMap<>();
     }
 
-    public SplitGroup withDividerPosition(int i, double pos) {
+    public SplitGroup wDividerPosition(int i, double pos) {
         setDividerPosition(i, pos);
         positionConstraints.put(i, new Pair<>(0D, 1D));
         try {
@@ -43,12 +42,12 @@ public class SplitGroup extends SplitPane implements FluentControl<SplitGroup> {
         return this;
     }
 
-    public SplitGroup withConstraints(int i, Pair<Double, Double> constraints) {
+    public SplitGroup wConstraints(int i, Pair<Double, Double> constraints) {
         positionConstraints.put(i, constraints);
         try {
             calculateConstraints(i, getDividers().get(i).getPosition());
         } catch (Exception e) {
-            UILogger.logWarning("Failed to add calculate constraint on SplitGroup.withConstraints(): " + e.getMessage());
+            UILogger.logWarning("Failed to add calculate constraint on SplitGroup.wConstraints(): " + e.getMessage());
         }
         return this;
     }
@@ -65,12 +64,12 @@ public class SplitGroup extends SplitPane implements FluentControl<SplitGroup> {
         }
     }
 
-    public SplitGroup withItems(Node... items) {
+    public SplitGroup wItems(Node... items) {
         getItems().addAll(items);
         return this;
     }
 
-    public SplitGroup withOrientation(Orientation o) {
+    public SplitGroup wOrientation(Orientation o) {
         setOrientation(o);
         return this;
     }

@@ -1,7 +1,7 @@
 package com.jurai.ui.menus;
 
 import com.jurai.ui.controls.AppSettingsController;
-import com.jurai.ui.controls.fluent.VGroup;
+import dev.mgcvale.fluidfx.components.groups.VGroup;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,7 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import lombok.Getter;
 
-import static com.jurai.ui.util.ControlWrappers.*;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wHgrow;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 
 public class AccountDashboardMenu extends AbstractMenu<HBox> {
     private HBox content;
@@ -48,13 +49,13 @@ public class AccountDashboardMenu extends AbstractMenu<HBox> {
     protected void layControls() {
         content.getStyleClass().addAll("p-x16-y8", "spacing-6");
         content.getChildren().addAll(
-                new VGroup().withHgrow(Priority.ALWAYS).withChildren(
-                        wrapVgrow(title, Priority.NEVER),
-                        wrapVgrow(accountSettingsMenu.getContent())
+                new VGroup().wHgrow(Priority.ALWAYS).wChildren(
+                        wVgrow(title, Priority.NEVER),
+                        wVgrow(accountSettingsMenu.getContent())
                 ),
-                new VGroup().withHgrow(Priority.ALWAYS).withChildren(
+                new VGroup().wHgrow(Priority.ALWAYS).wChildren(
                         subtitle,
-                        wrapVgrow(wrapHgrow(appSettingsMenu.getContent()))
+                        wVgrow(wHgrow(appSettingsMenu.getContent()))
                 )
         );
     }

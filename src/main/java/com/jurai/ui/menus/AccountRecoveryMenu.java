@@ -2,14 +2,15 @@ package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.TextFieldSet;
-import com.jurai.ui.controls.fluent.VGroup;
-import com.jurai.ui.util.ControlWrappers;
 import com.jurai.ui.util.SpacerFactory;
+import dev.mgcvale.fluidfx.components.groups.VGroup;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import lombok.Getter;
+
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wAlignment;
 
 public class AccountRecoveryMenu extends AbstractMenu<BorderPane> {
     private BorderPane content;
@@ -65,7 +66,7 @@ public class AccountRecoveryMenu extends AbstractMenu<BorderPane> {
                 sendRequest,
                 SpacerFactory.vSpacer(Priority.ALWAYS),
                 SpacerFactory.vSpacer(Priority.ALWAYS),
-                new VGroup().withAlignment(Pos.CENTER).withChildren(
+                new VGroup().wAlignment(Pos.CENTER).wChildren(
                         login,
                         createAccount
                 )
@@ -74,9 +75,9 @@ public class AccountRecoveryMenu extends AbstractMenu<BorderPane> {
         BorderPane.setAlignment(title, Pos.CENTER);
         title.getStyleClass().add("border-pane-region");
         content.setTop(
-            new VGroup().withStyleClass("border-pane-region").withBorderPaneAlignment(Pos.CENTER).withChildren(
+            new VGroup().wStyleClass("border-pane-region").wBorderPaneAlignment(Pos.CENTER).wChildren(
                 title,
-                ControlWrappers.wrapAlignment(new Label("Para recuperar sua conta, vamos te enviar um email com um link de recuperação.\n Com ele, você poderá trocar a sua senha, e retornar aqui para fazer login."), TextAlignment.CENTER)
+                wAlignment(new Label("Para recuperar sua conta, vamos te enviar um email com um link de recuperação.\n Com ele, você poderá trocar a sua senha, e retornar aqui para fazer login."), TextAlignment.CENTER)
             )
         );
         content.getStyleClass().add("border-pane-region");

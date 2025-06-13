@@ -5,7 +5,13 @@ import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
 import com.jurai.ui.controls.fluent.*;
 import com.jurai.ui.util.SpacerFactory;
-import javafx.beans.binding.DoubleBinding;
+import com.jurai.util.Ref;
+import dev.mgcvale.fluidfx.components.controls.FButton;
+import dev.mgcvale.fluidfx.components.controls.FTextField;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
+import dev.mgcvale.fluidfx.components.groups.ScrollGroup;
+import dev.mgcvale.fluidfx.components.groups.VGroup;
+import dev.mgcvale.fluidfx.reactive.FluidText;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -15,16 +21,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
+import dev.mgcvale.fluidfx.components.controls.FLabel;
 import lombok.Getter;
 
-import static com.jurai.ui.util.ControlWrappers.*;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClasses;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 
 public class DocumentChooser extends AbstractMenu<HBox> {
     private HBox content;
     private VBox currentDocumentContent;
-
-    ReadOnlyDoubleProperty contentWidthProperty;
-    DoubleBinding listWidthProperty;
 
     private Demanda lastDemanda = null;
 
@@ -36,8 +41,6 @@ public class DocumentChooser extends AbstractMenu<HBox> {
     @Override
     protected void initControls() {
         content = new HBox();
-        contentWidthProperty = content.widthProperty();
-        listWidthProperty = contentWidthProperty.multiply(0.55);
 
         docList = new SimpleList<>("Seus documentos");
         currentDocumentContent = new VBox();
@@ -50,21 +53,22 @@ public class DocumentChooser extends AbstractMenu<HBox> {
     @Override
     protected void layControls() {
         ReadOnlyDoubleProperty listHeightBinding = docList.heightProperty();
+        Ref<ReadOnlyDoubleProperty> splitGroupWidthProperty = new Ref<>(null);
 
         content.getStyleClass().addAll("pane", "spacing-4");
         content.getChildren().addAll(
                 SpacerFactory.hSpacer(12),
-                new SplitGroup().withHgrow(Priority.ALWAYS).withDividerPosition(0, 0.6).withConstraints(0, new Pair<>(0.3, 0.8)).withItems(
-                        new VGroup().withHgrow(Priority.ALWAYS).withChildren(
-                                wrapStyleClasses(new Label("Seus documentos"), "header", "pb-2-i"),
-                                wrapStyleClasses(new Label("Selecione um documento para fazer sua análise, accessar o chat e mais"), "subsubheader", "pb-4-i"),
-                                wrapVgrow(docList)
-                        ).bindPrefWidthProperty(listWidthProperty),
-                        new VGroup().withHgrow(Priority.ALWAYS).withChildren(
-                                wrapStyleClasses(new Label("Documento selecionado"), "subheader"),
+                new SplitGroup().wHgrow(Priority.ALWAYS).wDividerPosition(0, 0.6).wConstraints(0, new Pair<>(0.3, 0.8)).wItems(
+                        new VGroup().wHgrow(Priority.ALWAYS).wChildren(
+                                wStyleClasses(new Label("Seus documentos"), "header", "pb-2-i"),
+                                wStyleClasses(new Label("Selecione um documento para fazer sua análise, accessar o chat e mais"), "subsubheader", "pb-4-i"),
+                                wVgrow(docList)
+                        ),
+                        new VGroup().wHgrow(Priority.ALWAYS).wChildren(
+                                wStyleClasses(new Label("Documento selecionado"), "subheader"),
                                 SpacerFactory.vSpacer(Priority.ALWAYS),
                                 currentDocumentContent
-                        ).bindMinWidthProperty(listWidthProperty)
+                        )
                 )
         );
         currentDocumentContent.maxHeightProperty().bind(listHeightBinding);
@@ -76,7 +80,7 @@ public class DocumentChooser extends AbstractMenu<HBox> {
         lastDemanda = selectedDemanda;
         if (selectedDemanda == null) {
             currentDocumentContent.getChildren().setAll(
-                    new VGroup().withStyleClass("small-content-box", "p-5").withVgrow(Priority.ALWAYS).withChildren(
+                    new VGroup().wStyleClass("small-content-box", "p-5").wVgrow(Priority.ALWAYS).wChildren(
                             new Label("Você não tem nenhuma demanda selecionada!")
                     )
             );
@@ -91,32 +95,32 @@ public class DocumentChooser extends AbstractMenu<HBox> {
             return;
         }
         currentDocumentContent.getChildren().setAll(
-                new VGroup().withVgrow(Priority.ALWAYS).withStyleClass("small-content-box", "p-5").withChildren(
-                        new HGroup().withChildren(
-                                wrapStyleClasses(new Label(lastDemanda.getNome()), "subheader"),
+                new VGroup().wVgrow(Priority.ALWAYS).wStyleClass("small-content-box", "p-5").wChildren(
+                        new HGroup().wChildren(
+                                wStyleClasses(new Label(lastDemanda.getNome()), "subheader"),
                                 SpacerFactory.hSpacer(Priority.ALWAYS),
-                                new FluentButton("Ir ao Chat").withStyleClass("blue-button").applyCustomFunction(HoverAnimator::animateAll)
+                                new FButton("Ir ao Chat").wStyleClass("blue-button").applyCustomFunction(HoverAnimator::animateAll)
                         ),
-                        wrapStyleClasses(new Label("Dono: " + lastDemanda.getDono()), "subsubheader"),
+                        wStyleClasses(new Label("Dono: " + lastDemanda.getDono()), "subsubheader"),
                         SpacerFactory.vSpacer(16),
-                        new ScrollableGroup().withFixedWitdh().withVgrow(Priority.ALWAYS).vbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).hbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).withContent(
-                                new VGroup().withStyleClass("spacing-4").withChildren(
-                                        new ReactiveLabel("Foro: ", lastDemanda.foroProperty()),
-                                        new ReactiveLabel("Competencia: ", lastDemanda.competenciaProperty()),
-                                        new ReactiveLabel("Ass. Principal: ", lastDemanda.assuntoPrincipalProperty()),
-                                        new ReactiveLabel("Status: ", lastDemanda.statusDemandaProperty()),
+                        new ScrollGroup().wFixedWitdh().wVgrow(Priority.ALWAYS).wVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).wHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).wContent(
+                                new VGroup().wStyleClass("spacing-4").wChildren(
+                                        new FLabel().inText(FluidText.build("Foro: ", lastDemanda.foroProperty())),
+                                        new FLabel().inText(FluidText.build("Competencia: ", lastDemanda.competenciaProperty())),
+                                        new FLabel().inText(FluidText.build("Ass. principal: ", lastDemanda.assuntoPrincipalProperty())),
+                                        new FLabel().inText(FluidText.build("Status: ", lastDemanda.statusDemandaProperty())),
                                         new BooleanReactiveLabel("Tem Pedido de Liminar: ", lastDemanda.pedidoLiminarProperty()),
                                         new BooleanReactiveLabel("Tem Segredo de Justiça: ", lastDemanda.segJusticaProperty()),
                                         new BooleanReactiveLabel("Tem Dispensa Legal: ", lastDemanda.dispensaLegalProperty()),
                                         new BooleanReactiveLabel("Tem Justiça Gratuita: ", lastDemanda.justicaGratuitaProperty()),
                                         new BooleanReactiveLabel("Tem Guia de Custas: ", lastDemanda.guiaCustasProperty()),
-                                        new ReactiveLabel("Valor da ação: ", lastDemanda.valorAcaoProperty()),
-                                        new ReactiveLabel("Resumo: ", lastDemanda.resumoProperty())
+                                        new FLabel().inText(FluidText.build("Valor ação: ", lastDemanda.valorAcaoProperty())),
+                                        new FLabel().inText(FluidText.build("Resumo: ", lastDemanda.resumoProperty()))
                                 )
                         ),
-                        new HGroup().withStyleClass("spacing-4").withChildren(
-                                new FluentTextField().withPrompt("Fale com o JurAI sobre o processo").bindTextValue(chatTextMessage).withStyleClass("text-field-base").withHgrow(Priority.ALWAYS),
-                                new FluentButton("Enviar").withStyleClass("blue-button").applyCustomFunction(HoverAnimator::animateAllStronger)
+                        new HGroup().wStyleClass("spacing-4").wChildren(
+                                new FTextField().wPrompt("Fale com o JurAI sobre o processo").inText(chatTextMessage).wStyleClass("text-field-base").wHgrow(Priority.ALWAYS),
+                                new FButton("Enviar").wStyleClass("blue-button").applyCustomFunction(HoverAnimator::animateAllStronger)
                         )
                 )
         );

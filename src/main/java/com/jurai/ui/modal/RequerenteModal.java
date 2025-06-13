@@ -4,14 +4,16 @@ import com.jurai.data.ApplicationData;
 import com.jurai.ui.LoadingStrategy;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
-import com.jurai.ui.controls.fluent.HGroup;
-import com.jurai.ui.util.ControlWrapper;
 import com.jurai.ui.util.SpacerFactory;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 import java.util.List;
+
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wHgrow;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 
 @LoadingStrategy(LoadingStrategy.Strategy.LAZY)
 public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
@@ -114,8 +116,8 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
                 nomeSocial,
                 email,
                 cpfCnpj,
-                new HGroup().withVgrow(Priority.ALWAYS).withMargin().withChildren(
-                        new ControlWrapper(isIdoso).withVgrow(Priority.ALWAYS).withHgrow(Priority.ALWAYS),
+                new HGroup().wVgrow(Priority.ALWAYS).spaceAround().wChildren(
+                        wVgrow(wHgrow(isIdoso)),
                         genero
                 ),
                 SpacerFactory.vSpacer(Priority.ALWAYS)
@@ -196,7 +198,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
                 estado,
                 cidade,
                 bairro,
-                new HGroup().withVgrow(Priority.ALWAYS).withMargin().withChildren(logradouro, numero),
+                new HGroup().wVgrow(Priority.ALWAYS).spaceAround().wChildren(logradouro, numero),
                 complemento,
                 SpacerFactory.vSpacer(Priority.ALWAYS)
         );

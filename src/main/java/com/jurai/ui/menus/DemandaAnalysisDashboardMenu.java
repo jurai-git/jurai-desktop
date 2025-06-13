@@ -2,9 +2,8 @@ package com.jurai.ui.menus;
 
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.CircleGraph;
-import com.jurai.ui.controls.fluent.HGroup;
-import com.jurai.ui.controls.fluent.VGroup;
-import com.jurai.ui.util.ControlWrapper;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
+import dev.mgcvale.fluidfx.components.groups.VGroup;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -14,6 +13,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 
 public class DemandaAnalysisDashboardMenu extends AbstractMenu<StackPane> {
     private StackPane content, inactiveContent;
@@ -62,29 +63,29 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<StackPane> {
     @Override
     protected void layControls() {
         demandaInfo.getChildren().addAll(
-                new ControlWrapper(nome).withVgrow(Priority.ALWAYS),
-                new ControlWrapper(status).withVgrow(Priority.ALWAYS),
-                new ControlWrapper(assuntoPrincipal).withVgrow(Priority.ALWAYS),
-                new ControlWrapper(argumentosLink).withVgrow(Priority.ALWAYS)
+                wVgrow(nome),
+                wVgrow(status),
+                wVgrow(assuntoPrincipal),
+                wVgrow(argumentosLink)
         );
 
         HBox.setHgrow(circleGraph, Priority.ALWAYS);
         VBox.setVgrow(circleGraph, Priority.ALWAYS);
         centerContent.getChildren().addAll(
-                new VGroup().withHgrow(Priority.ALWAYS).withChildren(
+                new VGroup().wHgrow(Priority.ALWAYS).wChildren(
                         circleGraphLabel,
                         circleGraph
-                ).withStyleClass("small-content-box").withStyle("-fx-padding: .5em 0 0 0"),
+                ).wStyleClass("small-content-box").wStyle("-fx-padding: .5em 0 0 0"),
                 demandaInfo
         );
 
         VBox.setVgrow(centerContent, Priority.ALWAYS);
         activeContent.getChildren().addAll(
                 centerContent,
-                new HGroup().withVgrow(Priority.NEVER).withMargin().withChildren(
+                new HGroup().wVgrow(Priority.NEVER).spaceAround().wChildren(
                         moreDetails,
                         redoAnalysis
-                ).withStyleClass("buttons-row")
+                ).wStyleClass("buttons-row")
         );
 
         inactiveContent.getChildren().add(inactiveLabel);

@@ -1,9 +1,9 @@
 package com.jurai.ui.modal.notif;
 
 import com.jurai.ui.LoadingStrategy;
-import com.jurai.ui.controls.fluent.HGroup;
 import com.jurai.ui.modal.Notification;
 import com.jurai.ui.util.SpacerFactory;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -51,7 +51,7 @@ public class DefaultMessageNotification extends Notification<VBox> {
                 title,
                 message,
                 SpacerFactory.vSpacer(Priority.ALWAYS),
-                new HGroup().withChildren(SpacerFactory.hSpacer(Priority.ALWAYS), okButton)
+                new HGroup().wChildren(SpacerFactory.hSpacer(Priority.ALWAYS), okButton)
         );
     }
 

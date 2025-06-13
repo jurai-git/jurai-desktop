@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
 
 import java.util.List;
 
-import static com.jurai.ui.util.ControlWrappers.wrapStyleClasses;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClasses;
 
 public class DocumentsPaneController extends AbstractController<DocumentsPane> {
     private final DemandaService demandaService = DemandaService.getInstance();
@@ -105,7 +105,7 @@ public class DocumentsPaneController extends AbstractController<DocumentsPane> {
                 };
             }
 
-            docChooser.getDocList().setError(wrapStyleClasses(new Label(errorMsg), "subheader"));
+            docChooser.getDocList().setError(wStyleClasses(new Label(errorMsg), "subheader"));
             return;
         }
 
