@@ -20,14 +20,12 @@ public class DocumentChatVM extends ViewModelBase {
     private StringProperty currMsg;
     private AIService aiService;
     private ObservableList<ChatMessage> messages;
-    private BooleanProperty loading;
     private BooleanProperty sendDisabled;
     private ScrollGroup scrollGroup;
 
     public DocumentChatVM() {
         currMsg = new SimpleStringProperty("");
         aiService = AIService.getInstance();
-        loading = new SimpleBooleanProperty(false);
         messages = FXCollections.observableArrayList();
         sendDisabled = new SimpleBooleanProperty(true);
 
@@ -45,9 +43,6 @@ public class DocumentChatVM extends ViewModelBase {
     }
     public StringProperty currentMessage() {
         return currMsg;
-    }
-    public BooleanProperty loading() {
-        return loading;
     }
     public ObservableList<ChatMessage> messages() {
         return messages;
@@ -71,16 +66,17 @@ public class DocumentChatVM extends ViewModelBase {
     }
 
     private void doSend(String msg) {
-        loading.set(true);
+        messages.add(new ChatMessage(null, true, null));
 
         new Thread(() -> {
             try {
                 AIMessage res = aiService.sendMessage(msg);
+
                 Platform.runLater(() -> messages.add(new ChatMessage(res.getMessage(), true, null)));
             } catch (ResponseNotOkException e) {
                 Platform.runLater(() -> messages.add(new ChatMessage(msg, true, e)));
             } finally {
-                Platform.runLater(() -> loading.set(false));
+                Platform.runLater(() -> messages.removeIf(m -> m.contents() == null));
             }
         }).start();
     }

@@ -6,7 +6,7 @@ import lombok.Builder;
 public class DocChatErrorTranslator {
     public static String translateMessageError(ResponseNotOkException e) {
         return switch(e.getCode()) {
-            case 400 -> Defaults.DEFAULT_400;
+            case 400, 405 -> Defaults.DEFAULT_400;
             case 401 -> Defaults.DEFAULT_401;
             case 402 -> Defaults.DEFAULT_402;
             case 403 -> Defaults.DEFAULT_403;
