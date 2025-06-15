@@ -3,6 +3,7 @@ package com.jurai.ui.controller;
 import com.jurai.data.AppState;
 import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.Advogado;
+import com.jurai.ui.panes.DocumentsPane;
 import com.jurai.ui.panes.Header;
 import com.jurai.ui.panes.QuickQueryPane;
 import com.jurai.ui.util.Pane;
@@ -27,6 +28,7 @@ public class HeaderController extends AbstractController<Header> {
         AppState.get().selectedRequerenteProperty().addListener((obs, o, n) -> generateHeaderText(header));
         AppState.get().quickQueryModeProperty().addListener((obs, o, n) -> generateHeaderText(header));
         AppState.get().globalSelectedDemandaProperty().addListener((obs, o, n) -> generateHeaderText(header));
+        AppState.get().docPaneModeProperty().addListener((obs, o, n) -> generateHeaderText(header));
 
         AppState.get().useLightThemeProperty().addListener((obs, o, n) -> header.themeChanged());
         AppState.get().currentUserProperty().addListener((obs, o, n) -> {
@@ -80,6 +82,9 @@ public class HeaderController extends AbstractController<Header> {
                 newUrl.append(" / Documentos e Análises");
                 if (AppState.get().getGlobalSelectedDemanda() != null) {
                     newUrl.append(" / " + AppState.get().getGlobalSelectedDemanda().getNome());
+                }
+                if (AppState.get().getDocPaneMode().equals(DocumentsPane.Mode.CHAT)) {
+                    newUrl.append( " / Chat");
                 }
                 break;
             default:

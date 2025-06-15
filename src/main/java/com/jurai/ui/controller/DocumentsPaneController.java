@@ -77,7 +77,7 @@ public class DocumentsPaneController extends AbstractController<DocumentsPane> {
 
     private void paneSwitched(DocumentsPane pane) {
         pane.setPane(switch (AppState.get().getDocPaneMode()) {
-            case CHOOSER -> pane.getDocumentChooser();
+            case CHOOSER -> pane.getDocumentChooser().getContent();
             case CHAT -> pane.getDocumentChat();
         });
     }

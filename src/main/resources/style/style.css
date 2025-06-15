@@ -196,6 +196,19 @@
     -fx-background-radius: 8px;
 }
 
+.text-area-field {
+    -fx-padding: 0 !important;
+}
+
+.text-area-field .scroll-pane {
+    -fx-padding: 0 !important;
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+}
+
+
 .text-area > .scroll-pane {
     -fx-skin: "com.jurai.ui.util.DefaultScrollPaneSkin";
 }
@@ -508,4 +521,14 @@
 }
 .text-green .label {
     -fx-text-fill: green;
+}
+
+.user-message {
+    -fx-background-color: j-content-base;
+    -fx-background-radius: 1em;
+    -fx-padding: .6em 1.2em;
+}
+
+.chat-input {
+    /*-fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.1), 96, 0.2, 0, 0);*/
 }

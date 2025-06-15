@@ -15,7 +15,7 @@ public class EmentaTabController extends AbstractController<EmentaQuickQueryTab>
     @Override
     public void initialize(EmentaQuickQueryTab pane) {
         super.initialize(pane);
-        this.aiService = new AIService();
+        this.aiService = AIService.getInstance();
     }
 
     @Override

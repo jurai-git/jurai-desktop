@@ -1,9 +1,11 @@
 package com.jurai.ui.menus;
 
+import com.jurai.data.AppState;
 import com.jurai.data.model.Demanda;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
 import com.jurai.ui.controls.fluent.*;
+import com.jurai.ui.panes.DocumentsPane;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.Ref;
 import dev.mgcvale.fluidfx.components.controls.FButton;
@@ -11,7 +13,7 @@ import dev.mgcvale.fluidfx.components.controls.FTextField;
 import dev.mgcvale.fluidfx.components.groups.HGroup;
 import dev.mgcvale.fluidfx.components.groups.ScrollGroup;
 import dev.mgcvale.fluidfx.components.groups.VGroup;
-import dev.mgcvale.fluidfx.reactive.FluidText;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -99,23 +101,23 @@ public class DocumentChooser extends AbstractMenu<HBox> {
                         new HGroup().wChildren(
                                 wStyleClasses(new Label(lastDemanda.getNome()), "subheader"),
                                 SpacerFactory.hSpacer(Priority.ALWAYS),
-                                new FButton("Ir ao Chat").wStyleClass("blue-button").applyCustomFunction(HoverAnimator::animateAll)
+                                new FButton("Ir ao Chat").wStyleClass("blue-button").applyCustomFunction(HoverAnimator::animateAll).onAction(e -> AppState.get().setDocPaneMode(DocumentsPane.Mode.CHAT))
                         ),
                         wStyleClasses(new Label("Dono: " + lastDemanda.getDono()), "subsubheader"),
                         SpacerFactory.vSpacer(16),
                         new ScrollGroup().wFixedWitdh().wVgrow(Priority.ALWAYS).wVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).wHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).wContent(
                                 new VGroup().wStyleClass("spacing-4").wChildren(
-                                        new FLabel().inText(FluidText.build("Foro: ", lastDemanda.foroProperty())),
-                                        new FLabel().inText(FluidText.build("Competencia: ", lastDemanda.competenciaProperty())),
-                                        new FLabel().inText(FluidText.build("Ass. principal: ", lastDemanda.assuntoPrincipalProperty())),
-                                        new FLabel().inText(FluidText.build("Status: ", lastDemanda.statusDemandaProperty())),
+                                        new FLabel().inText(Bindings.concat("Foro: ", lastDemanda.foroProperty())),
+                                        new FLabel().inText(Bindings.concat("Competencia: ", lastDemanda.competenciaProperty())),
+                                        new FLabel().inText(Bindings.concat("Ass. principal: ", lastDemanda.assuntoPrincipalProperty())),
+                                        new FLabel().inText(Bindings.concat("Status: ", lastDemanda.statusDemandaProperty())),
                                         new BooleanReactiveLabel("Tem Pedido de Liminar: ", lastDemanda.pedidoLiminarProperty()),
                                         new BooleanReactiveLabel("Tem Segredo de Justiça: ", lastDemanda.segJusticaProperty()),
                                         new BooleanReactiveLabel("Tem Dispensa Legal: ", lastDemanda.dispensaLegalProperty()),
                                         new BooleanReactiveLabel("Tem Justiça Gratuita: ", lastDemanda.justicaGratuitaProperty()),
                                         new BooleanReactiveLabel("Tem Guia de Custas: ", lastDemanda.guiaCustasProperty()),
-                                        new FLabel().inText(FluidText.build("Valor ação: ", lastDemanda.valorAcaoProperty())),
-                                        new FLabel().inText(FluidText.build("Resumo: ", lastDemanda.resumoProperty()))
+                                        new FLabel().inText(Bindings.concat("Valor ação: ", lastDemanda.valorAcaoProperty())),
+                                        new FLabel().inText(Bindings.concat("Resumo: ", lastDemanda.resumoProperty()))
                                 )
                         ),
                         new HGroup().wStyleClass("spacing-4").wChildren(

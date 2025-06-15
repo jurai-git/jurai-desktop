@@ -288,6 +288,11 @@ public class Demanda implements Model {
     }
 
     @Override
+    public String toString() {
+        return getNome();
+    }
+
+    @Override
     public StringProperty nomeProperty() {
         return identificacao;
     }
