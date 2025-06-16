@@ -14,6 +14,7 @@ public class GlobalEvents {
     private final List<Runnable> globalDemandasEditedListeners = new CopyOnWriteArrayList<>();
     private final List<Runnable> globalDemandasChangedListeners = new CopyOnWriteArrayList<>();
     private final List<Runnable> pfpChangedListeners = new CopyOnWriteArrayList<>();
+    private final List<Runnable> sentMessageFromDocList = new CopyOnWriteArrayList<>();
 
     public static void initialize() {
         if (instance == null) {
@@ -30,6 +31,13 @@ public class GlobalEvents {
             throw new IllegalStateException("GlobalEvents not initialized. Call initialize() first.");
         }
         return instance;
+    }
+
+    public void onSentMessageFromDocList(Runnable listener) {
+        sentMessageFromDocList.add(listener);
+    }
+    public void fireSentMessageFromDocList() {
+        sentMessageFromDocList.forEach(Runnable::run);
     }
 
     public void onGlobalDemandasChanged(Runnable listener) {

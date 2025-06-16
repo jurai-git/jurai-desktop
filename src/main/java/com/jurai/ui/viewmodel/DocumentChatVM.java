@@ -1,5 +1,6 @@
 package com.jurai.ui.viewmodel;
 
+import com.jurai.data.AppState;
 import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.AIMessage;
 import com.jurai.data.model.ChatMessage;
@@ -34,6 +35,9 @@ public class DocumentChatVM extends ViewModelBase {
 
     public DocumentChatVM() {
         currMsg = new SimpleStringProperty("");
+        AppState.get().pretypedChatMessageProperty().addListener((obs, o, n) -> {
+            currMsg.set(n);
+        });
         aiService = AIService.getInstance();
         messages = FXCollections.observableArrayList();
         sendDisabled = new SimpleBooleanProperty(true);
@@ -58,6 +62,12 @@ public class DocumentChatVM extends ViewModelBase {
         appState.globalSelectedDemandaProperty().addListener((obs, o, n) -> {
             // when the demanda changes, we need to reload the chat for that demanda.
             reloadChatHistory(n);
+        });
+
+        GlobalEvents.get().onSentMessageFromDocList(() -> {
+            if (appState.getGlobalSelectedDemanda() != null && !currMsg.get().isBlank()) {
+                sendMessage();
+            }
         });
     }
 

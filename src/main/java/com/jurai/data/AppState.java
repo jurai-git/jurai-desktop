@@ -45,6 +45,8 @@ public final class AppState {
     private static ObjectProperty<Demanda> globalSelectedDemanda = new SimpleObjectProperty<>(null);
     private static LongProperty httpTimeout = new SimpleLongProperty(20);
 
+    private static StringProperty pretypedChatMessage = new SimpleStringProperty();
+
     private static final String fallbackPfpPath = "/img/user-default.jpg";
     private static final String juraiIcon = "/img/icon-antialias.png";
 
@@ -323,6 +325,16 @@ public final class AppState {
     }
     public ObjectProperty<Demanda> globalSelectedDemandaProperty() {
         return globalSelectedDemanda;
+    }
+
+    public String getPretypedChatMessage() {
+        return pretypedChatMessage.get();
+    }
+    public void setPretypedChatMessage(String message) {
+        pretypedChatMessage.set(message);
+    }
+    public StringProperty pretypedChatMessageProperty() {
+        return pretypedChatMessage;
     }
 
     // httpTimeout

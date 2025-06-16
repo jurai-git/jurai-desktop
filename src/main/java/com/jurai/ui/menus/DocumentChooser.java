@@ -1,22 +1,24 @@
 package com.jurai.ui.menus;
 
 import com.jurai.data.AppState;
+import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.Demanda;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
 import com.jurai.ui.controls.fluent.*;
 import com.jurai.ui.panes.DocumentsPane;
 import com.jurai.ui.util.SpacerFactory;
-import com.jurai.util.Ref;
 import dev.mgcvale.fluidfx.components.controls.FButton;
 import dev.mgcvale.fluidfx.components.controls.FTextField;
 import dev.mgcvale.fluidfx.components.groups.HGroup;
 import dev.mgcvale.fluidfx.components.groups.ScrollGroup;
 import dev.mgcvale.fluidfx.components.groups.VGroup;
+import dev.mgcvale.fluidfx.components.util.Ref;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
@@ -32,13 +34,18 @@ import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 public class DocumentChooser extends AbstractMenu<HBox> {
     private HBox content;
     private VBox currentDocumentContent;
-
     private Demanda lastDemanda = null;
-
     private StringProperty chatTextMessage;
 
     @Getter
     private SimpleList<Demanda> docList;
+
+    @Getter
+    private StringProperty message;
+
+    @Getter
+    private dev.mgcvale.fluidfx.components.util.Ref<FButton> sendButtonRef;
+
 
     @Override
     protected void initControls() {
@@ -48,6 +55,8 @@ public class DocumentChooser extends AbstractMenu<HBox> {
         currentDocumentContent = new VBox();
         VBox.setVgrow(currentDocumentContent, Priority.ALWAYS);
         currentDocumentContent.getStyleClass().add("spacing-4");
+        message = new SimpleStringProperty("");
+        sendButtonRef = new dev.mgcvale.fluidfx.components.util.Ref<>(null);
 
         chatTextMessage = new SimpleStringProperty("");
     }
@@ -55,7 +64,6 @@ public class DocumentChooser extends AbstractMenu<HBox> {
     @Override
     protected void layControls() {
         ReadOnlyDoubleProperty listHeightBinding = docList.heightProperty();
-        Ref<ReadOnlyDoubleProperty> splitGroupWidthProperty = new Ref<>(null);
 
         content.getStyleClass().addAll("pane", "spacing-4");
         content.getChildren().addAll(
@@ -96,6 +104,7 @@ public class DocumentChooser extends AbstractMenu<HBox> {
             updateContent(null);
             return;
         }
+        Ref<FTextField> messageRef = new Ref<>(null);
         currentDocumentContent.getChildren().setAll(
                 new VGroup().wVgrow(Priority.ALWAYS).wStyleClass("small-content-box", "p-5").wChildren(
                         new HGroup().wChildren(
@@ -121,8 +130,13 @@ public class DocumentChooser extends AbstractMenu<HBox> {
                                 )
                         ),
                         new HGroup().wStyleClass("spacing-4").wChildren(
-                                new FTextField().wPrompt("Fale com o JurAI sobre o processo").inText(chatTextMessage).wStyleClass("text-field-base").wHgrow(Priority.ALWAYS),
-                                new FButton("Enviar").wStyleClass("blue-button").applyCustomFunction(HoverAnimator::animateAllStronger)
+                                new FTextField().wPrompt("Fale com o JurAI sobre o processo").wStyleClass("text-field-base").grabInstance(messageRef).wHgrow(Priority.ALWAYS),
+                                new FButton("Enviar").wStyleClass("blue-button").applyCustomFunction(HoverAnimator::animateAllStronger).onAction(e -> {
+                                    AppState.get().setDocPaneMode(DocumentsPane.Mode.CHAT);
+                                    AppState.get().setPretypedChatMessage(messageRef.ref.getText());
+                                    messageRef.ref.setText("");
+                                    GlobalEvents.get().fireSentMessageFromDocList();
+                                })
                         )
                 )
         );
