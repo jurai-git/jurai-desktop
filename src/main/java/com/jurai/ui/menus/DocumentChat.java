@@ -110,7 +110,7 @@ public class DocumentChat extends VBox {
 
         if (msg.error() == null) { // no error
             if (msg.contents() == null) { // this means the message is loading
-                children.add(new FLabel("Carregando resposata..."));
+                children.add(new FLabel("Carregando resposta..."));
             } else { // message is done
 
                 if (msg.AIMessage()) {

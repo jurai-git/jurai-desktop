@@ -140,7 +140,7 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
                         segredoJustica,
                         dispensaLegal
             ),
-            new HGroup().spaceBetween().wVgrow(Priority.ALWAYS).wChildren(
+            new HGroup().spaceAround().wVgrow(Priority.ALWAYS).wChildren(
                     justicaGratiuta,
                     guiaCustas
             ),

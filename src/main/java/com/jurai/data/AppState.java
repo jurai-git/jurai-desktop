@@ -37,7 +37,7 @@ public final class AppState {
     private static BooleanProperty useAnimations = new SimpleBooleanProperty(true);
     private static BooleanProperty useLightTheme = new SimpleBooleanProperty(false);
     private static ObjectProperty<Demanda> selectedDemanda = new SimpleObjectProperty<>(null);
-    private static BooleanProperty sidebarExtended = new SimpleBooleanProperty(false);
+    private static BooleanProperty sidebarExtended = new SimpleBooleanProperty(true);
     private static BooleanProperty viewportSmall = new SimpleBooleanProperty(false);
     private static ObjectProperty<QuickQueryPane.Mode> quickQueryMode = new SimpleObjectProperty<>(QuickQueryPane.Mode.PDF);
     private static ObjectProperty<DocumentsPane.Mode> docPaneMode = new SimpleObjectProperty<>(DocumentsPane.Mode.CHOOSER);

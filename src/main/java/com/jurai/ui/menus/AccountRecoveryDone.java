@@ -1,5 +1,6 @@
 package com.jurai.ui.menus;
 
+import com.jurai.data.AppState;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.util.SpacerFactory;
 import dev.mgcvale.fluidfx.components.groups.VGroup;

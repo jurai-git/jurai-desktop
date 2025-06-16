@@ -131,6 +131,7 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> AppState.get().setAccountMode(AccountMode.LOGGING_IN));
         pane.getAccountRecoveryDone().getCreateAccount().setOnAction(e -> AppState.get().setAccountMode(AccountMode.REGISTERING));
         pane.getAccountRecoveryDone().getReturnToLogin().setOnAction(e -> AppState.get().setAccountMode(AccountMode.LOGGING_IN));
+        pane.getAccountRecoveryDone().getMakeNewRequest().setOnAction(e -> AppState.get().setAccountMode(AccountMode.FORGOT_PASSWORD));
 
         // dashboard menu actions
         pane.getAccountDashboardMenu().getDeleteAccount().setOnAction(e -> {
