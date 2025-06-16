@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Advogado implements Model, Serializable {
 
     // informacoes pessoais
-    private DoubleProperty id = new SimpleDoubleProperty();
+    private LongProperty id = new SimpleLongProperty();
     private StringProperty username = new SimpleStringProperty();
     private StringProperty email = new SimpleStringProperty();
     private StringProperty oab = new SimpleStringProperty();
@@ -35,7 +35,7 @@ public class Advogado implements Model, Serializable {
 
     // getters and setters
 
-    public double getId() {
+    public long getId() {
         return id.get();
     }
 
@@ -73,7 +73,7 @@ public class Advogado implements Model, Serializable {
         return email;
     }
 
-    public ReadOnlyDoubleProperty idProperty() {
+    public ReadOnlyLongProperty idProperty() {
         return id;
     }
 

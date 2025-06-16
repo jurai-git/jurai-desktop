@@ -76,7 +76,6 @@ public class Header extends AbstractPane {
         view.setAlignment(Pos.CENTER_LEFT);
     }
 
-
     public void updatePfp(String url) {
         if (url == null || url.isEmpty()) {
             loadFallback();

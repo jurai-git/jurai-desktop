@@ -4,15 +4,19 @@ import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.controls.*;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.EventLogger;
+import dev.mgcvale.fluidfx.components.controls.FLabel;
 import dev.mgcvale.fluidfx.components.groups.HGroup;
 import dev.mgcvale.fluidfx.components.groups.VGroup;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
 import lombok.Getter;
 
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClasses;
@@ -24,6 +28,9 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     @Getter
     private ProfilePicture profilePicture;
     private Label usernameLabel, oabLabel;
+
+    @Getter
+    private StringProperty pwdChangeErrorProperty;
 
     @Getter
     private TextFieldSet username, email, oab;
@@ -58,10 +65,12 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
         changePassword = new PasswordFieldSet("Troque sua senha");
         changePassword.getInput().getStyleClass().add("text-field-base");
         changePassword.getInput().setPromptText("Nova senha");
+        changePassword.getInput().textProperty().addListener((obs, o, n) -> getPwdChangeErrorProperty().set(""));
 
         confirmPassword = new PasswordFieldSet("Confirme a senha");
         confirmPassword.getInput().getStyleClass().add("text-field-base");
         confirmPassword.getInput().setPromptText("Confirme a senha");
+        confirmPassword.getInput().textProperty().addListener((obs, o, n) -> getPwdChangeErrorProperty().set(""));
 
         oab = new TextFieldSet("OAB");
         oab.getInput().getStyleClass().add("text-field-base");
@@ -87,6 +96,8 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
         changePasswordBtn = new Button("Mudar senha");
         changePasswordBtn.setDisable(true);
 
+        pwdChangeErrorProperty = new SimpleStringProperty("");
+
         HoverAnimator.animateAll(1.2, 1.2, deleteAccount, changePasswordBtn, resetChanges, saveChanges);
     }
 
@@ -111,6 +122,7 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
                         wStyleClasses(new Label("Troque sua senha"), "subheader"),
                         changePassword,
                         confirmPassword,
+                        new FLabel().inText(pwdChangeErrorProperty).inVisible(pwdChangeErrorProperty.isNotEmpty()).wStyleClass("text-red").wTextAlignment(TextAlignment.RIGHT),
                         SpacerFactory.vSpacer(Priority.ALWAYS),
                         new HGroup().wChildren(
                                 SpacerFactory.hSpacer(Priority.ALWAYS),

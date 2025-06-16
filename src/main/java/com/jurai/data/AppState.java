@@ -46,6 +46,7 @@ public final class AppState {
     private static LongProperty httpTimeout = new SimpleLongProperty(20);
 
     private static final String fallbackPfpPath = "/img/user-default.jpg";
+    private static final String juraiIcon = "/img/icon-antialias.png";
 
     public static void initialize() {
         if (instance == null) {
@@ -335,6 +336,10 @@ public final class AppState {
 
     public LongProperty httpTimeoutProperty() {
         return httpTimeout;
+    }
+
+    public String getJuraiIcon() {
+        return juraiIcon;
     }
 
     public String getFallbackPfpPath() {

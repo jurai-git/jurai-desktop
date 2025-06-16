@@ -42,7 +42,7 @@ public class HeaderController extends AbstractController<Header> {
         GlobalEvents.get().onPfpChanged(() -> {
             Advogado currentUser = AppState.get().getCurrentUser();
             if (currentUser != null) {
-                header.updatePfp(AppState.get().getApiUrl() + "advogado/" + (long) currentUser.getId() + "/pfp");
+                header.updatePfp(AppState.get().getApiUrl() + "advogado/" + currentUser.getId() + "/pfp");
             } else {
                 header.loadFallback();
             }

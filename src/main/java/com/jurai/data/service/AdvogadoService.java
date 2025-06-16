@@ -11,6 +11,8 @@ import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.model.serializer.AdvogadoSerializer;
 import com.jurai.data.model.serializer.RequerenteSerializer;
 import com.jurai.data.json.JsonUtils;
+import com.jurai.data.validator.AdvogadoValidator;
+import com.jurai.ui.panes.DocumentsPane;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.util.EventLogger;
 import javafx.application.Platform;
@@ -22,6 +24,7 @@ public class AdvogadoService {
     private final RequestHandler requestHandler = new RequestHandler(AppState.get().getApiUrl());
     private final Gson gson;
     private static final AdvogadoService instance = new AdvogadoService();
+    private final AdvogadoValidator advValidator = new AdvogadoValidator();
 
     private AdvogadoService() {
         GsonBuilder builder = new GsonBuilder();
@@ -69,9 +72,43 @@ public class AdvogadoService {
         }
     }
 
+    public void update(
+        String username,
+        String email,
+        String password
+    ) throws ResponseNotOkException {
+        JsonObject body = new JsonObject();
+        body.addProperty("username", username);
+        body.addProperty("email", email);
+
+        try {
+            requestHandler.patch("/advogado", body, "Bearer " + AppState.get().getCurrentUser().getAccessToken());
+        } catch (ResponseNotOkException e) {
+            EventLogger.logError("Error communicating to API on AdvogadoService.update(): error " + e.getCode());
+            throw e;
+        }
+    }
+
+    public void updatePassword(
+        String password
+    ) throws ResponseNotOkException {
+        JsonObject body = new JsonObject();
+        body.addProperty("password", password);
+
+        try {
+            requestHandler.patch("/advogado", body, "Bearer " + AppState.get().getCurrentUser().getAccessToken());
+        } catch (ResponseNotOkException e) {
+            EventLogger.logError("Error communicating to API on AdvogadoService.update(): error " + e.getCode());
+            throw e;
+        }
+    }
+
     public void deauthenticate() {
         AppState.get().setCurrentUser(null);
         AppState.get().setAccountMode(AccountMode.LOGGING_IN);
+        AppState.get().setSelectedDemanda(null);
+        AppState.get().setGlobalSelectedDemanda(null);
+        AppState.get().setDocPaneMode(DocumentsPane.Mode.CHOOSER);
     }
 
     public void authenticate(String uname, String password) throws ResponseNotOkException {

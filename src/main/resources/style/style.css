@@ -529,7 +529,13 @@
 .user-message {
     -fx-background-color: j-content-base;
     -fx-background-radius: 1em;
-    -fx-padding: .6em 1.2em;
+    -fx-padding: .6em .8em;
+}
+
+.ai-message {
+    -fx-background-color: j-content-secondary-base;
+    -fx-background-radius: 1em;
+    -fx-padding: .6em .8em;
 }
 
 .chat-input {

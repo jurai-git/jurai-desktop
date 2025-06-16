@@ -43,7 +43,7 @@ public abstract class RequerenteModal extends Modal<BasicTabbedPane> {
     protected void initControls() {
         initButtons();
         content = new BasicTabbedPane();
-        cpfCnpj = new MaskedTextFieldSet("CPF/CNPJ*");
+        cpfCnpj = new MaskedTextFieldSet("CPF*");
         cpfCnpj.setMask("###.###.###-##");
         nome = new TextFieldSet("Nome*");
         nomeSocial = new TextFieldSet("Nome Social");

@@ -7,6 +7,9 @@ import com.jurai.data.request.InternalErrorCodes;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
 import com.jurai.data.validator.AdvogadoValidator;
+import com.jurai.ui.error.UpdatePasswordErrorTranslator;
+import com.jurai.ui.menus.AccountSettingsMenu;
+import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.modal.notif.ConfirmationNotification;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;
 import com.jurai.ui.modal.notif.NotificationType;
@@ -168,6 +171,31 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
         pane.getAccountDashboardMenu().getConfirmPassword().textProperty().addListener(str -> {
             pane.getAccountDashboardMenu().getChangePasswrodBtn().setDisable(!isChangingPasswords(pane));
+        });
+
+        AccountSettingsMenu accountSettingsMenu = pane.getAccountDashboardMenu().getAccountSettingsMenu();
+
+        accountSettingsMenu.getChangePasswordBtn().setOnAction(e -> {
+            // first, validate fields
+            String pwd = accountSettingsMenu.getChangePassword().getText();
+            String confirmPwd = accountSettingsMenu.getConfirmPassword().getText();
+
+            if (pwd.strip().length() < 8) {
+                accountSettingsMenu.getPwdChangeErrorProperty().set("A senha deve conter ao menos 8 caracteres!");
+                return;
+            }
+            if (!confirmPwd.equals(pwd)) {
+                accountSettingsMenu.getPwdChangeErrorProperty().set("As senhas não coincidem!");
+                return;
+            }
+
+            try {
+                advogadoService.updatePassword(pwd);
+            } catch (ResponseNotOkException ex) {
+                accountSettingsMenu.getPwdChangeErrorProperty().set(UpdatePasswordErrorTranslator.translate(ex));
+            }
+
+            new DefaultMessageNotification("Sua senha foi atualizada com sucesso! Você terá que relogar para atualizar suas credenciais.", NotificationType.INFO, advogadoService::deauthenticate).show();
         });
 
 

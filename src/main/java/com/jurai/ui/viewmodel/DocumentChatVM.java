@@ -1,5 +1,6 @@
 package com.jurai.ui.viewmodel;
 
+import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.AIMessage;
 import com.jurai.data.model.ChatMessage;
 import com.jurai.data.model.Demanda;
@@ -10,9 +11,13 @@ import com.jurai.util.UILogger;
 import dev.mgcvale.fluidfx.components.groups.ScrollGroup;
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import lombok.Getter;
 
 import java.util.NoSuchElementException;
 
@@ -21,13 +26,26 @@ public class DocumentChatVM extends ViewModelBase {
     private AIService aiService;
     private ObservableList<ChatMessage> messages;
     private BooleanProperty sendDisabled;
-    private ScrollGroup scrollGroup;
+    private ObjectProperty<Image> pfp;
+    private final Image fallbackPfp;
+
+    @Getter
+    private Image juraiPfp;
 
     public DocumentChatVM() {
         currMsg = new SimpleStringProperty("");
         aiService = AIService.getInstance();
         messages = FXCollections.observableArrayList();
         sendDisabled = new SimpleBooleanProperty(true);
+
+        fallbackPfp = new Image(getClass().getResource(appState.getFallbackPfpPath()).toExternalForm());
+        pfp = new SimpleObjectProperty<>();
+        loadPfp();
+        appState.apiUrlProperty().addListener((obs, o, n) -> loadPfp());
+        appState.currentUserProperty().addListener((obs, o, b) -> loadPfp());
+        GlobalEvents.get().onPfpChanged(this::loadPfp);
+
+        juraiPfp = new Image(getClass().getResource(appState.getJuraiIcon()).toExternalForm());
 
         currMsg.addListener((obs, o, n) -> {
             if (currMsg.get().strip().isEmpty()) {
@@ -36,6 +54,20 @@ public class DocumentChatVM extends ViewModelBase {
                 sendDisabled.set(false);
             }
         });
+
+        appState.globalSelectedDemandaProperty().addListener((obs, o, n) -> {
+            // when the demanda changes, we need to reload the chat for that demanda.
+            reloadChatHistory(n);
+        });
+    }
+
+    private void reloadChatHistory(Demanda d) {
+        // clear everything up from the last session
+        currMsg.set("");
+        messages.clear();
+
+        // load messages from this session from the API
+
     }
 
     public ReadOnlyObjectProperty<Demanda> demanda() {
@@ -49,6 +81,9 @@ public class DocumentChatVM extends ViewModelBase {
     }
     public BooleanProperty sendDisabled() {
         return sendDisabled;
+    }
+    public ObservableValue<Image> pfp() {
+        return pfp;
     }
 
     public void setScrollGroup(ScrollGroup group) {
@@ -107,5 +142,19 @@ public class DocumentChatVM extends ViewModelBase {
 
     public void backToChooser() {
         appState.setDocPaneMode(DocumentsPane.Mode.CHOOSER);
+    }
+
+    private void loadPfp() {
+        if (appState.getCurrentUser() == null || appState.getApiUrl() == null) {
+            pfp.set(fallbackPfp);
+            return;
+        }
+
+        pfp.set(new Image(appState.getApiUrl() + "/advogado/" + appState.getCurrentUser().getId() + "/pfp"));
+        pfp.get().errorProperty().addListener((obs, o, n) -> {
+            if (pfp.get().isError()) {
+                pfp.set(fallbackPfp);
+            }
+        });
     }
 }

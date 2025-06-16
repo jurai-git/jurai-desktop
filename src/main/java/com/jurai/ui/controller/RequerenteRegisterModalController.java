@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 
 public class RequerenteRegisterModalController extends AbstractController<RequerenteRegisterModal> {
     private final AdvogadoService advogadoService = AdvogadoService.getInstance();
+    private final RequerenteValidator requerenteValidator = new RequerenteValidator();
 
     @Override
     protected void attachEvents(RequerenteRegisterModal pane) {
@@ -54,6 +55,9 @@ public class RequerenteRegisterModalController extends AbstractController<Requer
                         pane.getEstado(),
                         pane.getCidade()
                 );
+                if (!requerenteValidator.validateJFX(r)) {
+                    return;
+                }
                 advogadoService.addRequerente(r);
                 pane.clear();
                 pane.dispose();

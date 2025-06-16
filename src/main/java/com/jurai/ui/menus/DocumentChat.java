@@ -7,6 +7,7 @@ import com.jurai.ui.error.DocChatErrorTranslator;
 import com.jurai.ui.viewmodel.DocumentChatVM;
 import com.jurai.util.TextAreaUtils;
 import dev.mgcvale.fluidfx.components.controls.FButton;
+import dev.mgcvale.fluidfx.components.controls.FImageView;
 import dev.mgcvale.fluidfx.components.controls.FLabel;
 import dev.mgcvale.fluidfx.components.controls.FTextArea;
 import dev.mgcvale.fluidfx.components.core.BoxSpacing;
@@ -27,6 +28,9 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -69,7 +73,7 @@ public class DocumentChat extends VBox {
                 new FLabel().inText(vm.demanda().asString("Demanda selecionada: %s")).wStyleClass("subheader")
             ),
             new StackGroup().wMaxHeight(Region.USE_COMPUTED_SIZE).vgrow().wMaxWidth(900).wChildren(
-                new ScrollGroup().grabInstance(scrollGroupRef).wVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).wPrefHeight(0).wFixedWitdh().wContent(
+                new ScrollGroup().grabInstance(scrollGroupRef).wVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).wPrefHeight(0).wFixedWitdh().wContent(
                     new VGroup().wChildren(
                         new VGroup().wSpacing(24).grabInstance(messagesBox).inChildren(
                             ListMapper.map(vm.messages(), this::createMessageUI)
@@ -83,18 +87,22 @@ public class DocumentChat extends VBox {
                     new FLabel("Envie uma mensagem para iniciar a conversa com o JurAI.").wWrap(true)
                 ),
                 new HGroup().outHeightProperty(inputHeight).wMaxHeight(Region.USE_PREF_SIZE).wStackAlignment(Pos.BOTTOM_CENTER).grabInstance(textAreaGroupRef).wAlignment(Pos.BOTTOM_CENTER).wSpacing(12).wChildren(
-                    new FTextArea().grabInstance(textAreaRef).biText(vm.currentMessage()).hgrow().wStyleClass("text-field-base", "text-area-field", "chat-input").wPrompt("Escreva sua mensagem").wMaxHeight(Region.USE_PREF_SIZE).wPadding(Pad.zero()).wPrefRowCount(2).wWrap(true).onKeyPressed(e -> {
-                        Platform.runLater(() -> {
-                            int lines = TextAreaUtils.getVisualLineCount(textAreaRef.ref) - 1;
-                            lines = Math.min(Math.max(2, lines), 5);
-                            textAreaRef.ref.setPrefRowCount(lines);
-                        });
-                    }),
+                    new FTextArea().grabInstance(textAreaRef).biText(vm.currentMessage()).hgrow().wStyleClass("text-field-base", "text-area-field", "chat-input").wPrompt("Escreva sua mensagem").wMaxHeight(Region.USE_PREF_SIZE).wPadding(Pad.zero()).wPrefRowCount(2).wWrap(true),
                     new FButton("Enviar").onAction(e -> vm.sendMessage()).wPadding(Pad.all(8).addX(16)).wStyleClass("blue-button").wTranslateY(-4).applyCustomFunction(HoverAnimator::animateAll).inDisable(vm.sendDisabled())
                 )
             )
         );
+
         vm.setScrollGroup(scrollGroupRef.ref);
+        textAreaRef.ref.textProperty().addListener((obs, o, n) -> recalculateTextAreaHeight(textAreaRef.ref));
+    }
+
+    private void recalculateTextAreaHeight(TextArea txt) {
+        Platform.runLater(() -> {
+            int lines = TextAreaUtils.getVisualLineCount(txt) - 1;
+            lines = Math.min(Math.max(2, lines), 5);
+            txt.setPrefRowCount(lines);
+        });
     }
 
     private Node createMessageUI(ChatMessage msg) {
@@ -104,9 +112,23 @@ public class DocumentChat extends VBox {
             if (msg.contents() == null) { // this means the message is loading
                 children.add(new FLabel("Carregando resposata..."));
             } else { // message is done
-                children.add(new FLabel().inMaxWidth(messagesBox.ref.widthProperty().multiply(0.8)).wText(
-                    msg.AIMessage() ? "JurAI: " + msg.contents() : msg.contents()).wStyleClass(msg.AIMessage() ? "ai-message" : "user-message").wWrap(true)
-                );
+
+                if (msg.AIMessage()) {
+                    children.add(
+                        new HGroup().inMaxWidth(messagesBox.ref.widthProperty().multiply(0.8)).wSpacing(8).wAlignment(Pos.TOP_CENTER).wChildren(
+                            new FImageView().wImage(vm.getJuraiPfp()).wFitHeight(36).wPreserveRatio(true).wTranslateY(-6),
+                            new FLabel().wStyleClass("ai-message").wWrap(true).wText(msg.contents())
+                        )
+                    );
+                } else {
+                    children.add(
+                        new HGroup().inMaxWidth(messagesBox.ref.widthProperty().multiply(0.8)).wSpacing(8).wAlignment(Pos.TOP_CENTER).wChildren(
+                            new FLabel().wStyleClass("user-message").wWrap(true).wText(msg.contents()).hgrow().wTranslateY(-6),
+                            new FImageView().inImage(vm.pfp()).wFitHeight(36).wPreserveRatio(true).clipCircle()
+                        )
+                    );
+                }
+
             }
         } else { // error occurred, load error message
             children.add(

@@ -4,13 +4,14 @@ import com.jurai.ui.modal.notif.DefaultMessageNotification;
 import com.jurai.ui.modal.notif.NotificationType;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class AbstractValidator<T> {
     private Map<Filter<T>, String> filters;
 
     protected AbstractValidator() {
-        filters = new HashMap<>();
+        filters = new LinkedHashMap<>();
     }
 
     protected void ruleFor(Filter<T> filter, String msg) {
@@ -32,7 +33,7 @@ public abstract class AbstractValidator<T> {
         System.out.println("Requested JFX validation");
         for(Map.Entry<Filter<T>, String> entry : filters.entrySet()) {
             System.out.println("Validating entry with " + entry.getValue());
-            if(entry.getKey().accept(object)) {
+            if(!entry.getKey().accept(object)) {
                 new DefaultMessageNotification(entry.getValue(), NotificationType.ERROR).show();
                 return false;
             }

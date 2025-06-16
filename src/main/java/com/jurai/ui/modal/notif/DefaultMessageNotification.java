@@ -17,6 +17,12 @@ public class DefaultMessageNotification extends Notification<VBox> {
     private Label message;
     private Button okButton;
     private VBox content;
+    private Runnable onOk;
+
+    public DefaultMessageNotification(String message, NotificationType type, Runnable onOk) {
+        this(message, type);
+        this.onOk = onOk;
+    }
 
     public DefaultMessageNotification(String message, NotificationType type) {
         initControls();
@@ -26,13 +32,18 @@ public class DefaultMessageNotification extends Notification<VBox> {
         content.setCache(true);
         content.setCacheHint(CacheHint.SPEED);
         content.setCacheShape(true);
+        onOk = () -> {};
         layControls();
     }
 
     @Override
     protected void initControls() {
         okButton = new Button("OK");
-        okButton.setOnAction(e -> this.dispose());
+        okButton.setOnAction(e -> {
+            this.dispose();
+            onOk.run();
+        });
+
         okButton.setStyle("-fx-padding: 8px 1.5em;");
         content = new VBox();
         content.setStyle("-fx-background-radius: 12px; -fx-border-radius: 12px");
