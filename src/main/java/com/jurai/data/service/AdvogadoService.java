@@ -14,6 +14,7 @@ import com.jurai.data.json.JsonUtils;
 import com.jurai.data.validator.AdvogadoValidator;
 import com.jurai.ui.panes.DocumentsPane;
 import com.jurai.ui.util.AccountMode;
+import com.jurai.ui.util.Pane;
 import com.jurai.util.EventLogger;
 import javafx.application.Platform;
 
@@ -106,9 +107,8 @@ public class AdvogadoService {
     public void deauthenticate() {
         AppState.get().setCurrentUser(null);
         AppState.get().setAccountMode(AccountMode.LOGGING_IN);
-        AppState.get().setSelectedDemanda(null);
-        AppState.get().setGlobalSelectedDemanda(null);
         AppState.get().setDocPaneMode(DocumentsPane.Mode.CHOOSER);
+        AppState.get().setActivePane(Pane.DashboardPane);
     }
 
     public void authenticate(String uname, String password) throws ResponseNotOkException {
@@ -128,7 +128,7 @@ public class AdvogadoService {
 
     public void authenticate(String accessToken) throws ResponseNotOkException {
         try {
-            JsonObject response = requestHandler.get("/advogado/auth", "Bearer " + accessToken);
+            JsonObject response = requestHandler.post("/advogado/auth", new JsonObject(), "Bearer " + accessToken);
             Advogado advogado = gson.fromJson(response.get("advogado"), Advogado.class);
             AppState.get().setCurrentUser(advogado);
             reloadRequerentes();

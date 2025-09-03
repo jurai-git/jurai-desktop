@@ -192,8 +192,11 @@ public class AccountPaneController extends AbstractController<AccountPane> {
 
             try {
                 advogadoService.updatePassword(pwd);
+                accountSettingsMenu.getConfirmPassword().setText("");
+                accountSettingsMenu.getChangePassword().setText("");
             } catch (ResponseNotOkException ex) {
                 accountSettingsMenu.getPwdChangeErrorProperty().set(UpdatePasswordErrorTranslator.translate(ex));
+                return;
             }
 
             new DefaultMessageNotification("Sua senha foi atualizada com sucesso! Você terá que relogar para atualizar suas credenciais.", NotificationType.INFO, advogadoService::deauthenticate).show();
@@ -289,7 +292,10 @@ public class AccountPaneController extends AbstractController<AccountPane> {
     }
 
     private void userChanged(Advogado newUser, AccountPane pane) {
-        if (newUser == null) pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
+        if (newUser == null) {
+            pane.getAccountDashboardMenu().getAccountSettingsMenu().loadFallback();
+            return;
+        }
 
         pane.getAccountDashboardMenu().getAccountSettingsMenu().updatePfp(AppState.get().getApiUrl() + "advogado/" + newUser.getId() + "/pfp");
         AccountDashboardMenu dashboardMenu = pane.getAccountDashboardMenu();

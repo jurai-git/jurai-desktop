@@ -6,10 +6,7 @@ import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.error.DocChatErrorTranslator;
 import com.jurai.ui.viewmodel.DocumentChatVM;
 import com.jurai.util.TextAreaUtils;
-import dev.mgcvale.fluidfx.components.controls.FButton;
-import dev.mgcvale.fluidfx.components.controls.FImageView;
-import dev.mgcvale.fluidfx.components.controls.FLabel;
-import dev.mgcvale.fluidfx.components.controls.FTextArea;
+import dev.mgcvale.fluidfx.components.controls.*;
 import dev.mgcvale.fluidfx.components.core.BoxSpacing;
 import dev.mgcvale.fluidfx.components.groups.HGroup;
 import dev.mgcvale.fluidfx.components.groups.ScrollGroup;
@@ -29,9 +26,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
@@ -41,7 +35,6 @@ import java.util.List;
 public class DocumentChat extends VBox {
     private DocumentChatVM vm;
     private Ref<VGroup> messagesBox;
-
 
     public DocumentChat(DocumentChatVM vm) {
         super();
@@ -67,14 +60,14 @@ public class DocumentChat extends VBox {
         getChildren().addAll(
             new VGroup().wSpacing(8).wChildren(
                 new HGroup().wAlignment(Pos.CENTER_LEFT).wSpacing(12).wChildren(
-                    new FButton("Voltar para os documentos").onAction(e -> vm.backToChooser()),
-                    new FLabel("JurAI Chat").wStyleClass("header")
+                    new FButton("Voltar para os documentos").onAction(e -> vm.backToChooser())
                 ),
                 new FLabel().inText(vm.demanda().asString("Demanda selecionada: %s")).wStyleClass("subheader")
             ),
             new StackGroup().wMaxHeight(Region.USE_COMPUTED_SIZE).vgrow().wMaxWidth(900).wChildren(
                 new ScrollGroup().grabInstance(scrollGroupRef).wVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).wPrefHeight(0).wFixedWitdh().wContent(
                     new VGroup().wChildren(
+                        Spacers.vSpacer(20),
                         new VGroup().wSpacing(24).grabInstance(messagesBox).inChildren(
                             ListMapper.map(vm.messages(), this::createMessageUI)
                         ),
@@ -88,7 +81,10 @@ public class DocumentChat extends VBox {
                 ),
                 new HGroup().outHeightProperty(inputHeight).wMaxHeight(Region.USE_PREF_SIZE).wStackAlignment(Pos.BOTTOM_CENTER).grabInstance(textAreaGroupRef).wAlignment(Pos.BOTTOM_CENTER).wSpacing(12).wChildren(
                     new FTextArea().grabInstance(textAreaRef).biText(vm.currentMessage()).hgrow().wStyleClass("text-field-base", "text-area-field", "chat-input").wPrompt("Escreva sua mensagem").wMaxHeight(Region.USE_PREF_SIZE).wPadding(Pad.zero()).wPrefRowCount(2).wWrap(true),
-                    new FButton("Enviar").onAction(e -> vm.sendMessage()).wPadding(Pad.all(8).addX(16)).wStyleClass("blue-button").wTranslateY(-4).applyCustomFunction(HoverAnimator::animateAll).inDisable(vm.sendDisabled())
+                    new VGroup().wChildren(
+                        new FButton("Enviar").onAction(e -> vm.sendMessage()).wPadding(Pad.all(8).addX(16)).wStyleClass("blue-button").wTranslateY(-4).applyCustomFunction(HoverAnimator::animateAll).inDisable(vm.sendDisabled()),
+                        new FCheckBox("Pesquisar em documentos").biSelected(vm.requestedRAG())
+                    )
                 )
             )
         );
@@ -116,14 +112,14 @@ public class DocumentChat extends VBox {
                 if (msg.AIMessage()) {
                     children.add(
                         new HGroup().inMaxWidth(messagesBox.ref.widthProperty().multiply(0.8)).wSpacing(8).wAlignment(Pos.TOP_CENTER).wChildren(
-                            new FImageView().wImage(vm.getJuraiPfp()).wFitHeight(36).wPreserveRatio(true).wTranslateY(-6),
+                            new FImageView().wImage(vm.getJuraiPfp()).wFitHeight(36).wPreserveRatio(true).wTranslateY(8),
                             new FLabel().wStyleClass("ai-message").wWrap(true).wText(msg.contents())
                         )
                     );
                 } else {
                     children.add(
                         new HGroup().inMaxWidth(messagesBox.ref.widthProperty().multiply(0.8)).wSpacing(8).wAlignment(Pos.TOP_CENTER).wChildren(
-                            new FLabel().wStyleClass("user-message").wWrap(true).wText(msg.contents()).hgrow().wTranslateY(-6),
+                            new FLabel().wStyleClass("user-message").wWrap(true).wText(msg.contents()).hgrow().wTranslateY(-4),
                             new FImageView().inImage(vm.pfp()).wFitHeight(36).wPreserveRatio(true).clipCircle()
                         )
                     );

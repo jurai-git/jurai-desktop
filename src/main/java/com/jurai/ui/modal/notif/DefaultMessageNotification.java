@@ -4,6 +4,7 @@ import com.jurai.ui.LoadingStrategy;
 import com.jurai.ui.modal.Notification;
 import com.jurai.ui.util.SpacerFactory;
 import dev.mgcvale.fluidfx.components.groups.HGroup;
+import javafx.application.Platform;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,7 +42,13 @@ public class DefaultMessageNotification extends Notification<VBox> {
         okButton = new Button("OK");
         okButton.setOnAction(e -> {
             this.dispose();
-            onOk.run();
+            new Thread(() -> {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {
+                }
+                Platform.runLater(() -> onOk.run());
+            }).start();
         });
 
         okButton.setStyle("-fx-padding: 8px 1.5em;");

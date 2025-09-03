@@ -35,9 +35,8 @@ public class QuickQueryPane extends AbstractPane {
         pdfTab = new BasicTab("PDF", quickQueryTab.getContent());
         ementaTab = new BasicTab("Ementa", quickQueryTab.getContent());
 
-        tabbedPane.addTab(pdfTab);
         tabbedPane.addTab(ementaTab);
-        tabbedPane.setActiveTab(pdfTab);
+        tabbedPane.setActiveTab(ementaTab);
 
         title = new Label("Consulta Rápida");
         title.getStyleClass().add("header");

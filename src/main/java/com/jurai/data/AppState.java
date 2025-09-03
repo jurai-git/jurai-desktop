@@ -15,7 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import lombok.Getter;
 
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.stream.Stream;
 
@@ -33,7 +32,7 @@ public final class AppState {
     private static ObjectProperty<Requerente> selectedRequerente = new SimpleObjectProperty<>(null);
     private static ObjectProperty<Stage> currentStage = new SimpleObjectProperty<>(null);
     private static BooleanProperty remembersUser = new SimpleBooleanProperty(false);
-    private static StringProperty apiUrl = new SimpleStringProperty("http://localhost:5000/");
+    private static StringProperty apiUrl = new SimpleStringProperty("http://127.0.0.1:5001/");
     private static BooleanProperty useAnimations = new SimpleBooleanProperty(true);
     private static BooleanProperty useLightTheme = new SimpleBooleanProperty(false);
     private static ObjectProperty<Demanda> selectedDemanda = new SimpleObjectProperty<>(null);
@@ -43,7 +42,7 @@ public final class AppState {
     private static ObjectProperty<DocumentsPane.Mode> docPaneMode = new SimpleObjectProperty<>(DocumentsPane.Mode.CHOOSER);
     private static ObjectProperty<AsyncState<ObservableList<Demanda>>> allDemandas = new SimpleObjectProperty<>(new AsyncState<>(null, true, null));
     private static ObjectProperty<Demanda> globalSelectedDemanda = new SimpleObjectProperty<>(null);
-    private static LongProperty httpTimeout = new SimpleLongProperty(20);
+    private static LongProperty httpTimeout = new SimpleLongProperty(120);
 
     private static StringProperty pretypedChatMessage = new SimpleStringProperty();
 
@@ -341,19 +340,17 @@ public final class AppState {
     public Long getHttpTimeout() {
         return httpTimeout.get();
     }
-
     public void setHttpTimeout(Long newVal) {
         httpTimeout.set(newVal);
     }
-
     public LongProperty httpTimeoutProperty() {
         return httpTimeout;
     }
 
+
     public String getJuraiIcon() {
         return juraiIcon;
     }
-
     public String getFallbackPfpPath() {
         return fallbackPfpPath;
     }

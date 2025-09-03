@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Getter;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class DocumentChatVM extends ViewModelBase {
@@ -27,6 +28,7 @@ public class DocumentChatVM extends ViewModelBase {
     private AIService aiService;
     private ObservableList<ChatMessage> messages;
     private BooleanProperty sendDisabled;
+    private BooleanProperty requestedRAG;
     private ObjectProperty<Image> pfp;
     private final Image fallbackPfp;
 
@@ -41,6 +43,7 @@ public class DocumentChatVM extends ViewModelBase {
         aiService = AIService.getInstance();
         messages = FXCollections.observableArrayList();
         sendDisabled = new SimpleBooleanProperty(true);
+        requestedRAG = new SimpleBooleanProperty(false);
 
         fallbackPfp = new Image(getClass().getResource(appState.getFallbackPfpPath()).toExternalForm());
         pfp = new SimpleObjectProperty<>();
@@ -69,6 +72,7 @@ public class DocumentChatVM extends ViewModelBase {
                 sendMessage();
             }
         });
+
     }
 
     private void reloadChatHistory(Demanda d) {
@@ -77,7 +81,19 @@ public class DocumentChatVM extends ViewModelBase {
         messages.clear();
 
         // load messages from this session from the API
-
+        new Thread(() -> {
+            try {
+                List<ChatMessage> messages = aiService.getMessages(d);
+                Platform.runLater(() -> {
+                    this.messages.clear();
+                    this.messages.addAll(messages);
+                });
+            } catch (ResponseNotOkException e) {
+                Platform.runLater(() -> {
+                    UILogger.logError("Error loading messages on DocumentChatVM::reloadChatHistory: " + e.getCode());
+                });
+            }
+        }).start();
     }
 
     public ReadOnlyObjectProperty<Demanda> demanda() {
@@ -95,6 +111,9 @@ public class DocumentChatVM extends ViewModelBase {
     public ObservableValue<Image> pfp() {
         return pfp;
     }
+    public BooleanProperty requestedRAG() {
+        return requestedRAG;
+    }
 
     public void setScrollGroup(ScrollGroup group) {
         messages.addListener((ListChangeListener<? super ChatMessage>) change -> {
@@ -106,20 +125,20 @@ public class DocumentChatVM extends ViewModelBase {
         String msg = currMsg.get().strip();
         if (msg.isEmpty()) return;
         currMsg.set("");
-        messages.add(new ChatMessage(msg, false, null));
+        messages.add(new ChatMessage(msg, "default", false, null));
         doSend(msg);
     }
 
     private void doSend(String msg) {
-        messages.add(new ChatMessage(null, true, null));
+        messages.add(new ChatMessage(null, "default", true, null));
 
         new Thread(() -> {
             try {
-                AIMessage res = aiService.sendMessage(msg);
+                AIMessage res = aiService.sendMessageOnDemandaChat(msg, AppState.get().getGlobalSelectedDemanda(), requestedRAG.get());
 
-                Platform.runLater(() -> messages.add(new ChatMessage(res.getMessage(), true, null)));
+                Platform.runLater(() -> messages.add(new ChatMessage(res.getMessage(), "default", true, null)));
             } catch (ResponseNotOkException e) {
-                Platform.runLater(() -> messages.add(new ChatMessage(msg, true, e)));
+                Platform.runLater(() -> messages.add(new ChatMessage(msg, "default", true, e)));
             } finally {
                 Platform.runLater(() -> messages.removeIf(m -> m.contents() == null));
             }
