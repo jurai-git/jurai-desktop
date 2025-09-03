@@ -101,8 +101,12 @@ public class AIService {
 
             for (JsonElement message : messages) {
                 JsonObject msgObj = message.getAsJsonObject();
+
                 boolean isAiMessage = msgObj.get("role").getAsString().equals("model");
-                messagesFinal.add(new ChatMessage(msgObj.get("contents").getAsString(), msgObj.get("message_type").getAsString(), isAiMessage, null));
+                String type = msgObj.get("message_type").getAsString();
+                if (type.equals("rag")) continue; // Don't return RAG messages
+
+                messagesFinal.add(new ChatMessage(msgObj.get("contents").getAsString(), type, isAiMessage, null));
             }
 
             System.out.println(messagesFinal);
