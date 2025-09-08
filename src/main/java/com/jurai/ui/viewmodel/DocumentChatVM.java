@@ -28,6 +28,7 @@ import lombok.Getter;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+
 public class DocumentChatVM extends ViewModelBase {
     private StringProperty currMsg;
     private AIService aiService;
@@ -143,14 +144,20 @@ public class DocumentChatVM extends ViewModelBase {
         messages.add(new ChatMessage(null, "default", true, null));
 
         new Thread(() -> {
+            Demanda demandaBeforeSend = appState.getGlobalSelectedDemanda();
+
             try {
                 AIMessage res = aiService.sendMessageOnDemandaChat(msg, AppState.get().getGlobalSelectedDemanda(), requestedRAG.get());
 
-                Platform.runLater(() -> messages.add(new ChatMessage(res.getMessage(), "default", true, null)));
+                if (demandaBeforeSend.equals(appState.getGlobalSelectedDemanda())) { // only add the message if we're in the same chat.
+                    Platform.runLater(() -> messages.add(new ChatMessage(res.getMessage(), "default", true, null)));
+                }
             } catch (ResponseNotOkException e) {
-                Platform.runLater(() -> messages.add(new ChatMessage(msg, "default", true, e)));
+                if (demandaBeforeSend.equals(appState.getGlobalSelectedDemanda())) { // only add the message if we're in the same chat.
+                    Platform.runLater(() -> messages.add(new ChatMessage(msg, "default", true, e)));
+                }
             } finally {
-                Platform.runLater(() -> messages.removeIf(m -> m.contents() == null));
+                Platform.runLater(() -> messages.removeIf(m -> m.contents() == null)); // remove loading message regardless
             }
         }).start();
     }
