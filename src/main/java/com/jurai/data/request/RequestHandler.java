@@ -56,6 +56,10 @@ public class RequestHandler {
         return send("DELETE", endpoint, body, null, false);
     }
 
+    public JsonObject delete(String endpoint, String auth) throws ResponseNotOkException {
+        return send("DELETE", endpoint, null, auth, false);
+    }
+
     public JsonObject get(String endpoint) throws ResponseNotOkException {
         return send("GET", endpoint, null, null, false);
     }

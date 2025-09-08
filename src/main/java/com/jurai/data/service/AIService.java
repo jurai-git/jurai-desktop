@@ -119,4 +119,15 @@ public class AIService {
 
     }
 
+
+    public void deleteDemandaChat(Demanda d) throws ResponseNotOkException {
+        try {
+            String auth = "Bearer " + AppState.get().getCurrentUser().getAccessToken();
+            requestHandler.delete("/demanda/" + d.getId() + "/chat", auth);
+        } catch (ResponseNotOkException e) {
+            EventLogger.logError("Error communicating to API on AIService::deleteDemandaChat: error: " + e.getCode());
+            throw e;
+        }
+    }
+
 }

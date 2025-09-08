@@ -7,6 +7,11 @@ import com.jurai.data.model.ChatMessage;
 import com.jurai.data.model.Demanda;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AIService;
+import com.jurai.ui.error.DeleteDemandaChatErrorTranslator;
+import com.jurai.ui.modal.Notification;
+import com.jurai.ui.modal.notif.ConfirmationNotification;
+import com.jurai.ui.modal.notif.DefaultMessageNotification;
+import com.jurai.ui.modal.notif.NotificationType;
 import com.jurai.ui.panes.DocumentsPane;
 import com.jurai.util.UILogger;
 import dev.mgcvale.fluidfx.components.groups.ScrollGroup;
@@ -75,13 +80,17 @@ public class DocumentChatVM extends ViewModelBase {
 
     }
 
+    private Thread reloadThread = null;
     private void reloadChatHistory(Demanda d) {
+        if (reloadThread != null && reloadThread.isAlive()) {
+            reloadThread.interrupt();
+        }
         // clear everything up from the last session
         currMsg.set("");
         messages.clear();
 
         // load messages from this session from the API
-        new Thread(() -> {
+        reloadThread = new Thread(() -> {
             try {
                 List<ChatMessage> messages = aiService.getMessages(d);
                 Platform.runLater(() -> {
@@ -93,7 +102,8 @@ public class DocumentChatVM extends ViewModelBase {
                     UILogger.logError("Error loading messages on DocumentChatVM::reloadChatHistory: " + e.getCode());
                 });
             }
-        }).start();
+        });
+        reloadThread.start();
     }
 
     public ReadOnlyObjectProperty<Demanda> demanda() {
@@ -171,6 +181,24 @@ public class DocumentChatVM extends ViewModelBase {
 
     public void backToChooser() {
         appState.setDocPaneMode(DocumentsPane.Mode.CHOOSER);
+    }
+
+    public void deleteChat() {
+        new ConfirmationNotification<String>("Você realmente deseja limpar este chat?", NotificationType.CONFIRMATION).setOnYes(ev -> {
+            try {
+                aiService.deleteDemandaChat(appState.getGlobalSelectedDemanda());
+                reloadChatHistory(appState.getGlobalSelectedDemanda());
+            } catch (ResponseNotOkException e) {
+                return DeleteDemandaChatErrorTranslator.translate(e);
+            }
+            return null;
+        }).setAfterDispose(str -> {
+            if (str == null) {
+                new DefaultMessageNotification("Chat limpo com sucesso.", NotificationType.SUCCESS).show();
+            } else {
+                new DefaultMessageNotification("Erro ao deletar chat: " + str, NotificationType.ERROR).show();
+            }
+        }).show();
     }
 
     private void loadPfp() {
