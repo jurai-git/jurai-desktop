@@ -36,35 +36,6 @@ public class AccountPaneController extends AbstractController<AccountPane> {
     @Override
     protected void attachEvents(AccountPane pane) {
         // login action
-        pane.getLoginMenu().getPassword().setOnKeyPressed(e -> {
-            if(e.getCode() == KeyCode.ENTER) {
-                pane.getLoginMenu().getLogin().fire();
-            }
-        });
-
-        pane.getLoginMenu().getLogin().setOnAction(e -> {
-            try {
-                if(pane.getLoginMenu().getEmail().getText().equals("root")) {
-                    AppState.get().setCurrentUser(new Advogado(1, "advogado", "advogado@gmail.com", "oab123", "12321321321321"));
-                    return;
-                }
-                if (pane.getLoginMenu().getKeepConnected().isSelected()) {
-                    AppState.get().setRemembersUser(true);
-                }
-                advogadoService.authenticate(pane.getLoginMenu().getEmail().getText(), pane.getLoginMenu().getPassword().getText());
-                pane.getLoginMenu().getEmail().setText("");
-                pane.getLoginMenu().getPassword().setText("");
-            } catch (ResponseNotOkException ex) {
-                new DefaultMessageNotification(switch(ex.getCode()) {
-                    case 500 -> "Ocorreu um erro interno ao fazer login. Tente nomvamente mais tarde";
-                    case 400 -> "Parece que você deixou algum campo vazio!";
-                    case 401 -> "Usuário ou senha incorretos! Verifique suas credenciais e tente novamente";
-                    case InternalErrorCodes.NETWORK_ERROR -> "Ocorreu um erro de conexão! Verifique sua conexão com a internet";
-                    default -> "Ocorreu um erro inesperado! Tente novamente mais tarde. Código do erro: " + ex.getCode();
-                }, NotificationType.ERROR).show();
-            }
-        });
-
         //register action
         pane.getAdvogadoRegisterMenu().getConfirmPassword().setOnKeyTyped(e -> {
             if(e.getCode() == KeyCode.ENTER) {
@@ -126,8 +97,6 @@ public class AccountPaneController extends AbstractController<AccountPane> {
         // mode switching handling
         pane.getAccountRecoveryMenu().getLogin().setOnAction(e -> AppState.get().setAccountMode(AccountMode.LOGGING_IN));
         pane.getAccountRecoveryMenu().getCreateAccount().setOnAction(e -> AppState.get().setAccountMode(AccountMode.REGISTERING));
-        pane.getLoginMenu().getCreateAccount().setOnAction(e -> AppState.get().setAccountMode(AccountMode.REGISTERING));
-        pane.getLoginMenu().getForgotPwd().setOnAction(e -> AppState.get().setAccountMode(AccountMode.FORGOT_PASSWORD));
         pane.getAdvogadoRegisterMenu().getLoginHyperlink().setOnAction(e -> AppState.get().setAccountMode(AccountMode.LOGGING_IN));
         pane.getAccountRecoveryDone().getCreateAccount().setOnAction(e -> AppState.get().setAccountMode(AccountMode.REGISTERING));
         pane.getAccountRecoveryDone().getReturnToLogin().setOnAction(e -> AppState.get().setAccountMode(AccountMode.LOGGING_IN));
@@ -284,10 +253,10 @@ public class AccountPaneController extends AbstractController<AccountPane> {
     private void modeChanged(AccountMode newMode, AccountPane pane) {
         pane.setPane(switch(newMode) {
             case LOGGING_IN -> pane.getLoginMenu();
-            case REGISTERING -> pane.getAdvogadoRegisterMenu();
-            case FORGOT_PASSWORD -> pane.getAccountRecoveryMenu();
-            case LOGGED_IN -> pane.getAccountDashboardMenu();
-            case EMAIL_SENT -> pane.getAccountRecoveryDone();
+            case REGISTERING -> pane.getAdvogadoRegisterMenu().getContent();
+            case FORGOT_PASSWORD -> pane.getAccountRecoveryMenu().getContent();
+            case LOGGED_IN -> pane.getAccountDashboardMenu().getContent();
+            case EMAIL_SENT -> pane.getAccountRecoveryDone().getContent();
         });
     }
 

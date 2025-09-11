@@ -1,6 +1,7 @@
 package com.jurai.ui.controller;
 
 import com.jurai.data.AppState;
+import com.jurai.data.GlobalEvents;
 import com.jurai.data.model.Demanda;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.DemandaService;
@@ -61,6 +62,7 @@ public class DemandaDashboardController extends AbstractController<DemandaDashbo
     }
 
     private void bindDemandaList(ObservableList<Demanda> paneRequerentes) {
+        Demanda selectedDemanda = AppState.get().getSelectedDemanda();
         Bindings.bindContent(paneRequerentes, AppState.get().getSelectedRequerente().demandas());
     }
 

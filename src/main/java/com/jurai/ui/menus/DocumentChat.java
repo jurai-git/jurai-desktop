@@ -153,7 +153,7 @@ public class DocumentChat extends VBox {
             children.add(
                 new VGroup().wSpacing(4).wChildren(
                     new FLabel("Ocorreu um erro!").wStyleClass("text-red"),
-                    new FLabel(DocChatErrorTranslator.translateMessageError((ResponseNotOkException) msg.error()))
+                    new FLabel(DocChatErrorTranslator.translate((ResponseNotOkException) msg.error()))
                 )
             );
         }

@@ -8,7 +8,6 @@ import com.jurai.data.model.Demanda;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AIService;
 import com.jurai.ui.error.DeleteDemandaChatErrorTranslator;
-import com.jurai.ui.modal.Notification;
 import com.jurai.ui.modal.notif.ConfirmationNotification;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;
 import com.jurai.ui.modal.notif.NotificationType;
@@ -22,7 +21,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import lombok.Getter;
 
 import java.util.List;

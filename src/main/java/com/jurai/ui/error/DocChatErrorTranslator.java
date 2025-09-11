@@ -4,8 +4,8 @@ import com.jurai.data.request.ResponseNotOkException;
 import lombok.Builder;
 
 public class DocChatErrorTranslator {
-    public static String translateMessageError(ResponseNotOkException e) {
-        return switch(e.getCode()) {
+    public static String translate(ResponseNotOkException e) {
+        return switch (e.getCode()) {
             case 400, 405 -> Defaults.DEFAULT_400;
             case 401 -> Defaults.DEFAULT_401;
             case 402 -> Defaults.DEFAULT_402;

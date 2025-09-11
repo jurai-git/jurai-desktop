@@ -16,7 +16,6 @@ import org.controlsfx.control.ToggleSwitch;
 
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.*;
 
-
 public class AppSettingsMenu extends AbstractMenu<VBox>  {
     private VBox content;
 
@@ -68,7 +67,7 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
                 new ScrollGroup().wVgrow(Priority.ALWAYS).wStyleClass("spacing-3").wVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).wHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).wFixedWitdh().wContent(
                         new VGroup().wVgrow(Priority.ALWAYS).wChildren(
 
-                                wStyle(wStyleClasses(new Label("Configurações gerais"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                                wStyle(wStyleClass(new Label("Configurações gerais"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
                                 new VGroup().wVgrow(Priority.SOMETIMES).wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
                                         wHgrow(useLightThemeOption, Priority.ALWAYS),
                                         wHgrow(useAnimationsOption, Priority.ALWAYS),
@@ -76,7 +75,7 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
                                 ),
                                 SpacerFactory.vSpacer(24),
 
-                                wStyle(wStyleClasses(new Label("Privacidade e Segurança"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                                wStyle(wStyleClass(new Label("Privacidade e Segurança"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
                                 new VGroup().wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
                                         new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
                                                 new Label("Termos e condições"),
@@ -86,7 +85,7 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
                                 ),
                                 SpacerFactory.vSpacer(24),
 
-                                wStyle(wStyleClasses(new Label("Contato e suporte"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                                wStyle(wStyleClass(new Label("Contato e suporte"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
                                 new VGroup().wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
                                         new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
                                                 new Label("Nosso e-mail"),

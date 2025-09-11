@@ -28,7 +28,7 @@ import javafx.util.Pair;
 import dev.mgcvale.fluidfx.components.controls.FLabel;
 import lombok.Getter;
 
-import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClasses;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClass;
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 
 public class DocumentChooser extends AbstractMenu<HBox> {
@@ -70,12 +70,12 @@ public class DocumentChooser extends AbstractMenu<HBox> {
                 SpacerFactory.hSpacer(12),
                 new SplitGroup().wHgrow(Priority.ALWAYS).wDividerPosition(0, 0.6).wConstraints(0, new Pair<>(0.3, 0.8)).wItems(
                         new VGroup().wHgrow(Priority.ALWAYS).wChildren(
-                                wStyleClasses(new Label("Seus documentos"), "header", "pb-2-i"),
-                                wStyleClasses(new Label("Selecione um documento para fazer sua análise, accessar o chat e mais"), "subsubheader", "pb-4-i"),
+                                wStyleClass(new Label("Seus documentos"), "header", "pb-2-i"),
+                                wStyleClass(new Label("Selecione um documento para fazer sua análise, accessar o chat e mais"), "subsubheader", "pb-4-i"),
                                 wVgrow(docList)
                         ),
                         new VGroup().wHgrow(Priority.ALWAYS).wChildren(
-                                wStyleClasses(new Label("Documento selecionado"), "subheader"),
+                                wStyleClass(new Label("Documento selecionado"), "subheader"),
                                 SpacerFactory.vSpacer(Priority.ALWAYS),
                                 currentDocumentContent
                         )
@@ -108,11 +108,11 @@ public class DocumentChooser extends AbstractMenu<HBox> {
         currentDocumentContent.getChildren().setAll(
                 new VGroup().wVgrow(Priority.ALWAYS).wStyleClass("small-content-box", "p-5").wChildren(
                         new HGroup().wChildren(
-                                wStyleClasses(new Label(lastDemanda.getNome()), "subheader"),
+                                wStyleClass(new Label(lastDemanda.getNome()), "subheader"),
                                 SpacerFactory.hSpacer(Priority.ALWAYS),
                                 new FButton("Ir ao Chat").wStyleClass("blue-button").applyCustomFunction(HoverAnimator::animateAll).onAction(e -> AppState.get().setDocPaneMode(DocumentsPane.Mode.CHAT))
                         ),
-                        wStyleClasses(new Label("Dono: " + lastDemanda.getDono()), "subsubheader"),
+                        wStyleClass(new Label("Dono: " + lastDemanda.getDono()), "subsubheader"),
                         SpacerFactory.vSpacer(16),
                         new ScrollGroup().wFixedWitdh().wVgrow(Priority.ALWAYS).wVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).wHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).wContent(
                                 new VGroup().wStyleClass("spacing-4").wChildren(

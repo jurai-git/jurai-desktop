@@ -1,6 +1,9 @@
 package com.jurai.ui.panes;
 
+import com.jurai.data.service.AdvogadoService;
 import com.jurai.ui.menus.*;
+import com.jurai.ui.viewmodel.LoginMenuVM;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 public class AccountPane extends AbstractPane {
@@ -12,6 +15,8 @@ public class AccountPane extends AbstractPane {
     private AccountRecoveryMenu accountRecoveryMenu;
     private AccountRecoveryDone accountRecoveryDone;
 
+    private LoginMenuVM loginMenuVM;
+
     public AccountPane() {
         super();
     }
@@ -20,7 +25,8 @@ public class AccountPane extends AbstractPane {
     protected void initControls() {
         view  = new StackPane();
         view.getStyleClass().add("account-pane");
-        loginMenu = new LoginMenu();
+        loginMenuVM = new LoginMenuVM(AdvogadoService.getInstance());
+        loginMenu = new LoginMenu(loginMenuVM);
         advogadoRegisterMenu = new AdvogadoRegisterMenu();
         accountDashboardMenu = new AccountDashboardMenu();
         accountRecoveryMenu = new AccountRecoveryMenu();
@@ -29,16 +35,16 @@ public class AccountPane extends AbstractPane {
 
     @Override
     protected void layControls() {
-        view.getChildren().add(loginMenu.getContent());
+        view.getChildren().add(loginMenu);
     }
 
     private void removeAll() {
         view.getChildren().removeAll(view.getChildren());
     }
 
-    public void setPane(AbstractMenu<?> pane) {
+    public void setPane(Node pane) {
         removeAll();
-        view.getChildren().add(pane.getContent());
+        view.getChildren().add(pane);
     }
 
 

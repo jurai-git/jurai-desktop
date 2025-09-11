@@ -19,7 +19,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
 import lombok.Getter;
 
-import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClasses;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClass;
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 
 public class AccountSettingsMenu extends AbstractMenu<VBox> {
@@ -119,7 +119,7 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
                         email,
                         oab,
                         SpacerFactory.vSpacer(content.heightProperty().multiply(0.03).add(4)),
-                        wStyleClasses(new Label("Troque sua senha"), "subheader"),
+                        wStyleClass(new Label("Troque sua senha"), "subheader"),
                         changePassword,
                         confirmPassword,
                         new FLabel().inText(pwdChangeErrorProperty).inVisible(pwdChangeErrorProperty.isNotEmpty()).wStyleClass("text-red").wTextAlignment(TextAlignment.RIGHT),

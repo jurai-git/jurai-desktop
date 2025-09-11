@@ -17,7 +17,8 @@ import javafx.scene.control.Label;
 
 import java.util.List;
 
-import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClasses;
+import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClass;
+
 
 public class DocumentsPaneController extends AbstractController<DocumentsPane> {
     private final DemandaService demandaService = DemandaService.getInstance();
@@ -105,7 +106,7 @@ public class DocumentsPaneController extends AbstractController<DocumentsPane> {
                 };
             }
 
-            docChooser.getDocList().setError(wStyleClasses(new Label(errorMsg), "subheader"));
+            docChooser.getDocList().setError(wStyleClass(new Label(errorMsg), "subheader"));
             return;
         }
 
