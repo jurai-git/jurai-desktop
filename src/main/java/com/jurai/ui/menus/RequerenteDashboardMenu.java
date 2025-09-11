@@ -9,78 +9,45 @@ import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.modal.RequerenteEditingModal;
 import com.jurai.ui.modal.RequerenteRegisterModal;
 import com.jurai.ui.util.SpacerFactory;
+import com.jurai.ui.viewmodel.RequerenteDashboardMenuVM;
+import dev.mgcvale.fluidfx.components.controls.FButton;
+import dev.mgcvale.fluidfx.components.groups.HGroup;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class RequerenteDashboardMenu extends AbstractMenu<VBox> {
+public class RequerenteDashboardMenu extends VBox {
     private SimpleList<Requerente> requerentesList;
-    private VBox content;
-    private HBox form;
-    private Button addRequerente, editDeleteRequerente;
+    private final RequerenteDashboardMenuVM vm;
 
-    public RequerenteDashboardMenu() {
+    public RequerenteDashboardMenu(RequerenteDashboardMenuVM vm) {
         super();
-        ModalManager.getInstance().registerModalFactory("requerenteRegisterModal", () -> {
-            RequerenteRegisterModal modal = new RequerenteRegisterModal();
-            RequerenteRegisterModalController controller = new RequerenteRegisterModalController();
-            controller.initialize(modal);
-            return modal;
-        }, RequerenteRegisterModal.class);
-        ModalManager.getInstance().registerModalFactory("requerenteEditingModal", () -> {
-            Requerente r = requerentesList.getSelectedItem().getObject();
-            RequerenteEditingModal modal = new RequerenteEditingModal(requerentesList.getSelectedItem().getObject());
-            RequerenteEditingModalController controller = new RequerenteEditingModalController();
-            controller.initialize(modal);
-            return modal;
-        }, RequerenteEditingModal.class);
+        this.vm = vm;
+        initControls();
+        layControls();
     }
 
-    @Override
     protected void initControls() {
         requerentesList = new SimpleList<>("Requerentes");
-        content = new VBox();
-        form = new HBox();
-        form.getStyleClass().addAll("buttons-row");
-        addRequerente = new Button("Adicionar");
-        editDeleteRequerente = new Button("Visualizar/Editar");
-        HoverAnimator.animateAll(1, 1, addRequerente, editDeleteRequerente);
+        requerentesList.selectedItem().bindBidirectional(vm.selectedRequerente);
+        Bindings.bindContentBidirectional(vm.requerentes, requerentesList.getListObjects());
     }
 
-    @Override
     protected void layControls() {
-        HBox.setHgrow(editDeleteRequerente, Priority.ALWAYS);
-        HBox.setHgrow(addRequerente, Priority.ALWAYS);
-
-        form.getChildren().addAll(
-                SpacerFactory.hSpacer(Priority.ALWAYS),
-                addRequerente,
-                SpacerFactory.hSpacer(Priority.ALWAYS),
-                editDeleteRequerente,
-                SpacerFactory.hSpacer(Priority.ALWAYS)
-        );
-
-        VBox.setVgrow(form, Priority.NEVER);
         VBox.setVgrow(requerentesList, Priority.ALWAYS);
+        requerentesList.setMaxHeight(Double.MAX_VALUE);
 
-        content.getChildren().addAll(requerentesList, form);
+        VBox.setVgrow(this, Priority.ALWAYS);
+        setMaxHeight(Double.MAX_VALUE);
+        getChildren().addAll(
+            requerentesList,
+            new HGroup().spaceAround().wStyleClass("buttons-row").wChildren(
+                new FButton("Adicionar").onAction(e -> vm.onAdd()).applyCustomFunction(HoverAnimator::animateAll).hgrow(),
+                new FButton("Visualizar/Editar").onAction(e -> vm.onEdit()).applyCustomFunction(HoverAnimator::animateAll).hgrow().inDisable(vm.selectedRequerente.isNull())
+            )
+        );
     }
 
-    @Override
-    public VBox getContent() {
-        return content;
-    }
-
-    public Button getAddRequerente() {
-        return addRequerente;
-    }
-
-    public Button getEditDeleteRequerente() {
-        return editDeleteRequerente;
-    }
-
-    public SimpleList<Requerente> getRequerentesList() {
-        return requerentesList;
-    }
 }

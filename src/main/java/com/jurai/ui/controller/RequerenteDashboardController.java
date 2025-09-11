@@ -12,28 +12,14 @@ public class RequerenteDashboardController extends AbstractController<Requerente
 
     @Override
     protected void attachEvents(RequerenteDashboardMenu pane) {
-        pane.getAddRequerente().setOnAction(e -> {
-            ModalManager.getInstance().requestModal("requerenteRegisterModal");
-        });
-        pane.getEditDeleteRequerente().setOnAction(e -> {
-            ModalManager.getInstance().requestModal("requerenteEditingModal");
-        });
-
-        pane.getRequerentesList().addSelectedItemListener((observableValue, oldValue, newValue) -> {
-            AppState.get().setSelectedRequerente(newValue == null ? null : newValue.getObject());
-            if(newValue == null) {
-                pane.getEditDeleteRequerente().setDisable(true);
-            } else {
-                pane.getEditDeleteRequerente().setDisable(false);
-            }
-        });
     }
 
     @Override
     protected void attachNotifiers(RequerenteDashboardMenu pane) {
+        /*
         AppState.get().currentUserProperty().addListener((obs, o, n) -> {
             if (n != null) bindRequerenteList(pane.getRequerentesList());
-        });
+        });*/
     }
 
     private void bindRequerenteList(SimpleList<Requerente> listPane) {

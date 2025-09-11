@@ -1,16 +1,15 @@
 package com.jurai.ui.panes;
 
+import com.jurai.data.model.Requerente;
 import com.jurai.ui.controller.DemandaAnalysisController;
 import com.jurai.ui.controller.DemandaDashboardController;
 import com.jurai.ui.controller.RequerenteDashboardController;
 import com.jurai.ui.menus.DemandaAnalysisDashboardMenu;
 import com.jurai.ui.menus.DemandaDashboardMenu;
 import com.jurai.ui.menus.RequerenteDashboardMenu;
-import javafx.scene.layout.BorderPane;
+import com.jurai.ui.viewmodel.RequerenteDashboardMenuVM;
+import javafx.scene.layout.*;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 
 public class DashboardPane extends AbstractPane {
     private BorderPane view;
@@ -30,7 +29,8 @@ public class DashboardPane extends AbstractPane {
     protected void initControls() {
         view = new BorderPane();
         view.getStyleClass().addAll("pane", "no-bottom-padding");
-        requerenteDashboardMenu = new RequerenteDashboardMenu();
+        RequerenteDashboardMenuVM requerenteVM = new RequerenteDashboardMenuVM();
+        requerenteDashboardMenu = new RequerenteDashboardMenu(requerenteVM);
         demandaDashboardMenu = new DemandaDashboardMenu();
         demandaAnalysisDashboardMenu = new DemandaAnalysisDashboardMenu();
 
@@ -54,7 +54,7 @@ public class DashboardPane extends AbstractPane {
         centerContent.setVgap(16);
         centerContent.getColumnConstraints().addAll(left, right);
         centerContent.getRowConstraints().addAll(top, bottom);
-        centerContent.add(requerenteDashboardMenu.getContent(), 0, 0, 1, 2);
+        centerContent.add(requerenteDashboardMenu, 0, 0, 1, 2);
         centerContent.add(demandaDashboardMenu.getContent(), 1, 0, 1, 1);
         centerContent.add(demandaAnalysisDashboardMenu.getContent(), 1, 1, 1, 1);
 
@@ -63,9 +63,6 @@ public class DashboardPane extends AbstractPane {
     }
 
     private void attachControllers() {
-        RequerenteDashboardController requerenteController = new RequerenteDashboardController();
-        requerenteController.initialize(requerenteDashboardMenu);
-
         DemandaDashboardController demandaDashboardController = new DemandaDashboardController();
         demandaDashboardController.initialize(demandaDashboardMenu);
 

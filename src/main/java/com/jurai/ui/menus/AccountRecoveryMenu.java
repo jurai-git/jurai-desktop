@@ -15,7 +15,6 @@ import static dev.mgcvale.fluidfx.components.layout.Wrappers.wAlignment;
 public class AccountRecoveryMenu extends AbstractMenu<BorderPane> {
     private BorderPane content;
     private VBox fields;
-    private VBox urls;
 
     private Label title;
     private TextFieldSet email;

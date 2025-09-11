@@ -37,7 +37,6 @@ public class SimpleList<T extends Model> extends VBox {
     private final ObservableList<T> listObjects = FXCollections.observableArrayList();
     private ObjectProperty<SimpleListItem<T>> selectedItem = new SimpleObjectProperty<>();
 
-    //constructors
     public SimpleList() {
         this("Header");
     }
@@ -200,6 +199,10 @@ public class SimpleList<T extends Model> extends VBox {
 
     public void disableAutoSearch() {
         searchTextField.setOnKeyTyped(null);
+    }
+
+    public ObjectProperty<SimpleListItem<T>> selectedItem() {
+        return selectedItem;
     }
 
     public SimpleListItem<T> getSelectedItem() {

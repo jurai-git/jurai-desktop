@@ -9,7 +9,6 @@ import com.jurai.data.service.AdvogadoService;
 import com.jurai.data.validator.AdvogadoValidator;
 import com.jurai.ui.error.UpdatePasswordErrorTranslator;
 import com.jurai.ui.menus.AccountSettingsMenu;
-import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.modal.notif.ConfirmationNotification;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;
 import com.jurai.ui.modal.notif.NotificationType;
@@ -26,7 +25,6 @@ import java.util.Objects;
 public class AccountPaneController extends AbstractController<AccountPane> {
     private final AdvogadoService advogadoService = AdvogadoService.getInstance();
     private final AdvogadoValidator advogadoValidator = new AdvogadoValidator();
-
 
     @Override
     public void initialize(AccountPane pane) {

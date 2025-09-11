@@ -2,7 +2,6 @@ package com.jurai.ui.viewmodel;
 
 import com.jurai.data.AppState;
 import com.jurai.data.model.Advogado;
-import com.jurai.data.request.InternalErrorCodes;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
 import com.jurai.ui.error.LoginErrorTranslator;
