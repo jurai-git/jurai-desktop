@@ -1,7 +1,10 @@
 package com.jurai.ui.menus;
+
 import com.jurai.data.AppState;
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.*;
+import com.jurai.ui.controls.PasswordFieldSet;
+import com.jurai.ui.controls.ProfilePicture;
+import com.jurai.ui.controls.TextFieldSet;
 import com.jurai.ui.util.SpacerFactory;
 import com.jurai.util.EventLogger;
 import dev.mgcvale.fluidfx.components.controls.FLabel;
@@ -14,10 +17,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
-import lombok.Getter;
 
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.wStyleClass;
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
@@ -25,18 +28,13 @@ import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 public class AccountSettingsMenu extends AbstractMenu<VBox> {
     private VBox content;
 
-    @Getter
     private ProfilePicture profilePicture;
     private Label usernameLabel, oabLabel;
 
-    @Getter
     private StringProperty pwdChangeErrorProperty;
 
-    @Getter
     private TextFieldSet username, email, oab;
-    @Getter
     private PasswordFieldSet changePassword, confirmPassword;
-    @Getter
     private Button saveChanges, resetChanges, deleteAccount, changePasswordBtn;
 
     @Override
@@ -79,8 +77,8 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
         oabLabel = new Label();
         oabLabel.getStyleClass().addAll("text-secondary");
         oabLabel.textProperty().bind(Bindings.createStringBinding(
-                () -> "OAB: " + oab.getInput().getText(),
-                oab.getInput().textProperty()
+            () -> "OAB: " + oab.getInput().getText(),
+            oab.getInput().textProperty()
         ));
 
         saveChanges = new Button("Salvar");
@@ -104,38 +102,38 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     @Override
     protected void layControls() {
         content.getChildren().addAll(
-                wVgrow(new VGroup().wStyleClass("spacing-3", "small-content-box", "p-6").wChildren(
-                        new HGroup().wStyleClass("spacing-3", "pl-4").wChildren(
-                                profilePicture,
-                                new VGroup().wChildren(
-                                        SpacerFactory.vSpacer(Priority.ALWAYS),
-                                        usernameLabel,
-                                        oabLabel,
-                                        SpacerFactory.vSpacer(Priority.ALWAYS)
-                                )
-                        ),
-                        SpacerFactory.vSpacer(content.heightProperty().multiply(0.04)),
-                        username,
-                        email,
-                        oab,
-                        SpacerFactory.vSpacer(content.heightProperty().multiply(0.03).add(4)),
-                        wStyleClass(new Label("Troque sua senha"), "subheader"),
-                        changePassword,
-                        confirmPassword,
-                        new FLabel().inText(pwdChangeErrorProperty).inVisible(pwdChangeErrorProperty.isNotEmpty()).wStyleClass("text-red").wTextAlignment(TextAlignment.RIGHT),
+            wVgrow(new VGroup().wStyleClass("spacing-3", "small-content-box", "p-6").wChildren(
+                new HGroup().wStyleClass("spacing-3", "pl-4").wChildren(
+                    profilePicture,
+                    new VGroup().wChildren(
                         SpacerFactory.vSpacer(Priority.ALWAYS),
-                        new HGroup().wChildren(
-                                SpacerFactory.hSpacer(Priority.ALWAYS),
-                                changePasswordBtn
-                        )
-                )),
+                        usernameLabel,
+                        oabLabel,
+                        SpacerFactory.vSpacer(Priority.ALWAYS)
+                    )
+                ),
+                SpacerFactory.vSpacer(content.heightProperty().multiply(0.04)),
+                username,
+                email,
+                oab,
+                SpacerFactory.vSpacer(content.heightProperty().multiply(0.03).add(4)),
+                wStyleClass(new Label("Troque sua senha"), "subheader"),
+                changePassword,
+                confirmPassword,
+                new FLabel().inText(pwdChangeErrorProperty).inVisible(pwdChangeErrorProperty.isNotEmpty()).wStyleClass("text-red").wTextAlignment(TextAlignment.RIGHT),
+                SpacerFactory.vSpacer(Priority.ALWAYS),
                 new HGroup().wChildren(
-                        resetChanges,
-                        SpacerFactory.hSpacer(Priority.ALWAYS),
-                        deleteAccount,
-                        SpacerFactory.hSpacer(12),
-                        saveChanges
+                    SpacerFactory.hSpacer(Priority.ALWAYS),
+                    changePasswordBtn
                 )
+            )),
+            new HGroup().wChildren(
+                resetChanges,
+                SpacerFactory.hSpacer(Priority.ALWAYS),
+                deleteAccount,
+                SpacerFactory.hSpacer(12),
+                saveChanges
+            )
         );
         content.setPrefWidth(500);
         content.setMaxWidth(Double.MAX_VALUE);
@@ -150,10 +148,10 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
         EventLogger.log("Loading profile picture w URL " + url + " on AccountSettingsMenu");
 
         ChangeListener<Boolean> errorHandler = (obs, oldVal, hasError) -> {
-          if (hasError) {
-              EventLogger.logWarning("No image found for current user, loading default user image on AccountSettingsMenu");
-              loadFallback();
-          }
+            if (hasError) {
+                EventLogger.logWarning("No image found for current user, loading default user image on AccountSettingsMenu");
+                loadFallback();
+            }
         };
         Image img = new Image(url, true);
         img.errorProperty().addListener(errorHandler);
@@ -170,5 +168,49 @@ public class AccountSettingsMenu extends AbstractMenu<VBox> {
     @Override
     public VBox getContent() {
         return content;
+    }
+
+    public ProfilePicture getProfilePicture() {
+        return this.profilePicture;
+    }
+
+    public StringProperty getPwdChangeErrorProperty() {
+        return this.pwdChangeErrorProperty;
+    }
+
+    public TextFieldSet getUsername() {
+        return this.username;
+    }
+
+    public TextFieldSet getEmail() {
+        return this.email;
+    }
+
+    public TextFieldSet getOab() {
+        return this.oab;
+    }
+
+    public PasswordFieldSet getChangePassword() {
+        return this.changePassword;
+    }
+
+    public PasswordFieldSet getConfirmPassword() {
+        return this.confirmPassword;
+    }
+
+    public Button getSaveChanges() {
+        return this.saveChanges;
+    }
+
+    public Button getResetChanges() {
+        return this.resetChanges;
+    }
+
+    public Button getDeleteAccount() {
+        return this.deleteAccount;
+    }
+
+    public Button getChangePasswordBtn() {
+        return this.changePasswordBtn;
     }
 }

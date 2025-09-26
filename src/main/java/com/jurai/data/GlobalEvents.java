@@ -1,14 +1,10 @@
 package com.jurai.data;
 
-import lombok.Getter;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
 
 public class GlobalEvents {
 
-    @Getter
     private static volatile GlobalEvents instance;
 
     private final List<Runnable> globalDemandasEditedListeners = new CopyOnWriteArrayList<>();
@@ -33,9 +29,14 @@ public class GlobalEvents {
         return instance;
     }
 
+    public static GlobalEvents getInstance() {
+        return GlobalEvents.instance;
+    }
+
     public void onSentMessageFromDocList(Runnable listener) {
         sentMessageFromDocList.add(listener);
     }
+
     public void fireSentMessageFromDocList() {
         sentMessageFromDocList.forEach(Runnable::run);
     }

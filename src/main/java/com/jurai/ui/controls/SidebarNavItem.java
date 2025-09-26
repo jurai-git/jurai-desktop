@@ -15,24 +15,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Duration;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.function.Consumer;
 
 public class SidebarNavItem extends HBox {
     private boolean active;
     private Rectangle dot;
-    @Getter
     private SVGPath icon;
-    @Getter
     private StackPane iconContainer;
-    @Setter
-    @Getter
     private Label label;
     private PropertyBindAnimation dotWarpTransition;
     private FillTransition dotColorTransition;
-    @Getter
     private FillTransition iconColorTransition;
     private Consumer<Event> onAction;
     private boolean isIconColorPermanent;
@@ -63,10 +56,10 @@ public class SidebarNavItem extends HBox {
     private void initializeAnimations() {
 
         dotWarpTransition = new PropertyBindAnimation(
-                new PropertyBindPair<>(dot.heightProperty(), dot.widthProperty().multiply(1.5)),
-                new PropertyBindPair<>(dot.heightProperty(), dot.widthProperty().multiply(3.5)),
-                new PowerEase(4, true),
-                500
+            new PropertyBindPair<>(dot.heightProperty(), dot.widthProperty().multiply(1.5)),
+            new PropertyBindPair<>(dot.heightProperty(), dot.widthProperty().multiply(3.5)),
+            new PowerEase(4, true),
+            500
         );
 
         dotColorTransition = new FillTransition(Duration.millis(500), dot);
@@ -111,7 +104,8 @@ public class SidebarNavItem extends HBox {
                 getChildren().remove(label);
             else
                 getChildren().add(label);
-        } catch (IllegalArgumentException ignored) {}
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
     private void setupActions() {
@@ -131,7 +125,7 @@ public class SidebarNavItem extends HBox {
     }
 
     public void setOnAction(Consumer<Event> onAction) {
-        if(onAction == null) return;
+        if (onAction == null) return;
         this.onAction = onAction;
         setupActions();
     }
@@ -141,7 +135,7 @@ public class SidebarNavItem extends HBox {
     }
 
     public void setActive(boolean active) {
-        if(active != this.active) {
+        if (active != this.active) {
             this.active = active;
             activationChanged();
         }
@@ -193,4 +187,23 @@ public class SidebarNavItem extends HBox {
         return dot.isVisible();
     }
 
+    public SVGPath getIcon() {
+        return this.icon;
+    }
+
+    public StackPane getIconContainer() {
+        return this.iconContainer;
+    }
+
+    public Label getLabel() {
+        return this.label;
+    }
+
+    public FillTransition getIconColorTransition() {
+        return this.iconColorTransition;
+    }
+
+    public void setLabel(Label label) {
+        this.label = label;
+    }
 }

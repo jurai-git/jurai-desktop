@@ -14,17 +14,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.shape.Circle;
-import lombok.Getter;
 
 public class Header extends AbstractPane {
     private HBox view;
     private ImageView logo;
     private Image darkLogo, lightLogo;
 
-    @Getter
     private ImageView pfp;
 
-    @Getter
     private NavUrl navUrl;
 
     public Header() {
@@ -67,11 +64,11 @@ public class Header extends AbstractPane {
     @Override
     protected void layControls() {
         view.getChildren().addAll(
-                logo,
-                SpacerFactory.hSpacer(12),
-                navUrl,
-                SpacerFactory.hSpacer(Priority.ALWAYS),
-                pfp
+            logo,
+            SpacerFactory.hSpacer(12),
+            navUrl,
+            SpacerFactory.hSpacer(Priority.ALWAYS),
+            pfp
         );
         view.setAlignment(Pos.CENTER_LEFT);
     }
@@ -110,5 +107,13 @@ public class Header extends AbstractPane {
         } else {
             logo.setImage(darkLogo);
         }
+    }
+
+    public ImageView getPfp() {
+        return this.pfp;
+    }
+
+    public NavUrl getNavUrl() {
+        return this.navUrl;
     }
 }

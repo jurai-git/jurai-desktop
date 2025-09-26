@@ -6,8 +6,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import lombok.Getter;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.wHgrow;
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
@@ -15,9 +15,7 @@ import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 public class AccountDashboardMenu extends AbstractMenu<HBox> {
     private HBox content;
 
-    @Getter
     private Label title, subtitle;
-    @Getter
     private AccountSettingsMenu accountSettingsMenu;
 
     private AppSettingsMenu appSettingsMenu;
@@ -49,14 +47,14 @@ public class AccountDashboardMenu extends AbstractMenu<HBox> {
     protected void layControls() {
         content.getStyleClass().addAll("p-x16-y8", "spacing-6");
         content.getChildren().addAll(
-                new VGroup().wHgrow(Priority.ALWAYS).wChildren(
-                        wVgrow(title, Priority.NEVER),
-                        wVgrow(accountSettingsMenu.getContent())
-                ),
-                new VGroup().wHgrow(Priority.ALWAYS).wChildren(
-                        subtitle,
-                        wVgrow(wHgrow(appSettingsMenu.getContent()))
-                )
+            new VGroup().wHgrow(Priority.ALWAYS).wChildren(
+                wVgrow(title, Priority.NEVER),
+                wVgrow(accountSettingsMenu.getContent())
+            ),
+            new VGroup().wHgrow(Priority.ALWAYS).wChildren(
+                subtitle,
+                wVgrow(wHgrow(appSettingsMenu.getContent()))
+            )
         );
     }
 
@@ -99,5 +97,17 @@ public class AccountDashboardMenu extends AbstractMenu<HBox> {
     @Override
     public HBox getContent() {
         return content;
+    }
+
+    public Label getTitle() {
+        return this.title;
+    }
+
+    public Label getSubtitle() {
+        return this.subtitle;
+    }
+
+    public AccountSettingsMenu getAccountSettingsMenu() {
+        return this.accountSettingsMenu;
     }
 }

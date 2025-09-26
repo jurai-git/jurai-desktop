@@ -2,7 +2,10 @@ package com.jurai.ui.modal;
 
 import com.jurai.data.ApplicationData;
 import com.jurai.ui.animation.HoverAnimator;
-import com.jurai.ui.controls.*;
+import com.jurai.ui.controls.BasicTab;
+import com.jurai.ui.controls.BasicTabbedPane;
+import com.jurai.ui.controls.TextAreaSet;
+import com.jurai.ui.controls.TextFieldSet;
 import com.jurai.ui.util.SpacerFactory;
 import dev.mgcvale.fluidfx.components.groups.HGroup;
 import javafx.scene.control.Button;
@@ -10,26 +13,23 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import lombok.Getter;
 
 import java.util.List;
 
 public abstract class DemandaModal extends Modal<BasicTabbedPane> {
     protected TextFieldSet identificacao, foro, status, competencia,
-            classe, assuntoPrincipal,
-            valorAcao;
+        classe, assuntoPrincipal,
+        valorAcao;
 
     protected TextAreaSet resumo;
 
     protected CheckBox pedidoLiminar, segredoJustica, dispensaLegal, justicaGratiuta, guiaCustas;
 
     private BasicTabbedPane content;
-    @Getter
     private BasicTab tab1, tab2;
     private VBox tab1Content, tab2Content;
     private VBox tab1Form, tab2Form;
     protected HBox tab1Actions, tab2Actions;
-    @Getter
     protected Button tab1Cancel, tab2Cancel, next, previous, save;
 
     public DemandaModal(String name) {
@@ -70,7 +70,7 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
         tab1Form.getStyleClass().add("fields");
         tab1 = new BasicTab("Parte 1", tab1Content);
 
-         // tab 2
+        // tab 2
         tab2Content = new VBox();
         tab2Actions = new HBox();
         tab2Form = new VBox();
@@ -136,13 +136,13 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
             assuntoPrincipal,
             valorAcao,
             new HGroup().spaceAround().wVgrow(Priority.ALWAYS).wChildren(
-                        pedidoLiminar,
-                        segredoJustica,
-                        dispensaLegal
+                pedidoLiminar,
+                segredoJustica,
+                dispensaLegal
             ),
             new HGroup().spaceAround().wVgrow(Priority.ALWAYS).wChildren(
-                    justicaGratiuta,
-                    guiaCustas
+                justicaGratiuta,
+                guiaCustas
             ),
             resumo,
             SpacerFactory.vSpacer(ApplicationData.defaultIconSizeProperty().get() * 0.8)
@@ -221,5 +221,33 @@ public abstract class DemandaModal extends Modal<BasicTabbedPane> {
     @Override
     public BasicTabbedPane getContent() {
         return content;
+    }
+
+    public BasicTab getTab1() {
+        return this.tab1;
+    }
+
+    public BasicTab getTab2() {
+        return this.tab2;
+    }
+
+    public Button getTab1Cancel() {
+        return this.tab1Cancel;
+    }
+
+    public Button getTab2Cancel() {
+        return this.tab2Cancel;
+    }
+
+    public Button getNext() {
+        return this.next;
+    }
+
+    public Button getPrevious() {
+        return this.previous;
+    }
+
+    public Button getSave() {
+        return this.save;
     }
 }

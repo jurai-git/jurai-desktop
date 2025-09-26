@@ -17,7 +17,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import lombok.Getter;
 
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.wVgrow;
 
@@ -28,10 +27,8 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<StackPane> {
     private CircleGraph circleGraph;
     private Label circleGraphLabel, status, assuntoPrincipal, nome, inactiveLabel;
     private Hyperlink argumentosLink;
-    @Getter
     private Button moreDetails, redoAnalysis;
 
-    @Getter
     private Demanda demanda;
 
     @Override
@@ -72,13 +69,13 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<StackPane> {
     protected void layControls() {
         demandaInfo.getChildren().addAll(
             Spacers.vSpacer(),
-                wVgrow(nome),
-                Spacers.vSpacer(),
-                wVgrow(status),
-                Spacers.vSpacer(),
-                wVgrow(assuntoPrincipal),
-                Spacers.vSpacer(),
-                wVgrow(argumentosLink),
+            wVgrow(nome),
+            Spacers.vSpacer(),
+            wVgrow(status),
+            Spacers.vSpacer(),
+            wVgrow(assuntoPrincipal),
+            Spacers.vSpacer(),
+            wVgrow(argumentosLink),
             Spacers.vSpacer()
         );
         HBox.setHgrow(demandaInfo, Priority.SOMETIMES);
@@ -88,20 +85,20 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<StackPane> {
 
         dev.mgcvale.fluidfx.components.util.Ref<VGroup> circleGroup = new Ref<>(null);
         centerContent.getChildren().addAll(
-                new VGroup().grabInstance(circleGroup).wHgrow(Priority.NEVER).wChildren(
-                        circleGraphLabel,
-                        circleGraph
-                ).wStyleClass("small-content-box").wStyle("-fx-padding: .5em 0 0 0").inPrefWidth(circleGroup.ref.heightProperty().add(48)),
-                demandaInfo
+            new VGroup().grabInstance(circleGroup).wHgrow(Priority.NEVER).wChildren(
+                circleGraphLabel,
+                circleGraph
+            ).wStyleClass("small-content-box").wStyle("-fx-padding: .5em 0 0 0").inPrefWidth(circleGroup.ref.heightProperty().add(48)),
+            demandaInfo
         );
 
         VBox.setVgrow(centerContent, Priority.ALWAYS);
         activeContent.getChildren().addAll(
-                centerContent,
-                new HGroup().wVgrow(Priority.NEVER).spaceAround().wChildren(
-                        moreDetails,
-                        redoAnalysis
-                ).wStyleClass("buttons-row")
+            centerContent,
+            new HGroup().wVgrow(Priority.NEVER).spaceAround().wChildren(
+                moreDetails,
+                redoAnalysis
+            ).wStyleClass("buttons-row")
         );
 
         inactiveContent.getChildren().add(inactiveLabel);
@@ -135,5 +132,17 @@ public class DemandaAnalysisDashboardMenu extends AbstractMenu<StackPane> {
     @Override
     public StackPane getContent() {
         return content;
+    }
+
+    public Button getMoreDetails() {
+        return this.moreDetails;
+    }
+
+    public Button getRedoAnalysis() {
+        return this.redoAnalysis;
+    }
+
+    public Demanda getDemanda() {
+        return this.demanda;
     }
 }

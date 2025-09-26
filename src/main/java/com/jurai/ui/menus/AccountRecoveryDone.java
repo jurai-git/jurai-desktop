@@ -1,14 +1,17 @@
 package com.jurai.ui.menus;
 
-import com.jurai.data.AppState;
 import com.jurai.ui.animation.HoverAnimator;
 import com.jurai.ui.util.SpacerFactory;
 import dev.mgcvale.fluidfx.components.groups.VGroup;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import lombok.Getter;
 
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.wAlignment;
 
@@ -18,9 +21,7 @@ public class AccountRecoveryDone extends AbstractMenu<BorderPane> {
     private VBox urls;
 
     private Label title;
-    @Getter
     private Button returnToLogin;
-    @Getter
     private Hyperlink createAccount, makeNewRequest;
 
 
@@ -55,23 +56,23 @@ public class AccountRecoveryDone extends AbstractMenu<BorderPane> {
         content.getStyleClass().addAll("form");
         fields.setAlignment(Pos.CENTER);
         fields.getChildren().addAll(
-                SpacerFactory.vSpacer(Priority.ALWAYS),
-                new Label("Já trocou sua senha?"),
-                SpacerFactory.vSpacer(12),
-                returnToLogin,
-                SpacerFactory.vSpacer(Priority.ALWAYS)
+            SpacerFactory.vSpacer(Priority.ALWAYS),
+            new Label("Já trocou sua senha?"),
+            SpacerFactory.vSpacer(12),
+            returnToLogin,
+            SpacerFactory.vSpacer(Priority.ALWAYS)
         );
 
         BorderPane.setAlignment(title, Pos.CENTER);
         title.getStyleClass().add("border-pane-region");
         content.setTop(
-                new VGroup().wStyleClass("border-pane-region", "p-8").wBorderPaneAlignment(Pos.CENTER).wChildren(
-                        title,
-                        new VGroup().wAlignment(Pos.CENTER).wChildren(
-                                wAlignment(new Label("O e-mail de recuperação foi enviado com sucesso.\nCheque sua inbox e caixa de spam.\nCaso o email não chegue em 5 minutos, você poderá fazer uma nova requisição."), TextAlignment.CENTER),
-                                makeNewRequest
-                        )
+            new VGroup().wStyleClass("border-pane-region", "p-8").wBorderPaneAlignment(Pos.CENTER).wChildren(
+                title,
+                new VGroup().wAlignment(Pos.CENTER).wChildren(
+                    wAlignment(new Label("O e-mail de recuperação foi enviado com sucesso.\nCheque sua inbox e caixa de spam.\nCaso o email não chegue em 5 minutos, você poderá fazer uma nova requisição."), TextAlignment.CENTER),
+                    makeNewRequest
                 )
+            )
         );
         content.getStyleClass().add("border-pane-region");
         content.setCenter(fields);
@@ -83,4 +84,15 @@ public class AccountRecoveryDone extends AbstractMenu<BorderPane> {
         return content;
     }
 
+    public Button getReturnToLogin() {
+        return this.returnToLogin;
+    }
+
+    public Hyperlink getCreateAccount() {
+        return this.createAccount;
+    }
+
+    public Hyperlink getMakeNewRequest() {
+        return this.makeNewRequest;
+    }
 }

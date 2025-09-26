@@ -24,7 +24,6 @@ public class ArrowToggleButton extends StackPane {
     private StackPane arrowContainer;
     private BooleanProperty active = new SimpleBooleanProperty(false);
     private Rectangle base;
-    @Setter
     private Consumer<Boolean> onAction;
 
     private RotateTransition arrowRotateTransition;
@@ -120,7 +119,7 @@ public class ArrowToggleButton extends StackPane {
     }
 
     public void updateOrientation() {
-        if(active.get()) {
+        if (active.get()) {
             arrowRotateTransition.setToAngle(270);
             arrowRotateTransition.playFromStart();
         } else {
@@ -135,11 +134,14 @@ public class ArrowToggleButton extends StackPane {
             arrowPath.setContent(FileUtils.getResourceContent("/paths/arrow.path"));
             arrowPath.setRotate(90);
             arrowPath.getStyleClass().add("arrow");
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             UILogger.logError("unable to load sidebar icon paths");
             UILogger.logWarning("Proceding without sidebar icons");
         }
     }
 
+    public void setOnAction(Consumer<Boolean> onAction) {
+        this.onAction = onAction;
+    }
 }

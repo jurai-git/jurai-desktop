@@ -8,21 +8,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import lombok.Getter;
-import lombok.Setter;
 
 public class SecondaryScene {
-    @Getter
     private Scene scene;
-    @Getter
     private BorderPane content;
-    @Getter
     private StackPane modalRoot;
     AccountPane accountPane;
     private ImageView headerLogo;
     private StackPane headerLogoWrapper;
 
-    @Setter
     private Image darkImg, lightImg;
 
     public SecondaryScene() {
@@ -69,4 +63,23 @@ public class SecondaryScene {
         accountPaneController.initialize(accountPane);
     }
 
+    public Scene getScene() {
+        return this.scene;
+    }
+
+    public BorderPane getContent() {
+        return this.content;
+    }
+
+    public StackPane getModalRoot() {
+        return this.modalRoot;
+    }
+
+    public void setDarkImg(Image darkImg) {
+        this.darkImg = darkImg;
+    }
+
+    public void setLightImg(Image lightImg) {
+        this.lightImg = lightImg;
+    }
 }

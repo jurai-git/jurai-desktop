@@ -2,24 +2,24 @@ package com.jurai.ui.panes;
 
 import com.jurai.data.ApplicationData;
 import com.jurai.ui.animation.interpolator.PowerEase;
-import com.jurai.ui.menus.SidebarNav;
 import com.jurai.ui.controller.SidebarNavController;
+import com.jurai.ui.menus.SidebarNav;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import lombok.Getter;
 
 public class Sidebar extends AbstractPane {
     private VBox view;
     private Separator separator;
     private Region headerSpacer;
     private SidebarNav nav;
-    @Getter
     private boolean iconsOnly;
     private DoubleProperty finalWidth = new SimpleDoubleProperty();
     private DoubleProperty initialWidth = new SimpleDoubleProperty();
@@ -100,5 +100,9 @@ public class Sidebar extends AbstractPane {
     @Override
     public VBox getView() {
         return view;
+    }
+
+    public boolean isIconsOnly() {
+        return this.iconsOnly;
     }
 }

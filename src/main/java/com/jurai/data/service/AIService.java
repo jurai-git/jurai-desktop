@@ -1,6 +1,9 @@
 package com.jurai.data.service;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.jurai.data.AppState;
 import com.jurai.data.model.AIMessage;
 import com.jurai.data.model.ChatMessage;
@@ -10,7 +13,6 @@ import com.jurai.data.model.serializer.DemandaAnalysisSerializer;
 import com.jurai.data.request.RequestHandler;
 import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.util.EventLogger;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,6 @@ public class AIService {
     private final RequestHandler requestHandler = new RequestHandler(AppState.get().getApiUrl());
     private final Gson gson;
 
-    @Getter
     private static final AIService instance = new AIService();
 
 
@@ -33,6 +34,10 @@ public class AIService {
         AppState.get().apiUrlProperty().addListener((obs, o, n) -> {
             requestHandler.setBaseUrl(AppState.get().getApiUrl());
         });
+    }
+
+    public static AIService getInstance() {
+        return AIService.instance;
     }
 
     public DemandaAnalysis analyzeDemanda(String ementa) throws ResponseNotOkException {

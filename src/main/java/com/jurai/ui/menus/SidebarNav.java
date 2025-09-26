@@ -1,7 +1,7 @@
 package com.jurai.ui.menus;
 
-import com.jurai.data.ApplicationData;
 import com.jurai.data.AppState;
+import com.jurai.data.ApplicationData;
 import com.jurai.ui.controls.ArrowToggleButton;
 import com.jurai.ui.controls.SidebarNavItem;
 import com.jurai.ui.util.SpacerFactory;
@@ -13,17 +13,18 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
-import lombok.Getter;
 
 import java.io.IOException;
 import java.util.List;
 
 public class SidebarNav extends AbstractMenu<VBox> {
     private VBox content;
-    @Getter
-    private SidebarNavItem dashboard, quickQuery, documents, account, logout;
+    private SidebarNavItem dashboard;
+    private SidebarNavItem quickQuery;
+    private SidebarNavItem documents;
+    private SidebarNavItem account;
+    private SidebarNavItem logout;
     private SVGPath dashboardIcon, quickQueryIcon, documentsIcon, accountIcon, logoutIcon;
-    @Getter
     private ArrowToggleButton sidebarToggleButton;
 
     public SidebarNav() {
@@ -61,17 +62,17 @@ public class SidebarNav extends AbstractMenu<VBox> {
     @Override
     protected void layControls() {
         content.getChildren().addAll(
-                dashboard,
-                quickQuery,
-                documents,
-                account,
-                SpacerFactory.vSpacer(Priority.ALWAYS),
-                new HGroup().wChildren(
-                        SpacerFactory.hSpacer(Priority.ALWAYS),
-                        sidebarToggleButton
-                ).wStyle("-fx-padding: 0; -fx-gap: 0;"),
-                SpacerFactory.vSpacer(Priority.ALWAYS),
-                logout);
+            dashboard,
+            quickQuery,
+            documents,
+            account,
+            SpacerFactory.vSpacer(Priority.ALWAYS),
+            new HGroup().wChildren(
+                SpacerFactory.hSpacer(Priority.ALWAYS),
+                sidebarToggleButton
+            ).wStyle("-fx-padding: 0; -fx-gap: 0;"),
+            SpacerFactory.vSpacer(Priority.ALWAYS),
+            logout);
         dashboard.setActive(true);
     }
 
@@ -91,7 +92,7 @@ public class SidebarNav extends AbstractMenu<VBox> {
 
             logoutIcon = new SVGPath();
             logoutIcon.setContent(FileUtils.getResourceContent("/paths/logout.path"));
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             UILogger.logError("unable to load sidebar icon paths");
             UILogger.logWarning("Proceding without sidebar icons");
@@ -105,7 +106,7 @@ public class SidebarNav extends AbstractMenu<VBox> {
         account.setIconsOnly(iconsOnly);
         logout.setIconsOnly(iconsOnly);
 
-        if(iconsOnly) {
+        if (iconsOnly) {
             content.pseudoClassStateChanged(PseudoClass.getPseudoClass("iconsOnly"), true);
         } else {
             content.pseudoClassStateChanged(PseudoClass.getPseudoClass("iconsOnly"), false);
@@ -119,5 +120,29 @@ public class SidebarNav extends AbstractMenu<VBox> {
     @Override
     public VBox getContent() {
         return content;
+    }
+
+    public SidebarNavItem getDashboard() {
+        return this.dashboard;
+    }
+
+    public SidebarNavItem getQuickQuery() {
+        return this.quickQuery;
+    }
+
+    public SidebarNavItem getDocuments() {
+        return this.documents;
+    }
+
+    public SidebarNavItem getAccount() {
+        return this.account;
+    }
+
+    public SidebarNavItem getLogout() {
+        return this.logout;
+    }
+
+    public ArrowToggleButton getSidebarToggleButton() {
+        return this.sidebarToggleButton;
     }
 }

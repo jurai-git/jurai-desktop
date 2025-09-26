@@ -13,7 +13,6 @@ import com.jurai.util.StateLogger;
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
-import lombok.Getter;
 
 import java.beans.PropertyChangeSupport;
 import java.util.stream.Stream;
@@ -21,7 +20,6 @@ import java.util.stream.Stream;
 public final class AppState {
     private static PropertyChangeSupport support;
 
-    @Getter
     private static volatile AppState instance;
 
     private ObjectProperty<Advogado> currentUser = new SimpleObjectProperty<>(null);
@@ -64,9 +62,13 @@ public final class AppState {
         StateLogger.log("initialized Application state logging");
     }
 
+    public static AppState getInstance() {
+        return AppState.instance;
+    }
+
     private void registerAllListeners() {
         accountMode.addListener((obs, newVal, oldVal) -> {
-            if(accountMode.get() == AccountMode.LOGGED_IN) {
+            if (accountMode.get() == AccountMode.LOGGED_IN) {
                 setStageType(StageType.MAIN_STAGE);
             } else {
                 setStageType(StageType.SECONDARY_STAGE);
@@ -74,7 +76,7 @@ public final class AppState {
         });
 
         currentUser.addListener((obs, oldVal, newVal) -> {
-            if(newVal != null) {
+            if (newVal != null) {
                 setAccountMode(AccountMode.LOGGED_IN);
             } else {
                 setAccountMode(AccountMode.LOGGING_IN);
@@ -84,10 +86,10 @@ public final class AppState {
         });
 
         Stream.of(
-                currentUser, stageType, accountMode, activePane, debugging,
-                selectedRequerente, currentStage, remembersUser, apiUrl,
-                useAnimations, useLightTheme, selectedDemanda, sidebarExtended,
-                viewportSmall, quickQueryMode, docPaneMode, allDemandas, globalSelectedDemanda
+            currentUser, stageType, accountMode, activePane, debugging,
+            selectedRequerente, currentStage, remembersUser, apiUrl,
+            useAnimations, useLightTheme, selectedDemanda, sidebarExtended,
+            viewportSmall, quickQueryMode, docPaneMode, allDemandas, globalSelectedDemanda
         ).forEach(prop -> {
             prop.addListener((obs, oldVal, newVal) -> {
                 String name = getPropertyName(prop);
@@ -132,9 +134,11 @@ public final class AppState {
     public Advogado getCurrentUser() {
         return currentUser.get();
     }
+
     public void setCurrentUser(Advogado user) {
         currentUser.set(user);
     }
+
     public ObjectProperty<Advogado> currentUserProperty() {
         return currentUser;
     }
@@ -143,9 +147,11 @@ public final class AppState {
     public StageType getStageType() {
         return stageType.get();
     }
+
     public void setStageType(StageType stage) {
         stageType.set(stage);
     }
+
     public ObjectProperty<StageType> stageTypeProperty() {
         return stageType;
     }
@@ -154,9 +160,11 @@ public final class AppState {
     public AccountMode getAccountMode() {
         return accountMode.get();
     }
+
     public void setAccountMode(AccountMode mode) {
         accountMode.set(mode);
     }
+
     public ObjectProperty<AccountMode> accountModeProperty() {
         return accountMode;
     }
@@ -165,9 +173,11 @@ public final class AppState {
     public Pane getActivePane() {
         return activePane.get();
     }
+
     public void setActivePane(Pane pane) {
         activePane.set(pane);
     }
+
     public ObjectProperty<Pane> activePaneProperty() {
         return activePane;
     }
@@ -176,9 +186,11 @@ public final class AppState {
     public boolean isDebugging() {
         return debugging.get();
     }
+
     public void setDebugging(boolean debug) {
         debugging.set(debug);
     }
+
     public BooleanProperty debuggingProperty() {
         return debugging;
     }
@@ -187,9 +199,11 @@ public final class AppState {
     public Requerente getSelectedRequerente() {
         return selectedRequerente.get();
     }
+
     public void setSelectedRequerente(Requerente requerente) {
         selectedRequerente.set(requerente);
     }
+
     public ObjectProperty<Requerente> selectedRequerenteProperty() {
         return selectedRequerente;
     }
@@ -198,9 +212,11 @@ public final class AppState {
     public Stage getCurrentStage() {
         return currentStage.get();
     }
+
     public void setCurrentStage(Stage stage) {
         currentStage.set(stage);
     }
+
     public ObjectProperty<Stage> currentStageProperty() {
         return currentStage;
     }
@@ -209,9 +225,11 @@ public final class AppState {
     public boolean isRemembersUser() {
         return remembersUser.get();
     }
+
     public void setRemembersUser(boolean remembers) {
         remembersUser.set(remembers);
     }
+
     public BooleanProperty remembersUserProperty() {
         return remembersUser;
     }
@@ -220,9 +238,11 @@ public final class AppState {
     public String getApiUrl() {
         return apiUrl.get();
     }
+
     public void setApiUrl(String url) {
         apiUrl.set(url);
     }
+
     public StringProperty apiUrlProperty() {
         return apiUrl;
     }
@@ -231,9 +251,11 @@ public final class AppState {
     public boolean isUseAnimations() {
         return useAnimations.get();
     }
+
     public void setUseAnimations(boolean use) {
         useAnimations.set(use);
     }
+
     public BooleanProperty useAnimationsProperty() {
         return useAnimations;
     }
@@ -242,9 +264,11 @@ public final class AppState {
     public boolean isUseLightTheme() {
         return useLightTheme.get();
     }
+
     public void setUseLightTheme(boolean use) {
         useLightTheme.set(use);
     }
+
     public BooleanProperty useLightThemeProperty() {
         return useLightTheme;
     }
@@ -253,9 +277,11 @@ public final class AppState {
     public Demanda getSelectedDemanda() {
         return selectedDemanda.get();
     }
+
     public void setSelectedDemanda(Demanda demanda) {
         selectedDemanda.set(demanda);
     }
+
     public ObjectProperty<Demanda> selectedDemandaProperty() {
         return selectedDemanda;
     }
@@ -264,9 +290,11 @@ public final class AppState {
     public boolean isSidebarExtended() {
         return sidebarExtended.get();
     }
+
     public void setSidebarExtended(boolean extended) {
         sidebarExtended.set(extended);
     }
+
     public BooleanProperty sidebarExtendedProperty() {
         return sidebarExtended;
     }
@@ -275,9 +303,11 @@ public final class AppState {
     public boolean isViewportSmall() {
         return viewportSmall.get();
     }
+
     public void setViewportSmall(boolean small) {
         viewportSmall.set(small);
     }
+
     public BooleanProperty viewportSmallProperty() {
         return viewportSmall;
     }
@@ -286,9 +316,11 @@ public final class AppState {
     public QuickQueryPane.Mode getQuickQueryMode() {
         return quickQueryMode.get();
     }
+
     public void setQuickQueryMode(QuickQueryPane.Mode mode) {
         quickQueryMode.set(mode);
     }
+
     public ObjectProperty<QuickQueryPane.Mode> quickQueryModeProperty() {
         return quickQueryMode;
     }
@@ -297,9 +329,11 @@ public final class AppState {
     public DocumentsPane.Mode getDocPaneMode() {
         return docPaneMode.get();
     }
+
     public void setDocPaneMode(DocumentsPane.Mode mode) {
         docPaneMode.set(mode);
     }
+
     public ObjectProperty<DocumentsPane.Mode> docPaneModeProperty() {
         return docPaneMode;
     }
@@ -308,9 +342,11 @@ public final class AppState {
     public AsyncState<ObservableList<Demanda>> getAllDemandas() {
         return allDemandas.get();
     }
+
     public void setAllDemandas(AsyncState<ObservableList<Demanda>> demandas) {
         allDemandas.set(demandas);
     }
+
     public ObjectProperty<AsyncState<ObservableList<Demanda>>> allDemandasProperty() {
         return allDemandas;
     }
@@ -319,9 +355,11 @@ public final class AppState {
     public Demanda getGlobalSelectedDemanda() {
         return globalSelectedDemanda.get();
     }
+
     public void setGlobalSelectedDemanda(Demanda demanda) {
         globalSelectedDemanda.set(demanda);
     }
+
     public ObjectProperty<Demanda> globalSelectedDemandaProperty() {
         return globalSelectedDemanda;
     }
@@ -329,9 +367,11 @@ public final class AppState {
     public String getPretypedChatMessage() {
         return pretypedChatMessage.get();
     }
+
     public void setPretypedChatMessage(String message) {
         pretypedChatMessage.set(message);
     }
+
     public StringProperty pretypedChatMessageProperty() {
         return pretypedChatMessage;
     }
@@ -340,9 +380,11 @@ public final class AppState {
     public Long getHttpTimeout() {
         return httpTimeout.get();
     }
+
     public void setHttpTimeout(Long newVal) {
         httpTimeout.set(newVal);
     }
+
     public LongProperty httpTimeoutProperty() {
         return httpTimeout;
     }
@@ -351,6 +393,7 @@ public final class AppState {
     public String getJuraiIcon() {
         return juraiIcon;
     }
+
     public String getFallbackPfpPath() {
         return fallbackPfpPath;
     }

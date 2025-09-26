@@ -24,16 +24,13 @@ public class SimpleList<T extends Model> extends VBox {
     private LoadingCircle loadingCircle;
     private Label headerLabel;
     private StackPane searchIconContainer, listItemsWrapper;
-    @Getter
     private TextField searchTextField;
     private SVGPath searchIcon;
     private HBox header;
     private HBox searchArea;
     private ScrollPane scrollPane;
     private VBox listItemsContainer;
-    @Getter
     private final ObservableList<SimpleListItem<T>> listItems = FXCollections.observableArrayList();
-    @Getter
     private final ObservableList<T> listObjects = FXCollections.observableArrayList();
     private ObjectProperty<SimpleListItem<T>> selectedItem = new SimpleObjectProperty<>();
 
@@ -58,7 +55,7 @@ public class SimpleList<T extends Model> extends VBox {
         String searchIconString;
         try {
             searchIconString = FileUtils.getResourceContent("/paths/search.path");
-        } catch(Exception e) {
+        } catch (Exception e) {
             UILogger.logError("Unable to load search icon svg from path");
             UILogger.logWarning("Proceeding without search icon");
             searchIconString = "";
@@ -115,7 +112,7 @@ public class SimpleList<T extends Model> extends VBox {
     }
 
     public void setLoading(boolean loading) {
-        if(loading) {
+        if (loading) {
             listItemsWrapper.getChildren().setAll(loadingCircle);
             loadingCircle.play();
         } else {
@@ -138,7 +135,7 @@ public class SimpleList<T extends Model> extends VBox {
     }
 
     public void createListItem(T object) {
-        var item =  new SimpleListItem<>(object);
+        var item = new SimpleListItem<>(object);
         item.setOnMouseClicked(event -> {
             setSelectedItem(item);
         });
@@ -169,13 +166,13 @@ public class SimpleList<T extends Model> extends VBox {
             return;
         }
 
-        if(selectedItem.get() == null) {
+        if (selectedItem.get() == null) {
             selectedItem.set(item);
             item.setSelected(true);
             return;
         }
 
-        if(selectedItem.get().equals(item)) {
+        if (selectedItem.get().equals(item)) {
             item.setSelected(false);
             selectedItem.set(null);
         } else {
@@ -212,5 +209,17 @@ public class SimpleList<T extends Model> extends VBox {
     public void setHeaderText(String headerText) {
         this.headerText = headerText;
         headerLabel.setText(headerText);
+    }
+
+    public TextField getSearchTextField() {
+        return this.searchTextField;
+    }
+
+    public ObservableList<SimpleListItem<T>> getListItems() {
+        return this.listItems;
+    }
+
+    public ObservableList<T> getListObjects() {
+        return this.listObjects;
     }
 }

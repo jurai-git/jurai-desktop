@@ -92,6 +92,7 @@
             <version>1.18.36</version>
         </dependency>
 
+
         <dependency>
             <groupId>dev.mgcvale</groupId>
             <artifactId>fluidfx</artifactId>
@@ -105,8 +106,33 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>3.12.1</version> <!-- Updated version -->
                 <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <release>17</release>
+
+                    <!-- Critical: These JVM args allow Lombok to work with modules -->
+                    <compilerArgs>
+                        <!-- Allow Lombok access to compiler internals -->
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+                        <arg>--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED</arg>
+
+                        <!-- Additional access for Lombok -->
+                        <arg>--add-opens=java.base/java.lang=ALL-UNNAMED</arg>
+                        <arg>--add-opens=java.base/java.util=ALL-UNNAMED</arg>
+                        <arg>--add-opens=java.base/java.io=ALL-UNNAMED</arg>
+                    </compilerArgs>
+
+                    <!-- Annotation processor path -->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -114,6 +140,11 @@
                             <version>1.18.36</version>
                         </path>
                     </annotationProcessorPaths>
+
+                    <!-- Force forked compilation with sufficient memory -->
+                    <fork>true</fork>
+                    <meminitial>512m</meminitial>
+                    <maxmem>2048m</maxmem>
                 </configuration>
             </plugin>
 
@@ -156,30 +187,6 @@
                         <!-- Include other dependencies and the JDK -->
                         ${project.build.directory}/jmods
                     </jmodsPath>
-                </configuration>
-            </plugin>
-
-            <!-- Plugins to compile project -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <source>17</source>
-                    <target>17</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>com.jurai.Launcher</mainClass>
-                        </manifest>
-                    </archive>
                 </configuration>
             </plugin>
 
@@ -294,11 +301,6 @@
             </plugin>
         </plugins>
         <extensions>
-            <extension>
-                <groupId>org.apache.maven.extensions</groupId>
-                <artifactId>maven-build-cache-extension</artifactId>
-                <version>1.2.0</version>
-            </extension>
         </extensions>
     </build>
 </project>

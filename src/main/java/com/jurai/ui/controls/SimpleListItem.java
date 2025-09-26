@@ -20,7 +20,6 @@ public class SimpleListItem<T extends Model> extends HBox {
     private boolean selected;
     private FillTransition dotColorTransition, textFillTransition;
 
-    @Getter
     T object;
 
     public SimpleListItem(T object) {
@@ -113,4 +112,7 @@ public class SimpleListItem<T extends Model> extends HBox {
         return nameLabel.getText();
     }
 
+    public T getObject() {
+        return this.object;
+    }
 }

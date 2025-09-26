@@ -11,26 +11,21 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import lombok.Getter;
 import org.controlsfx.control.ToggleSwitch;
 
 import static dev.mgcvale.fluidfx.components.layout.Wrappers.*;
 
-public class AppSettingsMenu extends AbstractMenu<VBox>  {
+public class AppSettingsMenu extends AbstractMenu<VBox> {
     private VBox content;
 
-    @Getter
     private ToggleSwitch useLightTheme, useAnimations;
     private SettingsOption<ToggleSwitch> useLightThemeOption, useAnimationsOption;
 
-    @Getter
     private TextField apiUrl;
     private SettingsOption<TextField> apiUrlOption;
 
-    @Getter
     private Button saveChanges, importConfigs, exportConfigs;
 
-    @Getter
     private Label successLabel;
 
     @Override
@@ -64,49 +59,49 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
     @Override
     protected void layControls() {
         content.getChildren().addAll(
-                new ScrollGroup().wVgrow(Priority.ALWAYS).wStyleClass("spacing-3").wVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).wHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).wFixedWitdh().wContent(
-                        new VGroup().wVgrow(Priority.ALWAYS).wChildren(
+            new ScrollGroup().wVgrow(Priority.ALWAYS).wStyleClass("spacing-3").wVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED).wHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER).wFixedWitdh().wContent(
+                new VGroup().wVgrow(Priority.ALWAYS).wChildren(
 
-                                wStyle(wStyleClass(new Label("Configurações gerais"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
-                                new VGroup().wVgrow(Priority.SOMETIMES).wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
-                                        wHgrow(useLightThemeOption, Priority.ALWAYS),
-                                        wHgrow(useAnimationsOption, Priority.ALWAYS),
-                                        wHgrow(apiUrlOption, Priority.ALWAYS)
-                                ),
-                                SpacerFactory.vSpacer(24),
+                    wStyle(wStyleClass(new Label("Configurações gerais"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                    new VGroup().wVgrow(Priority.SOMETIMES).wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
+                        wHgrow(useLightThemeOption, Priority.ALWAYS),
+                        wHgrow(useAnimationsOption, Priority.ALWAYS),
+                        wHgrow(apiUrlOption, Priority.ALWAYS)
+                    ),
+                    SpacerFactory.vSpacer(24),
 
-                                wStyle(wStyleClass(new Label("Privacidade e Segurança"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
-                                new VGroup().wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
-                                        new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
-                                                new Label("Termos e condições"),
-                                                SpacerFactory.hSpacer(Priority.ALWAYS),
-                                                new Hyperlink("Clique aqui para ver")
-                                        )
-                                ),
-                                SpacerFactory.vSpacer(24),
-
-                                wStyle(wStyleClass(new Label("Contato e suporte"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
-                                new VGroup().wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
-                                        new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
-                                                new Label("Nosso e-mail"),
-                                                SpacerFactory.hSpacer(Priority.ALWAYS),
-                                                new Label("contas.jurai@gmail.com")
-                                        ),
-                                        new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
-                                                new Label("Formulário para contato"),
-                                                SpacerFactory.hSpacer(Priority.ALWAYS),
-                                                new Hyperlink("Clique aqui para acessar")
-                                        )
-                                )
+                    wStyle(wStyleClass(new Label("Privacidade e Segurança"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                    new VGroup().wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
+                        new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
+                            new Label("Termos e condições"),
+                            SpacerFactory.hSpacer(Priority.ALWAYS),
+                            new Hyperlink("Clique aqui para ver")
                         )
-                ),
-                new HGroup().wChildren(
-                        exportConfigs,
-                        SpacerFactory.hSpacer(12),
-                        importConfigs,
-                        SpacerFactory.hSpacer(Priority.ALWAYS),
-                        saveChanges
-                ) // bottom buttons
+                    ),
+                    SpacerFactory.vSpacer(24),
+
+                    wStyle(wStyleClass(new Label("Contato e suporte"), "subheader"), "-fx-padding: 0 0 8px 6px;"),
+                    new VGroup().wStyleClass("small-content-box", "spacing-3", "p-6").wChildren(
+                        new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
+                            new Label("Nosso e-mail"),
+                            SpacerFactory.hSpacer(Priority.ALWAYS),
+                            new Label("contas.jurai@gmail.com")
+                        ),
+                        new HGroup().wHgrow(Priority.ALWAYS).wAlignment(Pos.CENTER).wChildren(
+                            new Label("Formulário para contato"),
+                            SpacerFactory.hSpacer(Priority.ALWAYS),
+                            new Hyperlink("Clique aqui para acessar")
+                        )
+                    )
+                )
+            ),
+            new HGroup().wChildren(
+                exportConfigs,
+                SpacerFactory.hSpacer(12),
+                importConfigs,
+                SpacerFactory.hSpacer(Priority.ALWAYS),
+                saveChanges
+            ) // bottom buttons
         );
         content.setPrefWidth(600);
         content.getStyleClass().add("spacing-4");
@@ -116,5 +111,33 @@ public class AppSettingsMenu extends AbstractMenu<VBox>  {
     @Override
     public VBox getContent() {
         return content;
+    }
+
+    public ToggleSwitch getUseLightTheme() {
+        return this.useLightTheme;
+    }
+
+    public ToggleSwitch getUseAnimations() {
+        return this.useAnimations;
+    }
+
+    public TextField getApiUrl() {
+        return this.apiUrl;
+    }
+
+    public Button getSaveChanges() {
+        return this.saveChanges;
+    }
+
+    public Button getImportConfigs() {
+        return this.importConfigs;
+    }
+
+    public Button getExportConfigs() {
+        return this.exportConfigs;
+    }
+
+    public Label getSuccessLabel() {
+        return this.successLabel;
     }
 }

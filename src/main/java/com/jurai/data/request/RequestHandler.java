@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.jurai.data.AppState;
 import com.jurai.data.json.JsonUtils;
 import com.jurai.util.EventLogger;
-import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,11 +17,10 @@ import java.time.Duration;
 import java.util.UUID;
 
 public class RequestHandler {
-    @Setter
     private String baseUrl;
     private final HttpClient client = HttpClient.newBuilder()
-            .connectTimeout(Duration.ofSeconds(AppState.get().getHttpTimeout()))
-            .build();
+        .connectTimeout(Duration.ofSeconds(AppState.get().getHttpTimeout()))
+        .build();
 
     public RequestHandler(String baseUrl) {
         this.baseUrl = baseUrl;
@@ -78,8 +76,8 @@ public class RequestHandler {
             StringBuilder sb = new StringBuilder();
             sb.append("--").append(boundary).append(CRLF);
             sb.append("Content-Disposition: form-data; name=\"")
-                    .append(fieldName).append("\"; filename=\"")
-                    .append(fileName).append("\"").append(CRLF);
+                .append(fieldName).append("\"; filename=\"")
+                .append(fileName).append("\"").append(CRLF);
             sb.append("Content-Type: ").append(mimeType != null ? mimeType : "application/octet-stream").append(CRLF);
             sb.append(CRLF);
 
@@ -93,11 +91,11 @@ public class RequestHandler {
             System.arraycopy(closing, 0, multipartData, preamble.length + fileBytes.length, closing.length);
 
             HttpRequest.Builder builder = HttpRequest.newBuilder()
-                    .uri(URI.create(baseUrl + endpoint))
-                    .timeout(Duration.ofSeconds(AppState.get().getHttpTimeout()))
-                    .header("Content-Type", "multipart/form-data; boundary=" + boundary)
-                    .header("Accept", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofByteArray(multipartData));
+                .uri(URI.create(baseUrl + endpoint))
+                .timeout(Duration.ofSeconds(AppState.get().getHttpTimeout()))
+                .header("Content-Type", "multipart/form-data; boundary=" + boundary)
+                .header("Accept", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofByteArray(multipartData));
 
             if (auth != null) {
                 builder.header("Authorization", auth);
@@ -123,10 +121,10 @@ public class RequestHandler {
     private JsonObject send(String method, String endpoint, JsonObject body, String auth, boolean retrying) throws ResponseNotOkException {
         try {
             HttpRequest.Builder builder = HttpRequest.newBuilder()
-                    .uri(URI.create(baseUrl + endpoint))
-                    .timeout(Duration.ofSeconds(AppState.get().getHttpTimeout()))
-                    .header("Content-Type", "application/json")
-                    .header("Accept", "application/json");
+                .uri(URI.create(baseUrl + endpoint))
+                .timeout(Duration.ofSeconds(AppState.get().getHttpTimeout()))
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/json");
 
             if (auth != null) {
                 builder.header("Authorization", auth);
@@ -162,5 +160,9 @@ public class RequestHandler {
                 throw new ResponseNotOkException(InternalErrorCodes.NETWORK_ERROR);
             }
         }
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 }

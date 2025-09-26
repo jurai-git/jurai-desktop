@@ -7,9 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
-
-@Getter
-@AllArgsConstructor
 public enum NotificationType implements LabeledEnum {
     INFO("Informação"),
     WARNING("Aviso"),
@@ -19,7 +16,15 @@ public enum NotificationType implements LabeledEnum {
 
     private final String label;
 
+    private NotificationType(String label) {
+        this.label = label;
+    }
+
     public static List<String> asList() {
         return AbstractLabeledEnum.asList(NotificationType.class);
+    }
+
+    public String getLabel() {
+        return this.label;
     }
 }
