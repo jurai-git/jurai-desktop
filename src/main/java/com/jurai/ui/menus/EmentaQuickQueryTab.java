@@ -73,10 +73,7 @@ public class EmentaQuickQueryTab extends AbstractMenu<HBox> {
 
         rightContent.getChildren().addAll(
                 analysisLabel,
-                analysisResultsMenu.getContent(),
-                new HGroup().spaceAround().wChildren(
-                        viewArguments
-                )
+                analysisResultsMenu.getContent()
         );
 
         tabContent.getChildren().addAll(

@@ -8,14 +8,19 @@ import com.jurai.data.request.ResponseNotOkException;
 import com.jurai.data.service.AdvogadoService;
 import com.jurai.data.validator.AdvogadoValidator;
 import com.jurai.ui.error.UpdatePasswordErrorTranslator;
+import com.jurai.ui.error.UpdateUserErrorTranslator;
 import com.jurai.ui.menus.AccountSettingsMenu;
+import com.jurai.ui.modal.ModalManager;
 import com.jurai.ui.modal.notif.ConfirmationNotification;
 import com.jurai.ui.modal.notif.DefaultMessageNotification;
+import com.jurai.ui.modal.notif.LoadingModal;
 import com.jurai.ui.modal.notif.NotificationType;
 import com.jurai.ui.panes.AccountPane;
 import com.jurai.ui.util.AccountMode;
 import com.jurai.ui.menus.AccountDashboardMenu;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 
@@ -120,6 +125,28 @@ public class AccountPaneController extends AbstractController<AccountPane> {
                     new DefaultMessageNotification(msg, NotificationType.ERROR).show();
                 })
                 .show();
+        });
+
+        pane.getAccountDashboardMenu().getSaveChanges().setOnAction(e -> {
+            new LoadingModal().show();
+            new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    try {
+                        advogadoService.update(pane.getAccountDashboardMenu().getUsername().getText(), pane.getAccountDashboardMenu().getEmail().getText());
+                        Platform.runLater(() -> {
+                            ModalManager.getInstance().exitModal();
+                            new DefaultMessageNotification("Informações atualizadas com sucesso.", NotificationType.INFO).show();
+                        });
+                    } catch(ResponseNotOkException e) {
+                        Platform.runLater(() -> {
+                            ModalManager.getInstance().exitModal();
+                            new DefaultMessageNotification(UpdateUserErrorTranslator.translate(e), NotificationType.ERROR).show();
+                        });
+                    }
+                    return null;
+                }
+            }.run();
         });
 
         pane.getAccountDashboardMenu().getReset().setOnAction(e -> {

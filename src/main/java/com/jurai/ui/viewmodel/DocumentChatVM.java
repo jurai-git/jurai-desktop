@@ -145,7 +145,7 @@ public class DocumentChatVM extends ViewModelBase {
             Demanda demandaBeforeSend = appState.getGlobalSelectedDemanda();
 
             try {
-                AIMessage res = aiService.sendMessageOnDemandaChat(msg, AppState.get().getGlobalSelectedDemanda(), requestedRAG.get());
+                AIMessage res = aiService.sendMessageOnDemandaChat(msg, AppState.get().getGlobalSelectedDemanda(), true);
 
                 if (demandaBeforeSend.equals(appState.getGlobalSelectedDemanda())) { // only add the message if we're in the same chat.
                     Platform.runLater(() -> messages.add(new ChatMessage(res.getMessage(), "default", true, null)));

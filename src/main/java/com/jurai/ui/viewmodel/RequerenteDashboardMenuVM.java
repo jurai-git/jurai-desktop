@@ -1,7 +1,6 @@
 package com.jurai.ui.viewmodel;
 
 import com.jurai.data.model.Requerente;
-import com.jurai.data.service.RequerenteService;
 import com.jurai.ui.controller.RequerenteEditingModalController;
 import com.jurai.ui.controller.RequerenteRegisterModalController;
 import com.jurai.ui.controls.SimpleListItem;

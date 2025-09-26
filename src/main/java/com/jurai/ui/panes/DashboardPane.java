@@ -3,7 +3,6 @@ package com.jurai.ui.panes;
 import com.jurai.data.model.Requerente;
 import com.jurai.ui.controller.DemandaAnalysisController;
 import com.jurai.ui.controller.DemandaDashboardController;
-import com.jurai.ui.controller.RequerenteDashboardController;
 import com.jurai.ui.menus.DemandaAnalysisDashboardMenu;
 import com.jurai.ui.menus.DemandaDashboardMenu;
 import com.jurai.ui.menus.RequerenteDashboardMenu;

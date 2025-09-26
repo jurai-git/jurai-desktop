@@ -75,8 +75,7 @@ public class AdvogadoService {
 
     public void update(
         String username,
-        String email,
-        String password
+        String email
     ) throws ResponseNotOkException {
         JsonObject body = new JsonObject();
         body.addProperty("username", username);
